@@ -1,4 +1,4 @@
-# hotel [![](https://img.shields.io/travis/typicode/hotel.svg?style=flat-square)](https://travis-ci.org/typicode/hotel) [![](https://img.shields.io/npm/v/hotel.svg?style=flat-square)](https://www.npmjs.com/package/hotel) [![](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
+# hotel [![](https://img.shields.io/travis/typicode/hotel.svg?style=flat-square)](https://travis-ci.org/typicode/hotel) [![](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard) [![](https://img.shields.io/npm/v/hotel.svg?style=flat-square)](https://www.npmjs.com/package/hotel)
 
 Easily start, stop and access your servers from the browser
 
