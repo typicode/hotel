@@ -35,7 +35,7 @@ __Start hotel__
 
 __Relax__
 
-Your servers can now be accessed, started and stopped from [localhost:2000]().
+Your servers can now be accessed, started and stopped from [localhost:2000](http://localhost:2000).
 
 No need to open a terminal (works on OS X, Linux and Windows).
 
