@@ -1,15 +1,8 @@
-# hotel [![](https://img.shields.io/travis/typicode/hotel.svg?style=flat-square)](https://travis-ci.org/typicode/hotel) [![](https://img.shields.io/npm/v/hotel.svg?style=flat-square)](https://www.npmjs.com/package/hotel)
+# hotel [![](https://img.shields.io/travis/typicode/hotel.svg)](https://travis-ci.org/typicode/hotel) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel)
 
-Easily start, stop and access your servers from the browser.
+Easily start, stop and access your local servers from the browser.
 
-```
-   _____
-   |___|
- __|^_^|__  
- |  .    |
- |  .    |
-_|_______|_ Welcome!
-```
+![](https://rawgit.com/typicode/hotel/master/screenshot.png)
 
 __Install__
 
@@ -17,7 +10,7 @@ __Install__
 npm install -g hotel
 ```
 
-__Add your servers__ (need to be done only once)
+__Add your servers commands__ (need to be done only once)
 
 ```bash
 ~/node-app$ hotel add nodemon
@@ -33,13 +26,9 @@ __Start hotel__
 ~$ hotel autostart # Create an autostart script (recommended)
 ```
 
-__Relax__
-
 Your servers can now be accessed, started and stopped from [localhost:2000](http://localhost:2000).
 
 No need to open a terminal (works on OS X, Linux and Windows).
-
-![](screenshot.png)
 
 ## Usage
 
