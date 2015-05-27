@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <div id="targets"></div>
+    <footer>
+      <p>
+        <a href="https://github.com/typicode/hotel">hotel</a>
+        <small>v0.1.0</small>
+      <p>
+    </footer>
+
+    <script id="template" type="text/x-handlebars-template">
+      {{#each monitors}}
+        <div class="monitor {{status}}">
+
+          <a href="/{{id}}">{{id}}</a>
+
+          <div class="details">
+            <span class="status">
+              <small>{{status}}</small>
+            </span>
+            <span class="start {{status}}" data-id="{{id}}">
+              <small>start</small>
+            </span>
+            <span class="stop {{status}}" data-id="{{id}}">
+              <small>stop</small>
+            </span>
+          </div>
+
+        </div>
+      {{else}}
+        <p>No servers.</p>
+        <ul>
+          <li>To stop me run 'hotel stop'</li>
+          <li>To add a server 'hotel add cmd'</li>
+        </ul>
+      {{/each}}
+    </script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.2/handlebars.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>

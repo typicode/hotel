@@ -1,0 +1,97 @@
+/* Available status: running, stopping, stopped, crashed, sleeping */
+
+/* hide */
+.running.start,
+.stopping.start,
+.stopped.stop,
+.crashed.stop,
+.sleeping.stop {
+  display: none;
+}
+
+/* show */
+.running.stop,
+.stopping.stop,
+.stopped.start,
+.crashed.start,
+.sleeping.start {
+  display: table-cell;
+}
+
+body {
+  font-family: sans-serif;
+  padding: 20px;
+}
+
+a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #333;
+}
+
+a:hover, a:focus {
+  color: #8865B3;
+}
+
+small {
+  color: #999;
+}
+
+#targets {
+  width: 280px;
+}
+
+.monitor {
+  padding: 15px;
+  margin: 0;
+  border-bottom: 1px solid #EEE;
+}
+
+.monitor:last-of-type {
+  border: none;
+}
+
+.details {
+  display:table;
+  width:100%;
+  margin-top: 4px;
+}
+
+span {
+  display: table-cell;
+  width: 50%;
+}
+
+span.start, span.stop {
+  cursor: pointer;
+  text-align: right;
+}
+
+.clear {
+  clear: both;
+}
+
+button {
+  width: 50px;
+}
+
+footer p {
+  margin-left: 15px;
+}
+
+/* Sticky footer */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 28px; /* bottom = footer height */
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  height: 60px;
+  width: 320px;
+}

@@ -1,0 +1,52 @@
+{
+  "name": "hotel",
+  "version": "0.1.0",
+  "description": "Easily start, stop and access your servers from the browser",
+  "main": "lib",
+  "bin": "bin/index.js",
+  "preferGlobal": true,
+  "scripts": {
+    "prepublish": "npm test",
+    "daemon": "nodemon --exec babel-node -- src/daemon",
+    "standard": " standard src/**/*.js test/**/*.js",
+    "build": "babel src --out-dir lib --copy-files",
+    "test": "npm run build && npm run standard && mocha --compilers js:babel/register",
+    "uninstall": "node bin stop"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/typicode/hotel.git"
+  },
+  "keywords": [
+    "dev",
+    "utility"
+  ],
+  "author": "Typicode <typicode@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/typicode/hotel/issues"
+  },
+  "homepage": "https://github.com/typicode/hotel",
+  "dependencies": {
+    "express": "^4.12.3",
+    "get-port": "^1.0.0",
+    "got": "^2.9.2",
+    "mkdirp": "^0.5.0",
+    "respawn-group": "^1.0.1",
+    "socket.io": "^1.3.5",
+    "tildify": "^1.0.0",
+    "unquote": "^1.1.0",
+    "untildify": "^2.0.0",
+    "update-notifier": "^0.5.0",
+    "watch": "^0.16.0",
+    "xtend": "^4.0.0",
+    "yargs": "^3.8.0"
+  },
+  "devDependencies": {
+    "babel": "^5.3.3",
+    "mocha": "^2.2.1",
+    "rimraf": "^2.3.3",
+    "standard": "^3.11.1",
+    "supertest": "^0.15.0"
+  }
+}
