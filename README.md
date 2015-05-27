@@ -1,6 +1,6 @@
 # hotel [![](https://img.shields.io/travis/typicode/hotel.svg?style=flat-square)](https://travis-ci.org/typicode/hotel) [![](https://img.shields.io/npm/v/hotel.svg?style=flat-square)](https://www.npmjs.com/package/hotel)
 
-Easily start, stop and access your servers from the browser
+Easily start, stop and access your servers from the browser.
 
 ```
    _____
@@ -8,7 +8,7 @@ Easily start, stop and access your servers from the browser
  __|^_^|__  
  |  .    |
  |  .    |
-_|_______|_ Welcome! Please enjoy your stay.
+_|_______|_ Welcome!
 ```
 
 __Install__
