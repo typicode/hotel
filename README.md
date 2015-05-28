@@ -1,6 +1,6 @@
 # hotel [![](https://img.shields.io/travis/typicode/hotel.svg)](https://travis-ci.org/typicode/hotel) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel)
 
-Easily start, stop and access your local servers from one place.
+Easily start, stop and access your local servers from the browser.
 
 ![](https://rawgit.com/typicode/hotel/master/screenshot.png)
 
