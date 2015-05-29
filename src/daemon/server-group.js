@@ -36,7 +36,7 @@ function getCommand (cmd) {
 function addServer (group, file) {
   let server = JSON.parse(fs.readFileSync(file, 'utf8'))
   let id = getId(file)
-  getPort(function (err, port) {
+  getPort((err, port) => {
     if (err) throw err
 
     console.log(`Add server id: ${id} cmd: ${server.cmd} port: ${port}`)
@@ -82,9 +82,7 @@ module.exports = function () {
 
   // Add change event
   for (let monEvent of ['start', 'restart', 'stop']) {
-    group.on(monEvent, function () {
-      group.emit('change')
-    })
+    group.on(monEvent, () => group.emit('change'))
   }
 
   // Log monitors events
@@ -110,15 +108,15 @@ module.exports = function () {
   watch.createMonitor(serversDir, function (monitor) {
     monitor
       .on('created', (file) => {
-        console.log('created', file)
+        console.log(`created ${file}`)
         addServer(group, file)
       })
       .on('changed', (file) => {
-        console.log('changed', file)
+        console.log(`changed ${file}`)
         updateServer(group, file)
       })
       .on('removed', (file) => {
-        console.log('removed', file)
+        console.log(`removed ${file}`)
         removeServer(group, file)
       })
   })

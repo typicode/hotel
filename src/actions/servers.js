@@ -5,9 +5,9 @@ let mkdirp = require('mkdirp')
 let common = require('../common')
 
 module.exports = {
-  add: add,
-  rm: rm,
-  ls: ls
+  add,
+  rm,
+  ls
 }
 
 let serversDir = common.serversDir

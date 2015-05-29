@@ -6,8 +6,8 @@ let spawn = require('child_process').spawn
 let conf = require('../conf')
 
 module.exports = {
-  start: start,
-  stop: stop
+  start,
+  stop
 }
 
 let killURL = `http://127.0.0.1:${conf.port}/kill`

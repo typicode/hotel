@@ -7,7 +7,7 @@ module.exports = function (servers) {
 
   function index (req, res) {
     res.render('index', {
-      pkg: pkg,
+      pkg,
       monitors: servers.list()
     })
   }
@@ -40,8 +40,8 @@ module.exports = function (servers) {
       function handleConnect () {
         clearInterval(intervalId)
         client.destroy()
-        let url = 'http://localhost:' + port
-        console.log('Redirect to', url)
+        let url = `http://localhost:${port}`
+        console.log(`Redirect to ${url}`)
         res.redirect(url)
       }
 
@@ -50,13 +50,13 @@ module.exports = function (servers) {
       function handleError () {
         if (++counter === 5) {
           clearInterval(intervalId)
-          res.status(502).send('Can\'t connect to server on port ' + port)
+          res.status(502).send(`Can't connect to server on port ${port}`)
         }
       }
 
       // Try to connect
       let client = net
-        .connect({port: port}, handleConnect)
+        .connect({ port }, handleConnect)
         .on('error', handleError)
     }
 

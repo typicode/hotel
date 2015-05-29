@@ -1,9 +1,9 @@
-var os = require('os')
-var fs = require('fs')
-var cp = require('child_process')
-var path = require('path')
-var mkdirp = require('mkdirp')
-var untildify = require('untildify')
+let os = require('os')
+let fs = require('fs')
+let cp = require('child_process')
+let path = require('path')
+let mkdirp = require('mkdirp')
+let untildify = require('untildify')
 
 module.exports = {
   create,

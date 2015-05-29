@@ -1,4 +1,3 @@
-let path = require('path')
 let express = require('express')
 let conf = require('../conf')
 
@@ -11,11 +10,11 @@ let router = require('./router')(servers)
 
 // Start server
 server.listen(conf.port, '127.0.0.1', function () {
-  console.log('Server listening on port', conf.port)
+  console.log(`Server listening on port ${conf.port}`)
 })
 
 // Add ./public
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(`${__dirname}/public`))
 app.use(router)
 
 // Socket.io real-time updates
@@ -29,6 +28,6 @@ io.on('connection', function (socket) {
   servers.on('change', emitChange)
   emitChange()
 
-  socket.on('stop', (id) => servers.stop(id))
-  socket.on('start', (id) => servers.start(id))
+  socket.on('stop', id => servers.stop(id))
+  socket.on('start', id => servers.start(id))
 })
