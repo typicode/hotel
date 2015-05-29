@@ -59,6 +59,7 @@ function addServer (group, file) {
     }
 
     group.add(id, getCommand(server.cmd), opts)
+    group.emit('change')
   })
 }
 
@@ -71,6 +72,7 @@ function updateServer (group, file) {
 // Remove server
 function removeServer (group, file) {
   group.remove(getId(file))
+  group.emit('change')
 }
 
 module.exports = function () {
