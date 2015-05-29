@@ -46,6 +46,7 @@ small {
 .monitor {
   width: 280px;
   margin: 0;
+  padding: 15px 0 15px 0;
   border-bottom: 1px solid #EEE;
 }
 
