@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
-    <div id="targets"></div>
+    <div id="content"></div>
     <footer>
       <p>
         <a href="https://github.com/typicode/hotel">hotel</a>
@@ -33,11 +33,12 @@
 
         </div>
       {{else}}
-        <p>No servers.</p>
-        <ul>
-          <li>To stop me run 'hotel stop'</li>
-          <li>To add a server 'hotel add cmd'</li>
-        </ul>
+        <p>
+          Welcome! Why not add some servers ;)
+        </p>
+        <p>
+          <code>hotel add 'cmd -p $PORT'</code>
+        </p>
       {{/each}}
     </script>
 

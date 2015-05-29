@@ -33,16 +33,18 @@ a:hover, a:focus {
   color: #8865B3;
 }
 
+code {
+  font-size: 14px;
+  background: #EEE;
+  padding: 4px;
+}
+
 small {
   color: #999;
 }
 
-#targets {
-  width: 280px;
-}
-
 .monitor {
-  padding: 15px;
+  width: 280px;
   margin: 0;
   border-bottom: 1px solid #EEE;
 }
@@ -73,10 +75,6 @@ span.start, span.stop {
 
 button {
   width: 50px;
-}
-
-footer p {
-  margin-left: 15px;
 }
 
 /* Sticky footer */

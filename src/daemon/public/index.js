@@ -14,5 +14,5 @@ $('body')
 
 socket.on('change', function (context) {
   var html = template(context)
-  $('#targets').html(html)
+  $('#content').html(html)
 })
