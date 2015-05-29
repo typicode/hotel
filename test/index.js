@@ -10,9 +10,11 @@ let untildify = require('untildify')
 let rmrf = require('rimraf')
 let pkg = require('../package.json')
 
+let timeout = process.env.TRAVIS ? 8000 : 4000
+
 // Used to give some time to the system and commands
 function wait (done) {
-  setTimeout(done, 4000)
+  setTimeout(done, timeout)
 }
 
 function hotel (cmd) {
@@ -25,7 +27,7 @@ let request = supertest(`http://localhost:2000`)
 
 describe('hotel', function () {
 
-  this.timeout(4500)
+  this.timeout(timeout + 1000)
 
   before((done) => {
     hotel('stop') // Just in case
