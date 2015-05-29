@@ -6,8 +6,8 @@ var mkdirp = require('mkdirp')
 var untildify = require('untildify')
 
 module.exports = {
-  create: create,
-  remove: remove
+  create,
+  remove
 }
 
 let execPath = process.execPath
