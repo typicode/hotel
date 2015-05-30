@@ -74,10 +74,6 @@ span.start, span.stop {
   clear: both;
 }
 
-button {
-  width: 50px;
-}
-
 /* Sticky footer */
 html {
   position: relative;
