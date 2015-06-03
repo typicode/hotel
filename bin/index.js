@@ -30,32 +30,38 @@ var yargs = require('yargs')
 var argv = yargs.argv
 var _ = argv._
 
-if (_[0] === 'add' && _[1]) {
-  return servers.add(_[1], argv)
+function run () {
+  if (_[0] === 'add' && _[1]) {
+    return servers.add(_[1], argv)
+  }
+
+  if (_[0] === 'rm') {
+    return servers.rm(_[1])
+  }
+
+  if (_[0] === 'ls') {
+    return servers.ls()
+  }
+
+  if (_[0] === 'start') {
+    return daemon.start()
+  }
+
+  if (_[0] === 'stop') {
+    return daemon.stop()
+  }
+
+  if (_[0] === 'autostart') {
+    return autostart.create()
+  }
+
+  if (_[0] === 'rm-autostart') {
+    return autostart.remove()
+  }
+
+  yargs.showHelp()
 }
 
-if (_[0] === 'rm') {
-  return servers.rm(_[1])
-}
-
-if (_[0] === 'ls') {
-  return servers.ls()
-}
-
-if (_[0] === 'start') {
-  return daemon.start()
-}
-
-if (_[0] === 'stop') {
-  return daemon.stop()
-}
-
-if (_[0] === 'autostart') {
-  return autostart.create()
-}
-
-if (_[0] === 'rm-autostart') {
-  return autostart.remove()
-}
-
-yargs.showHelp()
+console.log()
+run()
+console.log()
