@@ -13,17 +13,17 @@ npm install -g hotel
 __Add your servers commands__ (need to be done only once)
 
 ```bash
-~/node-app$ hotel add nodemon
-~/html-app$ hotel add 'serve -p $PORT'
+~/express$ hotel add nodemon
+~/static$ hotel add 'serve -p $PORT'
 ```
 
 Your servers can now be accessed, started and stopped from [localhost:2000](http://localhost:2000).
 
+![](https://rawgit.com/typicode/hotel/master/screenshot.png)
+
 You can also directly go to [localhost:2000/name]().
 
 _if you're using [nvm](https://github.com/creationix/nvm) or similar, add `-e PATH` (i.e. `hotel add nodemon -e PATH`)._
-
-![](https://rawgit.com/typicode/hotel/master/screenshot.png)
 
 ## Usage
 
