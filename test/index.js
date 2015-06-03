@@ -18,12 +18,18 @@ function wait (done) {
 }
 
 function hotel (cmd) {
+  // Execute hotel cmd
   let out = cp.execSync(`node ${__dirname}/../${pkg.bin} ${cmd}`, {
     cwd: `${__dirname}/app`
   }).toString()
 
-  console.log(out)
+  // Log output
+  // .replace() used to enhance tests readability
+  console.log(out
+    .replace(/\n  /g, '\n    ')
+    .replace(/\n$/, ''))
 
+  // Return output
   return out
 }
 
@@ -41,7 +47,7 @@ describe('hotel', function () {
 
   after(() => hotel('stop'))
 
-  describe('hotel start', () => {
+  describe('$ hotel start', () => {
 
     before(done => {
       hotel('start')
@@ -126,7 +132,7 @@ describe('hotel', function () {
 
   })
 
-  describe('hotel stop', () => {
+  describe('$ hotel stop', () => {
 
     before((done) => {
       hotel('stop')
