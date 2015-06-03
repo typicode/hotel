@@ -50,7 +50,7 @@ module.exports = function (servers) {
       function handleError () {
         if (++counter === 5) {
           clearInterval(intervalId)
-          res.status(502).send(`Can't connect to server on port ${port}`)
+          res.status(502).send(`Hotel: can't connect to server on port ${port}`)
         }
       }
 
