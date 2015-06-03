@@ -10,7 +10,7 @@ let untildify = require('untildify')
 let rmrf = require('rimraf')
 let pkg = require('../package.json')
 
-let timeout = process.env.TRAVIS ? 8000 : 4000
+let timeout = process.env.TRAVIS ? 10000 : 5000
 
 // Used to give some time to the system and commands
 function wait (done) {
@@ -18,9 +18,13 @@ function wait (done) {
 }
 
 function hotel (cmd) {
-  return cp.execSync(`node ${__dirname}/../${pkg.bin} ${cmd}`, {
+  let out = cp.execSync(`node ${__dirname}/../${pkg.bin} ${cmd}`, {
     cwd: `${__dirname}/app`
   }).toString()
+
+  console.log(out)
+
+  return out
 }
 
 let request = supertest(`http://localhost:2000`)
