@@ -12,10 +12,6 @@ module.exports = function (servers) {
     })
   }
 
-  function version (req, res) {
-    res.send(pkg.version)
-  }
-
   function kill (req, res) {
     res.end()
     console.log('Shutting down servers')
@@ -70,7 +66,6 @@ module.exports = function (servers) {
 
   router
     .get('/', index)
-    .get('/version', version)
     .get('/:id', redirect)
     .post('/kill', kill)
 
