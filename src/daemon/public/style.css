@@ -25,6 +25,7 @@ body {
 
 a {
   text-decoration: none;
+  outline: 0;
   font-weight: bold;
   color: #333;
 }
@@ -70,8 +71,9 @@ span.start, span.stop {
   text-align: right;
 }
 
-.clear {
-  clear: both;
+footer a {
+  font-weight: normal;
+  color: #999;
 }
 
 /* Sticky footer */
@@ -87,6 +89,6 @@ body {
 footer {
   position: absolute;
   bottom: 0;
-  height: 60px;
+  height: 70px;
   width: 320px;
 }
