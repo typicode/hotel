@@ -15,15 +15,17 @@ __Add your servers commands__ (need to be done only once)
 ~/static$ hotel add 'serve -p $PORT'
 ```
 
-Your servers can now be accessed, started and stopped from [localhost:2000](http://localhost:2000) from a simple interface. No need to think about commands, ports and terminal tabs anymore.
+Your servers can now be accessed, started and stopped from [localhost:2000](http://localhost:2000) from a simple interface.
 
 ![](https://rawgit.com/typicode/hotel/master/screenshot.png)
 
+No need to think about commands, ports and terminal tabs anymore.
+
 As a shortcut, you can also directly go to `localhost:2000/<name>` to start and access a server.
 
-__Hotel works on OS X, Linux and Windows.__
+Hotel works on __OS X, Linux and Windows.__
 
-_if you're using [nvm](https://github.com/creationix/nvm) or similar, add `-e PATH` (i.e. `hotel add nodemon -e PATH`)._
+Note: if you're using [nvm](https://github.com/creationix/nvm) or similar, add `-e PATH` (i.e. `hotel add nodemon -e PATH`).
 
 ## Usage
 
