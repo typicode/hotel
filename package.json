@@ -7,11 +7,12 @@
   "preferGlobal": true,
   "scripts": {
     "prepublish": "npm test",
-    "daemon": "nodemon --exec babel-node -- src/daemon",
-    "standard": " standard src/**/*.js test/**/*.js",
-    "build": "babel src --out-dir lib --copy-files",
     "test": "npm run build && npm run standard && mocha --compilers js:babel/register",
-    "uninstall": "node bin stop"
+    "install": "node bin/install",
+    "uninstall": "node bin/uninstall",
+    "standard": " standard bin src/**/*.js test/**/*.js",
+    "build": "babel src --out-dir lib --copy-files",
+    "daemon": "nodemon --exec babel-node -- src/daemon"
   },
   "repository": {
     "type": "git",
