@@ -56,7 +56,7 @@ hotel ls           # List servers
 hotel rm [name]    # Remove server
 hotel start        # Start daemon
 hotel stop         # Stop daemon
-hotel autostart    # Add autostart script
+hotel autostart    # Create autostart script
 hotel rm-autostart # Remove autostart script
 ```
 
