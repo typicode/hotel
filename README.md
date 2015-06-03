@@ -1,6 +1,6 @@
 # hotel [![](https://img.shields.io/travis/typicode/hotel.svg)](https://travis-ci.org/typicode/hotel) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel)
 
-> Start, stop and access your local servers __from the browser__
+Start, stop and access your local servers from the browser <3
 
 __Install__
 
@@ -15,7 +15,7 @@ __Add your servers commands__ (need to be done only once)
 ~/static$ hotel add 'serve -p $PORT'
 ```
 
-Your servers can now be accessed, started and stopped from [localhost:2000](http://localhost:2000)
+Your servers can now be accessed, started and stopped from [localhost:2000](http://localhost:2000).
 
 ![](https://rawgit.com/typicode/hotel/master/screenshot.png)
 
