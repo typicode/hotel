@@ -3,6 +3,7 @@ let fs = require('fs')
 let cp = require('child_process')
 let path = require('path')
 let mkdirp = require('mkdirp')
+let tildify = require('tildify')
 let untildify = require('untildify')
 
 module.exports = {
@@ -65,23 +66,27 @@ data.win32 =
 
 function create () {
   let platform = os.platform()
-  console.log('Create autostart script')
-  console.log('Create', file[platform])
+  console.log(`  Create  ${tildify(file[platform])}`)
+
   mkdirp.sync(path.dirname(file[platform]))
   fs.writeFileSync(file[platform], data[platform])
 
   if (platform === 'darwin') {
     cp.execSync(`launchctl load -Fw ${file[platform]}`)
   }
+
+  console.log('  Created startup script ')
 }
 
 function remove () {
   let platform = os.platform()
-  console.log('Remove autostart script')
-  console.log('Remove', file[platform])
+  console.log(`  Remove  ${tildify(file[platform])}`)
+
   if (fs.existsSync(file[platform])) fs.unlinkSync(file[platform])
 
   if (platform === 'darwin') {
     cp.execSync(`launchctl unload ${file[platform]}`)
   }
+
+  console.log('  Removed autostart script')
 }

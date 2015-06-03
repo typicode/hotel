@@ -1,6 +1,7 @@
 let fs = require('fs')
 let path = require('path')
 let got = require('got')
+let tildify = require('tildify')
 let untildify = require('untildify')
 let spawn = require('child_process').spawn
 let conf = require('../conf')
@@ -14,17 +15,15 @@ let killURL = `http://127.0.0.1:${conf.port}/kill`
 
 // Start daemon in background
 function start () {
-  console.log('Start daemon')
-
   // Open ~/.hotel/daemon.log
   let daemonLog = untildify('~/.hotel/daemon.log')
-  console.log('Create', daemonLog)
+  console.log(`  Create  ${tildify(daemonLog)}`)
   let out = fs.openSync(daemonLog, 'w')
 
   // Spawn daemon and detach process
   let daemonFile = path.join(__dirname, '../daemon')
   let node = process.execPath
-  console.log(`Spawn ${node} ${daemonFile}`)
+  console.log(`  Spawn   ${tildify(node)} ${tildify(daemonFile)}`)
   spawn(node, [daemonFile], {
       stdio: ['ignore', out, out],
       detached: true
@@ -33,18 +32,18 @@ function start () {
     .unref()
 
   // Started
-  console.log('Started')
+  console.log(`  Started http://localhost:${conf.port}`)
 }
 
 // Stop daemon using killURL
 function stop () {
-  console.log('Stop daemon')
-
   got.post(killURL, (err) => {
-    // Assume it's not running
-    if (err) return console.log('Not running')
-
-    // Stopped
-    console.log('Stopped')
+    if (err) {
+      // Assume it's not running
+      console.log('  Not running')
+    } else {
+      // Stopped
+      console.log('  Stopped')
+    }
   })
 }
