@@ -36,14 +36,15 @@ function start () {
 }
 
 // Stop daemon using killURL
-function stop () {
+function stop (cb) {
   got.post(killURL, (err) => {
     if (err) {
       // Assume it's not running
       console.log('  Not running')
     } else {
       // Stopped
-      console.log('  Stopped')
+      console.log('  Stopped daemon')
     }
+    cb()
   })
 }

@@ -1,5 +1,7 @@
 var autostart = require('../lib/actions/autostart')
 var daemon = require('../lib/actions/daemon')
 
-daemon.stop()
+console.log()
 autostart.remove()
+console.log()
+daemon.stop(console.log)

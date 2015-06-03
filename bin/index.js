@@ -30,38 +30,46 @@ var yargs = require('yargs')
 var argv = yargs.argv
 var _ = argv._
 
-function run () {
+// Need to rely on a callback because daemon.stop is asynchronous
+function run (cb) {
   if (_[0] === 'add' && _[1]) {
-    return servers.add(_[1], argv)
+    servers.add(_[1], argv)
+    return cb()
   }
 
   if (_[0] === 'rm') {
-    return servers.rm(_[1])
+    servers.rm(_[1])
+    return cb()
   }
 
   if (_[0] === 'ls') {
-    return servers.ls()
+    servers.ls()
+    return cb()
   }
 
   if (_[0] === 'start') {
-    return daemon.start()
+    daemon.start()
+    return cb()
   }
 
   if (_[0] === 'stop') {
-    return daemon.stop()
+    // Asynchronous command
+    daemon.stop(cb)
+    return
   }
 
   if (_[0] === 'autostart') {
-    return autostart.create()
+    autostart.create()
+    return cb()
   }
 
   if (_[0] === 'rm-autostart') {
-    return autostart.remove()
+    autostart.remove()
+    return cb()
   }
 
   yargs.showHelp()
 }
 
 console.log()
-run()
-console.log()
+run(console.log)
