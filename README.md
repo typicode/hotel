@@ -1,6 +1,6 @@
 # hotel [![](https://img.shields.io/travis/typicode/hotel.svg)](https://travis-ci.org/typicode/hotel) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel)
 
-Start, stop and access your local servers __from the browser__ (*^▽^*). No need to have a terminal open.
+Start, stop and access your local servers __from the browser__.
 
 _Works on OS X, Linux and Windows_
 
