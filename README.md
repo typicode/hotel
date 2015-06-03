@@ -19,13 +19,9 @@ Your servers can now be accessed, started and stopped from [localhost:2000](http
 
 ![](https://rawgit.com/typicode/hotel/master/screenshot.png)
 
-No need to think about commands, ports and terminal tabs anymore.
-
 As a shortcut, you can also directly go to `localhost:2000/<name>` to start and access a server.
 
-Hotel works on __OS X, Linux and Windows.__
-
-Note: if you're using [nvm](https://github.com/creationix/nvm) or similar, add `-e PATH` (i.e. `hotel add nodemon -e PATH`).
+_If you're using [nvm](https://github.com/creationix/nvm) or similar, add `-e PATH` (i.e. `hotel add nodemon -e PATH`)._
 
 ## Usage
 
