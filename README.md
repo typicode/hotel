@@ -8,11 +8,11 @@ __Install__
 npm install -g hotel
 ```
 
-__Add your servers commands__ (need to be done only once)
+__Add your servers commands__ (need to be done only once, `-e` option can be omitted if you're not using a version manager like [nvm](https://github.com/creationix/nvm))
 
 ```bash
-~/express$ hotel add nodemon
-~/static$ hotel add 'serve -p $PORT'
+~/express$ hotel add nodemon -e PATH
+~/static$ hotel add 'serve -p $PORT' -e PATH
 ```
 
 Your servers can now be accessed, started and stopped from [localhost:2000](http://localhost:2000).
@@ -21,7 +21,7 @@ Your servers can now be accessed, started and stopped from [localhost:2000](http
 
 As a shortcut, you can also directly go to `localhost:2000/<name>` to start and access a server.
 
-_If you're using [nvm](https://github.com/creationix/nvm) or similar, add `-e PATH` (i.e. `hotel add nodemon -e PATH`)._
+Works on OS X, Linux and Windows.
 
 ## Usage
 
