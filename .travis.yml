@@ -2,4 +2,6 @@ language: node_js
 node_js:
   - "0.12"
 before_install:
+  - npm install babel
+before_script:
   - npm run build
