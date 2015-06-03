@@ -20,7 +20,11 @@
   },
   "keywords": [
     "dev",
-    "utility"
+    "utility",
+    "process",
+    "manager",
+    "local",
+    "server"
   ],
   "author": "Typicode <typicode@gmail.com>",
   "license": "MIT",
