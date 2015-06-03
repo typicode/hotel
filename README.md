@@ -15,7 +15,7 @@ __Add your servers commands__ (need to be done only once)
 ~/static$ hotel add 'serve -p $PORT'
 ```
 
-Your servers can now be accessed, started and stopped from [localhost:2000](http://localhost:2000) from a simple interface.
+Your servers can now be accessed, started and stopped from [localhost:2000](http://localhost:2000)
 
 ![](https://rawgit.com/typicode/hotel/master/screenshot.png)
 
