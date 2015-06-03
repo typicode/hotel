@@ -1,8 +1,6 @@
 # hotel [![](https://img.shields.io/travis/typicode/hotel.svg)](https://travis-ci.org/typicode/hotel) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel)
 
-Start, stop and access your local servers __from the browser__.
-
-_Works on OS X, Linux and Windows_
+> Start, stop and access your local servers __from the browser__
 
 __Install__
 
@@ -17,11 +15,13 @@ __Add your servers commands__ (need to be done only once)
 ~/static$ hotel add 'serve -p $PORT'
 ```
 
-Your servers can now be accessed, started and stopped from [localhost:2000](http://localhost:2000).
+Your servers can now be accessed, started and stopped from [localhost:2000](http://localhost:2000) from a simple interface. No need to think about commands, ports and terminal tabs anymore.
 
 ![](https://rawgit.com/typicode/hotel/master/screenshot.png)
 
-You can also directly go to [localhost:2000/name]().
+As a shortcut, you can also directly go to `localhost:2000/<name>` to start and access a server.
+
+__Hotel works on OS X, Linux and Windows.__
 
 _if you're using [nvm](https://github.com/creationix/nvm) or similar, add `-e PATH` (i.e. `hotel add nodemon -e PATH`)._
 
