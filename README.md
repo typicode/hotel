@@ -75,7 +75,7 @@ server.listen(port)
 hotel add 'cmd -p $PORT'
 
 # Windows
-hotel add "cmd -p %PORT"
+hotel add "cmd -p %PORT%"
 ```
 
 ## Hotel files
