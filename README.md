@@ -51,7 +51,7 @@ http://localhost:2000/<app-name>
 
 Other commands
 
-```
+```bash
 hotel ls           # List servers
 hotel rm [name]    # Remove server
 hotel start        # Start daemon
