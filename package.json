@@ -5,6 +5,9 @@
   "main": "lib",
   "bin": "bin/index.js",
   "preferGlobal": true,
+  "engines": {
+    "node": ">= 0.12"
+  },
   "scripts": {
     "prepublish": "npm test",
     "test": "npm run build && npm run standard && mocha --compilers js:babel/register",
