@@ -71,11 +71,8 @@ server.listen(port)
 ```
 
 ```bash
-# OS X, Linux
-hotel add 'cmd -p $PORT'
-
-# Windows
-hotel add "cmd -p %PORT%"
+hotel add 'cmd -p $PORT'  # OS X, Linux
+hotel add "cmd -p %PORT%" # Windows
 ```
 
 ## Hotel files
