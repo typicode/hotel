@@ -32,8 +32,13 @@ function add (cmd, opts) {
   }
 
   if (opts.o) obj.out = opts.o
+
+  obj.env = {}
+
+  // By default, save PATH env for version managers users
+  obj.env.PATH = process.env.PATH
+
   if (opts.e && process.env[opts.e]) {
-    obj.env = {}
     obj.env[opts.e] = process.env[opts.e]
   }
 

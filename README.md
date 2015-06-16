@@ -11,15 +11,15 @@ npm install -g hotel
 __Add your servers commands__ (need to be done only once, `-e` option can be omitted if you're not using a version manager like [nvm](https://github.com/creationix/nvm))
 
 ```bash
-~/express$ hotel add nodemon -e PATH
-~/static$ hotel add 'serve -p $PORT' -e PATH
+~/express$ hotel add nodemon
+~/static$ hotel add 'serve -p $PORT'
 ```
 
 Your servers can now be accessed, started and stopped from [localhost:2000](http://localhost:2000).
 
 ![](https://rawgit.com/typicode/hotel/master/screenshot.png)
 
-As a shortcut, you can also directly go to `localhost:2000/<name>` to start and access a server.
+As a shortcut, you can also directly go to `localhost:2000/<app-name>` to start and access a server.
 
 Works on OS X, Linux and Windows.
 
@@ -33,8 +33,7 @@ hotel add <cmd> cmd [opts]
 # Examples:
 hotel add nodemon -o out.log # Set output file
 hotel add nodemon -n name    # Set custom name
-hotel add nodemon -e PATH    # Save current environment variable
-                             # (use it with version managers)
+hotel add nodemon -e ENV     # Save environment variable
 ```
 
 To list, start and stop servers go to
@@ -60,7 +59,7 @@ hotel autostart    # Create autostart script
 hotel rm-autostart # Remove autostart script
 ```
 
-## Port variable
+## PORT
 
 For `hotel` to work, your servers need to listen on the PORT environment variable.
 Here are some examples showing how you can do it from your code or the command-line:
@@ -75,7 +74,7 @@ hotel add 'cmd -p $PORT'  # OS X, Linux
 hotel add "cmd -p %PORT%" # Windows
 ```
 
-## Hotel files
+## Files
 
 `~/.hotel` contains daemon log, servers and daemon configurations.
 
