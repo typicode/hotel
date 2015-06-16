@@ -68,7 +68,7 @@ hotel autostart    # Create autostart script
 hotel rm-autostart # Remove autostart script
 ```
 
-## PORT
+## Port
 
 For `hotel` to work, your servers need to listen on the PORT environment variable.
 Here are some examples showing how you can do it from your code or the command-line:
