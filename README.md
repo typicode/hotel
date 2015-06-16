@@ -8,7 +8,7 @@ __Install__
 npm install -g hotel
 ```
 
-__Add your servers commands__ (need to be done only once, `-e` option can be omitted if you're not using a version manager like [nvm](https://github.com/creationix/nvm))
+__Add your servers commands__ (need to be done only once)
 
 ```bash
 ~/express$ hotel add nodemon
