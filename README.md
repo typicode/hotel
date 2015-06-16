@@ -1,6 +1,6 @@
 # hotel [![](https://img.shields.io/travis/typicode/hotel.svg)](https://travis-ci.org/typicode/hotel) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel)
 
-> Simply manage your dev servers from the browser without having to think about ports or commands <3
+> Manage your dev servers from the browser without having to think about ports or commands <3
 
 ## Quick start
 
