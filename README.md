@@ -17,7 +17,12 @@ __Add your servers commands__ (need to be done only once)
 
 Your servers can now be accessed, started and stopped from [localhost:2000](http://localhost:2000).
 
-As a shortcut, you can also directly go to `localhost:2000/<app-name>` to start and access a server.
+As a shortcut, you can also directly go to `localhost:2000/<app-name>` to start and access a server. For example:
+
+```
+http://localhost:2000/express
+http://localhost:2000/static
+```
 
 Works on OS X, Linux and Windows.
 
