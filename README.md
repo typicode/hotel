@@ -1,23 +1,19 @@
 # hotel [![](https://img.shields.io/travis/typicode/hotel.svg)](https://travis-ci.org/typicode/hotel) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel)
 
-> Manage your dev servers from the browser. No terminal needed. <3
+> Simply manage your dev servers from the browser without having to think about ports or commands <3
 
-__Install__
+## Quick start
 
-```bash
-npm install -g hotel
-```
-
-__Add your servers commands__ (need to be done only once)
+Add your servers commands (__need to be done only once__)
 
 ```bash
 ~/projects/one$ hotel add nodemon
 ~/projects/two$ hotel add 'serve -p $PORT'
 ```
 
-Your servers can now be accessed, started and stopped from [localhost:2000](http://localhost:2000).
+Now, you can access, start and stop your servers from [localhost:2000](http://localhost:2000).
 
-As a shortcut, you can also directly go to `localhost:2000/<app-name>`. For instance:
+As a shortcut, you can also directly go to [localhost:2000/project-name](). For instance:
 
 ```bash
 # http://localhost:2000/one
@@ -25,6 +21,14 @@ As a shortcut, you can also directly go to `localhost:2000/<app-name>`. For inst
 ```
 
 Works on OS X, Linux and Windows.
+
+## Installation
+
+```bash
+npm install -g hotel
+```
+
+## GIF
 
 ![](https://rawgit.com/typicode/hotel/master/screen.gif)
 
