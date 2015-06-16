@@ -17,11 +17,11 @@ __Add your servers commands__ (need to be done only once)
 
 Your servers can now be accessed, started and stopped from [localhost:2000](http://localhost:2000).
 
-![](https://rawgit.com/typicode/hotel/master/screenshot.png)
-
 As a shortcut, you can also directly go to `localhost:2000/<app-name>` to start and access a server.
 
 Works on OS X, Linux and Windows.
+
+![](https://rawgit.com/typicode/hotel/master/screen.gif)
 
 ## Usage
 
