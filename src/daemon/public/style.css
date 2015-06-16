@@ -31,7 +31,7 @@ a {
 }
 
 a:hover, a:focus {
-  color: #8865B3;
+  color: #333 !important;
 }
 
 code {
@@ -49,6 +49,10 @@ small {
   margin: 0;
   padding: 15px 0 15px 0;
   border-bottom: 1px solid #EEE;
+}
+
+.monitor.stopped a {
+  color: #999;
 }
 
 .monitor:last-of-type {

@@ -1,18 +1,18 @@
-let source = $("#template").html()
-let template = Handlebars.compile(source)
-let socket = io.connect(location.origin)
+var source = $("#template").html()
+var template = Handlebars.compile(source)
+var socket = io.connect(location.origin)
 
 $('body')
   .on('click', '.stop', function () {
-    let id = $(this).data('id')
+    var id = $(this).data('id')
     socket.emit('stop', id)
   })
   .on('click', '.start', function () {
-    let id = $(this).data('id')
+    var id = $(this).data('id')
     socket.emit('start', id)
   })
 
-socket.on('change', (context) => {
-  let html = template(context)
+socket.on('change', function (context) {
+  var html = template(context)
   $('#content').html(html)
 })
