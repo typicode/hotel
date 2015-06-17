@@ -3,10 +3,13 @@ var fs = require('fs')
 var path = require('path')
 var tildify = require('tildify')
 var updateNotifier = require('update-notifier')
+var sudoBlock = require('sudo-block')
 var servers = require('../lib/actions/servers')
 var daemon = require('../lib/actions/daemon')
 var autostart = require('../lib/actions/autostart')
 var pkg = require('../package.json')
+
+sudoBlock('\n  Should not be run as root, please retry without sudo.\n')
 
 updateNotifier({pkg: pkg}).notify()
 

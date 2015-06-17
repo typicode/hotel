@@ -22,11 +22,13 @@ As a shortcut, you can also directly go to [localhost:2000/project-name](). For 
 
 Works on OS X, Linux and Windows.
 
-## Installation
+## Install
 
 ```bash
 npm install -g hotel
 ```
+
+If you install `hotel` using `sudo`, please run the following command `hotel autostart && hotel start` to complete installation.
 
 ## GIF
 

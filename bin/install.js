@@ -1,19 +1,19 @@
-var downgradeRoot = require('downgrade-root');
+var sudoBlock = require('sudo-block');
 var autostart = require('../lib/actions/autostart')
 var daemon = require('../lib/actions/daemon')
 
+// Checking if hotel is being installed using 'sudo npm'
+// ~/.hotel should not be created as root
+sudoBlock(
+'\n' +
+'  To complete install, please run:\n' +
+'  hotel autostart && hotel start\n'
+)
+
 console.log()
-try {
-  downgradeRoot()
-} catch (err) {
-  console.log('  Error: Couldn\'t downgrade permissions')
-  console.log('  Please run: hotel autostart && hotal start')
-  console.log()
-  return
-}
 autostart.create()
 console.log()
 daemon.start()
 console.log()
 console.log('  To uninstall: npm rm -g hotel')
-console.log('')
+console.log()
