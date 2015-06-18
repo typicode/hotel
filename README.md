@@ -13,7 +13,7 @@ Add your servers commands (need to be done only once)
 
 Now, you can access, start and stop your servers from [localhost:2000](http://localhost:2000).
 
-As a shortcut, you can also directly go to [localhost:2000/project-name]():
+As a shortcut, you can also directly go to:
 
 ```bash
 # http://localhost:2000/one
