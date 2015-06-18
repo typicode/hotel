@@ -4,7 +4,7 @@
 
 ## Quick start
 
-Add your servers commands (__need to be done only once__)
+Add your servers commands (need to be done only once)
 
 ```bash
 ~/projects/one$ hotel add nodemon
