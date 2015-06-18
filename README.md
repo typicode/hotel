@@ -16,8 +16,8 @@ Now, you can access, start and stop your servers from [localhost:2000](http://lo
 As a shortcut, you can also directly go to:
 
 ```bash
-# http://localhost:2000/one
-# http://localhost:2000/two
+http://localhost:2000/one
+http://localhost:2000/two
 ```
 
 Works on OS X, Linux and Windows.
