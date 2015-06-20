@@ -32,6 +32,7 @@ module.exports = function (servers) {
 
     // Redirect when server is reachable
     let port = servers.get(id).env.PORT
+    let hostname = req.hostname
     let counter = 0
 
     function forward () {
@@ -40,7 +41,7 @@ module.exports = function (servers) {
       function handleConnect () {
         clearInterval(intervalId)
         client.destroy()
-        let url = `http://localhost:${port}`
+        let url = `http://${hostname}:${port}`
         console.log(`Redirect to ${url}`)
         res.redirect(url)
       }

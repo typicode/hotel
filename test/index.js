@@ -96,10 +96,18 @@ describe('hotel', function () {
           // Test redirection
           supertest(res.header.location)
             .get('/')
-            // Test that PATH was passed to the server
+            // Server is configured to return PATH,
+            // in order to test that PATH was passed to the server
             .expect(new RegExp(process.env.PATH))
             .expect(200, done)
         })
+    })
+
+    it('should use the same hostname to redirect', done => {
+      supertest(`http://127.0.0.1:2000`)
+        .get('/name')
+        .expect('location', /http:\/\/127.0.0.1/)
+        .expect(302, done)
     })
 
     it('should write output to output.log', () => {
