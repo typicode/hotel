@@ -103,6 +103,13 @@ describe('hotel', function () {
         })
     })
 
+    it('should redirect paths correctly', done => {
+      request
+        .get('/name/x/y/z')
+        .expect('location', /:\d+\/x\/y\/z/)
+        .expect(302, done)
+    })
+
     it('should use the same hostname to redirect', done => {
       supertest(`http://127.0.0.1:2000`)
         .get('/name')
