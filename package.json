@@ -1,6 +1,6 @@
 {
   "name": "hotel",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "Easily start, stop and access your servers from the browser",
   "main": "lib",
   "bin": "bin/index.js",
