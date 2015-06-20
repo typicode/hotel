@@ -25,9 +25,11 @@ function hotel (cmd) {
 
   // Log output
   // .replace() used to enhance tests readability
-  console.log(out
-    .replace(/\n  /g, '\n    ')
-    .replace(/\n$/, ''))
+  if (!process.env.QUIET) {
+    console.log(out
+      .replace(/\n  /g, '\n    ')
+      .replace(/\n$/, ''))
+  }
 
   // Return output
   return out
