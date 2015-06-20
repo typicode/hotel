@@ -50,14 +50,18 @@ function add (cmd, opts) {
   console.log(`  Added  http://localhost:${conf.port}/${id}`)
 }
 
-function rm (name) {
+function rm (name, cb) {
   let id = getId(name)
   let file = getServerFile(id)
 
   console.log(`  Remove  ${tildify(file)}`)
-  console.log(`  Removed`)
-
-  fs.unlink(file, function () {})
+  fs.unlink(file, function (err) {
+    if (err) {
+      return cb(new Error('unable to delete'))
+    }
+    console.log(`  Removed`)
+    cb()
+  })
 }
 
 function ls () {
