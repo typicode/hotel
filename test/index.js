@@ -19,9 +19,12 @@ function wait (done) {
 
 function hotel (cmd) {
   // Execute hotel cmd
-  let out = cp.execSync(`node ${__dirname}/../${pkg.bin} ${cmd}`, {
+  let bin = `${__dirname}/../${pkg.bin}`
+  let proc = cp.spawnSync('sh', ['-c', `${bin} ${cmd}`], {
     cwd: `${__dirname}/app`
-  }).toString()
+  })
+  
+  let out = proc.stdout.toString()
 
   // Log output
   // .replace() used to enhance tests readability
@@ -136,6 +139,14 @@ describe('hotel', function () {
         .get('/app')
         .expect(302)
         .expect('location', '/', done)
+    })
+
+  })
+
+  describe('app$ hotel rm non-existent-app', () => {
+
+    it('should print an error', () => {
+      assert(hotel('rm non-existent-app').includes('unable to delete'))
     })
 
   })
