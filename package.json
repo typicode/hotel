@@ -15,6 +15,7 @@
     "uninstall": "node bin/uninstall",
     "standard": " standard bin src/**/*.js test/**/*.js",
     "build": "babel src --out-dir lib --copy-files",
+    "watch": "babel src --out-dir lib --copy-files --watch",
     "daemon": "nodemon --exec babel-node -- src/daemon"
   },
   "repository": {
