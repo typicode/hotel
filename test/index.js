@@ -1,10 +1,10 @@
+/* global describe, before, after, it */
 process.env.HOME = `${__dirname}/home`
 process.env.USERPROFILE = `${__dirname}/home`
 
 let assert = require('assert')
 let cp = require('child_process')
 let fs = require('fs')
-let path = require('path')
 let supertest = require('supertest')
 let untildify = require('untildify')
 let rmrf = require('rimraf')
@@ -26,7 +26,7 @@ function hotel (cmd) {
   // Log output
   // .replace() used to enhance tests readability
   console.log(out
-    .replace(/\n  /g, '\n    ')
+    .replace(/\n {2}/g, '\n    ')
     .replace(/\n$/, ''))
 
   // Return output
