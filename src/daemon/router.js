@@ -33,6 +33,7 @@ module.exports = function (servers) {
     // Redirect when server is reachable
     let port = servers.get(id).env.PORT
     let hostname = req.hostname
+    let path = req.params[0] || ''
     let counter = 0
 
     function forward () {
@@ -41,7 +42,7 @@ module.exports = function (servers) {
       function handleConnect () {
         clearInterval(intervalId)
         client.destroy()
-        let url = `http://${hostname}:${port}`
+        let url = `http://${hostname}:${port}/${path}`
         console.log(`Redirect to ${url}`)
         res.redirect(url)
       }
@@ -68,6 +69,7 @@ module.exports = function (servers) {
   router
     .get('/', index)
     .get('/:id', redirect)
+    .get('/:id/*', redirect)
     .post('/kill', kill)
 
   return router
