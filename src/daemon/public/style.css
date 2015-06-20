@@ -1,5 +1,9 @@
 /* Available status: running, stopping, stopped, crashed, sleeping */
 
+html, button {
+  font-family: sans-serif;
+}
+
 /* hide */
 .running.start,
 .stopping.start,
@@ -7,15 +11,6 @@
 .crashed.stop,
 .sleeping.stop {
   display: none;
-}
-
-/* show */
-.running.stop,
-.stopping.stop,
-.stopped.start,
-.crashed.start,
-.sleeping.start {
-  display: table-cell;
 }
 
 body {
@@ -40,10 +35,6 @@ code {
   padding: 4px;
 }
 
-small {
-  color: #999;
-}
-
 .monitor {
   width: 280px;
   margin: 0;
@@ -60,19 +51,33 @@ small {
 }
 
 .details {
-  display:table;
-  width:100%;
+  overflow: hidden;
   margin-top: 4px;
 }
 
-span {
-  display: table-cell;
-  width: 50%;
+.status {
+  color: #999;
+  float: left;
 }
 
-span.start, span.stop {
+/* Start-stop buttons */
+.start, .stop {
+  float: right;
   cursor: pointer;
   text-align: right;
+  border: 0;
+  padding: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 1em;
+  color: #999;
+}
+
+.start:hover,
+.start:focus,
+.stop:hover,
+.stop:focus {
+  color: #111;
 }
 
 footer a {
