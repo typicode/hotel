@@ -7,6 +7,7 @@ var sudoBlock = require('sudo-block')
 var servers = require('../lib/actions/servers')
 var daemon = require('../lib/actions/daemon')
 var autostart = require('../lib/actions/autostart')
+var opener = require('../lib/actions/opener')
 var pkg = require('../package.json')
 
 sudoBlock('\n  Should not be run as root, please retry without sudo.\n')
@@ -24,6 +25,7 @@ var yargs = require('yargs')
   .command('stop', 'Stop daemon')
   .command('autostart', 'Create autostart script')
   .command('rm-autostart', 'Remove autostart script')
+  .command('open', 'Open hotel in your browser')
   .example('$0 add nodemon')
   .example('$0 add -o app.log \'serve -p $PORT\'')
   .example('$0 add -n app \'serve -p $PORT\'')
@@ -59,6 +61,12 @@ function run (cb) {
   if (_[0] === 'stop') {
     // Asynchronous command
     daemon.stop(cb)
+    return
+  }
+
+  if (_[0] === 'open') {
+    // Asynchronous command
+    opener.open(cb)
     return
   }
 
