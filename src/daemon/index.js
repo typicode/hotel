@@ -9,8 +9,8 @@ let servers = require('./server-group')()
 let router = require('./router')(servers)
 
 // Start server
-server.listen(conf.port, '127.0.0.1', function () {
-  console.log(`Server listening on port ${conf.port}`)
+server.listen(conf.port, conf.host, function () {
+  console.log(`Server listening on port ${conf.host}:${conf.port}`)
 })
 
 // Add ./public
