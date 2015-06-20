@@ -48,6 +48,11 @@ function add (cmd, opts) {
   fs.writeFileSync(file, data)
 
   console.log(`  Added  http://localhost:${conf.port}/${id}`)
+
+  if (!obj.out) {
+    console.log(`  Warn   No log file specified. Output will be discarded.`)
+    console.log(`         Use '-o log.txt' to specify a logfile.`)
+  }
 }
 
 function rm (name) {
