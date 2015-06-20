@@ -20,7 +20,7 @@ http://localhost:2000/one
 http://localhost:2000/two
 ```
 
-Works on OS X, Linux and Windows.
+Works on OS X, Linux and Windows with any server.
 
 ## Install
 
