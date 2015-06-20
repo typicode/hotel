@@ -67,8 +67,8 @@ function ls () {
       let id = path.basename(file, '.json')
       let serverFile = getServerFile(id)
       let server = JSON.parse(fs.readFileSync(serverFile))
-      return `  ${tildify(server.cwd)}$ ${server.cmd}\n`
-           + `  http://localhost:${conf.port}/${id}`
+      return `  ${tildify(server.cwd)}$ ${server.cmd}\n` +
+        `  http://localhost:${conf.port}/${id}`
     })
     .join('\n\n')
 
