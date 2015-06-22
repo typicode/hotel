@@ -29,22 +29,24 @@ function waitFor (condition, done) {
   function retry () {
     if (new Date() - start > timeout) return done()
     setTimeout(() => {
-      condition((err) => {
+      condition(err => {
         if (!err) return done()
-        else retry()
+        retry()
       })
     }, 250)
   }
 }
 
-function forUp (cb) {
-  http.get(url, () => { cb() })
-    .on('error', (e) => { cb(e) })
+function isUp (cb) {
+  http
+    .get(url, cb)
+    .on('error', cb)
 }
 
-function forDown (cb) {
-  http.get(url, () => { cb(new Error()) })
-    .on('error', (e) => { cb() })
+function isDown (cb) {
+  http
+    .get(url, () => { cb(new Error()) })
+    .on('error', err => cb())
 }
 
 function hotel (cmd) {
@@ -69,12 +71,13 @@ let request = supertest(url)
 
 describe('hotel', function () {
 
-  this.timeout(timeout)
+  // Must be slightly higher than wait() timeout
+  this.timeout(timeout * 1.2)
 
   before((done) => {
     hotel('stop') // Just in case
     rmrf.sync(untildify('~/.hotel'))
-    waitFor(forDown, done)
+    waitFor(isDown, done)
   })
 
   after(() => hotel('stop'))
@@ -83,7 +86,7 @@ describe('hotel', function () {
 
     before(done => {
       hotel('start')
-      waitFor(forUp, done)
+      waitFor(isUp, done)
     })
 
     it('should start daemon', done => {
