@@ -10,7 +10,7 @@
   },
   "scripts": {
     "prepublish": "npm test",
-    "test": "npm run build && npm run standard && mocha --compilers js:babel/register",
+    "test": "npm run build && npm run standard && mocha",
     "install": "node bin/install",
     "uninstall": "node bin/uninstall",
     "standard": " standard bin src/**/*.js test/**/*.js",
