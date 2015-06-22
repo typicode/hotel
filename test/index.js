@@ -45,8 +45,8 @@ function isUp (cb) {
 
 function isDown (cb) {
   http
-    .get(url, () => { cb(new Error()) })
-    .on('error', err => cb())
+    .get(url, () => cb(new Error()))
+    .on('error', () => cb())
 }
 
 function hotel (cmd) {
