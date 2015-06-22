@@ -11,8 +11,8 @@ let untildify = require('untildify')
 let rmrf = require('rimraf')
 let pkg = require('../package.json')
 
-let isCI = process.env.TRAVIS || process.env.CI
-let timeout = isCI ? 10000 : 5000
+let isCI = process.env.TRAVIS || process.env.APPVEYOR
+let timeout = isCI ? 60000 : 5000
 let url = 'http://localhost:2000'
 
 // Used to give some time to the system and commands
@@ -69,7 +69,7 @@ let request = supertest(url)
 
 describe('hotel', function () {
 
-  this.timeout(timeout * 1.2)
+  this.timeout(timeout)
 
   before((done) => {
     hotel('stop') // Just in case
