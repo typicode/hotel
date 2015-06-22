@@ -5,7 +5,6 @@ process.env.USERPROFILE = `${__dirname}/home`
 let assert = require('assert')
 let cp = require('child_process')
 let fs = require('fs')
-let path = require('path')
 var http = require('http')
 let supertest = require('supertest')
 let untildify = require('untildify')
@@ -27,7 +26,7 @@ function waitFor (condition, done) {
   let start = new Date()
   retry()
 
-  function retry() {
+  function retry () {
     if (new Date() - start > timeout) return done()
     setTimeout(() => {
       condition((err) => {
