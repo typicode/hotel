@@ -1,4 +1,5 @@
 let net = require('net')
+let conf = require('../conf')
 let express = require('express')
 let pkg = require('../../package.json')
 
@@ -33,7 +34,8 @@ module.exports = function (servers) {
     // Redirect when server is reachable
     let port = servers.get(id).env.PORT
     let hostname = req.hostname
-    let counter = 0
+    let timeout = conf.timeout
+    let start = new Date()
 
     function forward () {
       // On connect, destroy client
@@ -49,9 +51,11 @@ module.exports = function (servers) {
       // On error, increment counter
       // Give up after the 5th attempt
       function handleError () {
-        if (++counter === 5) {
+        if (new Date() - start > timeout) {
           clearInterval(intervalId)
-          res.status(502).send(`Can't connect to server on port ${port} (retry or check logs).`)
+          res.status(502).send(
+            `Can't connect to server on port ${port}, ` +
+            `timeout of ${timeout}ms exceeded. Retry or check logs.`)
         }
       }
 

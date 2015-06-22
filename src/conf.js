@@ -12,7 +12,8 @@ let file = untildify('~/.hotel/conf.json')
 // Defaults
 let defaults = {
   port: 2000,
-  host: '127.0.0.1'
+  host: '127.0.0.1',
+  timeout: 5000
 }
 
 // Create file it it doesn't exist
