@@ -5,6 +5,8 @@ process.env.USERPROFILE = `${__dirname}/home`
 let assert = require('assert')
 let cp = require('child_process')
 let fs = require('fs')
+let path = require('path')
+var http = require('http')
 let supertest = require('supertest')
 let untildify = require('untildify')
 let rmrf = require('rimraf')
@@ -12,10 +14,38 @@ let pkg = require('../package.json')
 
 let isCI = process.env.TRAVIS || process.env.CI
 let timeout = isCI ? 10000 : 5000
+let url = 'http://localhost:2000'
 
 // Used to give some time to the system and commands
 function wait (done) {
   setTimeout(done, timeout)
+}
+
+// Used to give some time to the system and commands,
+// but specify a condition to wait for
+function waitFor (condition, done) {
+  let start = new Date()
+  retry()
+
+  function retry() {
+    if (new Date() - start > timeout) return done()
+    setTimeout(() => {
+      condition((err) => {
+        if (!err) return done()
+        else retry()
+      })
+    }, 250)
+  }
+}
+
+function forUp (cb) {
+  http.get(url, () => { cb() })
+    .on('error', (e) => { cb(e) })
+}
+
+function forDown (cb) {
+  http.get(url, () => { cb(new Error()) })
+    .on('error', (e) => { cb() })
 }
 
 function hotel (cmd) {
@@ -26,15 +56,17 @@ function hotel (cmd) {
 
   // Log output
   // .replace() used to enhance tests readability
-  console.log(out
-    .replace(/\n {2}/g, '\n    ')
-    .replace(/\n$/, ''))
+  if (!process.env.QUIET) {
+    console.log(out
+      .replace(/\n {2}/g, '\n    ')
+      .replace(/\n$/, ''))
+  }
 
   // Return output
   return out
 }
 
-let request = supertest(`http://localhost:2000`)
+let request = supertest(url)
 
 describe('hotel', function () {
 
@@ -43,7 +75,7 @@ describe('hotel', function () {
   before((done) => {
     hotel('stop') // Just in case
     rmrf.sync(untildify('~/.hotel'))
-    wait(done)
+    waitFor(forDown, done)
   })
 
   after(() => hotel('stop'))
@@ -52,7 +84,7 @@ describe('hotel', function () {
 
     before(done => {
       hotel('start')
-      wait(done)
+      waitFor(forUp, done)
     })
 
     it('should start daemon', done => {
