@@ -1,7 +1,4 @@
 #!/usr/bin/env node
-var fs = require('fs')
-var path = require('path')
-var tildify = require('tildify')
 var updateNotifier = require('update-notifier')
 var sudoBlock = require('sudo-block')
 var servers = require('../lib/actions/servers')

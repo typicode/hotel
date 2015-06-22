@@ -1,4 +1,4 @@
-var sudoBlock = require('sudo-block');
+var sudoBlock = require('sudo-block')
 var autostart = require('../lib/actions/autostart')
 var daemon = require('../lib/actions/daemon')
 

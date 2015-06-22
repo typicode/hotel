@@ -13,7 +13,7 @@
     "test": "npm run build && npm run standard && mocha",
     "install": "node bin/install",
     "uninstall": "node bin/uninstall",
-    "standard": " standard bin src/**/*.js test/**/*.js",
+    "standard": " standard",
     "build": "babel src --out-dir lib --copy-files",
     "daemon": "nodemon --exec babel-node -- src/daemon"
   },
@@ -57,7 +57,7 @@
     "mocha": "^2.2.1",
     "nodemon": "^1.3.7",
     "rimraf": "^2.3.3",
-    "standard": "^3.11.1",
+    "standard": "^4.3.1",
     "supertest": "^0.15.0"
   }
 }
