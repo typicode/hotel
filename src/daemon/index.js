@@ -1,3 +1,4 @@
+let util = require('util')
 let express = require('express')
 let conf = require('../conf')
 
@@ -10,7 +11,7 @@ let router = require('./router')(servers)
 
 // Start server
 server.listen(conf.port, conf.host, function () {
-  console.log(`Server listening on port ${conf.host}:${conf.port}`)
+  util.log(`Server listening on port ${conf.host}:${conf.port}`)
 })
 
 // Add ./public
@@ -19,7 +20,7 @@ app.use(router)
 
 // Socket.io real-time updates
 io.on('connection', function (socket) {
-  console.log('Socket.io connection')
+  util.log('Socket.io connection')
 
   function emitChange () {
     socket.emit('change', { monitors: servers.list() })

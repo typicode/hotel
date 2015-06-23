@@ -4,6 +4,7 @@
 let os = require('os')
 let fs = require('fs')
 let path = require('path')
+let util = require('util')
 let watch = require('watch')
 let regroup = require('respawn-group')
 let extend = require('xtend')
@@ -39,7 +40,7 @@ function addServer (group, file) {
   getPort((err, port) => {
     if (err) throw err
 
-    console.log(`Add server id: ${id} cmd: ${server.cmd} port: ${port}`)
+    util.log(`Add server id: ${id} cmd: ${server.cmd} port: ${port}`)
 
     process.env.PORT = port
     let opts = {
@@ -50,11 +51,11 @@ function addServer (group, file) {
     if (server.out) {
       try {
         let logFile = path.resolve(server.cwd, server.out)
-        console.log(`Open ${logFile}`)
+        util.log(`Open ${logFile}`)
         let out = fs.openSync(logFile, 'w')
         opts.stdio = ['ignore', out, out]
       } catch (e) {
-        return console.log(e)
+        return util.log(e)
       }
     }
 
@@ -88,35 +89,35 @@ module.exports = function () {
   // Log monitors events
   group
     .on('start', (mon) => {
-      console.log(mon.id, 'has started')
+      util.log(mon.id, 'has started')
     })
     .on('restart', (mon) => {
-      console.log(mon.id, 'is being restarted')
+      util.log(mon.id, 'is being restarted')
     })
     .on('stop', (mon) => {
-      console.log(mon.id, 'has stopped')
+      util.log(mon.id, 'has stopped')
     })
     .on('warn', (mon, err) => {
-      console.log(mon.id, err)
+      util.log(mon.id, err)
     })
     .on('stderr', (mon, data) => {
-      console.log(mon.id, data.toString())
+      util.log(mon.id, data.toString())
     })
 
   // Watch ~/.hotel/servers
-  console.log(`Watching ${serversDir}`)
+  util.log(`Watching ${serversDir}`)
   watch.createMonitor(serversDir, function (monitor) {
     monitor
       .on('created', (file) => {
-        console.log(`created ${file}`)
+        util.log(`created ${file}`)
         addServer(group, file)
       })
       .on('changed', (file) => {
-        console.log(`changed ${file}`)
+        util.log(`changed ${file}`)
         updateServer(group, file)
       })
       .on('removed', (file) => {
-        console.log(`removed ${file}`)
+        util.log(`removed ${file}`)
         removeServer(group, file)
       })
   })

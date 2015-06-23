@@ -1,6 +1,7 @@
 let net = require('net')
-let conf = require('../conf')
 let express = require('express')
+let util = require('util')
+let conf = require('../conf')
 let pkg = require('../../package.json')
 
 module.exports = function (servers) {
@@ -15,9 +16,9 @@ module.exports = function (servers) {
 
   function kill (req, res) {
     res.end()
-    console.log('Shutting down servers')
+    util.log('Shutting down servers')
     servers.shutdown(() => {
-      console.log('Exit')
+      util.log('Exit')
       process.exit()
     })
   }
@@ -44,12 +45,11 @@ module.exports = function (servers) {
         clearInterval(intervalId)
         client.destroy()
         let url = `http://${hostname}:${port}`
-        console.log(`Redirect to ${url}`)
+        util.log(`Redirect to ${url}`)
         res.redirect(url)
       }
 
-      // On error, increment counter
-      // Give up after the 5th attempt
+      // On error, give up on timeout
       function handleError () {
         if (new Date() - start > timeout) {
           clearInterval(intervalId)
