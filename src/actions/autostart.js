@@ -12,8 +12,6 @@ module.exports = {
 }
 
 let execPath = process.execPath
-let daemonFile = `${__dirname}/../daemon`
-
 let binFile = path.resolve(`${__dirname}/../../bin`)
 let logFile = untildify('~/.hotel/daemon.log')
 
@@ -32,7 +30,7 @@ Type=Application
 Vestion=1.0
 Name=Hotel
 Comment=Hotel start command
-Exec=${execPath} ${binFile} start
+Exec=${execPath} ${binFile} start > ${logFile}
 StartupNotify=false
 Terminal=false
 `
@@ -61,7 +59,7 @@ data.darwin =
 `
 
 data.win32 =
-`CreateObject("Wscript.Shell").Run "node ${daemonFile} start", 0, true
+`CreateObject("Wscript.Shell").Run "${execPath} ${binFile} start", 0, true
 `
 
 function create () {
