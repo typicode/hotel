@@ -11,6 +11,7 @@ module.exports = {
   remove
 }
 
+let platform = os.platform()
 let execPath = process.execPath
 let binFile = path.resolve(`${__dirname}/../../bin`)
 let logFile = untildify('~/.hotel/daemon.log')
@@ -63,7 +64,6 @@ data.win32 =
 `
 
 function create () {
-  let platform = os.platform()
   console.log(`  Create  ${tildify(file[platform])}`)
 
   mkdirp.sync(path.dirname(file[platform]))
@@ -77,7 +77,6 @@ function create () {
 }
 
 function remove () {
-  let platform = os.platform()
   console.log(`  Remove  ${tildify(file[platform])}`)
 
   if (fs.existsSync(file[platform])) fs.unlinkSync(file[platform])
