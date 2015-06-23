@@ -24,6 +24,6 @@ function create () {
 
 function remove () {
   console.log(`  Remove  ${tildify(file)}`)
-  startupScript.remove(name, cmd, logFile)
+  startupScript.remove(name)
   console.log('  Removed autostart script')
 }

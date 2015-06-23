@@ -3,7 +3,6 @@ let fs = require('fs')
 let cp = require('child_process')
 let path = require('path')
 let mkdirp = require('mkdirp')
-let tildify = require('tildify')
 let untildify = require('untildify')
 
 module.exports = {
@@ -24,8 +23,7 @@ function getFile (name) {
 
 function getData (name, cmd, out) {
   if (platform === 'linux') {
-    return
-`[Desktop Entry]
+    return `[Desktop Entry]
 Type=Application
 Vestion=1.0
 Name=${name}
@@ -40,8 +38,7 @@ Terminal=false
     let args = cmd
       .split(' ')
       .map(item => `<string>${item}</string>`)
-    return
-`<?xml version="1.0" encoding="UTF-8"?>
+    return `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
@@ -63,14 +60,12 @@ Terminal=false
   }
 
   if (platform === 'win32') {
-    return
-`CreateObject("Wscript.Shell").Run "${cmd}", 0, true
+    return `CreateObject("Wscript.Shell").Run "${cmd}", 0, true
 `
   }
 
   throw new Error(`Unsupported platform (${platform})`)
 }
-
 
 function create (name, cmd, out) {
   let file = getFile(name)
@@ -84,7 +79,7 @@ function create (name, cmd, out) {
   }
 }
 
-function remove () {
+function remove (name) {
   let file = getFile(name)
 
   if (fs.existsSync(file)) fs.unlinkSync(file)
