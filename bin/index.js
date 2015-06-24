@@ -48,7 +48,6 @@ function run (cb) {
 
   if (_[0] === 'start') {
     autostart.create()
-    console.log()
     daemon.start()
     return cb()
   }
@@ -56,7 +55,6 @@ function run (cb) {
   if (_[0] === 'stop') {
     // Asynchronous command
     autostart.remove()
-    console.log()
     daemon.stop(cb)
     return
   }

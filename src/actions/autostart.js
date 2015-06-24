@@ -1,6 +1,6 @@
 let path = require('path')
-let tildify = require('tildify')
 let untildify = require('untildify')
+let debug = require('../utils/debug')
 let startupScript = require('../utils/startup-script')
 
 module.exports = {
@@ -17,13 +17,11 @@ function create () {
   let cmd = `${execPath} ${binFile} start`
   let logFile = untildify('~/.hotel/daemon.log')
 
-  console.log(`  Create  ${tildify(file)}`)
+  debug(`create ${file}`)
   startupScript.create(name, cmd, logFile)
-  console.log('  Created startup script ')
 }
 
 function remove () {
-  console.log(`  Remove  ${tildify(file)}`)
+  debug(`remove ${file}`)
   startupScript.remove(name)
-  console.log('  Removed autostart script')
 }

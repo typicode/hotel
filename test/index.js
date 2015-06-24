@@ -11,7 +11,7 @@ let untildify = require('untildify')
 let rmrf = require('rimraf')
 let pkg = require('../package.json')
 
-let isCI = process.env.TRAVIS || process.env.APPVEYOR
+let isCI = process.env.TRAVIS
 let timeout = isCI ? 60000 : 5000
 let url = 'http://localhost:2000'
 
