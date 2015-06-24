@@ -54,9 +54,16 @@ module.exports = function (servers) {
       function handleError () {
         if (new Date() - start > timeout) {
           clearInterval(intervalId)
-          res.status(502).send(
+
+          let msg =
             `Can't connect to server on port ${port}, ` +
-            `timeout of ${timeout}ms exceeded. Retry or check logs.`)
+            `timeout of ${timeout}ms exceeded. Retry or check logs.`
+
+          msg += '<pre><code>'
+          msg += servers.get(id).tail
+          msg += '</code></pre>'
+
+          res.status(502).send(msg)
         }
       }
 

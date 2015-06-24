@@ -88,21 +88,24 @@ module.exports = function () {
 
   // Log monitors events
   group
-    .on('start', (mon) => {
-      util.log(mon.id, 'has started')
-    })
-    .on('restart', (mon) => {
-      util.log(mon.id, 'is being restarted')
-    })
-    .on('stop', (mon) => {
-      util.log(mon.id, 'has stopped')
-    })
-    .on('warn', (mon, err) => {
-      util.log(mon.id, err)
-    })
-    .on('stderr', (mon, data) => {
-      util.log(mon.id, data.toString())
-    })
+    .on('start', (mon) => util.log(mon.id, 'has started'))
+    .on('restart', (mon) => util.log(mon.id, 'is being restarted'))
+    .on('stop', (mon) => util.log(mon.id, 'has stopped'))
+    .on('warn', (mon, err) => util.log(mon.id, err))
+
+  // Always keep last lines of output if monitor crashes
+  let handleOutput = (mon, data) => {
+    mon.tail = mon.tail
+      .concat(data)
+      .split('\n')
+      .slice(-100)
+      .join('\n')
+  }
+
+  group
+    .on('start', (mon) => mon.tail = '')
+    .on('stdout', handleOutput)
+    .on('stderr', handleOutput)
 
   // Watch ~/.hotel/servers
   util.log(`Watching ${serversDir}`)

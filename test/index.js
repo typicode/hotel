@@ -151,6 +151,22 @@ describe('hotel', function () {
     })
   })
 
+  describe('app$ hotel add -n unknow-command "foo"', () => {
+
+    before(done => {
+      hotel('add -n unknow-command "foo"')
+      wait(done)
+    })
+
+    it('should return an error', done => {
+      request
+        .get('/unknow-command')
+        .expect(/foo/)
+        .expect(502, done)
+    })
+
+  })
+
   describe('app$ hotel ls', () => {
 
     it('should return server list', () => {
