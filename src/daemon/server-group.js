@@ -48,18 +48,38 @@ function addServer (group, file) {
       env: extend(process.env, server.env)
     }
 
+    let logFile
     if (server.out) {
-      try {
-        let logFile = path.resolve(server.cwd, server.out)
-        util.log(`Open ${logFile}`)
-        let out = fs.openSync(logFile, 'w')
-        opts.stdio = ['ignore', out, out]
-      } catch (e) {
-        return util.log(e)
+      logFile = path.resolve(server.cwd, server.out)
+    }
+
+    let mon = group.add(id, getCommand(server.cmd), opts)
+
+    let handleStart = () => {
+      mon.tail = ''
+
+      if (logFile) {
+        fs.unlink(logFile, (e) => util.log(e))
       }
     }
 
-    group.add(id, getCommand(server.cmd), opts)
+    let handleOutput = (data) => {
+      mon.tail = mon.tail
+        .concat(data)
+        .split('\n')
+        .slice(-100)
+        .join('\n')
+
+      if (logFile) {
+        fs.appendFile(logFile, data, (e) => util.log(e))
+      }
+    }
+
+    mon
+      .on('start', handleStart)
+      .on('stdout', handleOutput)
+      .on('stderr', handleOutput)
+
     group.emit('change')
   })
 }
@@ -92,20 +112,6 @@ module.exports = function () {
     .on('restart', (mon) => util.log(mon.id, 'is being restarted'))
     .on('stop', (mon) => util.log(mon.id, 'has stopped'))
     .on('warn', (mon, err) => util.log(mon.id, err))
-
-  // Always keep last lines of output if monitor crashes
-  let handleOutput = (mon, data) => {
-    mon.tail = mon.tail
-      .concat(data)
-      .split('\n')
-      .slice(-100)
-      .join('\n')
-  }
-
-  group
-    .on('start', (mon) => mon.tail = '')
-    .on('stdout', handleOutput)
-    .on('stderr', handleOutput)
 
   // Watch ~/.hotel/servers
   util.log(`Watching ${serversDir}`)

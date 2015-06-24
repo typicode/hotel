@@ -60,6 +60,8 @@ module.exports = function (servers) {
             `timeout of ${timeout}ms exceeded. Retry or check logs.`
 
           msg += '<pre><code>'
+          msg += servers.get(id).command.join(' ')
+          msg += '\n\n'
           msg += servers.get(id).tail
           msg += '</code></pre>'
 
