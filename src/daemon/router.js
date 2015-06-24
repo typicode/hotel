@@ -24,12 +24,13 @@ module.exports = function (servers) {
   }
 
   function redirect (req, res, next) {
-    if (!servers.has(req.params.id)) {
+    let id = req.params.id
+
+    if (!servers.has(id)) {
       return res.redirect('/')
     }
 
     // Start server
-    let id = req.params.id
     servers.start(id)
 
     // Redirect when server is reachable
