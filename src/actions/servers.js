@@ -47,12 +47,14 @@ function add (cmd, opts) {
   console.log(`  Create ${tildify(file)}`)
   fs.writeFileSync(file, data)
 
-  console.log(`  Added  http://localhost:${conf.port}/${id}`)
-
-  if (!obj.out) {
-    console.log(`  Warn   No log file specified. Output will be discarded.`)
-    console.log(`         Use '-o log.txt' to specify a logfile.`)
+  if (obj.out) {
+    let logFile = tildify(path.resolve(obj.out))
+    console.log(`  Output ${logFile}`)
+  } else {
+    console.log('  Output No log file specified (use \'-o app.log\')')
   }
+
+  console.log(`  Added  http://localhost:${conf.port}/${id}`)
 }
 
 function rm (name) {
