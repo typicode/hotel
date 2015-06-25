@@ -2,6 +2,8 @@
 
 > Manage your dev servers from the browser without having to think about ports or commands <3
 
+![](https://rawgit.com/typicode/hotel/master/screen.gif)
+
 ## Quick start
 
 Add your servers commands (need to be done only once)
@@ -27,10 +29,6 @@ Works on OS X, Linux and Windows with any server.
 ```bash
 npm install -g hotel && hotel start
 ```
-
-## GIF
-
-![](https://rawgit.com/typicode/hotel/master/screen.gif)
 
 ## Usage
 
