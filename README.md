@@ -25,10 +25,8 @@ Works on OS X, Linux and Windows with any server.
 ## Install
 
 ```bash
-npm install -g hotel
+npm install -g hotel && hotel start
 ```
-
-If you install `hotel` using `sudo`, please run the following command `hotel autostart && hotel start` to complete installation.
 
 ## GIF
 
