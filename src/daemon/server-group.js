@@ -55,7 +55,8 @@ function addServer (group, file) {
 
     let mon = group.add(id, getCommand(server.cmd), opts)
 
-    let handleStart = () => {
+    // On start reset logfile and mon.tail
+    let onStart = () => {
       mon.tail = ''
 
       if (logFile) {
@@ -63,7 +64,8 @@ function addServer (group, file) {
       }
     }
 
-    let handleOutput = (data) => {
+    // On output write to logfile and to mon.tail
+    let onOutput = (data) => {
       mon.tail = mon.tail
         .concat(data)
         .split('\n')
@@ -76,9 +78,9 @@ function addServer (group, file) {
     }
 
     mon
-      .on('start', handleStart)
-      .on('stdout', handleOutput)
-      .on('stderr', handleOutput)
+      .on('start', onStart)
+      .on('stdout', onOutput)
+      .on('stderr', onOutput)
 
     group.emit('change')
   })
