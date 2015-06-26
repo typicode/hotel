@@ -1,6 +1,7 @@
-let net = require('net')
-let express = require('express')
 let util = require('util')
+let once = require('once')
+let express = require('express')
+let onPortOpen = require('../utils/on-port-open')
 let conf = require('../conf')
 let pkg = require('../../package.json')
 
@@ -33,51 +34,38 @@ module.exports = function (servers) {
     // Start server
     servers.start(id)
 
-    // Redirect when server is reachable
+    // Redirect when server is available
     let port = servers.get(id).env.PORT
     let hostname = req.hostname
     let timeout = conf.timeout
-    let start = new Date()
 
-    function forward () {
-      // On connect, destroy client
-      // and redirect
-      function handleConnect () {
-        clearInterval(intervalId)
-        client.removeListener('error', handleError)
-        client.destroy()
+    let forward = (err) => {
+      if (err) {
+        let msg = `Can't connect to server on port ${port}`
+
+        msg += `server crashed or timeout of ${timeout}ms exceeded. Retry or check logs.`
+        msg += '<pre><code>'
+        msg += servers.get(id).command.join(' ')
+        msg += '\n\n'
+        msg += servers.get(id).tail
+        msg += '</code></pre>'
+
+        res.status(502).send(msg)
+      } else {
         let url = `http://${hostname}:${port}`
         util.log(`Redirect to ${url}`)
         res.redirect(url)
       }
-
-      // On error, give up on timeout
-      function handleError () {
-        if (new Date() - start > timeout) {
-          clearInterval(intervalId)
-
-          let msg =
-            `Can't connect to server on port ${port}, ` +
-            `timeout of ${timeout}ms exceeded. Retry or check logs.`
-
-          msg += '<pre><code>'
-          msg += servers.get(id).command.join(' ')
-          msg += '\n\n'
-          msg += servers.get(id).tail
-          msg += '</code></pre>'
-
-          res.status(502).send(msg)
-        }
-      }
-
-      // Try to connect
-      let client = net
-        .connect({ port }, handleConnect)
-        .on('error', handleError)
     }
 
-    let intervalId = setInterval(forward, 1000)
-    forward()
+    // Make sure to send only one response
+    forward = once(forward)
+
+    // If server stops, no need to wait for timeout
+    servers.get(id).once('stop', () => forward(new Error('Server stopped')))
+
+    // When port is open, forward
+    onPortOpen(port, timeout, forward)
   }
 
   router
