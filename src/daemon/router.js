@@ -44,6 +44,7 @@ module.exports = function (servers) {
       // and redirect
       function handleConnect () {
         clearInterval(intervalId)
+        client.removeListener('error', handleError)
         client.destroy()
         let url = `http://${hostname}:${port}`
         util.log(`Redirect to ${url}`)
