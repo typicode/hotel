@@ -3,7 +3,6 @@ let once = require('once')
 let express = require('express')
 let onPortOpen = require('../utils/on-port-open')
 let conf = require('../conf')
-let pkg = require('../../package.json')
 
 module.exports = function (servers) {
   let router = express.Router()
