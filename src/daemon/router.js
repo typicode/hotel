@@ -8,13 +8,6 @@ let pkg = require('../../package.json')
 module.exports = function (servers) {
   let router = express.Router()
 
-  function index (req, res) {
-    res.render('index', {
-      pkg,
-      monitors: servers.list()
-    })
-  }
-
   function kill (req, res) {
     res.end()
     util.log('Shutting down servers')
@@ -69,7 +62,6 @@ module.exports = function (servers) {
   }
 
   router
-    .get('/', index)
     .get('/:id', redirect)
     .post('/kill', kill)
 
