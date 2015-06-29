@@ -37,8 +37,8 @@ function run (cb) {
   }
 
   if (_[0] === 'rm') {
-    servers.rm(_[1])
-    return cb()
+    servers.rm(_[1], cb)
+    return
   }
 
   if (_[0] === 'ls') {
@@ -63,4 +63,13 @@ function run (cb) {
 }
 
 console.log()
-run(console.log)
+run(function (err) {
+  if (err) {
+    if (err.message) {
+      console.log('  Error   ' + err.message)
+    }
+    console.log('')
+    process.exit(1)
+  }
+  console.log()
+})
