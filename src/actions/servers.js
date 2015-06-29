@@ -26,10 +26,8 @@ function getServerFile (id) {
 function add (cmd, opts) {
   let id = getId(opts.n)
   let file = getServerFile(id)
-  let obj = {
-    cwd: process.cwd(),
-    cmd: cmd
-  }
+  let cwd = process.cwd()
+  let obj = { cwd, cmd }
 
   if (opts.o) obj.out = opts.o
 
