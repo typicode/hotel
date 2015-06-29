@@ -52,11 +52,9 @@ function isDown (cb) {
 function hotel (cmd) {
   // Execute hotel cmd
   let bin = `${__dirname}/../${pkg.bin}`
-  let proc = cp.spawnSync('sh', ['-c', `${bin} ${cmd}`], {
+  let out = cp.execSync(`node ${bin} ${cmd}`, {
     cwd: `${__dirname}/app`
-  })
-
-  let out = proc.stdout.toString()
+  }).toString()
 
   // Log output
   // .replace() used to enhance tests readability
@@ -118,10 +116,11 @@ describe('hotel', function () {
     })
   })
 
-  describe('app$ hotel add -n name -o output.log -e PATH "node index.js"', () => {
+  describe('app$ hotel add -n name -o output.log -e FOO "node index.js"', () => {
 
     before(done => {
-      hotel('add -n name -o output.log -e PATH "node index.js"')
+      process.env.FOO = 'foo'
+      hotel('add -n name -o output.log -e FOO "node index.js"')
       wait(done)
     })
 
@@ -134,9 +133,9 @@ describe('hotel', function () {
           // Test redirection
           supertest(res.header.location)
             .get('/')
-            // Server is configured to return PATH,
-            // in order to test that PATH was passed to the server
-            .expect(new RegExp(process.env.PATH))
+            // Server is configured to return PATH and FOO
+            .expect(new RegExp(process.env.FOO))
+            .expect(/node_modules/)
             .expect(200, done)
         })
     })

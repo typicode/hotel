@@ -1,6 +1,4 @@
-/*
- * Read, watch and manage servers
- */
+// Read, watch and manage servers
 let os = require('os')
 let fs = require('fs')
 let path = require('path')
