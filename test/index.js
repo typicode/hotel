@@ -55,7 +55,7 @@ function hotel (cmd) {
   let proc = cp.spawnSync('sh', ['-c', `${bin} ${cmd}`], {
     cwd: `${__dirname}/app`
   })
-  
+
   let out = proc.stdout.toString()
 
   // Log output
@@ -197,7 +197,7 @@ describe('hotel', function () {
   describe('app$ hotel rm non-existent-app', () => {
 
     it('should print an error', () => {
-      assert(hotel('rm non-existent-app').includes('unable to delete'))
+      assert(hotel('rm non-existent-app').includes('No such file'))
     })
 
   })

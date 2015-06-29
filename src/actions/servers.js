@@ -57,18 +57,17 @@ function add (cmd, opts) {
   console.log(`  Added  http://localhost:${conf.port}/${id}`)
 }
 
-function rm (name, cb) {
+function rm (name) {
   let id = getId(name)
   let file = getServerFile(id)
 
   console.log(`  Remove  ${tildify(file)}`)
-  fs.unlink(file, function (err) {
-    if (err) {
-      return cb(new Error('unable to delete'))
-    }
-    console.log(`  Removed`)
-    cb()
-  })
+  if (fs.existsSync(file)) {
+    fs.unlinkSync(file)
+    console.log('  Removed')
+  } else {
+    console.log('  No such file')
+  }
 }
 
 function ls () {

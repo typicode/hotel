@@ -37,7 +37,7 @@ function run (cb) {
   }
 
   if (_[0] === 'rm') {
-    servers.rm(_[1], cb)
+    servers.rm(_[1])
     return
   }
 
