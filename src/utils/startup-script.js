@@ -46,6 +46,7 @@ Terminal=false
     let array = [cmd].concat(args)
       .split(' ')
       .map(item => `<string>${item}</string>`)
+      .join('\n')
 
     return `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -74,8 +75,9 @@ Terminal=false
     // Escape command and args
     cmd = `""${cmd}""`
     args = args.map(a => `""${a}""`).join(' ')
+    out = `""${out}""`
 
-    return `CreateObject("Wscript.Shell").Run "${cmd} ${args}", 0, true
+    return `CreateObject("Wscript.Shell").Run "${cmd} ${args} > ${out}", 0, true
 `
   }
 

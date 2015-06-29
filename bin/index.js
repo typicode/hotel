@@ -48,7 +48,7 @@ function run (cb) {
 
   if (_[0] === 'start') {
     autostart.create()
-    daemon.start()
+    // daemon.start()
     return cb()
   }
 

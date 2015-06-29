@@ -13,11 +13,11 @@ let file = startupScript.getFile(name)
 
 function create () {
   let cmd = process.execPath
-  let binFile = path.resolve(`${__dirname}/../../bin`)
+  let daemonFile = path.join(__dirname, '../daemon')
   let logFile = untildify('~/.hotel/daemon.log')
 
   debug(`create ${file}`)
-  startupScript.create(name, cmd, [binFile, 'start'], logFile)
+  startupScript.create(name, cmd, [daemonFile], logFile)
 }
 
 function remove () {
