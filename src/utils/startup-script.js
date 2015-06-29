@@ -21,23 +21,32 @@ function getFile (name) {
   }[platform]
 }
 
-function getData (name, cmd, out) {
+function getData (name, cmd, args, out) {
+  // Linux
   if (platform === 'linux') {
+
+    // Join args
+    args = args.join(' ')
+
     return `[Desktop Entry]
 Type=Application
 Vestion=1.0
 Name=${name}
 Comment=${name} startup script
-Exec=${cmd} > ${out}
+Exec=${cmd} ${args} > ${out}
 StartupNotify=false
 Terminal=false
 `
   }
 
+  // Darwin
   if (platform === 'darwin') {
-    let args = cmd
+
+    // Turn command and args to XML
+    let array = [cmd].concat(args)
       .split(' ')
       .map(item => `<string>${item}</string>`)
+
     return `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -46,7 +55,7 @@ Terminal=false
   <string>${name}</string>
   <key>ProgramArguments</key>
   <array>
-      ${args}
+      ${array}
   </array>
   <key>RunAtLoad</key>
   <true/>
@@ -59,17 +68,23 @@ Terminal=false
 `
   }
 
+  // Windows
   if (platform === 'win32') {
-    return `CreateObject("Wscript.Shell").Run "${cmd}", 0, true
+
+    // Escape command and args
+    cmd = `""${cmd}""`
+    args = args.map(a => `""${a}""`).join(' ')
+
+    return `CreateObject("Wscript.Shell").Run "${cmd} ${args}", 0, true
 `
   }
 
   throw new Error(`Unsupported platform (${platform})`)
 }
 
-function create (name, cmd, out) {
+function create (name, cmd, args, out) {
   let file = getFile(name)
-  let data = getData(name, cmd, out)
+  let data = getData(name, cmd, args, out)
 
   mkdirp.sync(path.dirname(file))
   fs.writeFileSync(file, data)
