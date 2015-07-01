@@ -1,7 +1,7 @@
 let fs = require('fs')
+let cp = require('child_process')
 let mkdirp = require('mkdirp')
 let untildify = require('untildify')
-let spawn = require('./spawn')
 
 let dir = untildify('~\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup')
 
@@ -23,7 +23,11 @@ export function create (name, cmd, args, out) {
   mkdirp.sync(dir)
   fs.writeFileSync(file, data)
 
-  spawn(cmd, args, out)
+  // Spawn vbscript
+  cp.spawn('cmd', ['/c', file], {
+    stdio: 'ignore',
+    detached: true
+  }).unref()
 }
 
 export function remove (name) {
