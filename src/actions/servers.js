@@ -5,12 +5,6 @@ let mkdirp = require('mkdirp')
 let common = require('../common')
 let conf = require('../conf')
 
-module.exports = {
-  add,
-  rm,
-  ls
-}
-
 let serversDir = common.serversDir
 
 mkdirp.sync(serversDir)
@@ -23,7 +17,7 @@ function getServerFile (id) {
   return `${serversDir}/${id}.json`
 }
 
-function add (cmd, opts) {
+export function add (cmd, opts) {
   let id = getId(opts.n)
   let file = getServerFile(id)
   let cwd = process.cwd()
@@ -36,8 +30,14 @@ function add (cmd, opts) {
   // By default, save PATH env for version managers users
   obj.env.PATH = process.env.PATH
 
+  // Copy other env option
   if (opts.e && process.env[opts.e]) {
     obj.env[opts.e] = process.env[opts.e]
+  }
+
+  // Copy port option
+  if (opts.p) {
+    obj.env.PORT = opts.p
   }
 
   let data = JSON.stringify(obj, null, 2)
@@ -55,7 +55,7 @@ function add (cmd, opts) {
   console.log(`  Added  http://localhost:${conf.port}/${id}`)
 }
 
-function rm (name) {
+export function rm (name) {
   let id = getId(name)
   let file = getServerFile(id)
 
@@ -68,7 +68,7 @@ function rm (name) {
   }
 }
 
-function ls () {
+export function ls () {
   let list = fs
     .readdirSync(serversDir)
     .map(file => {

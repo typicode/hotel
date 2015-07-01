@@ -24,4 +24,4 @@ if (!fs.existsSync(file)) fs.writeFileSync(file, data)
 let conf = JSON.parse(fs.readFileSync(file))
 
 // Assign defaults and export
-module.exports = extend(defaults, conf)
+export default extend(defaults, conf)

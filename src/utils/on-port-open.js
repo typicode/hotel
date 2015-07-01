@@ -1,6 +1,6 @@
 let net = require('net')
 
-module.exports = function (port, timeout, cb) {
+export default function (port, timeout, cb) {
   let start = new Date()
 
   // Recursive connect function limited by timeout
@@ -23,7 +23,7 @@ module.exports = function (port, timeout, cb) {
         if (new Date() - start > timeout) {
           cb(new Error('Timeout'))
         } else {
-          setTimeout(() => connect(port, cb), 1000)
+          setTimeout(() => connect(port, cb), 250)
         }
       })
 

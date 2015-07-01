@@ -1,5 +1,3 @@
 let untildify = require('untildify')
 
-module.exports = {
-  serversDir: untildify('~/.hotel/servers')
-}
+export default { serversDir: untildify('~/.hotel/servers') }

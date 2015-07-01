@@ -3,7 +3,7 @@ let os = require('os')
 let fs = require('fs')
 let path = require('path')
 let util = require('util')
-let watch = require('watch')
+let chokidar = require('chokidar')
 let regroup = require('respawn-group')
 let extend = require('xtend')
 let getPort = require('get-port')
@@ -96,7 +96,7 @@ function removeServer (group, file) {
   group.emit('change')
 }
 
-module.exports = function () {
+export default function () {
   let group = regroup({
     maxRestarts: 0
   })
@@ -115,21 +115,27 @@ module.exports = function () {
 
   // Watch ~/.hotel/servers
   util.log(`Watching ${serversDir}`)
-  watch.createMonitor(serversDir, function (monitor) {
-    monitor
-      .on('created', (file) => {
-        util.log(`created ${file}`)
-        addServer(group, file)
-      })
-      .on('changed', (file) => {
-        util.log(`changed ${file}`)
-        updateServer(group, file)
-      })
-      .on('removed', (file) => {
-        util.log(`removed ${file}`)
-        removeServer(group, file)
-      })
-  })
+
+  // During tests don't bother about CPU and make chokidar super fast
+  let opts = {}
+  if (process.env.NODE_ENV === 'test') {
+    opts.usePolling = true
+    opts.interval = 25
+  }
+
+  chokidar.watch(serversDir, opts)
+    .on('add', (file) => {
+      util.log(`created ${file}`)
+      addServer(group, file)
+    })
+    .on('change', (file) => {
+      util.log(`changed ${file}`)
+      updateServer(group, file)
+    })
+    .on('unlink', (file) => {
+      util.log(`removed ${file}`)
+      removeServer(group, file)
+    })
 
   // Add servers
   let files = fs.readdirSync(serversDir)

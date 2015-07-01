@@ -1,4 +1,5 @@
 /* global describe, before, after, it */
+process.env.NODE_ENV = 'test'
 process.env.HOME = `${__dirname}/home`
 process.env.USERPROFILE = `${__dirname}/home`
 
@@ -11,23 +12,17 @@ let untildify = require('untildify')
 let rmrf = require('rimraf')
 let pkg = require('../package.json')
 
-let isCI = process.env.TRAVIS
-let timeout = isCI ? 60000 : 5000
 let url = 'http://localhost:2000'
 
 // Used to give some time to the system and commands
 function wait (done) {
-  setTimeout(done, timeout)
+  setTimeout(done, 100)
 }
 
 // Used to give some time to the system and commands,
 // but specify a condition to wait for
 function waitFor (condition, done) {
-  let start = new Date()
-  retry()
-
   function retry () {
-    if (new Date() - start > timeout) return done()
     setTimeout(() => {
       condition(err => {
         if (!err) return done()
@@ -35,11 +30,13 @@ function waitFor (condition, done) {
       })
     }, 250)
   }
+
+  retry()
 }
 
 function isUp (cb) {
   http
-    .get(url, cb)
+    .get(url, () => cb())
     .on('error', cb)
 }
 
@@ -72,16 +69,17 @@ let request = supertest(url)
 
 describe('hotel', function () {
 
-  // Must be slightly higher than wait() timeout
-  this.timeout(timeout * 1.2)
-
   before((done) => {
     hotel('stop') // Just in case
     rmrf.sync(untildify('~/.hotel'))
-    waitFor(isDown, done)
+    isDown(done)
   })
 
-  after(() => hotel('stop'))
+  after(() => {
+    hotel('stop')
+    console.log('~/.hotel/daemon.log')
+    console.log(fs.readFileSync(untildify('~/.hotel/daemon.log'), 'utf-8'))
+  })
 
   describe('$ hotel start', () => {
 
@@ -95,76 +93,74 @@ describe('hotel', function () {
     })
   })
 
-  describe('app$ hotel add "node index.js"', () => {
+  describe('$ hotel add', () => {
 
     before(done => {
-      hotel('add "node index.js"')
-      wait(done)
-    })
-
-    it('should create a redirection from /app to app server', done => {
-      request
-        .get('/app')
-        .expect(302, (err, res) => {
-          if (err) throw err
-
-          // Test redirection
-          supertest(res.header.location)
-            .get('/')
-            .expect(200, done)
-        })
-    })
-  })
-
-  describe('app$ hotel add -n name -o output.log -e FOO "node index.js"', () => {
-
-    before(done => {
+      // Set custom env
       process.env.FOO = 'foo'
-      hotel('add -n name -o output.log -e FOO "node index.js"')
-      wait(done)
-    })
 
-    it('should create a redirection from /name to app server', done => {
-      request
-        .get('/name')
-        .expect(302, (err, res) => {
-          if (err) throw err
-
-          // Test redirection
-          supertest(res.header.location)
-            .get('/')
-            // Server is configured to return PATH and FOO
-            .expect(new RegExp(process.env.FOO))
-            .expect(/node_modules/)
-            .expect(200, done)
-        })
-    })
-
-    it('should use the same hostname to redirect', done => {
-      supertest(`http://127.0.0.1:2000`)
-        .get('/name')
-        .expect('location', /http:\/\/127.0.0.1/)
-        .expect(302, done)
-    })
-
-    it('should write output to output.log', () => {
-      let log = fs.readFileSync(`${__dirname}/app/output.log`, 'utf-8')
-      assert(log.includes('Server running'))
-    })
-  })
-
-  describe('app$ hotel add -n unknow-command "foo"', () => {
-
-    before(done => {
+      // Add servers
+      hotel('add "node index.js"')
+      hotel('add -n name -o output.log -e FOO -p 51234 "node index.js"')
       hotel('add -n unknow-command "foo"')
+
+      // Wait for daemon to detect new servers
       wait(done)
     })
 
-    it('should return an error', done => {
-      request
-        .get('/unknow-command')
-        .expect(/foo/)
-        .expect(502, done)
+    describe('"node index.js"', () => {
+      it('should create a redirection from /app to app server', done => {
+        request
+          .get('/app')
+          .expect(302, (err, res) => {
+            if (err) throw err
+
+            // Test redirection
+            supertest(res.header.location)
+              .get('/')
+              .expect(200, done)
+          })
+      })
+    })
+
+    describe('-n name -o output.log -e FOO -p 51234 "node index.js"', () => {
+      it('should create a redirection from /name to app server', done => {
+        request
+          .get('/name')
+          .expect('location', /:51234/)
+          .expect(302, (err, res) => {
+            if (err) throw err
+
+            // Test redirection
+            supertest(res.header.location)
+              .get('/')
+              // Server is configured to return PATH and FOO
+              .expect(new RegExp(process.env.FOO))
+              .expect(/node_modules/)
+              .expect(200, done)
+          })
+      })
+
+      it('should use the same hostname to redirect', done => {
+        supertest(`http://127.0.0.1:2000`)
+          .get('/name')
+          .expect('location', /http:\/\/127.0.0.1/)
+          .expect(302, done)
+      })
+
+      it('should write output to output.log', () => {
+        let log = fs.readFileSync(`${__dirname}/app/output.log`, 'utf-8')
+        assert(log.includes('Server running'))
+      })
+    })
+
+    describe('app$ hotel add -n unknow-command "foo"', () => {
+      it('should return an error', done => {
+        request
+          .get('/unknow-command')
+          .expect(/foo/)
+          .expect(502, done)
+      })
     })
 
   })

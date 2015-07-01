@@ -1,10 +1,11 @@
 let util = require('util')
-let once = require('once')
 let express = require('express')
+let once = require('once')
+let stripAnsi = require('strip-ansi')
 let onPortOpen = require('../utils/on-port-open')
 let conf = require('../conf')
 
-module.exports = function (servers) {
+export default function (servers) {
   let router = express.Router()
 
   function kill (req, res) {
@@ -33,13 +34,15 @@ module.exports = function (servers) {
 
     let forward = (err) => {
       if (err) {
-        let msg = `Can't connect to server on port ${port}`
+        let command = servers.get(id).command.join(' ')
+        let tail = stripAnsi(servers.get(id).tail)
 
-        msg += `server crashed or timeout of ${timeout}ms exceeded. Retry or check logs.`
+        let msg = `Can't connect to server on port ${port}.\n`
+        msg += `Server crashed or timeout of ${timeout}ms exceeded. Retry or check logs.\n`
         msg += '<pre><code>'
-        msg += servers.get(id).command.join(' ')
+        msg += command
         msg += '\n\n'
-        msg += servers.get(id).tail
+        msg += tail
         msg += '</code></pre>'
 
         res.status(502).send(msg)
