@@ -6,7 +6,7 @@
 
 ## Quick start
 
-Add your servers commands (need to be done only once)
+Add your servers commands (need to be done only once).
 
 ```bash
 ~/projects/one$ hotel add nodemon
@@ -23,6 +23,14 @@ http://localhost:2000/two
 ```
 
 Works on OS X, Linux and Windows with any server.
+
+```bash
+hotel add 'jekyll --port $PORT'
+hotel add 'rails server --port $PORT'
+hotel add 'python -m SimpleHTTPServer $PORT'
+hotel add 'php -S 127.0.0.1:$PORT'
+# On windows use "" and %PORT%
+```
 
 ## Install
 
