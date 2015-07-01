@@ -16,7 +16,7 @@ let url = 'http://localhost:2000'
 
 // Used to give some time to the system and commands
 function wait (done) {
-  setTimeout(done, 100)
+  setTimeout(done, 1000)
 }
 
 // Used to give some time to the system and commands,
