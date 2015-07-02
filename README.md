@@ -4,6 +4,8 @@
 
 ![](https://rawgit.com/typicode/hotel/master/screen.gif)
 
+_Works on OS X, Linux and Windows with any server._
+
 ## Quick start
 
 Add your servers commands (need to be done only once).
@@ -22,14 +24,14 @@ http://localhost:2000/one
 http://localhost:2000/two
 ```
 
-Works on OS X, Linux and Windows with any server.
+Other servers examples (on Windows use `""` and `%PORT`):
 
 ```bash
 hotel add 'jekyll --port $PORT'
 hotel add 'rails server --port $PORT'
 hotel add 'python -m SimpleHTTPServer $PORT'
 hotel add 'php -S 127.0.0.1:$PORT'
-# On windows use "" and %PORT%
+# ...
 ```
 
 ## Install
@@ -46,9 +48,9 @@ To add a server
 hotel add <cmd> cmd [opts]
 
 # Examples:
-hotel add nodemon -o out.log # Set output file
-hotel add nodemon -n name    # Set custom name
-hotel add nodemon -e ENV     # Save environment variable
+hotel add 'nodemon app.js' -o out.log # Set output file (default: none)
+hotel add 'nodemon app.js' -n name    # Set custom name (default: current dir name)
+hotel add 'nodemon app.js' -e ENV     # Save environment variable
 ```
 
 To list, start and stop servers go to
@@ -66,10 +68,10 @@ http://localhost:2000/<app-name>
 Other commands
 
 ```bash
-hotel ls           # List servers
-hotel rm [name]    # Remove server
-hotel start        # Start daemon
-hotel stop         # Stop daemon
+hotel ls        # List servers
+hotel rm [name] # Remove server
+hotel start     # Start daemon
+hotel stop      # Stop daemon
 ```
 
 ## Port
