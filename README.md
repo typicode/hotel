@@ -24,7 +24,7 @@ http://localhost:2000/one
 http://localhost:2000/two
 ```
 
-Other servers examples (on Windows use `""` and `%PORT`):
+Other servers examples (on Windows use `""` and `%PORT%`):
 
 ```bash
 hotel add 'jekyll --port $PORT'
