@@ -2,9 +2,27 @@
 
 > Manage your dev servers from the browser without having to think about ports or commands <3
 
+Hotel is a simple process manager created for web developpers.
+
+1. Tell hotel how to start your server
+2. Go to [localhost:2000]()
+3. Congrats :+1:
+
 ![](https://rawgit.com/typicode/hotel/master/screen.gif)
 
 _Works on OS X, Linux and Windows with any server._
+
+## Why?
+
+Are you doing a lot of web development? With hotel, you don't have to leave your browser to start your dev server. You also don't have to manage terminal tabs, remember commands, worry about ports, ...
+
+Just fire up your text-editor, a browser and you're done.
+
+## Install
+
+```bash
+npm install -g hotel && hotel start
+```
 
 ## Quick start
 
@@ -32,12 +50,6 @@ hotel add 'rails server --port $PORT'
 hotel add 'python -m SimpleHTTPServer $PORT'
 hotel add 'php -S 127.0.0.1:$PORT'
 # ...
-```
-
-## Install
-
-```bash
-npm install -g hotel && hotel start
 ```
 
 ## Usage
