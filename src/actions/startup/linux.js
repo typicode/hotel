@@ -1,7 +1,7 @@
 let fs = require('fs')
+let cp = require('child_process')
 let mkdirp = require('mkdirp')
 let untildify = require('untildify')
-let spawn = require('./spawn')
 
 let dir = untildify('~/.config/autostart')
 
