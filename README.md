@@ -1,7 +1,5 @@
 # hotel [![](https://img.shields.io/travis/typicode/hotel.svg)](https://travis-ci.org/typicode/hotel) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel)
 
-> Manage your dev servers from the browser without having to think about ports or commands <3
-
 Hotel is a simple process manager created for web developpers.
 
 1. Tell hotel how to start your server
