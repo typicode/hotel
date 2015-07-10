@@ -5,6 +5,16 @@ let spawn = require('./spawn')
 
 let dir = untildify('~/.config/autostart')
 
+function spawn (cmd, args, out) {
+  let fd = fs.openSync(out, 'w')
+  cp.spawn(cmd, args, {
+      stdio: ['ignore', fd, fd],
+      detached: true
+    })
+    .on('error', console.log)
+    .unref()
+}
+
 export function getFile (name) {
   return `${dir}/${name}.desktop`
 }

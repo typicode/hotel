@@ -42,7 +42,7 @@ export function create (name, cmd, args, out) {
   mkdirp.sync(dir)
   fs.writeFileSync(file, data)
 
-  spawn(cmd, args, out)
+  cp.execSync(`launchctl load ${name}`)
 }
 
 export function remove (name) {
