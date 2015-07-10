@@ -57,7 +57,7 @@ hotel add 'php -S 127.0.0.1:$PORT'
 To add a server
 
 ```bash
-hotel add <cmd> cmd [opts]
+hotel add <cmd> [opts]
 
 # Examples:
 hotel add 'nodemon app.js' -o out.log # Set output file (default: none)
