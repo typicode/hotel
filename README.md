@@ -62,6 +62,7 @@ hotel add <cmd> cmd [opts]
 # Examples:
 hotel add 'nodemon app.js' -o out.log # Set output file (default: none)
 hotel add 'nodemon app.js' -n name    # Set custom name (default: current dir name)
+hotel add 'nodemon app.js' -p 3000    # Set a fixed port (default: random port)
 hotel add 'nodemon app.js' -e ENV     # Save environment variable
 ```
 
