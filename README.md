@@ -76,6 +76,8 @@ To start and access directly your server go to
 http://localhost:2000/<app-name>
 ```
 
+> :fire: PRO-TIP: Install [Hotel Clerk](https://github.com/therealklanni/hotel-clerk) to manage your Hotel from your menubar.
+
 Other commands
 
 ```bash
