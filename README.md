@@ -1,6 +1,6 @@
 # hotel [![](https://img.shields.io/travis/typicode/hotel.svg)](https://travis-ci.org/typicode/hotel) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel)
 
-Hotel is a simple process manager created for web developpers.
+Hotel is a simple process manager created for web developers.
 
 1. Tell hotel how to start your server
 2. Go to [localhost:2000]()
