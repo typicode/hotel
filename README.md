@@ -76,8 +76,6 @@ To start and access directly your server go to
 http://localhost:2000/<app-name>
 ```
 
-> :fire: PRO-TIP: Install [Hotel Clerk](https://github.com/therealklanni/hotel-clerk) to manage your Hotel from your menubar.
-
 Other commands
 
 ```bash
@@ -111,6 +109,10 @@ hotel add "cmd -p %PORT%" # Windows
 ~/.hotel/daemon.log
 ~/.hotel/servers/<app-name>.json
 ```
+
+## Third-party tools
+
+[Hotel Clerk](https://github.com/therealklanni/hotel-clerk) OS X menubar
 
 ## License
 
