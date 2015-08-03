@@ -2,11 +2,10 @@ let os = require('os')
 let path = require('path')
 let got = require('got')
 let untildify = require('untildify')
+let startup = require('user-startup')
 let conf = require('../conf')
 let debug = require('../utils/debug')
 
-let platform = os.platform()
-let startup = require(`./startup/${platform}.js`)
 let startupFile = startup.getFile('hotel')
 
 let killURL = `http://127.0.0.1:${conf.port}/kill`
