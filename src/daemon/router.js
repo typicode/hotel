@@ -2,7 +2,7 @@ let util = require('util')
 let express = require('express')
 let once = require('once')
 let stripAnsi = require('strip-ansi')
-let onPortOpen = require('../utils/on-port-open')
+let serverReady = require('server-ready')
 let conf = require('../conf')
 
 export default function (servers) {
@@ -60,7 +60,7 @@ export default function (servers) {
     servers.get(id).once('stop', () => forward(new Error('Server stopped')))
 
     // When port is open, forward
-    onPortOpen(port, timeout, forward)
+    serverReady(port, timeout, forward)
   }
 
   router
