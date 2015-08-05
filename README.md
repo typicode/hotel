@@ -12,7 +12,7 @@ _Works on OS X, Linux and Windows with any server._
 
 ## Why?
 
-Are you doing a lot of web development? With hotel, you don't have to leave your browser to start your dev server. You also don't have to manage terminal tabs, remember commands, worry about ports, ...
+With hotel, you don't have to leave your browser to start your dev server. You also don't have to manage terminal tabs, remember commands, worry about ports, ...
 
 Just fire up your text-editor, a browser and you're done.
 
