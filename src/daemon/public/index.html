@@ -7,14 +7,8 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   </head>
   <body>
+
     <div id="content"></div>
-    <footer>
-      <p>
-        <a href="https://github.com/typicode/hotel">
-          <i class="fa fa-building-o"></i>
-        </a>
-      </p>
-    </footer>
 
     <script id="template" type="text/x-handlebars-template">
       {{#each monitors}}
@@ -26,6 +20,9 @@
             <span class="status">
               <small>{{status}}</small>
             </span>
+            <button class="remove" data-id="{{id}}">
+              <small>X</small>
+            </button>
             <button class="start {{status}}" data-id="{{id}}">
               <small>start</small>
             </button>
@@ -43,6 +40,20 @@
           <code>hotel add 'cmd -p $PORT'</code>
         </p>
       {{/each}}
+
+      <button class="add" data-id="{{id}}">
+        <small>Add Server</small>
+      </button>
+
+      <footer>
+        <p>
+          <a href="https://github.com/typicode/hotel">
+            <i class="fa fa-building-o"></i>
+          </a>
+          <small class="vs">{{vs}}</small>
+        </p>
+      </footer>
+
     </script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

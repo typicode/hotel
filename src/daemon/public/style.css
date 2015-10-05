@@ -61,7 +61,7 @@ code {
 }
 
 /* Start-stop buttons */
-.start, .stop {
+.start, .stop, .remove {
   float: right;
   cursor: pointer;
   text-align: right;
@@ -71,6 +71,7 @@ code {
   background: transparent;
   font-size: 1em;
   color: #999;
+  margin: 10px;
 }
 
 .start:hover,
@@ -78,6 +79,10 @@ code {
 .stop:hover,
 .stop:focus {
   color: #111;
+}
+
+.remove:hover {
+  color: #c21;
 }
 
 footer a {
