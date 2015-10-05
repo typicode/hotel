@@ -8,7 +8,9 @@ let io = require('socket.io')(server)
 
 let servers = require('./server-group')()
 let router = require('./router')(servers)
+
 let actions = require('../actions/servers')
+let pkg = require('../../package.json')
 
 // Start server
 server.listen(conf.port, conf.host, function () {
@@ -24,7 +26,7 @@ io.on('connection', function (socket) {
   util.log('Socket.io connection')
 
   function emitChange () {
-    socket.emit('change', { monitors: servers.list() })
+    socket.emit('change', { vs: pkg.version, monitors: servers.list() })
   }
 
   servers.on('change', emitChange)

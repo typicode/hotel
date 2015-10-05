@@ -42,7 +42,7 @@ code {
   border-bottom: 1px solid #EEE;
 }
 
-.monitor.stopped a {
+.monitor.stopped a, .vs {
   color: #999;
 }
 
