@@ -29,10 +29,24 @@ a:hover, a:focus {
   color: #333 !important;
 }
 
-code {
-  font-size: 14px;
-  background: #EEE;
-  padding: 4px;
+.addform {
+  overflow: hidden;
+  height: 0;
+  width: 280px;
+  transition: height 0.4s;
+}
+.addform.show {
+  height: 70px;
+}
+
+input {
+  box-sizing: border-box;
+  margin: 0 0 2px 1px;
+  width: calc(100% - 1px);
+}
+
+.opt input {
+  width: calc(25% - 1px);
 }
 
 .monitor {
@@ -42,7 +56,7 @@ code {
   border-bottom: 1px solid #EEE;
 }
 
-.monitor.stopped a {
+.monitor.stopped a, .vs {
   color: #999;
 }
 
@@ -55,13 +69,18 @@ code {
   margin-top: 4px;
 }
 
+.details span,
+.details button {
+  margin: 8px;
+}
+
 .status {
   color: #999;
   float: left;
 }
 
 /* Start-stop buttons */
-.start, .stop {
+.start, .stop, .remove {
   float: right;
   cursor: pointer;
   text-align: right;
@@ -70,7 +89,7 @@ code {
   outline: 0;
   background: transparent;
   font-size: 1em;
-  color: #999;
+  color: #999;  
 }
 
 .start:hover,
@@ -78,6 +97,10 @@ code {
 .stop:hover,
 .stop:focus {
   color: #111;
+}
+
+.remove:hover {
+  color: #c21;
 }
 
 footer a {

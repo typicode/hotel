@@ -7,25 +7,36 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   </head>
   <body>
-    <div id="content"></div>
-    <footer>
-      <p>
-        <a href="https://github.com/typicode/hotel">
-          <i class="fa fa-building-o"></i>
-        </a>
-      </p>
-    </footer>
 
-    <script id="template" type="text/x-handlebars-template">
+    <form class="addform">
+      <div>
+        <input type="text" placeholder="path" name="path"
+        ><input type="text" placeholder="cmd" name="cmd">
+      </div>
+      <div class="opt">
+        <input type="text" placeholder="output" name="o"
+        ><input type="text" placeholder="name" name="n"
+        ><input type="text" placeholder="port" name="p"
+        ><input type="text" placeholder="env" name="e">
+      </div> 
+    </form>
+    <button class="add">
+      <small>Add Server</small>
+    </button>
+
+    <div id="list"></div>
+
+    <script id="list-template" type="text/x-handlebars-template">
       {{#each monitors}}
         <div class="monitor {{status}}">
-
           <a href="/{{id}}" title="{{cwd}}$ {{command.[2]}}">{{id}}</a>
-
           <div class="details">
             <span class="status">
               <small>{{status}}</small>
             </span>
+            <button class="remove" data-id="{{id}}" title="Remove">
+              <small>X</small>
+            </button>
             <button class="start {{status}}" data-id="{{id}}">
               <small>start</small>
             </button>
@@ -33,16 +44,18 @@
               <small>stop</small>
             </button>
           </div>
-
         </div>
       {{else}}
-        <p>
-          Welcome! Why not add some servers ;)
-        </p>
-        <p>
-          <code>hotel add 'cmd -p $PORT'</code>
-        </p>
+        <p>Welcome! Why not add some servers ;)</p>
       {{/each}}
+      <footer>
+        <p>
+          <a href="https://github.com/typicode/hotel">
+            <i class="fa fa-building-o"></i>         
+            <small class="vs">{{vs}}</small>
+          </a>
+        </p>
+      </footer>
     </script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
