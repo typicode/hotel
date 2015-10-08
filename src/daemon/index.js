@@ -35,5 +35,5 @@ io.on('connection', function (socket) {
   socket.on('stop', id => servers.stop(id))
   socket.on('start', id => servers.start(id))
   socket.on('remove', id => actions.rm(id))
-  socket.on('add', data => actions.add(data.cmd, {n: data.name}, data.path))
+  socket.on('add', data => actions.add(data.cmd, data, data.path))
 })
