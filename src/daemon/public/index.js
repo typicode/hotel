@@ -7,31 +7,31 @@
   var Handlebars = window.Handlebars
   var source = $('#list-template').html()
   var template = Handlebars.compile(source)
-  
+
   $('body')
-    //STOP
+    // STOP
     .on('click', '.stop', function () {
       var id = $(this).data('id')
       socket.emit('stop', id)
     })
-    //START
+    // START
     .on('click', '.start', function () {
       var id = $(this).data('id')
       socket.emit('start', id)
     })
-    //REMOVE
+    // REMOVE
     .on('click', '.remove', function () {
-      var sure = confirm('Are you sure?')
-      if(sure){
+      var sure = window.confirm('Are you sure?')
+      if (sure) {
         var id = $(this).data('id')
         socket.emit('remove', id)
       }
     })
-    //ADD
+    // ADD
     .on('click', '.add', function () {
       var form = $('.addform')
       form.toggleClass('show')
-      if (!form.hasClass('show')) {        
+      if (!form.hasClass('show')) {
         var data = {}
         $('input', '.addform').each(function () {
           data[this.name] = this.value
@@ -39,13 +39,13 @@
         if (data.path && data.cmd) {
           if (!data.n) {
             var split = data.path.split('/')
-            if(split.length === 1) {
+            if (split.length === 1) {
               split = data.path.split('\\')
             }
             while (!data.n) {
               data.n = split.pop()
             }
-          }        
+          }
           socket.emit('add', data)
         }
       } else {
