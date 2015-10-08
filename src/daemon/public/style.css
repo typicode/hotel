@@ -1,9 +1,4 @@
 /* Available status: running, stopping, stopped, crashed, sleeping */
-
-html, button {
-  font-family: sans-serif;
-}
-
 /* hide */
 .running.start,
 .stopping.start,
@@ -11,6 +6,10 @@ html, button {
 .crashed.stop,
 .sleeping.stop {
   display: none;
+}
+
+html, button {
+  font-family: sans-serif;
 }
 
 body {
@@ -29,6 +28,7 @@ a:hover, a:focus {
   color: #333 !important;
 }
 
+/* form */
 .addform {
   font-size: 80%;
   overflow: hidden;
@@ -54,10 +54,7 @@ input {
   width: 235px;
 }
 
-.opt input {
-  width: calc(25% - 1px);
-}
-
+/* list */
 .monitor {
   width: 280px;
   margin: 0;
@@ -88,7 +85,7 @@ input {
   float: left;
 }
 
-/* Start-stop buttons */
+/* buttons */
 .start, .stop, .remove {
   float: right;
   cursor: pointer;
@@ -112,24 +109,23 @@ input {
   color: #c21;
 }
 
-footer a {
-  font-weight: normal;
-  color: #999;
-}
-
-/* Sticky footer */
+/* footer */
 html {
   position: relative;
   min-height: 100%;
 }
 
 body {
-  margin-bottom: 28px; /* bottom = footer height */
+  margin-bottom: 58px;
 }
 
 footer {
   position: absolute;
   bottom: 0;
-  height: 70px;
-  width: 320px;
+  height: 58px;
+}
+
+footer a {
+  font-weight: normal;
+  color: #999;
 }

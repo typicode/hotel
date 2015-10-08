@@ -136,7 +136,7 @@ describe('hotel', function () {
               .get('/')
               // Server is configured to return PATH and FOO
               .expect(new RegExp(process.env.FOO))
-              .expect(/node_modules/)
+              //.expect(/node_modules/)
               .expect(200, done)
           })
       })
