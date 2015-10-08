@@ -30,19 +30,28 @@ a:hover, a:focus {
 }
 
 .addform {
+  font-size: 80%;
   overflow: hidden;
   height: 0;
   width: 280px;
   transition: height 0.4s;
 }
 .addform.show {
-  height: 70px;
+  height: 180px;
+}
+.addform h2 {
+  margin: 10px 0 5px;
+  font-size: 120%;
 }
 
+label {
+  width: 44px;
+  display: inline-block;
+}
 input {
   box-sizing: border-box;
   margin: 0 0 2px 1px;
-  width: calc(100% - 1px);
+  width: 235px;
 }
 
 .opt input {

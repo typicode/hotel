@@ -9,17 +9,15 @@
   <body>
 
     <form class="addform">
-      <div>
-        <input type="text" placeholder="path" name="path"
-        ><input type="text" placeholder="cmd" name="cmd">
-      </div>
-      <div class="opt">
-        <input type="text" placeholder="output" name="o"
-        ><input type="text" placeholder="name" name="n"
-        ><input type="text" placeholder="port" name="p"
-        ><input type="text" placeholder="env" name="e">
-      </div> 
+      <label>Path</label><input type="text" placeholder="C:\path\project" name="path">
+      <label>Cmd</label><input type="text" placeholder="node app.js" name="cmd">
+      <h2><small>Options</small></h2>
+      <label>Output</label><input type="text" placeholder="output.log (default: none)" name="o">
+      <label>Name</label><input type="text" placeholder="name (default: current dir name)" name="n">
+      <label>Port</label><input type="text" placeholder="8080 (default: random port)" name="p">
+      <label>Env</label><input type="text" placeholder="environment variable" name="e">
     </form>
+    
     <button class="add">
       <small>Add Server</small>
     </button>
