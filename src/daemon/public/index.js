@@ -30,8 +30,7 @@
     // ADD
     .on('click', '.add', function () {
       var form = $('#addform')
-      form.toggleClass('show')
-      if (!form.hasClass('show')) {
+      if (form.hasClass('show')) {
         var data = {}
         $('input', '#addform').each(function () {
           data[this.name] = this.value
@@ -48,9 +47,17 @@
           }
           socket.emit('add', data)
         }
+        form.removeClass('show')
+        $('.hide').hide()
       } else {
-        $('input', '#addform').val('')
+        form.addClass('show')
+        $('.hide').show()
       }
+    })
+    // HIDE
+    .on('click', '.hide', function () {
+      $('#addform').removeClass('show')
+      $('.hide').hide()
     })
 
   socket.on('change', function (data) {

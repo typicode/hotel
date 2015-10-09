@@ -18,6 +18,13 @@ a:hover, button:hover {
   cursor: pointer;
 }
 
+button {
+  background: transparent;
+  border: 0;
+  outline: 0;
+}
+/* width */
+
 #addform,
 #list {
   max-width: 280px;
@@ -33,7 +40,7 @@ a:hover, button:hover {
 }
 
 #addform.show {
-  height: 180px;
+  height: 200px;
 }
 
 #addform h2 {
@@ -50,11 +57,35 @@ a:hover, button:hover {
   box-sizing: border-box;
   border: 1px solid #eee;
   margin: 0 0 2px 0;
-  padding: 2px;
+  padding: 4px;
   width: 235px;
 }
 #addform input:last-of-type {
   margin: 0;
+}
+
+/*button*/
+.bt {
+  background: transparent;
+  border: 0;
+  outline: 0;
+  padding: 10px 0;
+}
+.bt span {
+  vertical-align: top;
+  line-height: 24px;
+}
+.bt .fa {
+  font-size: 24px;
+  color: #999;
+}
+.bt:hover .fa {
+  font-size: 24px;
+  color: #333;
+}
+.hide {
+  display: none;
+  margin-right: 14px;
 }
 
 /* list */
@@ -79,6 +110,9 @@ a:hover, button:hover {
 #list .monitor.running a {
   color: #333;
 }
+#list .monitor.crashed a {
+  color: #c33;
+}
 
 #list .details {
   overflow: hidden;
@@ -91,19 +125,17 @@ a:hover, button:hover {
 }
 
 #list button {
-  background: transparent;
-  border: 0;
-  outline: 0;
   padding: 0;
   float: right;
   margin-left: 12px;
   font-size: 24px;
 }
 
-/* buttons */
+/* list buttons */
 
-/* Available status: running, stopping, stopped, crashed, sleeping */
-/* hide */
+/* Available status: 
+     running, stopping, stopped, crashed, sleeping */
+
 #list .running.start,
 #list .stopping.start,
 #list .stopped.stop,
@@ -116,11 +148,11 @@ a:hover, button:hover {
 #list .start:focus,
 #list .stop:hover,
 #list .stop:focus {
-  color: #111;
+  color: #333;
 }
 
 #list .remove:hover {
-  color: #c21;
+  color: #c43;
 }
 
 /* footer */
@@ -139,4 +171,7 @@ footer {
   position: absolute;
   bottom: 0;
   height: 38px;
+}
+footer a:hover {
+  color: #333;
 }
