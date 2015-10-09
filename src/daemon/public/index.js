@@ -5,8 +5,8 @@
   var socket = io.connect(window.location.origin)
 
   var Handlebars = window.Handlebars
-  var source = $('#list-template').html()
-  var template = Handlebars.compile(source)
+  var listTemplate = $('#list-template').html()
+  var makeList = Handlebars.compile(listTemplate)
 
   $('body')
     // STOP
@@ -29,18 +29,18 @@
     })
     // ADD
     .on('click', '.add', function () {
-      var form = $('.addform')
+      var form = $('#addform')
       form.toggleClass('show')
       if (!form.hasClass('show')) {
         var data = {}
-        $('input', '.addform').each(function () {
+        $('input', '#addform').each(function () {
           data[this.name] = this.value
         })
-        if (data.path && data.cmd) {
+        if (data.cwd && data.cmd) {
           if (!data.n) {
-            var split = data.path.split('/')
+            var split = data.cwd.split('/')
             if (split.length === 1) {
-              split = data.path.split('\\')
+              split = data.cwd.split('\\')
             }
             while (!data.n) {
               data.n = split.pop()
@@ -49,14 +49,14 @@
           socket.emit('add', data)
         }
       } else {
-        $('input', '.addform').val('')
+        $('input', '#addform').val('')
       }
-
     })
 
-  socket.on('change', function (context) {
-    var newList = template(context)
+  socket.on('change', function (data) {
+    var newList = makeList(data)
     $('#list').html(newList)
+    $('#vs').text('hotel ' + data.vs)
   })
 
 })()

@@ -1,111 +1,125 @@
-/* Available status: running, stopping, stopped, crashed, sleeping */
-/* hide */
-.running.start,
-.stopping.start,
-.stopped.stop,
-.crashed.stop,
-.sleeping.stop {
-  display: none;
-}
-
-html, button {
+html, body, button, input {
   font-family: sans-serif;
+  color: #333;
 }
 
 body {
-  font-family: sans-serif;
   padding: 20px;
 }
 
 a {
   text-decoration: none;
   outline: 0;
-  font-weight: bold;
-  color: #333;
+}
+a:visited {
+  color: inherit;
+}
+a:hover, button:hover {
+  cursor: pointer;
 }
 
-a:hover, a:focus {
-  color: #333 !important;
+#addform,
+#list {
+  max-width: 280px;
 }
 
 /* form */
-.addform {
+#addform {
   font-size: 80%;
   overflow: hidden;
   height: 0;
   width: 280px;
   transition: height 0.4s;
 }
-.addform.show {
+
+#addform.show {
   height: 180px;
 }
-.addform h2 {
+
+#addform h2 {
   margin: 10px 0 5px;
   font-size: 120%;
 }
 
-label {
+#addform label {
   width: 44px;
   display: inline-block;
 }
-input {
+
+#addform input {
   box-sizing: border-box;
-  margin: 0 0 2px 1px;
+  border: 1px solid #eee;
+  margin: 0 0 2px 0;
+  padding: 2px;
   width: 235px;
+}
+#addform input:last-of-type {
+  margin: 0;
 }
 
 /* list */
-.monitor {
-  width: 280px;
-  margin: 0;
-  padding: 15px 0 15px 0;
-  border-bottom: 1px solid #EEE;
-}
-
-.monitor.stopped a, .vs {
+#list,
+#list button {
   color: #999;
 }
 
-.monitor:last-of-type {
+#list .monitor {  
+  margin: 0;
+  padding: 15px 0 15px 0;
+  border-bottom: 1px solid #eee;
+}
+#list .monitor:last-of-type {
   border: none;
 }
 
-.details {
+#list a {
+  font-weight: bold;
+}
+
+#list .monitor.running a {
+  color: #333;
+}
+
+#list .details {
   overflow: hidden;
-  margin-top: 4px;
+  margin-top: 4px;  
 }
 
-.details span,
-.details button {
-  margin: 8px;
-}
-
-.status {
-  color: #999;
+#list .status {
   float: left;
+  font-size: 80%;
+}
+
+#list button {
+  background: transparent;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  float: right;
+  margin-left: 12px;
+  font-size: 24px;
 }
 
 /* buttons */
-.start, .stop, .remove {
-  float: right;
-  cursor: pointer;
-  text-align: right;
-  border: 0;
-  padding: 0;
-  outline: 0;
-  background: transparent;
-  font-size: 1em;
-  color: #999;  
+
+/* Available status: running, stopping, stopped, crashed, sleeping */
+/* hide */
+#list .running.start,
+#list .stopping.start,
+#list .stopped.stop,
+#list .crashed.stop,
+#list .sleeping.stop {
+  display: none;
 }
 
-.start:hover,
-.start:focus,
-.stop:hover,
-.stop:focus {
+#list .start:hover,
+#list .start:focus,
+#list .stop:hover,
+#list .stop:focus {
   color: #111;
 }
 
-.remove:hover {
+#list .remove:hover {
   color: #c21;
 }
 
@@ -116,16 +130,13 @@ html {
 }
 
 body {
-  margin-bottom: 58px;
+  margin-bottom: 38px;
 }
 
 footer {
+  color: #999;
+  font-size: 90%;
   position: absolute;
   bottom: 0;
-  height: 58px;
-}
-
-footer a {
-  font-weight: normal;
-  color: #999;
+  height: 38px;
 }
