@@ -71,10 +71,6 @@ button {
   outline: 0;
   padding: 10px 0;
 }
-.bt span {
-  vertical-align: top;
-  line-height: 24px;
-}
 .bt .fa {
   font-size: 24px;
   color: #999;
@@ -82,6 +78,19 @@ button {
 .bt:hover .fa {
   font-size: 24px;
   color: #333;
+}
+.bt span {
+  vertical-align: top;
+  line-height: 24px;
+  width: 0;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap; 
+  text-align: left; 
+  transition: width 0.4s;
+}
+.bt:hover span {
+  width: 100px;  
 }
 .hide {
   display: none;
