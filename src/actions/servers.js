@@ -17,10 +17,10 @@ function getServerFile (id) {
   return `${serversDir}/${id}.json`
 }
 
-export function add (cmd, opts) {
+export function add (cmd, opts, gpath) {
   let id = getId(opts.n)
   let file = getServerFile(id)
-  let cwd = process.cwd()
+  let cwd = gpath || process.cwd()
   let obj = { cwd, cmd }
 
   if (opts.o) obj.out = opts.o

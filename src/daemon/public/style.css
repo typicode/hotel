@@ -1,103 +1,186 @@
-/* Available status: running, stopping, stopped, crashed, sleeping */
-
-html, button {
+html, body, button, input {
   font-family: sans-serif;
-}
-
-/* hide */
-.running.start,
-.stopping.start,
-.stopped.stop,
-.crashed.stop,
-.sleeping.stop {
-  display: none;
+  color: #333;
 }
 
 body {
-  font-family: sans-serif;
   padding: 20px;
 }
 
 a {
   text-decoration: none;
   outline: 0;
-  font-weight: bold;
+}
+a:visited {
+  color: inherit;
+}
+a:hover, button:hover {
+  cursor: pointer;
+}
+
+button {
+  background: transparent;
+  border: 0;
+  outline: 0;
+}
+/* width */
+
+#addform,
+#list {
+  max-width: 280px;
+}
+
+/* form */
+#addform {
+  font-size: 80%;
+  overflow: hidden;
+  height: 0;
+  width: 280px;
+  transition: height 0.4s;
+}
+
+#addform.show {
+  height: 200px;
+}
+
+#addform h2 {
+  margin: 10px 0 5px;
+  font-size: 120%;
+}
+
+#addform label {
+  width: 44px;
+  display: inline-block;
+}
+
+#addform input {
+  box-sizing: border-box;
+  border: 1px solid #eee;
+  margin: 0 0 2px 0;
+  padding: 4px;
+  width: 235px;
+}
+#addform input:last-of-type {
+  margin: 0;
+}
+
+/*button*/
+.bt {
+  background: transparent;
+  border: 0;
+  outline: 0;
+  padding: 10px 0;
+}
+.bt .fa {
+  font-size: 24px;
+  color: #999;
+}
+.bt:hover .fa {
+  font-size: 24px;
   color: #333;
 }
-
-a:hover, a:focus {
-  color: #333 !important;
+.bt span {
+  vertical-align: top;
+  line-height: 24px;
+  width: 0;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap; 
+  text-align: left; 
+  transition: width 0.4s;
+}
+.bt:hover span {
+  width: 100px;  
+}
+.hide {
+  display: none;
+  margin-right: 14px;
 }
 
-code {
-  font-size: 14px;
-  background: #EEE;
-  padding: 4px;
-}
-
-.monitor {
-  width: 280px;
-  margin: 0;
-  padding: 15px 0 15px 0;
-  border-bottom: 1px solid #EEE;
-}
-
-.monitor.stopped a {
+/* list */
+#list,
+#list button {
   color: #999;
 }
 
-.monitor:last-of-type {
+#list .monitor {  
+  margin: 0;
+  padding: 15px 0 15px 0;
+  border-bottom: 1px solid #eee;
+}
+#list .monitor:last-of-type {
   border: none;
 }
 
-.details {
+#list a {
+  font-weight: bold;
+}
+
+#list .monitor.running a {
+  color: #333;
+}
+#list .monitor.crashed a {
+  color: #c33;
+}
+
+#list .details {
   overflow: hidden;
-  margin-top: 4px;
+  margin-top: 4px;  
 }
 
-.status {
-  color: #999;
+#list .status {
   float: left;
+  font-size: 80%;
 }
 
-/* Start-stop buttons */
-.start, .stop {
-  float: right;
-  cursor: pointer;
-  text-align: right;
-  border: 0;
+#list button {
   padding: 0;
-  outline: 0;
-  background: transparent;
-  font-size: 1em;
-  color: #999;
+  float: right;
+  margin-left: 12px;
+  font-size: 24px;
 }
 
-.start:hover,
-.start:focus,
-.stop:hover,
-.stop:focus {
-  color: #111;
+/* list buttons */
+
+/* Available status: 
+     running, stopping, stopped, crashed, sleeping */
+
+#list .running.start,
+#list .stopping.start,
+#list .stopped.stop,
+#list .crashed.stop,
+#list .sleeping.stop {
+  display: none;
 }
 
-footer a {
-  font-weight: normal;
-  color: #999;
+#list .start:hover,
+#list .start:focus,
+#list .stop:hover,
+#list .stop:focus {
+  color: #333;
 }
 
-/* Sticky footer */
+#list .remove:hover {
+  color: #c43;
+}
+
+/* footer */
 html {
   position: relative;
   min-height: 100%;
 }
 
 body {
-  margin-bottom: 28px; /* bottom = footer height */
+  margin-bottom: 38px;
 }
 
 footer {
+  color: #999;
+  font-size: 90%;
   position: absolute;
   bottom: 0;
-  height: 70px;
-  width: 320px;
+  height: 38px;
+}
+footer a:hover {
+  color: #333;
 }

@@ -3,47 +3,57 @@
   <head>
     <title>hotel</title>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   </head>
   <body>
-    <div id="content"></div>
+
+    <form id="addform">
+      <label>Path</label><input type="text" placeholder="C:\path\project" name="cwd">
+      <label>Cmd</label><input type="text" placeholder="node app.js" name="cmd">
+      <h2>Options</h2>
+      <label>Output</label><input type="text" placeholder="output.log (default: none)" name="o">
+      <label>Name</label><input type="text" placeholder="name (default: current dir name)" name="n">
+      <label>Port</label><input type="text" placeholder="8080 (default: random port)" name="p">
+      <label>Env</label><input type="text" placeholder="environment variable" name="e">
+    </form>
+    
+    <div>
+      <button class="hide bt">
+        <i class="fa fa-chevron-circle-up"></i>
+        <span>Hide</span>
+      </button>
+      <button class="add bt">
+        <i class="fa fa-plus-circle"></i>
+        <span>Add Server</span>
+      </button>
+    </div>
+
+    <div id="list"></div>
+
     <footer>
-      <p>
         <a href="https://github.com/typicode/hotel">
           <i class="fa fa-building-o"></i>
+          <span id="vs"></span>
         </a>
-      </p>
     </footer>
 
-    <script id="template" type="text/x-handlebars-template">
+    <script id="list-template" type="text/x-handlebars-template">
       {{#each monitors}}
         <div class="monitor {{status}}">
-
-          <a href="/{{id}}" title="{{cwd}}$ {{command.[2]}}">{{id}}</a>
-
+          <a href="/{{id}}" title="{{cwd}} $ {{command.[2]}} {{command.[3]}}">{{id}}</a>
           <div class="details">
-            <span class="status">
-              <small>{{status}}</small>
-            </span>
-            <button class="start {{status}}" data-id="{{id}}">
-              <small>start</small>
-            </button>
-            <button class="stop {{status}}" data-id="{{id}}">
-              <small>stop</small>
-            </button>
+            <span class="status">{{status}}</span>
+            <button class="remove" data-id="{{id}}" title="Remove"><i class="fa fa-times-circle"></i></button>
+            <button class="start {{status}}" data-id="{{id}}" title="Start"><i class="fa fa-toggle-off"></i></button>
+            <button class="stop {{status}}" data-id="{{id}}" title="Stop"><i class="fa fa-toggle-on"></i></button>
           </div>
-
         </div>
       {{else}}
-        <p>
-          Welcome! Why not add some servers ;)
-        </p>
-        <p>
-          <code>hotel add 'cmd -p $PORT'</code>
-        </p>
+        <p>Welcome! Why not add some servers ;)</p>
       {{/each}}
-    </script>
+    </script>  
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.2/handlebars.min.js"></script>
