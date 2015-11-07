@@ -5,7 +5,6 @@ const path = require('path')
 const util = require('util')
 const chokidar = require('chokidar')
 const regroup = require('respawn-group')
-const extend = require('xtend')
 const getPort = require('get-port')
 const mkdirp = require('mkdirp')
 const unquote = require('unquote')
@@ -41,7 +40,7 @@ function addServer (group, file) {
     process.env.PORT = port
     let opts = {
       cwd: server.cwd,
-      env: extend(process.env, server.env)
+      env: Object.assign({}, process.env, server.env)
     }
 
     let logFile
