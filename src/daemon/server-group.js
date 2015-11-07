@@ -1,18 +1,18 @@
 // Read, watch and manage servers
-let os = require('os')
-let fs = require('fs')
-let path = require('path')
-let util = require('util')
-let chokidar = require('chokidar')
-let regroup = require('respawn-group')
-let extend = require('xtend')
-let getPort = require('get-port')
-let mkdirp = require('mkdirp')
-let unquote = require('unquote')
-let common = require('../common')
+const os = require('os')
+const fs = require('fs')
+const path = require('path')
+const util = require('util')
+const chokidar = require('chokidar')
+const regroup = require('respawn-group')
+const extend = require('xtend')
+const getPort = require('get-port')
+const mkdirp = require('mkdirp')
+const unquote = require('unquote')
+const common = require('../common')
 
 // Path
-let serversDir = common.serversDir
+const serversDir = common.serversDir
 
 // Create dir
 mkdirp.sync(serversDir)
@@ -35,9 +35,7 @@ function getCommand (cmd) {
 function addServer (group, file) {
   let server = JSON.parse(fs.readFileSync(file, 'utf8'))
   let id = getId(file)
-  getPort((err, port) => {
-    if (err) throw err
-
+  getPort().then(port => {
     util.log(`Add server id: ${id} cmd: ${server.cmd} port: ${port}`)
 
     process.env.PORT = port
@@ -96,7 +94,7 @@ function removeServer (group, file) {
   group.emit('change')
 }
 
-export default function () {
+module.exports = function () {
   let group = regroup({
     maxRestarts: 0
   })

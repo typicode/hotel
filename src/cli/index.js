@@ -1,10 +1,10 @@
-let updateNotifier = require('update-notifier')
-let sudoBlock = require('sudo-block')
-let servers = require('../actions/servers')
-let daemon = require('../actions/daemon')
-let pkg = require('../../package.json')
+const updateNotifier = require('update-notifier')
+const sudoBlock = require('sudo-block')
+const servers = require('../actions/servers')
+const daemon = require('../actions/daemon')
+const pkg = require('../../package.json')
 
-export default function (processArgv) {
+module.exports = function (processArgv) {
   console.log()
   sudoBlock('\n  Should not be run as root, please retry without sudo.\n')
   updateNotifier({pkg: pkg}).notify()

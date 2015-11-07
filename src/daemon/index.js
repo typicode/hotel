@@ -1,18 +1,13 @@
-let util = require('util')
-let express = require('express')
-let conf = require('../conf')
+const util = require('util')
+const express = require('express')
+const conf = require('../conf')
 
-let app = require('express')()
-let server = require('http').Server(app)
-let io = require('socket.io')(server)
+const app = require('express')()
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
 
-let servers = require('./server-group')()
-let router = require('./router')(servers)
-
-// Start server
-server.listen(conf.port, conf.host, function () {
-  util.log(`Server listening on port ${conf.host}:${conf.port}`)
-})
+const servers = require('./server-group')()
+const router = require('./router')(servers)
 
 // Add ./public
 app.use(express.static(`${__dirname}/public`))
@@ -31,4 +26,9 @@ io.on('connection', function (socket) {
 
   socket.on('stop', id => servers.stop(id))
   socket.on('start', id => servers.start(id))
+})
+
+// Start server
+server.listen(conf.port, conf.host, function () {
+  util.log(`Server listening on port ${conf.host}:${conf.port}`)
 })

@@ -1,1 +1,1 @@
-export default require('debug')('hotel')
+module.exports = require('debug')('hotel')

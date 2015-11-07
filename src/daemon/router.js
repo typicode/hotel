@@ -1,11 +1,11 @@
-let util = require('util')
-let express = require('express')
-let once = require('once')
-let stripAnsi = require('strip-ansi')
-let serverReady = require('server-ready')
-let conf = require('../conf')
+const util = require('util')
+const express = require('express')
+const once = require('once')
+const stripAnsi = require('strip-ansi')
+const serverReady = require('server-ready')
+const conf = require('../conf')
 
-export default function (servers) {
+module.exports = function (servers) {
   let router = express.Router()
 
   function kill (req, res) {

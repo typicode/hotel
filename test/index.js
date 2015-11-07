@@ -3,16 +3,16 @@ process.env.NODE_ENV = 'test'
 process.env.HOME = `${__dirname}/home`
 process.env.USERPROFILE = `${__dirname}/home`
 
-let assert = require('assert')
-let cp = require('child_process')
-let fs = require('fs')
+const assert = require('assert')
+const cp = require('child_process')
+const fs = require('fs')
 var http = require('http')
-let supertest = require('supertest')
-let untildify = require('untildify')
-let rmrf = require('rimraf')
-let pkg = require('../package.json')
+const supertest = require('supertest')
+const untildify = require('untildify')
+const rmrf = require('rimraf')
+const pkg = require('../package.json')
 
-let url = 'http://localhost:2000'
+const url = 'http://localhost:2000'
 
 // Used to give some time to the system and commands
 function wait (done) {

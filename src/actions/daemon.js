@@ -1,16 +1,21 @@
-let path = require('path')
-let got = require('got')
-let untildify = require('untildify')
-let startup = require('user-startup')
-let conf = require('../conf')
-let debug = require('../utils/debug')
+const path = require('path')
+const got = require('got')
+const untildify = require('untildify')
+const startup = require('user-startup')
+const conf = require('../conf')
+const debug = require('../utils/debug')
 
-let startupFile = startup.getFile('hotel')
+const startupFile = startup.getFile('hotel')
 
-let killURL = `http://127.0.0.1:${conf.port}/kill`
+const killURL = `http://127.0.0.1:${conf.port}/kill`
+
+module.exports = {
+  start,
+  stop
+}
 
 // Start daemon in background
-export function start () {
+function start () {
   let node = process.execPath
   let daemonFile = path.join(__dirname, '../daemon')
   let daemonLog = path.resolve(untildify('~/.hotel/daemon.log'))
@@ -22,8 +27,8 @@ export function start () {
 }
 
 // Stop daemon using killURL
-export function stop (cb) {
-  got.post(killURL, (err) => {
+function stop (cb) {
+  got.post(killURL, { timeout: 1000, retries: 0 }, (err) => {
     console.log(err ? '  Not running' : '  Stopped daemon')
 
     debug(`removing ${startupFile}`)
