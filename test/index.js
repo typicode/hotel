@@ -3,10 +3,12 @@ process.env.NODE_ENV = 'test'
 process.env.HOME = `${__dirname}/home`
 process.env.USERPROFILE = `${__dirname}/home`
 
+require('babel-polyfill')
+
 const assert = require('assert')
 const cp = require('child_process')
 const fs = require('fs')
-var http = require('http')
+const http = require('http')
 const supertest = require('supertest')
 const untildify = require('untildify')
 const rmrf = require('rimraf')
