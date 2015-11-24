@@ -1,12 +1,16 @@
 const util = require('util')
-const express = require('express')
 const once = require('once')
-const stripAnsi = require('strip-ansi')
+const express = require('express')
 const serverReady = require('server-ready')
-const conf = require('../conf')
+const errorMsg = require('./error-msg')
+const proxyPac = require('./proxy-pac')
 
 module.exports = function (servers) {
   let router = express.Router()
+
+  function pac (req, res) {
+    res.send(proxyPac)
+  }
 
   function kill (req, res) {
     res.end()
@@ -18,52 +22,42 @@ module.exports = function (servers) {
   }
 
   function redirect (req, res, next) {
-    let id = req.params.id
+    const { id } = req.params
 
     if (!servers.has(id)) {
+      const msg = `Can't find server for http://${hostname}`
+      util.log(msg)
       return res.redirect('/')
     }
 
     // Start server
-    servers.start(id)
+    const server = servers.start(id)
 
-    // Redirect when server is available
-    let port = servers.get(id).env.PORT
-    let hostname = req.hostname
-    let timeout = conf.timeout
-
-    let forward = (err) => {
-      if (err) {
-        let command = servers.get(id).command.join(' ')
-        let tail = stripAnsi(servers.get(id).tail)
-
-        let msg = `Can't connect to server on port ${port}.\n`
-        msg += `Server crashed or timeout of ${timeout}ms exceeded. Retry or check logs.\n`
-        msg += '<pre><code>'
-        msg += command
-        msg += '\n\n'
-        msg += tail
-        msg += '</code></pre>'
-
-        res.status(502).send(msg)
-      } else {
-        let url = `http://${hostname}:${port}`
-        util.log(`Redirect to ${url}`)
-        res.redirect(url)
-      }
-    }
+    // Target
+    const { PORT } = server.env
+    const { hostname } = req
+    const target = `http://${hostname}:${PORT}`
 
     // Make sure to send only one response
-    forward = once(forward)
+    const forward = once((err) => {
+      if (err) {
+        const msg = errorMsg(servers.get(id))
+        res.status(502).send(msg)
+      } else {
+        util.log(`Redirect to ${target}`)
+        res.redirect(target)
+      }
+    })
 
     // If server stops, no need to wait for timeout
-    servers.get(id).once('stop', () => forward(new Error('Server stopped')))
+    server.once('stop', () => forward(new Error('Server stopped')))
 
-    // When port is open, forward
-    serverReady(port, timeout, forward)
+    // When PORT is open, forward
+    serverReady(PORT, forward)
   }
 
   router
+    .get('/proxy.pac', pac)
     .get('/:id', redirect)
     .post('/kill', kill)
 

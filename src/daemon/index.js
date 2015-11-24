@@ -1,16 +1,31 @@
 const util = require('util')
+const http = require('http')
 const express = require('express')
+const vhost = require('vhost')
+const socketIO = require('socket.io')
 const conf = require('../conf')
 
-const app = require('express')()
-const server = require('http').Server(app)
-const io = require('socket.io')(server)
+const app = express()
+const server = http.createServer(app)
+const io = socketIO(server)
 
 const servers = require('./server-group')()
 const router = require('./router')(servers)
+const hotelHost = require('./vhosts/hotel-dev')(servers)
+const devHost = require('./vhosts/dev')(servers)
 
-// Add ./public
+// requests timeout
+const serverReady = require('server-ready')
+serverReady.timeout = conf.timeout
+
+// .dev hosts
+app.use(vhost('hotel.dev', hotelHost))
+app.use(vhost('*.dev', devHost))
+
+// public
 app.use(express.static(`${__dirname}/public`))
+
+// servers router
 app.use(router)
 
 // Socket.io real-time updates

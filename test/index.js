@@ -91,7 +91,24 @@ describe('hotel', function () {
     })
 
     it('should start daemon', done => {
-      request.get('/').expect(200, done)
+      request
+        .get('/')
+        .expect(200, done)
+    })
+
+    describe('daemon', () => {
+      it('should serve /proxy.pac', done => {
+        request
+          .get('/proxy.pac')
+          .expect(200, done)
+      })
+
+      it('should be accessible on http://hotel.dev', done => {
+        request
+          .get('/')
+          .set('Host', 'hotel.dev')
+          .expect(200, done)
+      })
     })
   })
 
@@ -122,6 +139,28 @@ describe('hotel', function () {
               .get('/')
               .expect(200, done)
           })
+      })
+
+      it('should proxy requests from http://app.dev to app server', done => {
+        request
+          .get('/')
+          .set('Host', 'app.dev')
+          .expect(200, /Hello World/, done)
+      })
+
+      it('should redirect http://hotel.dev/app to http://app.dev', done => {
+        request
+          .get('/app')
+          .set('Host', 'hotel.dev')
+          .expect('Location', 'http://app.dev')
+          .expect(302, done)
+      })
+
+      it('should not redirect assets http://hotel.dev/index.html', done => {
+        request
+          .get('/index.html')
+          .set('Host', 'hotel.dev')
+          .expect(200, done)
       })
     })
 
