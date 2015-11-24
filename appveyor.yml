@@ -3,8 +3,6 @@ environment:
 
 install:
   - ps: Install-Product node $env:nodejs_version
-  - npm install babel
-  - npm run build
   - npm install
 
 test_script:
