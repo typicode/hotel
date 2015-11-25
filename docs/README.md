@@ -2,12 +2,12 @@
 
 This step is totally optional and you can use `hotel` without it.
 
-To use local `.dev` domain, you need to configure your browser or network to use `hotel`'s proxy auto-config file which is available at [http://localhost:2000/proxy.pac]() (view [proxy.pac](../src/daemon/proxy-pac.js) content).
+To use local `.dev` domain, you need to configure your browser or network to use `hotel`'s proxy auto-config file which is available at `http://localhost:2000/proxy.pac` (view [proxy.pac](../src/daemon/proxy-pac.js) content).
 
 After that, you'll be able to access servers using `.dev` domains:
 
-* [http://hotel.dev]() <-> [http://localhost:2000]()
-* [http://project.dev]() <-> [http://localhost:2000/project]()
+* `http://hotel.dev  ` <-> `http://localhost:2000`
+* `http://project.dev` <-> `http://localhost:2000/project`
 
 ### Browser configuration
 
@@ -23,4 +23,4 @@ After that, you'll be able to access servers using `.dev` domains:
 
 ## Important
 
-Make sure that you have started `hotel` and that [http://localhost:2000/proxy.pac]() is available when setting proxy auto-config URL.
+Make sure that you have started `hotel` and that `http://localhost:2000/proxy.pac` is available when setting proxy auto-config URL.
