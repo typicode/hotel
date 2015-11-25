@@ -2,11 +2,9 @@
 
 > Classy process manager for front-end devs ❤
 
-Just fire up a text editor, a browser and you're good to go.
-
 ![](https://rawgit.com/typicode/hotel/master/screen.gif)
 
-_No need to worry about ports, remember commands, manage terminal tabs, ... you can even use local `.dev` domains and it works everywhere :+1:_
+No need to worry about ports, remember commands, manage terminal tabs, ... access and start your servers from the browser. You can even use local `.dev` domains and it works everywhere :+1:
 
 ## Features
 
