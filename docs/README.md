@@ -11,12 +11,16 @@ After that, you'll be able to access servers using `.dev` domains:
 
 ### Browser configuration
 
-* __Firefox__ `Preferences > Advanced > Network > Connection > Settings > Automatic proxy URL configuration`
-* __Chrome__ `google-chrome --proxy-pac-url=http://localhost:2000/proxy.pac`
-* __Internet Explorer__ uses system network configuration.
+* Firefox - `Preferences > Advanced > Network > Connection > Settings > Automatic proxy URL configuration`
+* Chrome - `google-chrome --proxy-pac-url=http://localhost:2000/proxy.pac`
+* Internet Explorer - uses system network configuration.
 
 ### System configuration
 
-* __OS X__ `Network Preferences > Advanced > Proxies > Automatic Proxy Discovery`
-* __Windows__ `Settings > Network and Internet > Proxy > Use setup script`
-* __Linux__ depends on the distribution, use browser configuration as an alternative.
+* OS X - `Network Preferences > Advanced > Proxies > Automatic Proxy Discovery`
+* Windows - `Settings > Network and Internet > Proxy > Use setup script`
+* Linux - depends on the distribution, use browser configuration as an alternative.
+
+## Important
+
+Make sure that you have started `hotel` and that `http://localhost:2000/proxy.pac` is available when setting proxy auto-config URL.
