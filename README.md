@@ -1,20 +1,25 @@
-# hotel [![](https://img.shields.io/travis/typicode/hotel.svg)](https://travis-ci.org/typicode/hotel) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel)
+# hotel [![Mac/Linux Build Status](https://img.shields.io/travis/typicode/hotel/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/typicode/hotel) [![Windows Build status](https://img.shields.io/appveyor/ci/typicode/hotel/master.svg?label=Windows)](https://ci.appveyor.com/project/typicode/hotel/branch/master) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel)
 
-Hotel is a simple process manager created for web developers.
+> Server manager for front-end devs ❤
 
-1. Tell hotel how to start your server
-2. Go to [localhost:2000]()
-3. Congrats :+1:
+Just fire up a text editor, a browser and you're good to go.
 
 ![](https://rawgit.com/typicode/hotel/master/screen.gif)
 
-_Works on OS X, Linux and Windows with any server._
+_No need to worry about ports, remember commands, manage terminal tabs, ... you can even use local `.dev` domains and it works everywhere :+1:_
 
-## Why?
+## Features
 
-With hotel, you don't have to leave your browser to start your dev server. You also don't have to manage terminal tabs, remember commands, worry about ports, ...
+* __Shortcut access__ (`http://localhost:2000/project`)
+* __Local domain support__ (`http://project.dev` *)
+* __Servers are only started when you access them__
+* __Random or fixed ports__
+* Works with any server (Node, Ruby, PHP, ...)
+* Cross-platform (OS X, Linux and Windows)
+* Plays nice with other servers (Apache, Nginx, ...)
+* No port 80 or admin/root privileges needed
 
-Just fire up a text editor, a browser and you're done.
+_(*) Local `.dev` domains are optional. If you want to use them, you need to configure your browser or network to use `hotel`'s proxy auto-config file (`proxy.pac`). See instructions [here](https://github.com/typicode/hotel/docs)._
 
 ## Install
 
@@ -24,7 +29,7 @@ npm install -g hotel && hotel start
 
 ## Quick start
 
-Add your servers commands (need to be done only once).
+Add your servers commands.
 
 ```bash
 ~/projects/one$ hotel add nodemon
@@ -40,7 +45,7 @@ http://localhost:2000/one
 http://localhost:2000/two
 ```
 
-Other servers examples (on Windows use `"` instead of `'`and `%PORT%`):
+Other servers examples:
 
 ```bash
 hotel add 'jekyll --port $PORT'
@@ -49,6 +54,8 @@ hotel add 'python -m SimpleHTTPServer $PORT'
 hotel add 'php -S 127.0.0.1:$PORT'
 # ...
 ```
+
+On __Windows__ use `"%PORT%"` instead of `'$PORT'`
 
 ## Usage
 
@@ -61,7 +68,7 @@ hotel add <cmd> [opts]
 hotel add 'nodemon app.js' -o out.log # Set output file (default: none)
 hotel add 'nodemon app.js' -n name    # Set custom name (default: current dir name)
 hotel add 'nodemon app.js' -p 3000    # Set a fixed port (default: random port)
-hotel add 'nodemon app.js' -e ENV     # Save environment variable
+hotel add 'nodemon app.js' -e PATH    # Store PATH environment variable in server config
 ```
 
 To list, start and stop servers go to
@@ -100,7 +107,11 @@ hotel add 'cmd -p $PORT'  # OS X, Linux
 hotel add "cmd -p %PORT%" # Windows
 ```
 
-## Files
+## Dev domain support
+
+ See instructions [here](https://github.com/typicode/hotel/docs).
+
+## Configurations and logs
 
 `~/.hotel` contains daemon log, servers and daemon configurations.
 
