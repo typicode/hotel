@@ -17,7 +17,7 @@ No need to worry about ports, remember commands, manage terminal tabs, ... acces
 * Plays nice with other servers (Apache, Nginx, ...)
 * No port 80 or admin/root privileges needed
 
-_(*) Local `.dev` domains are optional. If you want to use them, you need to configure your browser or network to use `hotel`'s proxy auto-config file (`proxy.pac`). See instructions [here](https://github.com/typicode/hotel/docs)._
+_(*) Local `.dev` domains are optional. If you want to use them, you need to configure your browser or network to use `hotel`'s proxy auto-config file (`proxy.pac`). See instructions [here](https://github.com/typicode/hotel/blob/master/docs/README.md)._
 
 ## Install
 
@@ -107,7 +107,7 @@ hotel add "cmd -p %PORT%" # Windows
 
 ## Dev domain support
 
- See instructions [here](https://github.com/typicode/hotel/docs).
+ See instructions [here](https://github.com/typicode/hotel/blob/master/docs/README.md).
 
 ## Configurations and logs
 
