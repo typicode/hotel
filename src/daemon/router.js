@@ -25,7 +25,7 @@ module.exports = function (servers) {
     const { id } = req.params
 
     if (!servers.has(id)) {
-      const msg = `Can't find server for http://${hostname}`
+      const msg = `Redirect - can't find server for ${id}`
       util.log(msg)
       return res.redirect('/')
     }

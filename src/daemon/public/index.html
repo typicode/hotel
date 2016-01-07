@@ -4,7 +4,7 @@
     <title>hotel</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   </head>
   <body>
     <div id="content"></div>
@@ -27,10 +27,10 @@
               <small>{{status}}</small>
             </span>
             <button class="start {{status}}" data-id="{{id}}">
-              <small>start</small>
+              <small><i class="fa fa-play-circle"></i> start</small>
             </button>
             <button class="stop {{status}}" data-id="{{id}}">
-              <small>stop</small>
+              <small><i class="fa fa-stop-circle"></i> stop</small>
             </button>
           </div>
 
@@ -47,7 +47,6 @@
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.2/handlebars.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
     <script src="index.js"></script>
   </body>
 </html>
