@@ -3,7 +3,7 @@ const once = require('once')
 const express = require('express')
 const serverReady = require('server-ready')
 const errorMsg = require('./error-msg')
-const proxyPac = require('./proxy-pac')
+const proxyPac = require('./views/proxy-pac')
 
 module.exports = function (servers) {
   let router = express.Router()

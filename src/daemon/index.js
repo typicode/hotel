@@ -4,6 +4,7 @@ const express = require('express')
 const vhost = require('vhost')
 const socketIO = require('socket.io')
 const conf = require('../conf')
+const tcpProxy = require('./tcp-proxy')
 
 const app = express()
 const server = http.createServer(app)
@@ -41,6 +42,28 @@ io.on('connection', function (socket) {
 
   socket.on('stop', id => servers.stop(id))
   socket.on('start', id => servers.start(id))
+})
+
+// Handle CONNECT, used by WebSockets when accessing .dev domains
+server.on('connect', (req, socket, head) => {
+  const hostname = req.headers.host.split(':')[0]
+  const id = hostname.replace(/.dev$/, '')
+  if (hostname === 'hotel.dev') {
+    util.log(`Proxy socket to ${conf.port}`)
+    tcpProxy(socket, conf.port)
+  } else if (servers.has(id)) {
+    // Start server
+    const server = servers.start(id)
+
+    // Target
+    const { PORT } = server.env
+
+    util.log(`Proxy socket to ${Port}`)
+    tcpProxy(socket, PORT)
+  } else {
+    util.log(`Can't find server for http://${hostname}`)
+    socket.end()
+  }
 })
 
 // Start server

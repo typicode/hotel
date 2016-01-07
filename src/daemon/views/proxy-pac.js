@@ -1,7 +1,6 @@
-const conf = require('../conf')
+const conf = require('../../conf')
 
-// Proxy only *.dev URLs
-// Send direct for other domains
+// Tells the browser to proxy *.dev URLs to hotel
 module.exports =
 `function FindProxyForURL (url, host) {
   if (dnsDomainIs(host, '.dev')) return 'PROXY 127.0.0.1:${conf.port}'
