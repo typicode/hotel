@@ -58,7 +58,7 @@ server.on('connect', (req, socket, head) => {
     // Target
     const { PORT } = server.env
 
-    util.log(`Proxy socket to ${Port}`)
+    util.log(`Proxy socket to ${PORT}`)
     tcpProxy(socket, PORT)
   } else {
     util.log(`Can't find server for http://${hostname}`)
