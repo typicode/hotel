@@ -2,8 +2,8 @@ const util = require('util')
 const once = require('once')
 const express = require('express')
 const serverReady = require('server-ready')
-const errorMsg = require('./error-msg')
-const proxyPac = require('./views/proxy-pac')
+const errorMsg = require('../views/error-msg')
+const proxyPac = require('../views/proxy-pac')
 
 module.exports = function (servers) {
   let router = express.Router()

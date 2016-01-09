@@ -3,7 +3,7 @@ const once = require('once')
 const express = require('express')
 const httpProxy = require('http-proxy')
 const serverReady = require('server-ready')
-const errorMsg = require('../error-msg')
+const errorMsg = require('../views/error-msg')
 
 // *.dev vhost
 module.exports = (servers) => {

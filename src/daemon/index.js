@@ -2,17 +2,16 @@ const util = require('util')
 const http = require('http')
 const express = require('express')
 const vhost = require('vhost')
-const connectSSE = require('connect-sse')
 const conf = require('../conf')
 const tcpProxy = require('./tcp-proxy')
 
 const app = express()
 const server = http.createServer(app)
-const sse = connectSSE()
 
 const servers = require('./server-group')()
-const router = require('./router')(servers)
-const api = require('./api')(servers)
+const indexRouter = require('./routers')(servers)
+const api = require('./routers/api')(servers)
+const events = require('./events')(servers)
 const hotelHost = require('./vhosts/hotel-dev')(servers)
 const devHost = require('./vhosts/dev')(servers)
 
@@ -21,18 +20,10 @@ const serverReady = require('server-ready')
 serverReady.timeout = conf.timeout
 
 // Server-sent events for servers
-app.get('/_events/servers', sse, (req, res) => {
-  function sendServers () {
-    res.json({ monitors: servers.list() })
-  }
+app.get('/_events', events)
 
-  servers.on('change', sendServers)
-  sendServers()
-
-  setInterval(sendServers, 1000)
-})
-
-app.use('/_', api)
+// API
+app.use('/_servers', api)
 
 // .dev hosts
 app.use(vhost('hotel.dev', hotelHost))
@@ -41,8 +32,8 @@ app.use(vhost('*.dev', devHost))
 // public
 app.use(express.static(`${__dirname}/public`))
 
-// servers router
-app.use(router)
+// Server router
+app.use(indexRouter)
 
 // Handle CONNECT, used by WebSockets when accessing .dev domains
 server.on('connect', (req, socket, head) => {
@@ -58,7 +49,7 @@ server.on('connect', (req, socket, head) => {
     // Target
     const { PORT } = server.env
 
-    util.log(`Proxy socket to ${Port}`)
+    util.log(`Proxy socket to ${PORT}`)
     tcpProxy(socket, PORT)
   } else {
     util.log(`Can't find server for http://${hostname}`)

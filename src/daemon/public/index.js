@@ -8,22 +8,15 @@
   $('body')
     .on('click', '.stop', function () {
       var id = $(this).data('id')
-      $.ajax('/_/' + id, {
-        method: 'PATCH',
-        data: { action: 'stop' }
-      })
+      $.post('/_servers/' + id + '/stop')
     })
     .on('click', '.start', function () {
       var id = $(this).data('id')
-      $.ajax('/_/' + id, {
-        method: 'PATCH',
-        data: { action: 'start' }
-      })
+      $.post('/_servers/' + id + '/start')
     })
 
-
-  var es = new EventSource('/_events/servers')
-  es.onmessage = function (event) {
+  /* global EventSource */
+  new EventSource('/_events/servers').onmessage = function (event) {
     var html = template(JSON.parse(event.data))
     $('#content').html(html)
   }
