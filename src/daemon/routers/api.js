@@ -8,12 +8,12 @@ module.exports = (servers) => {
     res.sendStatus(404)
   }
 
-  router.post('/start', exists, (req, res) => {
+  router.post('/:id/start', exists, (req, res) => {
     servers.start(req.params.id)
     res.end()
   })
 
-  router.post('/stop', exists, (req, res) => {
+  router.post('/:id/stop', exists, (req, res) => {
     servers.stop(req.params.id)
     res.end()
   })

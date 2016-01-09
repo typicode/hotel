@@ -16,7 +16,9 @@
     })
 
   /* global EventSource */
-  new EventSource('/_events/servers').onmessage = function (event) {
+  console.log('foo')
+  new EventSource('/_events').onmessage = function (event) {
+    console.log(event)
     var html = template(JSON.parse(event.data))
     $('#content').html(html)
   }

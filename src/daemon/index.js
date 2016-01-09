@@ -20,7 +20,7 @@ const serverReady = require('server-ready')
 serverReady.timeout = conf.timeout
 
 // Server-sent events for servers
-app.get('/_events', events)
+app.use('/_events', events)
 
 // API
 app.use('/_servers', api)

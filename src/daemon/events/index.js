@@ -7,7 +7,7 @@ module.exports = (servers) => {
 
   router.get('/', sse, (req, res) => {
     function sendState () {
-      res.json({ state: servers.list() }, 'servers')
+      res.json({ monitors: servers.list() })
     }
 
     servers.on('change', sendState)
