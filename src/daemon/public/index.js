@@ -1,6 +1,6 @@
-/* global EventSource */
+/* global EventSource, Vue, fetch */
 ;(function () {
-  var vm = new Vue({
+  new Vue({
 
     el: '#app',
 
