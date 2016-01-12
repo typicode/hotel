@@ -4,50 +4,45 @@
     <title>hotel</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   </head>
   <body>
-    <div id="content"></div>
-    <footer>
-      <p>
-        <a href="https://github.com/typicode/hotel">
-          <i class="fa fa-building-o"></i>
-        </a>
-      </p>
-    </footer>
+    <div v-cloak v-if="monitors !== null" id="app">
+      <div v-if="monitors.length" v-for="monitor in monitors" class="monitor {{monitor.status}}">
+        <a href="/{{monitor.id}}" title="{{monitor.cwd}}$ {{monitor.command[2]}}">{{monitor.id}}</a>
 
-    <script id="template" type="text/x-handlebars-template">
-      {{#each monitors}}
-        <div class="monitor {{status}}">
-
-          <a href="/{{id}}" title="{{cwd}}$ {{command.[2]}}">{{id}}</a>
-
-          <div class="details">
-            <span class="status">
-              <small>{{status}}</small>
-            </span>
-            <button class="start {{status}}" data-id="{{id}}">
-              <small>start</small>
-            </button>
-            <button class="stop {{status}}" data-id="{{id}}">
-              <small>stop</small>
-            </button>
-          </div>
-
+        <div class="details">
+          <span class="status">
+            <small>{{monitor.status}}</small>
+          </span>
+          <button v-show="monitor.status !== 'running'" v-on:click="start(monitor.id)" class="start">
+            <small>start <i class="fa fa-play-circle"></i></small>
+          </button>
+          <button v-show="monitor.status === 'running'" v-on:click="stop(monitor.id)" class="stop">
+            <small>stop <i class="fa fa-stop-circle"></i></small>
+          </button>
         </div>
-      {{else}}
+      </div>
+
+      <div v-if="!monitors.length">
         <p>
           Welcome! Why not add some servers ;)
         </p>
         <p>
           <code>hotel add 'cmd -p $PORT'</code>
         </p>
-      {{/each}}
-    </script>
+      </div>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.2/handlebars.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+      <footer>
+        <p>
+          <a href="https://github.com/typicode/hotel">
+            <i class="fa fa-building-o"></i>
+          </a>
+        </p>
+      </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/g/es6-promise@3.0.2,fetch@0.9.0,vue@1.0.14"></script>
     <script src="index.js"></script>
   </body>
 </html>

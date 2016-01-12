@@ -1,24 +1,29 @@
+/* global EventSource */
 ;(function () {
-  var $ = window.jQuery
-  var io = window.io
-  var Handlebars = window.Handlebars
+  var vm = new Vue({
 
-  var source = $('#template').html()
-  var template = Handlebars.compile(source)
-  var socket = io.connect(window.location.origin)
+    el: '#app',
 
-  $('body')
-    .on('click', '.stop', function () {
-      var id = $(this).data('id')
-      socket.emit('stop', id)
-    })
-    .on('click', '.start', function () {
-      var id = $(this).data('id')
-      socket.emit('start', id)
-    })
+    created: function () {
+      var self = this
+      new EventSource('/_events').onmessage = function (event) {
+        var data = JSON.parse(event.data)
+        self.monitors = data.monitors
+      }
+    },
 
-  socket.on('change', function (context) {
-    var html = template(context)
-    $('#content').html(html)
+    data: {
+      monitors: null
+    },
+
+    methods: {
+      start: function (id) {
+        fetch('/_servers/' + id + '/start', { method: 'POST' })
+      },
+
+      stop: function (id) {
+        fetch('/_servers/' + id + '/stop', { method: 'POST' })
+      }
+    }
   })
 })()
