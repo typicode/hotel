@@ -1,16 +1,10 @@
 /* Available status: running, stopping, stopped, crashed, sleeping */
+[v-cloak] {
+  display: none;
+}
 
 html, button {
   font-family: sans-serif;
-}
-
-/* hide */
-.running.start,
-.stopping.start,
-.stopped.stop,
-.crashed.stop,
-.sleeping.stop {
-  display: none;
 }
 
 body {
@@ -25,7 +19,7 @@ a {
   color: #333;
 }
 
-a:hover, a:focus {
+a:focus {
   color: #333 !important;
 }
 
@@ -42,8 +36,12 @@ code {
   border-bottom: 1px solid #EEE;
 }
 
-.monitor.stopped a {
-  color: #999;
+.monitor.running a {
+  color: #0EBC5A;
+}
+
+.monitor a {
+  color: #CCC;
 }
 
 .monitor:last-of-type {
@@ -74,9 +72,7 @@ code {
 }
 
 .start:hover,
-.start:focus,
-.stop:hover,
-.stop:focus {
+.stop:hover{
   color: #111;
 }
 

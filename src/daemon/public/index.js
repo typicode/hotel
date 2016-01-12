@@ -1,25 +1,29 @@
+/* global EventSource */
 ;(function () {
-  var $ = window.jQuery
-  var Handlebars = window.Handlebars
+  var vm = new Vue({
 
-  var source = $('#template').html()
-  var template = Handlebars.compile(source)
+    el: '#app',
 
-  $('body')
-    .on('click', '.stop', function () {
-      var id = $(this).data('id')
-      $.post('/_servers/' + id + '/stop')
-    })
-    .on('click', '.start', function () {
-      var id = $(this).data('id')
-      $.post('/_servers/' + id + '/start')
-    })
+    created: function () {
+      var self = this
+      new EventSource('/_events').onmessage = function (event) {
+        var data = JSON.parse(event.data)
+        self.monitors = data.monitors
+      }
+    },
 
-  /* global EventSource */
-  console.log('foo')
-  new EventSource('/_events').onmessage = function (event) {
-    console.log(event)
-    var html = template(JSON.parse(event.data))
-    $('#content').html(html)
-  }
+    data: {
+      monitors: null
+    },
+
+    methods: {
+      start: function (id) {
+        fetch('/_servers/' + id + '/start', { method: 'POST' })
+      },
+
+      stop: function (id) {
+        fetch('/_servers/' + id + '/stop', { method: 'POST' })
+      }
+    }
+  })
 })()
