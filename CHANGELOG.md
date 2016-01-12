@@ -2,7 +2,7 @@
 
 ## 0.4.2
 
-* Remove socket.io dependency.
+* Removed socket.io dependency.
 
 ## 0.4.1
 
