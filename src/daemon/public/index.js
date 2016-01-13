@@ -1,6 +1,6 @@
-/* global EventSource, Vue, fetch */
+/* eslint-disable */
 ;(function () {
-  new Vue({
+  var vm = new Vue({
 
     el: '#app',
 
