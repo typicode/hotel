@@ -122,6 +122,7 @@ hotel add "cmd -p %PORT%" # Windows
 ## Third-party tools
 
 [Hotel Clerk](https://github.com/therealklanni/hotel-clerk) OS X menubar
+
 [HotelX](https://github.com/djyde/HotelX) Another OS X menubar (only 1.6MB)
 
 ## License
