@@ -1,15 +1,15 @@
 const updateNotifier = require('update-notifier')
 const sudoBlock = require('sudo-block')
-const servers = require('../actions/servers')
-const daemon = require('../actions/daemon')
+const servers = require('./servers')
+const daemon = require('./daemon')
 const pkg = require('../../package.json')
 
-module.exports = function (processArgv) {
+module.exports = processArgv => {
   console.log()
   sudoBlock('\n  Should not be run as root, please retry without sudo.\n')
-  updateNotifier({pkg: pkg}).notify()
+  updateNotifier({ pkg }).notify()
 
-  let yargs = require('yargs')(processArgv.slice(2))
+  const yargs = require('yargs')(processArgv.slice(2))
     .version(pkg.version).alias('v', 'version')
     .help('help').alias('h', 'help')
     .usage('Usage: $0 <command> [options]')
@@ -25,11 +25,11 @@ module.exports = function (processArgv) {
     .epilog('https://github.com/typicode/hotel')
     .demand(1)
 
-  let argv = yargs.argv
-  let _ = argv._
+  const { argv } = yargs
+  const { _ } = argv
 
   // Need to rely on a callback because daemon.stop is asynchronous
-  let run = (cb) => {
+  const run = cb => {
     if (_[0] === 'add' && _[1]) {
       servers.add(_[1], argv)
       return cb()
@@ -58,7 +58,7 @@ module.exports = function (processArgv) {
     yargs.showHelp()
   }
 
-  run((err) => {
+  run(err => {
     if (err) {
       if (err.message) console.log('  Error   ' + err.message)
       console.log()

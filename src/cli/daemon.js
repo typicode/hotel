@@ -16,9 +16,9 @@ module.exports = {
 
 // Start daemon in background
 function start () {
-  let node = process.execPath
-  let daemonFile = path.join(__dirname, '../daemon')
-  let daemonLog = path.resolve(untildify('~/.hotel/daemon.log'))
+  const node = process.execPath
+  const daemonFile = path.join(__dirname, '../daemon')
+  const daemonLog = path.resolve(untildify('~/.hotel/daemon.log'))
 
   debug(`creating ${startupFile}`)
   startup.create('hotel', node, [daemonFile], daemonLog)
