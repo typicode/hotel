@@ -20,10 +20,10 @@ const serverReady = require('server-ready')
 serverReady.timeout = conf.timeout
 
 // Server-sent events for servers
-app.use('/_events', events)
+app.use('/_api/events', events)
 
 // API
-app.use('/_servers', api)
+app.use('/_api/servers', api)
 
 // .dev hosts
 app.use(vhost('hotel.dev', hotelHost))

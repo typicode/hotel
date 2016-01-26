@@ -8,35 +8,37 @@
   </head>
   <body>
     <div v-cloak v-if="monitors !== null" id="app">
-      <div v-if="monitors.length" v-for="monitor in monitors" class="monitor {{monitor.status}}">
-        <a href="/{{monitor.id}}" title="{{monitor.cwd}}$ {{monitor.command[2]}}">{{monitor.id}}</a>
+      <table>
+        <tr v-if="monitors.length" v-for="monitor in monitors" class="monitor {{monitor.status}}">
 
-        <div class="details">
-          <span class="status">
-            <small>{{monitor.status}}</small>
-          </span>
-          <button v-show="monitor.status !== 'running'" v-on:click="start(monitor.id)" class="start">
-            <small>start <i class="fa fa-play-circle"></i></small>
-          </button>
-          <button v-show="monitor.status === 'running'" v-on:click="stop(monitor.id)" class="stop">
-            <small>stop <i class="fa fa-stop-circle"></i></small>
-          </button>
-        </div>
-      </div>
+          <td>
+            <a href="/{{monitor.id}}" title="{{monitor.cwd}}$ {{monitor.command[2]}}">
+              {{monitor.id}}
+              <span class="status">- {{monitor.status}}</span>
+            </a>
+          </td>
 
-      <div v-if="!monitors.length">
-        <p>
-          Welcome! Why not add some servers ;)
-        </p>
-        <p>
-          <code>hotel add 'cmd -p $PORT'</code>
-        </p>
+          <td>
+            <a v-if="monitor.status !== 'running'" v-on:click.prevent="start(monitor.id)" class="start">
+              <i class="fa fa-toggle-off"></i>
+            </a>
+            <a v-if="monitor.status === 'running'" v-on:click.prevent="stop(monitor.id)" class="stop">
+              <i class="fa fa-toggle-on"></i>
+            </a>
+          </td>
+
+        </tr>
+      </table>
+
+      <div v-if="!monitors.length" class="empty">
+        <p>Welcome (^_^)/</p>
+        <p><em>Use hotel command-line to add servers</em></p>
       </div>
 
       <footer>
         <p>
           <a href="https://github.com/typicode/hotel">
-            <i class="fa fa-building-o"></i>
+            <i class="fa fa-building-o"></i> <span>README</span>
           </a>
         </p>
       </footer>

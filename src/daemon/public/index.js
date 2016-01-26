@@ -6,7 +6,7 @@
 
     created: function () {
       var self = this
-      new EventSource('/_events').onmessage = function (event) {
+      new EventSource('/_api/events').onmessage = function (event) {
         var data = JSON.parse(event.data)
         self.monitors = data.monitors
       }
@@ -18,11 +18,11 @@
 
     methods: {
       start: function (id) {
-        fetch('/_servers/' + id + '/start', { method: 'POST' })
+        fetch('/_api/servers/' + id + '/start', { method: 'POST' })
       },
 
       stop: function (id) {
-        fetch('/_servers/' + id + '/stop', { method: 'POST' })
+        fetch('/_api/servers/' + id + '/stop', { method: 'POST' })
       }
     }
   })

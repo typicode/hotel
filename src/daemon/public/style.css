@@ -9,76 +9,82 @@ html, button {
 
 body {
   font-family: sans-serif;
-  padding: 20px;
+  font-size: 16px;
+  padding: 10px;
+  color: #333;
 }
 
 a {
   text-decoration: none;
   outline: 0;
-  font-weight: bold;
-  color: #333;
+  color: inherit;
+  cursor: pointer;
 }
 
-a:focus {
-  color: #333 !important;
+a:hover, a:focus {
+  color: #444 !important;
 }
 
 code {
+  font-family: monospace;
   font-size: 14px;
-  background: #EEE;
+  background: #F9F9F9;
   padding: 4px;
 }
 
-.monitor {
-  width: 280px;
-  margin: 0;
-  padding: 15px 0 15px 0;
+table {
+  width: 100%;
+  max-width: 320px;
+  border-collapse: collapse;
+}
+
+tr {
   border-bottom: 1px solid #EEE;
+  vertical-align: top;
 }
 
-.monitor.running a {
-  color: #0EBC5A;
-}
-
-.monitor a {
-  color: #CCC;
-}
-
-.monitor:last-of-type {
+tr:last-child {
   border: none;
 }
 
-.details {
-  overflow: hidden;
-  margin-top: 4px;
+td:last-child {
+  width: 30px;
+  text-align: right;
+  font-size: 18px;
+}
+
+td a {
+  display: inline-block;
+  padding: 15px 0 15px 0;
 }
 
 .status {
-  color: #999;
-  float: left;
+  font-size: 12px;
 }
 
-/* Start-stop buttons */
-.start, .stop {
-  float: right;
-  cursor: pointer;
-  text-align: right;
-  border: 0;
-  padding: 0;
-  outline: 0;
-  background: transparent;
-  font-size: 1em;
+tr.stopped, tr.crashed {
   color: #999;
 }
 
-.start:hover,
-.stop:hover{
-  color: #111;
+tr.running td:last-child a, tr.running td:last-child a:hover {
+  color: #16a085 !important
 }
 
-footer a {
-  font-weight: normal;
+.empty a {
+  text-decoration: underline;
+}
+
+footer {
   color: #999;
+}
+
+footer a span {
+  visibility: hidden;
+  font-size: 14px;
+}
+
+footer a:hover span {
+  visibility: visible;
 }
 
 /* Sticky footer */
@@ -94,6 +100,5 @@ body {
 footer {
   position: absolute;
   bottom: 0;
-  height: 70px;
   width: 320px;
 }
