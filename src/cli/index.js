@@ -6,7 +6,7 @@ const pkg = require('../../package.json')
 
 module.exports = processArgv => {
   console.log()
-  sudoBlock('\n  Should not be run as root, please retry without sudo.\n')
+  sudoBlock('\nShould not be run as root, please retry without sudo.\n')
   updateNotifier({ pkg }).notify()
 
   const yargs = require('yargs')(processArgv.slice(2))
@@ -60,7 +60,7 @@ module.exports = processArgv => {
 
   run(err => {
     if (err) {
-      if (err.message) console.log('  Error   ' + err.message)
+      if (err.message) console.log('Error   ' + err.message)
       console.log()
       process.exit(1)
     }

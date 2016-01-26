@@ -48,29 +48,27 @@ function add (cmd, opts) {
 
   let data = JSON.stringify(obj, null, 2)
 
-  console.log(`  Create ${tildify(file)}`)
+  console.log(`Create ${tildify(file)}`)
   fs.writeFileSync(file, data)
 
   if (obj.out) {
     let logFile = tildify(path.resolve(obj.out))
-    console.log(`  Output ${logFile}`)
+    console.log(`Output ${logFile}`)
   } else {
-    console.log('  Output No log file specified (use \'-o app.log\')')
+    console.log('Output No log file specified (use \'-o app.log\')')
   }
-
-  console.log(`  Added  http://localhost:${conf.port}/${id}`)
 }
 
 function rm (name) {
   let id = getId(name)
   let file = getServerFile(id)
 
-  console.log(`  Remove  ${tildify(file)}`)
+  console.log(`Remove  ${tildify(file)}`)
   if (fs.existsSync(file)) {
     fs.unlinkSync(file)
-    console.log('  Removed')
+    console.log('Removed')
   } else {
-    console.log('  No such file')
+    console.log('No such file')
   }
 }
 

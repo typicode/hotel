@@ -23,13 +23,13 @@ function start () {
   debug(`creating ${startupFile}`)
   startup.create('hotel', node, [daemonFile], daemonLog)
 
-  console.log(`  Started http://localhost:${conf.port}`)
+  console.log(`Started http://localhost:${conf.port}`)
 }
 
 // Stop daemon using killURL
 function stop (cb) {
   got.post(killURL, { timeout: 1000, retries: 0 }, (err) => {
-    console.log(err ? '  Not running' : '  Stopped daemon')
+    console.log(err ? 'Not running' : 'Stopped daemon')
 
     debug(`removing ${startupFile}`)
     startup.remove('hotel')
