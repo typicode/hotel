@@ -10,75 +10,72 @@ html, button {
 body {
   font-family: sans-serif;
   font-size: 16px;
-  padding: 20px;
-  color: #2c3e50;
+  padding: 10px;
+  color: #333;
 }
 
 a {
   text-decoration: none;
   outline: 0;
-  color: #2c3e50;
+  color: inherit;
+  cursor: pointer;
 }
 
 a:hover, a:focus {
-  color: #34495e !important;
+  color: #444 !important;
 }
 
 code {
+  font-family: monospace;
   font-size: 14px;
-  background: #EEE;
+  background: #F9F9F9;
   padding: 4px;
 }
 
-.monitor {
-  width: 320px;
-  margin: 0;
-  padding: 20px 0 20px 0;
+table {
+  width: 100%;
+  max-width: 320px;
+  border-collapse: collapse;
+}
+
+tr {
   border-bottom: 1px solid #EEE;
+  vertical-align: top;
 }
 
-.monitor.running a {
-  color: #27ae60;
-}
-
-.monitor:last-of-type {
+tr:last-child {
   border: none;
 }
 
-.status {
-  color: #95a5a6;
+td:last-child {
+  width: 30px;
+  text-align: right;
+  font-size: 18px;
 }
 
-.details, .actions {
+td a {
   display: inline-block;
+  padding: 15px 0 15px 0;
 }
 
-.details {
-  width: 220px;
+.status {
+  font-size: 12px;
 }
 
-.actions {
-  width: 95px;
+tr.stopped, tr.crashed {
+  color: #999;
 }
 
-.actions {
-  text-align: right;
+tr.running td:last-child a, tr.running td:last-child a:hover {
+  color: #16a085 !important
 }
 
-/* Start-stop buttons */
-.start, .stop {
-  cursor: pointer;
-  text-align: right;
-  border: 0;
-  padding: 0;
-  outline: 0;
-  background: transparent;
-  font-size: 1em;
+.empty a {
+  text-decoration: underline;
 }
 
-.start:hover,
-.stop:hover{
-  color: #7f8c8d;
+footer {
+  color: #999;
 }
 
 footer a span {
@@ -103,6 +100,5 @@ body {
 footer {
   position: absolute;
   bottom: 0;
-  height: 70px;
   width: 320px;
 }
