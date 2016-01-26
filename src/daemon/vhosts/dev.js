@@ -4,6 +4,7 @@ const express = require('express')
 const httpProxy = require('http-proxy')
 const serverReady = require('server-ready')
 const errorMsg = require('../views/error-msg')
+const conf = require('../../conf')
 
 // *.dev vhost
 module.exports = (servers) => {
@@ -12,7 +13,8 @@ module.exports = (servers) => {
 
   app.use((req, res, next) => {
     const { hostname } = req
-    const id = hostname.replace(/.dev$/, '')
+    const regexp = new RegExp(`.${conf.tld}$`)
+    const id = hostname.replace(regexp, '')
 
     if (!servers.has(id)) {
       const msg = `Can't find server for http://${hostname}`

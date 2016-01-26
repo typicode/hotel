@@ -26,8 +26,8 @@ app.use('/_api/events', events)
 app.use('/_api/servers', api)
 
 // .dev hosts
-app.use(vhost('hotel.dev', hotelHost))
-app.use(vhost('*.dev', devHost))
+app.use(vhost(`hotel.${conf.tld}`, hotelHost))
+app.use(vhost(`*.${conf.tld}`, devHost))
 
 // public
 app.use(express.static(`${__dirname}/public`))
@@ -38,8 +38,10 @@ app.use(indexRouter)
 // Handle CONNECT, used by WebSockets when accessing .dev domains
 server.on('connect', (req, socket, head) => {
   const hostname = req.headers.host.split(':')[0]
-  const id = hostname.replace(/.dev$/, '')
-  if (hostname === 'hotel.dev') {
+  const regexp = new RegExp(`.${conf.tld}$`)
+  const id = hostname.replace(regexp, '')
+
+  if (hostname === `hotel.${conf.tld}`) {
     util.log(`Proxy socket to ${conf.port}`)
     tcpProxy(socket, conf.port)
   } else if (servers.has(id)) {

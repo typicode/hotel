@@ -3,10 +3,11 @@
 ## Unreleased
 
 * UI update.
+* Added top-level domain configuration option `tld`.
 
 ## 0.4.2
 
-* Removed socket.io dependency.
+* Removed `socket.io` dependency.
 
 ## 0.4.1
 
@@ -15,4 +16,3 @@
 ## 0.4.0
 
 * Added Local `.dev` domain support for HTTP requests.
-

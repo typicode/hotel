@@ -12,7 +12,8 @@ const file = untildify('~/.hotel/conf.json')
 const defaults = {
   port: 2000,
   host: '127.0.0.1',
-  timeout: 5000
+  timeout: 5000,
+  tld: 'dev'
 }
 
 // Create file it it doesn't exist
