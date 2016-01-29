@@ -8,7 +8,7 @@ const debug = require('../utils/debug')
 
 const startupFile = startup.getFile('hotel')
 
-const killURL = `http://127.0.0.1:${conf.port}/kill`
+const killURL = `http://127.0.0.1:${conf.port}/_api/kill`
 
 module.exports = {
   start,

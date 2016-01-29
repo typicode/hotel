@@ -30,7 +30,7 @@ describe('start|stop', () => {
 
   it('should stop daemon', done => {
     daemon.stop(() => {
-      const opts = url.parse('http://127.0.0.1:2000/kill')
+      const opts = url.parse('http://127.0.0.1:2000/_api/kill')
       opts.method = 'POST'
       sinon.assert.calledWith(http.request, opts)
       sinon.assert.calledWithExactly(userStartup.remove, 'hotel')
