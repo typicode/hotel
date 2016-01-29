@@ -6,9 +6,16 @@
 
     created: function () {
       var self = this
-      new EventSource('/_api/events').onmessage = function (event) {
-        var data = JSON.parse(event.data)
-        self.monitors = data.monitors
+      if (EvenetSource) {
+        new EventSource('/_api/events').onmessage = function (event) {
+          var data = JSON.parse(event.data)
+          self.monitors = data.monitors
+        }
+      } else {
+        setInterval(() => fetch('/_api/servers')
+          .then(response => response.json())
+          .then(json => self.monitors = json)
+        , 1000)
       }
     },
 

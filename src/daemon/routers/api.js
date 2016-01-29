@@ -8,6 +8,10 @@ module.exports = (servers) => {
     res.sendStatus(404)
   }
 
+  router.get('/', (req, res) => {
+    res.json({ monitors: servers.list() })
+  })
+
   router.post('/:id/start', exists, (req, res) => {
     servers.start(req.params.id)
     res.end()
