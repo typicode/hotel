@@ -1,10 +1,14 @@
 # Change Log
 
-## Unreleased
+## 0.4.4 - 0.4.5
+
+* Bug fixes
+
+## 0.4.3
 
 * UI update.
 * Added top-level domain configuration option `tld`.
-* Fixed IE support when accessing homepage.
+* Added IE support.
 
 ## 0.4.2
 
