@@ -40,7 +40,8 @@ table {
 
 tr {
   border-bottom: 1px solid #EEE;
-  vertical-align: top;
+  vertical-align: middle;
+  height: 40px;
 }
 
 tr:last-child {
@@ -53,9 +54,8 @@ td:last-child {
   font-size: 18px;
 }
 
-td a {
-  display: inline-block;
-  padding: 15px 0 15px 0;
+td:last-child .fa {
+  font-size: 20px;
 }
 
 .status {
