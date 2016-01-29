@@ -30,7 +30,7 @@ module.exports = (servers) => {
     const target = `http://127.0.0.1:${PORT}`
 
     // Make sure to send only one response
-    const forward = once((err) => {
+    const forward = once(err => {
       if (err) {
         const msg = errorMsg(server)
         res.status(502).send(msg)

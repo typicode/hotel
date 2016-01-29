@@ -23,7 +23,7 @@ function getServerFile (id) {
   return `${serversDir}/${id}.json`
 }
 
-function add (cmd, opts) {
+function add (cmd, opts = {}) {
   let id = getId(opts.n)
   let file = getServerFile(id)
   let cwd = process.cwd()

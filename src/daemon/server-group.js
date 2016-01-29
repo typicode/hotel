@@ -55,7 +55,7 @@ function addServer (group, file) {
       mon.tail = ''
 
       if (logFile) {
-        fs.unlink(logFile, (e) => { if (e) util.log(e.message) })
+        fs.unlink(logFile, err => { if (err) util.log(err.message) })
       }
     }
 
@@ -68,7 +68,7 @@ function addServer (group, file) {
         .join('\n')
 
       if (logFile) {
-        fs.appendFile(logFile, data, (e) => { if (e) util.log(e.message) })
+        fs.appendFile(logFile, data, err => { if (err) util.log(err.message) })
       }
     }
 

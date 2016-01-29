@@ -1,5 +1,6 @@
 const path = require('path')
-const got = require('got')
+const http = require('http')
+const url = require('url')
 const untildify = require('untildify')
 const startup = require('user-startup')
 const conf = require('../conf')
@@ -28,12 +29,15 @@ function start () {
 
 // Stop daemon using killURL
 function stop (cb) {
-  got.post(killURL, { timeout: 1000, retries: 0 }, (err) => {
-    console.log(err ? 'Not running' : 'Stopped daemon')
+  const opts = url.parse(killURL)
+  opts.method = 'POST'
 
+  const req = http.request(opts, () => {
     debug(`removing ${startupFile}`)
     startup.remove('hotel')
-
+    console.log('Stopped daemon')
     cb()
   })
+
+  req.on('error', () => console.log('Not running'))
 }

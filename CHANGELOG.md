@@ -4,6 +4,7 @@
 
 * UI update.
 * Added top-level domain configuration option `tld`.
+* Fixed IE support when accessing homepage.
 
 ## 0.4.2
 
