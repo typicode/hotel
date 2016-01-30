@@ -9,6 +9,7 @@ module.exports = function (servers) {
   let router = express.Router()
 
   function pac (req, res) {
+    util.log('Serve proxy.pac')
     res.send(proxyPac)
   }
 
