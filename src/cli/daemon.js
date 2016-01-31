@@ -4,6 +4,7 @@ const url = require('url')
 const untildify = require('untildify')
 const startup = require('user-startup')
 const conf = require('../conf')
+const pidFile = require('../pid-file')
 const debug = require('../utils/debug')
 
 const startupFile = startup.getFile('hotel')
@@ -29,15 +30,7 @@ function start () {
 
 // Stop daemon using killURL
 function stop (cb) {
-  const opts = url.parse(killURL)
-  opts.method = 'POST'
-
-  const req = http.request(opts, () => {
-    debug(`removing ${startupFile}`)
-    startup.remove('hotel')
-    console.log('Stopped daemon')
-    cb()
-  })
-
-  req.on('error', () => console.log('Not running'))
+  startup.remove('hotel')
+  const pid = pidFile.read()
+  if (pid) process.kill(pid)
 }

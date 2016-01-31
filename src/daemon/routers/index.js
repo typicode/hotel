@@ -13,15 +13,6 @@ module.exports = function (servers) {
     res.send(proxyPac)
   }
 
-  function kill (req, res) {
-    res.end()
-    util.log('Shutting down servers')
-    servers.shutdown(() => {
-      util.log('Exit')
-      process.exit()
-    })
-  }
-
   function redirect (req, res, next) {
     const { id } = req.params
 
@@ -60,7 +51,6 @@ module.exports = function (servers) {
   router
     .get('/proxy.pac', pac)
     .get('/:id', redirect)
-    .post('/kill', kill)
 
   return router
 }
