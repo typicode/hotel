@@ -9,6 +9,7 @@
     "node": ">= 0.12"
   },
   "scripts": {
+<<<<<<< d0aa47673ffca22b529b33e4254a7de12d3af80a
     "test": "mocha && standard",
     "start": "nodemon --exec babel-node -- src/daemon",
     "prepublish": "npm test && npm run build",
@@ -16,6 +17,18 @@
     "uninstall": "node lib/scripts/uninstall",
     "build": "babel src --out-dir lib --copy-files --loose all",
     "watch": "npm run build -- --watch"
+=======
+    "test": "npm run mocha && npm run standard ",
+    "start": "npm run babel:watch & npm run nodemon & wait",
+    "prepublish": "npm test",
+    "install": "node lib/scripts/install",
+    "uninstall": "node lib/scripts/uninstall",
+    "nodemon": "nodemon lib/daemon --ignore lib/daemon/public",
+    "babel:build": "babel src --out-dir lib --copy-files --loose all",
+    "babel:watch": "npm run build -- --watch",
+    "standard": "standard",
+    "mocha": "mocha test/daemon/**/*.js test/cli/*.js test/bin"
+>>>>>>> Refactor scripts
   },
   "repository": {
     "type": "git",
