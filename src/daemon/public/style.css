@@ -3,15 +3,11 @@
   display: none;
 }
 
-html, button {
-  font-family: sans-serif;
-}
-
 body {
-  font-family: sans-serif;
-  font-size: 16px;
+  font-family: "Helvetica Neue", Helvetica, arial, sans-serif;
+  font-size: 18px;
   padding: 10px;
-  color: #333;
+  color: #34495e;
 }
 
 a {
@@ -22,7 +18,7 @@ a {
 }
 
 a:hover, a:focus {
-  color: #444 !important;
+  color: #2c3e50 !important;
 }
 
 code {
@@ -39,22 +35,19 @@ table {
 }
 
 tr {
-  border-bottom: 1px solid #EEE;
+  border: solid #EEE;
+  border-width: 1px 0 1px 0;
   vertical-align: middle;
   height: 40px;
 }
 
-tr:last-child {
-  border: none;
-}
-
-td:last-child {
+td.actions {
   width: 30px;
   text-align: right;
   font-size: 18px;
 }
 
-td:last-child .fa {
+td.actions .fa {
   font-size: 20px;
 }
 
@@ -63,11 +56,11 @@ td:last-child .fa {
 }
 
 tr.stopped, tr.crashed {
-  color: #999;
+  color: #bdc3c7;
 }
 
-tr.running td:last-child a, tr.running td:last-child a:hover {
-  color: #16a085 !important
+tr.running td.actions a, tr.running td.actions a:hover {
+  color: #2ecc71 !important
 }
 
 .empty a {
@@ -75,7 +68,7 @@ tr.running td:last-child a, tr.running td:last-child a:hover {
 }
 
 footer {
-  color: #999;
+  color: #bdc3c7;
 }
 
 footer a span {

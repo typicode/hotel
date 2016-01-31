@@ -1,25 +1,22 @@
 /* eslint-disable */
 ;(function () {
-  var vm = new Vue({
+  const API_ROOT = '_api'
+
+  const vm = new Vue({
 
     el: '#app',
 
-    created: function () {
-      var self = this
+    created() {
       if (EventSource) {
-        new EventSource('/_api/events').onmessage = function (event) {
-          var data = JSON.parse(event.data)
-          self.monitors = data.monitors
+        new EventSource(`${API_ROOT}/events`).onmessage = event => {
+          const data = JSON.parse(event.data)
+          this.monitors = data.monitors
         }
       } else {
-        setInterval(function () {
-          fetch('/_api/servers')
-            .then(function (response) {
-              return response.json()
-            })
-            .then(function (json) {
-              return self.monitors = json
-            })
+        setInterval(() => {
+          fetch(`${API_ROOT}/servers`)
+            .then(response => response.json())
+            .then(json => this.monitors = json)
         }, 1000)
       }
     },
@@ -29,12 +26,12 @@
     },
 
     methods: {
-      start: function (id) {
-        fetch('/_api/servers/' + id + '/start', { method: 'POST' })
+      start(id) {
+        fetch(`${API_ROOT}/servers/${id}/start`, { method: 'POST' })
       },
 
       stop: function (id) {
-        fetch('/_api/servers/' + id + '/stop', { method: 'POST' })
+        fetch(`${API_ROOT}/servers/${id}/stop`, { method: 'POST' })
       }
     }
   })

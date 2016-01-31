@@ -5,20 +5,20 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
   </head>
   <body>
     <div v-cloak v-if="monitors !== null" id="app">
       <table>
         <tr v-if="monitors.length" v-for="monitor in monitors" class="monitor {{monitor.status}}">
 
-          <td>
+          <td class="details">
             <a href="/{{monitor.id}}" title="{{monitor.cwd}}$ {{monitor.command[2]}}">
-              {{monitor.id}}
-              <span class="status">- {{monitor.status}}</span>
+              {{monitor.id}}<span class="status"> - {{monitor.status}}</span>
             </a>
           </td>
 
-          <td>
+          <td class="actions">
             <a v-if="monitor.status !== 'running'" v-on:click.prevent="start(monitor.id)" class="start">
               <i class="fa fa-toggle-off"></i>
             </a>
