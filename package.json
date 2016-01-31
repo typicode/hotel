@@ -9,11 +9,11 @@
     "node": ">= 0.12"
   },
   "scripts": {
-    "test": "mocha test/daemon/**/*.js test/cli/*.js --compilers js:babel-core/register && npm run standard ",
+    "test": "mocha test/daemon/**/*.js test/cli/*.js test/bin && npm run standard ",
     "start": "nodemon --exec babel-node -- src/daemon",
     "prepublish": "npm test",
-    "install": "node bin/install",
-    "uninstall": "node bin/uninstall",
+    "install": "node lib/scripts/install",
+    "uninstall": "node lib/scripts/uninstall",
     "standard": " standard",
     "build": "babel src --out-dir lib --copy-files --loose all",
     "watch": "npm run build -- --watch"
