@@ -1,4 +1,4 @@
-var daemon = require('../cli/daemon')
+const daemon = require('../cli/daemon')
 
 console.log()
 daemon.stop(console.log)

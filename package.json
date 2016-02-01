@@ -12,7 +12,7 @@
     "test": "mocha && standard",
     "start": "nodemon --exec babel-node -- src/daemon",
     "prepublish": "npm test && npm run build",
-    "install": "node lib/scripts/install",
+    "install": "echo '\nHotel is now installed.\nRun 'hotel start' and visit 'http://localhost:2000' to get started.'",
     "uninstall": "node lib/scripts/uninstall",
     "build": "babel src --out-dir lib --copy-files --loose all",
     "watch": "npm run build -- --watch"
