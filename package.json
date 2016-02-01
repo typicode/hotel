@@ -9,7 +9,7 @@
     "node": ">= 0.12"
   },
   "scripts": {
-    "test": "mocha test/daemon/**/*.js test/cli/*.js test/bin && npm run standard ",
+    "test": "mocha test/daemon/**/*.js test/cli/*.js && npm run standard ",
     "start": "nodemon --exec babel-node -- src/daemon",
     "prepublish": "npm test",
     "install": "node lib/scripts/install",
