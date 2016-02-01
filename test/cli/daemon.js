@@ -1,4 +1,4 @@
-/* global describe, before, it */
+/* global describe, before, after, it */
 const path = require('path')
 const http = require('http')
 const url = require('url')
