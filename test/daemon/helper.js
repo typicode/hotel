@@ -14,6 +14,6 @@ module.exports.createApp = function () {
 
   const app = daemonApp(group)
   app.group = group
-  app.shutdown = (cb) => group.shutdown(cb)
+  app.shutdown = cb => group.shutdown(cb)
   return app
 }

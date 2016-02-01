@@ -8,12 +8,19 @@ const userStartup = require('user-startup')
 const daemon = require('../../src/cli/daemon')
 
 describe('start|stop', () => {
+  let sandbox
+
   before(() => {
-    sinon.stub(userStartup, 'create')
-    sinon.stub(userStartup, 'remove')
-    sinon.stub(http, 'request')
+    sandbox = sinon.sandbox.create()
+    sandbox.stub(userStartup, 'create')
+    sandbox.stub(userStartup, 'remove')
+    sandbox.stub(http, 'request')
       .returns({ on: () => {} })
       .callsArg(1)
+  })
+
+  after(() => {
+    sandbox.restore()
   })
 
   it('should start daemon', () => {

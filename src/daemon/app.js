@@ -4,6 +4,7 @@ const express = require('express')
 const vhost = require('vhost')
 const conf = require('../conf')
 const tcpProxy = require('./tcp-proxy')
+const API_ROOT = '/_'
 
 module.exports = servers => {
   const app = express()
@@ -20,10 +21,10 @@ module.exports = servers => {
   serverReady.timeout = conf.timeout
 
   // Server-sent events for servers
-  app.use('/_api/events', events)
+  app.use(`${API_ROOT}/events`, events)
 
   // API
-  app.use('/_api/servers', api)
+  app.use(`${API_ROOT}/servers`, api)
 
   // .dev hosts
   app.use(vhost(`hotel.${conf.tld}`, hotelHost))

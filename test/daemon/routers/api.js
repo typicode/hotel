@@ -6,11 +6,12 @@ const app = require('../helper').createApp()
 describe('routers/api', () => {
   after(done => app.shutdown(done))
 
-  describe('GET /_api/servers', () => {
+  describe('GET /_/servers', () => {
     it('should return monitor list', done => {
       request(app)
-        .get('/_api/servers')
+        .get('/_/servers')
         .expect(200, (err, res) => {
+          console.log('fooo')
           if (err) return done(err)
           assert.equal(res.body.monitors.length, 2)
           done()
@@ -18,10 +19,10 @@ describe('routers/api', () => {
     })
   })
 
-  describe('POST /_api/servers/:id/start', () => {
+  describe('POST /_/servers/:id/start', () => {
     it('should start monitor', done => {
       request(app)
-        .post('/_api/servers/node/start')
+        .post('/_/servers/node/start')
         .expect(200, err => {
           if (err) return done(err)
           assert.equal(app.group.get('node').status, 'running')
@@ -30,10 +31,10 @@ describe('routers/api', () => {
     })
   })
 
-  describe('POST /_api/servers/:id/stop', () => {
+  describe('POST /_/servers/:id/stop', () => {
     it('should start monitor', done => {
       request(app)
-        .post('/_api/servers/node/stop')
+        .post('/_/servers/node/stop')
         .expect(200, err => {
           if (err) return done(err)
           assert.equal(app.group.get('node').status, 'stopping')
