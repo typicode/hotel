@@ -1,10 +1,8 @@
 # hotel [![Mac/Linux Build Status](https://img.shields.io/travis/typicode/hotel/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/typicode/hotel) [![Windows Build status](https://img.shields.io/appveyor/ci/typicode/hotel/master.svg?label=Windows)](https://ci.appveyor.com/project/typicode/hotel/branch/master) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel)
 
-> Classy process manager for web devs ❤
+> No need to worry about ports, remember commands, manage terminal tabs, ... access and start your servers from the browser. You can even use local `.dev` domains and it works everywhere (OS X, Linux, Windows) :+1:
 
 ![](https://rawgit.com/typicode/hotel/master/screen.gif)
-
-No need to worry about ports, remember commands, manage terminal tabs, ... access and start your servers from the browser. You can even use local `.dev` domains and it works everywhere :+1:
 
 ## Features
 
@@ -17,7 +15,7 @@ No need to worry about ports, remember commands, manage terminal tabs, ... acces
 * Plays nice with other servers (Apache, Nginx, ...)
 * No port 80 or admin/root privileges needed
 
-_(*) Local `.dev` domains are optional. If you want to use them, you need to configure your browser or network to use hotel's proxy auto-config file (`proxy.pac`). See instructions [here](https://github.com/typicode/hotel/blob/master/docs/README.md)._
+_(*) Local `.dev` domains are optional. To use them, configure your network or browser to use hotel's proxy auto-config file (`proxy.pac`). See instructions [here](https://github.com/typicode/hotel/blob/master/docs/README.md)._
 
 ## Install
 
