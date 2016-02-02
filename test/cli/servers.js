@@ -1,8 +1,4 @@
 /* global describe, before, afterEach, it */
-process.env.HOME = '/home'
-process.env.USERPROFILE = process.env.HOME
-process.cwd = () => '/some/dir/project'
-
 const fs = require('fs')
 const path = require('path')
 const assert = require('assert')
@@ -12,18 +8,21 @@ const { serversDir } = require('../../src/common')
 
 describe('add|rm', () => {
 
-  before(() => mock({
-    [serversDir]: {}
-  }))
+  before(() => {
+    process.chdir(path.join(__dirname, '../fixtures/app'))
+    mock({
+      [serversDir]: {}
+    })
+  })
 
   afterEach(() => mock.restore())
 
   it('should create file', () => {
     servers.add('node index.js')
-    const file = path.join(serversDir, 'project.json')
+    const file = path.join(serversDir, 'app.json')
     const conf = {
       cmd: 'node index.js',
-      cwd: '/some/dir/project',
+      cwd: process.cwd(),
       env: {
         PATH: process.env.PATH
       }
@@ -38,17 +37,17 @@ describe('add|rm', () => {
   it('should support options', () => {
     process.env.FOO = 'FOO'
     const opts = {
-      n: 'app',
+      n: 'project',
       o: '/some/path/out.log',
       e: 'FOO',
       p: 3000
     }
     servers.add('node index.js', opts)
 
-    const file = path.join(serversDir, 'app.json')
+    const file = path.join(serversDir, 'project.json')
     const conf = {
       cmd: 'node index.js',
-      cwd: '/some/dir/project',
+      cwd: process.cwd(),
       out: opts.o,
       env: {
         PATH: process.env.PATH,
@@ -64,10 +63,10 @@ describe('add|rm', () => {
   })
 
   it('should remove file', () => {
-    const project = path.join(serversDir, 'project.json')
     const app = path.join(serversDir, 'app.json')
+    const project = path.join(serversDir, 'project.json')
     servers.rm()
-    servers.rm('app')
+    servers.rm('project')
     assert(!fs.existsSync(project))
     assert(!fs.existsSync(app))
   })
