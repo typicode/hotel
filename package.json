@@ -15,7 +15,7 @@
     "uninstall": "node lib/scripts/uninstall",
     "nodemon": "nodemon lib/daemon --ignore lib/daemon/public",
     "babel:build": "babel src --out-dir lib --copy-files --loose all",
-    "babel:watch": "npm run build -- --watch",
+    "babel:watch": "npm run build -- --watch"
   },
   "repository": {
     "type": "git",
