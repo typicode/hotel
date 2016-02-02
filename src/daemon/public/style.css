@@ -59,8 +59,12 @@ tr.stopped, tr.crashed {
   color: #bdc3c7;
 }
 
-tr.running td.actions a, tr.running td.actions a:hover {
-  color: #2ecc71 !important
+tr.running td.actions a {
+  color: #2ecc71 !important;
+}
+
+tr.running td.actions a:hover {
+  color: #27ae60 !important;
 }
 
 .empty a {
