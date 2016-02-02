@@ -1,6 +1,6 @@
 /* eslint-disable */
 ;(function () {
-  const API_ROOT = '_api'
+  const API_ROOT = '_'
 
   const vm = new Vue({
 
