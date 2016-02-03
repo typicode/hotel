@@ -1,6 +1,6 @@
 const fs = require('fs')
 const untildify = require('untildify')
-const pidFile = untildify('~/.hotel/pid')
+const pidFile = untildify('~/.hotel/daemon.pid')
 
 module.exports = {
   create,
