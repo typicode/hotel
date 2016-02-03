@@ -11,7 +11,7 @@ describe('start|stop', () => {
 
   before(() => {
     mock({
-      '~/.hotel/pid': '1234'
+      '~/.hotel/daemon.pid': '1234'
     })
 
     sandbox = sinon.sandbox.create()
