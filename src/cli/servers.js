@@ -24,10 +24,10 @@ function getServerFile (id) {
 }
 
 function add (cmd, opts = {}) {
-  let id = getId(opts.n)
-  let file = getServerFile(id)
-  let cwd = process.cwd()
-  let obj = { cwd, cmd }
+  const id = getId(opts.n)
+  const file = getServerFile(id)
+  const cwd = process.cwd()
+  const obj = { cwd, cmd }
 
   if (opts.o) obj.out = opts.o
 
@@ -46,13 +46,13 @@ function add (cmd, opts = {}) {
     obj.env.PORT = opts.p
   }
 
-  let data = JSON.stringify(obj, null, 2)
+  const data = JSON.stringify(obj, null, 2)
 
   console.log(`Create ${tildify(file)}`)
   fs.writeFileSync(file, data)
 
   if (obj.out) {
-    let logFile = tildify(path.resolve(obj.out))
+    const logFile = tildify(path.resolve(obj.out))
     console.log(`Output ${logFile}`)
   } else {
     console.log('Output No log file specified (use \'-o app.log\')')
@@ -60,8 +60,8 @@ function add (cmd, opts = {}) {
 }
 
 function rm (name) {
-  let id = getId(name)
-  let file = getServerFile(id)
+  const id = getId(name)
+  const file = getServerFile(id)
 
   console.log(`Remove  ${tildify(file)}`)
   if (fs.existsSync(file)) {
@@ -73,14 +73,13 @@ function rm (name) {
 }
 
 function ls () {
-  let list = fs
+  const list = fs
     .readdirSync(serversDir)
     .map(file => {
-      let id = path.basename(file, '.json')
-      let serverFile = getServerFile(id)
-      let server = JSON.parse(fs.readFileSync(serverFile))
-      return `  ${tildify(server.cwd)}$ ${server.cmd}\n` +
-        `  http://localhost:${conf.port}/${id}`
+      const id = path.basename(file, '.json')
+      const serverFile = getServerFile(id)
+      const server = JSON.parse(fs.readFileSync(serverFile))
+      return `${id} - ${server.cwd}\n${server.cmd}`
     })
     .join('\n\n')
 

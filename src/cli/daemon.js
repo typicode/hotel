@@ -24,8 +24,9 @@ function start () {
 }
 
 // Stop daemon using killURL
-function stop (cb) {
+function stop () {
   startup.remove('hotel')
   const pid = pidFile.read()
   if (pid) process.kill(pid)
+  console.log('Stopped')
 }

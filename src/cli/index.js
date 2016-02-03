@@ -5,7 +5,6 @@ const daemon = require('./daemon')
 const pkg = require('../../package.json')
 
 module.exports = processArgv => {
-  console.log()
   sudoBlock('\nShould not be run as root, please retry without sudo.\n')
   updateNotifier({ pkg }).notify()
 
@@ -28,42 +27,25 @@ module.exports = processArgv => {
   const { argv } = yargs
   const { _ } = argv
 
-  // Need to rely on a callback because daemon.stop is asynchronous
-  const run = cb => {
-    if (_[0] === 'add' && _[1]) {
-      servers.add(_[1], argv)
-      return cb()
-    }
-
-    if (_[0] === 'rm') {
-      servers.rm(_[1])
-      return cb()
-    }
-
-    if (_[0] === 'ls') {
-      servers.ls()
-      return cb()
-    }
-
-    if (_[0] === 'start') {
-      daemon.start()
-      return cb()
-    }
-
-    if (_[0] === 'stop') {
-      daemon.stop(cb)
-      return
-    }
-
-    yargs.showHelp()
+  if (_[0] === 'add' && _[1]) {
+    return servers.add(_[1], argv)
   }
 
-  run(err => {
-    if (err) {
-      if (err.message) console.log('Error   ' + err.message)
-      console.log()
-      process.exit(1)
-    }
-    console.log()
-  })
+  if (_[0] === 'rm') {
+    return servers.rm(_[1])
+  }
+
+  if (_[0] === 'ls') {
+    return servers.ls()
+  }
+
+  if (_[0] === 'start') {
+    return daemon.start()
+  }
+
+  if (_[0] === 'stop') {
+    return daemon.stop()
+  }
+
+  yargs.showHelp()
 }
