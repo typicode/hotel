@@ -3,7 +3,6 @@ const path = require('path')
 const tildify = require('tildify')
 const mkdirp = require('mkdirp')
 const common = require('../common')
-const conf = require('../conf')
 
 const serversDir = common.serversDir
 
