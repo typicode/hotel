@@ -3,6 +3,7 @@
 ## 0.4.6
 
 * Bug fixes (0.4.3 to 0.4.5 deprecated)
+* Added `~/.hotel/daemon.pid` file
 
 ## 0.4.3
 
