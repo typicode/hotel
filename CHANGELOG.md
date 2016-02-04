@@ -1,8 +1,8 @@
 # Change Log
 
-## 0.4.4 - 0.4.5
+## 0.4.6
 
-* Bug fixes
+* Bug fixes (0.4.3 to 0.4.5 deprecated)
 
 ## 0.4.3
 
