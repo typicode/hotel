@@ -114,6 +114,7 @@ hotel add "cmd -p %PORT%" # Windows
 ```bash
 ~/.hotel/conf.json
 ~/.hotel/daemon.log
+~/.hotel/daemon.pid
 ~/.hotel/servers/<app-name>.json
 ```
 
