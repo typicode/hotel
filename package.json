@@ -13,6 +13,7 @@
     "start": "npm run babel:watch & npm run nodemon & wait",
     "prepublish": "npm test && npm run babel:build",
     "uninstall": "node lib/scripts/uninstall",
+    "precommit": "npm test",
     "nodemon": "nodemon lib/daemon --ignore lib/daemon/public",
     "babel:build": "babel src --out-dir lib --copy-files --loose all",
     "babel:watch": "npm run babel:build -- --watch"
@@ -63,6 +64,7 @@
     "babel-plugin-transform-object-assign": "^6.1.18",
     "babel-polyfill": "^6.1.19",
     "babel-preset-es2015": "^6.1.2",
+    "husky": "^0.10.2",
     "mocha": "^2.4.2",
     "mock-fs": "^3.6.0",
     "nodemon": "^1.8.1",
