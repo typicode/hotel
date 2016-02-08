@@ -23,10 +23,15 @@ function start () {
   console.log(`Started http://localhost:${conf.port}`)
 }
 
-// Stop daemon using killURL
+// Stop daemon using PID
 function stop () {
   startup.remove('hotel')
   const pid = pidFile.read()
-  if (pid) process.kill(pid)
+  if (pid) {
+    try {
+      // May fail in some cases
+      process.kill(pid)
+    } catch (err) {}
+  }
   console.log('Stopped')
 }
