@@ -9,7 +9,7 @@ After that, you'll be able to access servers using `.dev` domains:
 * `http://hotel.dev  ` <-> `http://localhost:2000`
 * `http://project.dev` <-> `http://localhost:2000/project`
 
-## System configuration (recommanded)
+## System configuration (recommended)
 
 ### OS X
 
