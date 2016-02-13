@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-* Bundle front-end dependencies to make homepage work without network access
+* Bundle front-end dependencies to make homepage work without network access.
 
 ## 0.4.6
 
