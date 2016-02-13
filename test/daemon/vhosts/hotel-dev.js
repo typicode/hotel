@@ -1,9 +1,12 @@
 /* global describe, after, it */
 const request = require('supertest')
-const app = require('../helper').createApp()
+const helper = require('../helper')
 
 describe('GET hotel.tld', () => {
-  after(done => app.shutdown(done))
+  let app
+
+  before(() => app = helper.before())
+  after(helper.after)
 
   it('should return 200', done => {
     request(app)

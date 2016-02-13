@@ -8,7 +8,7 @@ const conf = require('../../conf')
 
 // *.dev vhost
 module.exports = (servers) => {
-  const app = express()
+  const app = express.Router()
   const proxy = httpProxy.createProxyServer()
 
   app.use((req, res, next) => {

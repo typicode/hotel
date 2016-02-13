@@ -13,9 +13,6 @@ const common = require('../common')
 // Path
 const serversDir = common.serversDir
 
-// Create dir
-mkdirp.sync(serversDir)
-
 // Return monitor id
 function getId (file) {
   return path.basename(file, '.json')
@@ -94,6 +91,9 @@ function removeServer (group, file) {
 }
 
 module.exports = function () {
+  // Create dir
+  mkdirp.sync(serversDir)
+
   let group = regroup({
     maxRestarts: 0
   })
@@ -113,14 +113,7 @@ module.exports = function () {
   // Watch ~/.hotel/servers
   util.log(`Watching ${serversDir}`)
 
-  // During tests don't bother about CPU and make chokidar super fast
-  let opts = {}
-  if (process.env.NODE_ENV === 'test') {
-    opts.usePolling = true
-    opts.interval = 25
-  }
-
-  chokidar.watch(serversDir, opts)
+/*  chokidar.watch(serversDir)
     .on('add', (file) => {
       util.log(`created ${file}`)
       addServer(group, file)
@@ -133,7 +126,7 @@ module.exports = function () {
       util.log(`removed ${file}`)
       removeServer(group, file)
     })
-
+*/
   // Add servers
   let files = fs.readdirSync(serversDir)
   for (let file of files) {

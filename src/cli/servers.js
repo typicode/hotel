@@ -6,8 +6,6 @@ const common = require('../common')
 
 const serversDir = common.serversDir
 
-mkdirp.sync(serversDir)
-
 module.exports = {
   add,
   rm,
@@ -23,9 +21,11 @@ function getServerFile (id) {
 }
 
 function add (cmd, opts = {}) {
+  mkdirp.sync(serversDir)
+
   const id = getId(opts.n)
   const file = getServerFile(id)
-  const cwd = process.cwd()
+  const cwd = opts.d || process.cwd()
   const obj = { cwd, cmd }
 
   if (opts.o) obj.out = opts.o
@@ -72,6 +72,8 @@ function rm (name) {
 }
 
 function ls () {
+  mkdirp.sync(serversDir)
+  
   const list = fs
     .readdirSync(serversDir)
     .map(file => {

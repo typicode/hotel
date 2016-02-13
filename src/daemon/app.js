@@ -2,22 +2,31 @@ const util = require('util')
 const http = require('http')
 const express = require('express')
 const vhost = require('vhost')
+const serverReady = require('server-ready')
 const conf = require('../conf')
+
+// Require routes
 const tcpProxy = require('./tcp-proxy')
+const IndexRouter = require('./routers')
+const APIRouter = require('./routers/api')
+const Events = require('./events')
+const HotelHost = require('./vhosts/hotel-dev')
+const DevHost = require('./vhosts/dev')
+
 const API_ROOT = '/_'
 
 module.exports = servers => {
   const app = express()
   const server = http.createServer(app)
 
-  const indexRouter = require('./routers')(servers)
-  const api = require('./routers/api')(servers)
-  const events = require('./events')(servers)
-  const hotelHost = require('./vhosts/hotel-dev')(servers)
-  const devHost = require('./vhosts/dev')(servers)
+  // Initialize routes
+  const indexRouter = IndexRouter(servers)
+  const api = APIRouter(servers)
+  const events = Events(servers)
+  const hotelHost = HotelHost(servers)
+  const devHost = DevHost(servers)
 
   // requests timeout
-  const serverReady = require('server-ready')
   serverReady.timeout = conf.timeout
 
   // Server-sent events for servers
