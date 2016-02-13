@@ -1,5 +1,9 @@
 # Change Log
 
+## Unreleased
+
+* Bundle front-end dependencies to make homepage work without network access
+
 ## 0.4.6
 
 * Bug fixes (0.4.3 to 0.4.5 deprecated)
