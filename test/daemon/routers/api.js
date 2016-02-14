@@ -1,10 +1,10 @@
-/* global describe, after, it */
+/* global describe, before, after, it */
 const request = require('supertest')
 const assert = require('assert')
 const helper = require('../helper')
 
 describe('routers/api', () => {
-  var app
+  let app
   before(() => app = helper.before())
   after(helper.after)
 
@@ -13,7 +13,6 @@ describe('routers/api', () => {
       request(app)
         .get('/_/servers')
         .expect(200, (err, res) => {
-          console.log('fooo')
           if (err) return done(err)
           assert.equal(res.body.monitors.length, 2)
           done()

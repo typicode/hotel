@@ -1,10 +1,9 @@
-/* global describe, after, it */
+/* global describe, before, after, it */
 const request = require('supertest')
 const helper = require('../helper')
 
 describe('*.tld', () => {
   let app
-
   before(() => app = helper.before())
   after(helper.after)
 

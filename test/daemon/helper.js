@@ -1,3 +1,4 @@
+const path = require('path')
 const mock = require('mock-fs')
 const untildify = require('untildify')
 const daemonApp = require('../../src/daemon/app')
@@ -11,9 +12,11 @@ module.exports = {
 
 let app
 
-function before() {
+function before () {
   mock({
-    [untildify('~/.hotel')]: {}
+    [untildify('~/.hotel')]: {},
+    // Needed to avoid 404
+    [path.join(__dirname, '../../src/daemon/public/index.html')]: 'hello world'
   })
 
   servers.add('node index.js', {
@@ -24,14 +27,14 @@ function before() {
 
   servers.add('unknown-cmd', { n: 'failing' })
 
-  const group = serverGroup()
+  const group = serverGroup(false)
   app = daemonApp(group)
   app.group = group
 
   return app
 }
 
-function after(done) {
+function after (done) {
   app.group.shutdown(done)
   mock.restore()
 }

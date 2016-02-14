@@ -1,11 +1,10 @@
-/* global describe, after, it */
+/* global describe, before, after, it */
 const request = require('supertest')
 const assert = require('assert')
 const helper = require('../helper')
 
 describe('routers/index', () => {
   let app
-
   before(() => app = helper.before())
   after(helper.after)
 

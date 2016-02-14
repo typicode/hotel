@@ -90,7 +90,7 @@ function removeServer (group, file) {
   group.emit('change')
 }
 
-module.exports = function () {
+module.exports = (watch = true) => {
   // Create dir
   mkdirp.sync(serversDir)
 
@@ -113,20 +113,22 @@ module.exports = function () {
   // Watch ~/.hotel/servers
   util.log(`Watching ${serversDir}`)
 
-/*  chokidar.watch(serversDir)
-    .on('add', (file) => {
-      util.log(`created ${file}`)
-      addServer(group, file)
-    })
-    .on('change', (file) => {
-      util.log(`changed ${file}`)
-      updateServer(group, file)
-    })
-    .on('unlink', (file) => {
-      util.log(`removed ${file}`)
-      removeServer(group, file)
-    })
-*/
+  if (watch) {
+    chokidar.watch(serversDir)
+      .on('add', (file) => {
+        util.log(`created ${file}`)
+        addServer(group, file)
+      })
+      .on('change', (file) => {
+        util.log(`changed ${file}`)
+        updateServer(group, file)
+      })
+      .on('unlink', (file) => {
+        util.log(`removed ${file}`)
+        removeServer(group, file)
+      })
+  }
+
   // Add servers
   let files = fs.readdirSync(serversDir)
   for (let file of files) {

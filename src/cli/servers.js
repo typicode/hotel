@@ -73,7 +73,7 @@ function rm (name) {
 
 function ls () {
   mkdirp.sync(serversDir)
-  
+
   const list = fs
     .readdirSync(serversDir)
     .map(file => {
