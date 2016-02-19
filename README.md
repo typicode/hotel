@@ -32,13 +32,20 @@ Add your servers commands.
 ~/projects/two$ hotel add 'serve -p $PORT'
 ```
 
-Now, you can access, start and stop your servers from [localhost:2000](http://localhost:2000).
+Now, you can access, start and stop your servers from [localhost:2000](http://localhost:2000) or [hotel.dev](http://hotel.dev).
 
 As a shortcut, you can also directly go to:
 
 ```bash
 http://localhost:2000/one
 http://localhost:2000/two
+```
+
+And
+
+```bash
+http://one.dev
+http://two.dev
 ```
 
 Other servers examples:
