@@ -91,8 +91,8 @@ Other commands
 ```bash
 hotel ls        # List servers
 hotel rm [name] # Remove server
-hotel start     # Start daemon
-hotel stop      # Stop daemon
+hotel start     # Start hotel daemon
+hotel stop      # Stop hotel daemon
 ```
 
 ## Port
