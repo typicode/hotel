@@ -1,10 +1,12 @@
-/* global describe, after, it */
+/* global describe, before, after, it */
 const request = require('supertest')
 const assert = require('assert')
-const app = require('../helper').createApp()
+const helper = require('../helper')
 
 describe('routers/index', () => {
-  after(done => app.shutdown(done))
+  let app
+  before(() => app = helper.before())
+  after(helper.after)
 
   describe('GET /proxy.pac', () => {
     it('should serve /proxy.pac', done => {

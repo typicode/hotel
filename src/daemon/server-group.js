@@ -13,9 +13,6 @@ const common = require('../common')
 // Path
 const serversDir = common.serversDir
 
-// Create dir
-mkdirp.sync(serversDir)
-
 // Return monitor id
 function getId (file) {
   return path.basename(file, '.json')
@@ -93,7 +90,10 @@ function removeServer (group, file) {
   group.emit('change')
 }
 
-module.exports = function () {
+module.exports = (watch = true) => {
+  // Create dir
+  mkdirp.sync(serversDir)
+
   let group = regroup({
     maxRestarts: 0
   })
@@ -113,26 +113,21 @@ module.exports = function () {
   // Watch ~/.hotel/servers
   util.log(`Watching ${serversDir}`)
 
-  // During tests don't bother about CPU and make chokidar super fast
-  let opts = {}
-  if (process.env.NODE_ENV === 'test') {
-    opts.usePolling = true
-    opts.interval = 25
+  if (watch) {
+    chokidar.watch(serversDir)
+      .on('add', (file) => {
+        util.log(`created ${file}`)
+        addServer(group, file)
+      })
+      .on('change', (file) => {
+        util.log(`changed ${file}`)
+        updateServer(group, file)
+      })
+      .on('unlink', (file) => {
+        util.log(`removed ${file}`)
+        removeServer(group, file)
+      })
   }
-
-  chokidar.watch(serversDir, opts)
-    .on('add', (file) => {
-      util.log(`created ${file}`)
-      addServer(group, file)
-    })
-    .on('change', (file) => {
-      util.log(`changed ${file}`)
-      updateServer(group, file)
-    })
-    .on('unlink', (file) => {
-      util.log(`removed ${file}`)
-      removeServer(group, file)
-    })
 
   // Add servers
   let files = fs.readdirSync(serversDir)

@@ -1,17 +1,18 @@
-/* global describe, after, it */
+/* global describe, before, after, it */
 const request = require('supertest')
 const assert = require('assert')
-const app = require('../helper').createApp()
+const helper = require('../helper')
 
 describe('routers/api', () => {
-  after(done => app.shutdown(done))
+  let app
+  before(() => app = helper.before())
+  after(helper.after)
 
   describe('GET /_/servers', () => {
     it('should return monitor list', done => {
       request(app)
         .get('/_/servers')
         .expect(200, (err, res) => {
-          console.log('fooo')
           if (err) return done(err)
           assert.equal(res.body.monitors.length, 2)
           done()

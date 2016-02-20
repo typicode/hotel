@@ -3,7 +3,7 @@ const express = require('express')
 
 // hotel.dev vhost
 module.exports = (servers) => {
-  const app = express()
+  const app = express.Router()
 
   // Redirect http://hotel.dev/:id to http://:id.dev
   app.use('/:id', (req, res, next) => {
