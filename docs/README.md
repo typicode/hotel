@@ -13,7 +13,7 @@ After that, you'll be able to access servers using `.dev` domains:
 
 ### OS X
 
-`Network Preferences > Advanced > Proxies > Automatic Proxy Discovery`
+`Network Preferences > Advanced > Proxies > Automatic Proxy Configuration`
 
 ### Windows
 
