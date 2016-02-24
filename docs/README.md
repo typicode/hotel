@@ -29,7 +29,13 @@ Browsers can be configured to use a specific proxy. Use this method as an altern
 
 ### Chrome
 
-`google-chrome --proxy-pac-url=http://localhost:2000/proxy.pac`
+```sh
+# Linux
+google-chrome --proxy-pac-url=http://localhost:2000/proxy.pac`
+
+# OS X
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --proxy-pac-url=http://localhost:2000/proxy.pac 
+```
 
 ### Firefox
 
