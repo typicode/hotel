@@ -12,7 +12,7 @@
     "test": "mocha && standard",
     "start": "npm run babel:watch & npm run webpack:watch & npm run nodemon & wait",
     "prepublish": "npm test && npm run babel:build && npm run webpack:build",
-    "uninstall": "node lib/scripts/uninstall",
+    "uninstall": "bin/uninstall.js",
     "precommit": "npm test",
     "nodemon": "nodemon lib/daemon --ignore lib/daemon/public",
     "babel:build": "babel src --out-dir lib --copy-files --loose all --ignore src/client",
