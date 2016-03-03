@@ -16,19 +16,18 @@ describe('routers/index', () => {
     })
   })
 
-  // TODO: this test randomly fails on AppVeyor
-  // describe('GET http://localhost:2000/node', () => {
-  //   it('should redirect to node server', done => {
-  //     request(app)
-  //       .get('/node')
-  //       .expect('location', /:51234/)
-  //       .expect(302, (err, res) => {
-  //         if (err) throw err
-  //         assert.equal(app.group.get('node').status, 'running')
-  //         done()
-  //       })
-  //   })
-  // })
+  describe('GET http://localhost:2000/node', () => {
+    it('should redirect to node server', done => {
+      request(app)
+        .get('/node')
+        .expect('location', /:51234/)
+        .expect(302, (err, res) => {
+          if (err) throw err
+          assert.equal(app.group.get('node').status, 'running')
+          done()
+        })
+    })
+  })
 
   // describe('GET http://127.0.0.1:2000/node', () => {
   //   it('should use the same hostname to redirect', done => {
