@@ -32,13 +32,13 @@ function addServer (group, file) {
   let server = JSON.parse(fs.readFileSync(file, 'utf8'))
   let id = getId(file)
   getPort().then(port => {
-    util.log(`Add server id: ${id} cmd: ${server.cmd} port: ${port}`)
-
     process.env.PORT = port
     let opts = {
       cwd: server.cwd,
       env: Object.assign({}, process.env, server.env)
     }
+
+    util.log(`Add server id: ${id} cmd: ${opts.cmd} port: ${opts.env.PORT}`)
 
     let logFile
     if (server.out) {
