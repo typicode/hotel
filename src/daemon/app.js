@@ -37,7 +37,7 @@ module.exports = servers => {
 
   // .dev hosts
   app.use(vhost(`hotel.${conf.tld}`, hotelHost))
-  app.use(vhost(`*.${conf.tld}`, devHost))
+  app.use(vhost(new RegExp(`.*\.${conf.tld}`), devHost))
 
   // public
   app.use(express.static(`${__dirname}/public`))
