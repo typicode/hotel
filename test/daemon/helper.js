@@ -1,6 +1,7 @@
 const path = require('path')
 const mock = require('mock-fs')
 const untildify = require('untildify')
+const conf = require('../../src/conf')
 const daemonApp = require('../../src/daemon/app')
 const serverGroup = require('../../src/daemon/server-group')
 const servers = require('../../src/cli/servers')
@@ -9,6 +10,9 @@ module.exports = {
   before,
   after
 }
+
+// Set request timeout to 10 seconds instead of 5 seconds for slower CI servers
+conf.timeout = 10000
 
 let app
 
@@ -23,6 +27,12 @@ function before () {
     n: 'node',
     p: 51234,
     d: `${__dirname}/../fixtures/app`
+  })
+
+  servers.add('node index.js', {
+   n: 'subdomain.node',
+   p: 51235,
+   d: `${__dirname}/../fixtures/app`
   })
 
   servers.add('unknown-cmd', { n: 'failing' })

@@ -3,6 +3,8 @@
 ## Unreleased
 
 * Bundle front-end dependencies to make homepage work without network access.
+* Support subdomains
+* Support `https` and `wss`
 
 ## 0.4.6
 

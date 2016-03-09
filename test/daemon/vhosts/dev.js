@@ -16,6 +16,15 @@ describe('*.tld', () => {
     })
   })
 
+  describe('GET http://subdomain.node.dev', () => {
+    it('should proxy request', done => {
+      request(app)
+        .get('/')
+        .set('Host', 'subdomain.node.dev')
+        .expect(200, /Hello World/, done)
+    })
+  })
+
   describe('GET http://unknown.dev', () => {
     it('should return 404', done => {
       request(app)
