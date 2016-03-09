@@ -27,7 +27,7 @@ Don't forget to restart hotel and reload network or browser configuration.
 
 ##### Windows
 
-`Settings > Network and Internet > Proxy > Use setup script`
+`Settings > Network and Internet > Proxy > Use setup script
 
 ##### Linux
 
@@ -41,11 +41,13 @@ Browsers can be configured to use a specific proxy. Use this method as an altern
 
 ```sh
 # Linux
-google-chrome --proxy-pac-url=http://localhost:2000/proxy.pac`
+google-chrome --proxy-pac-url=http://localhost:2000/proxy.pac
 
 # OS X
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --proxy-pac-url=http://localhost:2000/proxy.pac 
 ```
+
+__Note__ Exit Chrome before running these commands.
 
 ##### Firefox
 
