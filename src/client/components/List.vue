@@ -1,41 +1,13 @@
 <style>
-table {
+.options, .list {
   width: 100%;
   max-width: 320px;
-  border-collapse: collapse;
 }
 
-tr {
-  border: solid #EEE;
-  border-width: 1px 0 1px 0;
-  vertical-align: middle;
-  height: 40px;
-}
-
-td.actions {
-  width: 30px;
-  text-align: right;
-  font-size: 18px;
-}
-
-td.actions .fa {
-  font-size: 20px;
-}
-
-.status {
-  font-size: 12px;
-}
-
-tr.stopped, tr.crashed {
-  color: #bdc3c7;
-}
-
-tr.running td.actions a {
-  color: #2ecc71 !important;
-}
-
-tr.running td.actions a:hover {
-  color: #27ae60 !important;
+.options.monitor {
+  border-top: none;
+  margin-bottom: 10px;
+  font-size: 1em;
 }
 
 .empty a {
@@ -44,26 +16,16 @@ tr.running td.actions a:hover {
 </style>
 
 <template>
-  <table>
-    <tr v-if="monitors.length" v-for="monitor in monitors" class="monitor {{monitor.status}}">
+  <div class="options monitor">
+    <div class="status">Open in New Window</div>
+    <Sw :on.sync="_openInNewWindow"></Sw>
+  </div>
 
-      <td class="details">
-        <a href="/{{monitor.id}}" title="{{monitor.cwd}}$ {{monitor.command[2]}}">
-          {{monitor.id}}<span class="status"> - {{monitor.status}}</span>
-        </a>
-      </td>
-
-      <td class="actions">
-        <a v-if="monitor.status !== 'running'" v-on:click.prevent="start(monitor.id)" class="start">
-          <i class="fa fa-toggle-off"></i>
-        </a>
-        <a v-if="monitor.status === 'running'" v-on:click.prevent="stop(monitor.id)" class="stop">
-          <i class="fa fa-toggle-on"></i>
-        </a>
-      </td>
-
-    </tr>
-  </table>
+  <div v-if="monitors.length" class="list">
+    <Monitor v-for="monitor in monitors" :id="monitor.id"
+      :status="monitor.status" :open-in-new-window="openInNewWindow"
+      title="{{monitor.cwd}}$ {{monitor.command[2]}}"></Monitor>
+  </div>
 
   <div v-if="!monitors.length" class="empty">
     <p>Welcome (^_^)</p>
@@ -73,6 +35,9 @@ tr.running td.actions a:hover {
 
 <script>
 const API_ROOT = '_'
+
+import Sw from './Switch.vue'
+import Monitor from './Monitor.vue'
 
 export default {
   created() {
@@ -92,18 +57,28 @@ export default {
 
   data() {
     return {
-      monitors: null
+      monitors: [],
+      openInNewWindow: false
     }
   },
 
-  methods: {
-    start(id) {
-      fetch(`${API_ROOT}/servers/${id}/start`, { method: 'POST' })
-    },
-
-    stop: function (id) {
-      fetch(`${API_ROOT}/servers/${id}/stop`, { method: 'POST' })
+  computed: {
+    _openInNewWindow: {
+      get() {
+        if (window.localStorage) {
+          this.openInNewWindow = window.localStorage.getItem('openInNewWindow') == 'true'
+        }
+        return this.openInNewWindow
+      },
+      set(newVal) {
+        this.openInNewWindow = newVal
+        if (window.localStorage) {
+          window.localStorage.setItem('openInNewWindow', newVal)
+        }
+      }
     }
-  }
+  },
+
+  components: { Monitor, Sw }
 }
 </script>
