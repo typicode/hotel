@@ -1,10 +1,11 @@
 const path = require('path')
-const mock = require('mock-fs')
-const untildify = require('untildify')
+const rmrf = require('rimraf')
 const conf = require('../../src/conf')
 const daemonApp = require('../../src/daemon/app')
 const serverGroup = require('../../src/daemon/server-group')
 const servers = require('../../src/cli/servers')
+
+const testDir = path.join(__dirname, '/../../tmp')
 
 module.exports = {
   before,
@@ -17,22 +18,16 @@ conf.timeout = 10000
 let app
 
 function before () {
-  mock({
-    [untildify('~/.hotel')]: {},
-    // Needed to avoid 404
-    [path.join(__dirname, '../../src/daemon/public/index.html')]: 'hello world'
-  })
-
   servers.add('node index.js', {
     n: 'node',
     p: 51234,
-    d: `${__dirname}/../fixtures/app`
+    d: path.join(__dirname, '../fixtures/app')
   })
 
   servers.add('node index.js', {
    n: 'subdomain.node',
    p: 51235,
-   d: `${__dirname}/../fixtures/app`
+   d: path.join(__dirname, '../fixtures/app')
   })
 
   servers.add('unknown-cmd', { n: 'failing' })
@@ -45,6 +40,8 @@ function before () {
 }
 
 function after (done) {
-  app.group.shutdown(done)
-  mock.restore()
+  app.group.shutdown(() => {
+    rmrf.sync(testDir)
+    done()
+  })
 }

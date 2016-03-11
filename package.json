@@ -9,7 +9,7 @@
     "node": ">= 0.12"
   },
   "scripts": {
-    "test": "mocha && standard",
+    "test": "HOME='test/tmp' USERHOME='test/tmp' mocha && standard",
     "start": "npm run babel:watch & npm run webpack:watch & npm run nodemon & wait",
     "prepublish": "npm test && npm run babel:build && npm run webpack:build",
     "uninstall": "bin/uninstall.js",
@@ -75,6 +75,7 @@
     "mocha": "^2.4.2",
     "mock-fs": "^3.6.0",
     "nodemon": "^1.8.1",
+    "rimraf": "^2.5.2",
     "sinon": "^1.17.3",
     "standard": "^4.5.4",
     "supertest": "^0.15.0",
