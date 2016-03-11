@@ -116,15 +116,15 @@ module.exports = (watch = true) => {
   if (watch) {
     chokidar.watch(serversDir)
       .on('add', (file) => {
-        util.log(`created ${file}`)
+        util.log(`Created ${file}`)
         addServer(group, file)
       })
       .on('change', (file) => {
-        util.log(`changed ${file}`)
+        util.log(`Changed ${file}`)
         updateServer(group, file)
       })
       .on('unlink', (file) => {
-        util.log(`removed ${file}`)
+        util.log(`Removed ${file}`)
         removeServer(group, file)
       })
   }

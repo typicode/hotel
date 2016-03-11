@@ -1,14 +1,25 @@
 const fs = require('fs')
 const path = require('path')
-const httpProxy = require('http-proxy')
 const util = require('util')
+const exitHook = require('exit-hook')
+const httpProxy = require('http-proxy')
+const userStartup = require('user-startup')
 const conf = require('../conf')
 const pidFile = require('../pid-file')
 const servers = require('./server-group')()
 const server = require('./app')(servers)
 
 pidFile.create()
-process.on('exit', pidFile.remove)
+
+exitHook(() => {
+  util.log('Exiting')
+
+  util.log('Remove pid file')
+  pidFile.remove()
+
+  util.log('Remove startup script')
+  userStartup.remove('hotel')
+})
 
 const proxy = httpProxy.createServer({
   target: {

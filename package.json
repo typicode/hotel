@@ -43,6 +43,7 @@
     "chokidar": "^1.2.0",
     "connect-sse": "^1.2.0",
     "debug": "^2.2.0",
+    "exit-hook": "^1.1.1",
     "express": "^4.13.3",
     "get-port": "^2.0.0",
     "http-proxy": "^1.12.0",
