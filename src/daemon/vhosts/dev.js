@@ -14,7 +14,7 @@ module.exports = (servers) => {
   app.use((req, res, next) => {
     const { hostname } = req
     const regexp = new RegExp(`.${conf.tld}$`)
-    const id = hostname.replace(regexp, '')
+    const id = hostname.replace(regexp, '').replace(/(\w+\.)*/, '')
 
     if (!servers.has(id)) {
       const msg = `Can't find server for http://${hostname}`
