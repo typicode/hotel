@@ -3,22 +3,16 @@ const path = require('path')
 const util = require('util')
 const exitHook = require('exit-hook')
 const httpProxy = require('http-proxy')
-const userStartup = require('user-startup')
 const conf = require('../conf')
 const pidFile = require('../pid-file')
 const servers = require('./server-group')()
 const server = require('./app')(servers)
 
 pidFile.create()
-
 exitHook(() => {
-  util.log('Exiting')
-
-  util.log('Remove pid file')
+  console.log('Exiting')
+  console.log('Remove pid file')
   pidFile.remove()
-
-  util.log('Remove startup script')
-  userStartup.remove('hotel')
 })
 
 const proxy = httpProxy.createServer({

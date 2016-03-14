@@ -1,6 +1,5 @@
 const fs = require('fs')
-const untildify = require('untildify')
-const pidFile = untildify('~/.hotel/daemon.pid')
+const { pidFile } = require('./common')
 
 module.exports = {
   create,
@@ -9,6 +8,7 @@ module.exports = {
 }
 
 function create () {
+  console.log('create', pidFile, process.pid)
   return fs.writeFileSync(pidFile, process.pid)
 }
 

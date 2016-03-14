@@ -4,7 +4,7 @@ const servers = require('./servers')
 const daemon = require('./daemon')
 const pkg = require('../../package.json')
 
-module.exports = processArgv => {
+module.exports = (processArgv) => {
   sudoBlock('\nShould not be run as root, please retry without sudo.\n')
   updateNotifier({ pkg }).notify()
 

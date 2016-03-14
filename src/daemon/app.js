@@ -26,7 +26,7 @@ function parseReq (req) {
   return { id, port }
 }
 
-module.exports = servers => {
+module.exports = (servers) => {
   const app = express()
   const server = http.createServer(app)
 

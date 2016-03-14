@@ -1,22 +1,20 @@
 /* global describe, before, after, it */
+const fs = require('fs')
 const path = require('path')
+const assert = require('assert')
 const sinon = require('sinon')
 const mock = require('mock-fs')
 const untildify = require('untildify')
 const userStartup = require('user-startup')
+const common = require('../../src/common')
 const daemon = require('../../src/cli/daemon')
 
 describe('start|stop', () => {
   let sandbox
 
   before(() => {
-    mock({
-      '~/.hotel/daemon.pid': '1234'
-    })
-
     sandbox = sinon.sandbox.create()
     sandbox.stub(userStartup, 'create')
-    sandbox.stub(userStartup, 'remove')
     sandbox.stub(process, 'kill')
   })
 
@@ -31,16 +29,36 @@ describe('start|stop', () => {
     const daemonLog = path.resolve(untildify('~/.hotel/daemon.log'))
 
     daemon.start()
+
     sinon.assert.calledWithExactly(
       userStartup.create,
       'hotel', node, [daemonFile], daemonLog
     )
+
+    assert.equal(
+      fs.readFileSync(common.startupFile),
+      userStartup.getFile('hotel')
+    )
   })
 
   it('should stop daemon', () => {
-    daemon.stop(() => {
-      sinon.assert.calledWithExactly(userStartup.remove, 'hotel')
-      sinon.assert.calledWithExactly(process.kill, '1234')
+    mock({
+      [common.pidFile]: '1234',
+      [common.startupFile]: userStartup.getFile('hotel'),
+      [userStartup.getFile('hotel')]: 'startup script'
     })
+    daemon.stop()
+
+    assert(
+      !fs.existsSync(userStartup.getFile('hotel')),
+      'user-startup script not removed'
+    )
+
+    assert(
+      !fs.existsSync(common.startupFile),
+      '~/.hotel/startup not removed'
+    )
+
+    sinon.assert.calledWithExactly(process.kill, '1234')
   })
 })

@@ -76,7 +76,7 @@ function ls () {
 
   const list = fs
     .readdirSync(serversDir)
-    .map(file => {
+    .map((file) => {
       const id = path.basename(file, '.json')
       const serverFile = getServerFile(id)
       const server = JSON.parse(fs.readFileSync(serverFile))

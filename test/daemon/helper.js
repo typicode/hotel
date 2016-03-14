@@ -1,11 +1,11 @@
+const fs = require('fs')
 const path = require('path')
-const rmrf = require('rimraf')
+const mock = require('mock-fs')
+const untildify = require('untildify')
 const conf = require('../../src/conf')
 const daemonApp = require('../../src/daemon/app')
 const serverGroup = require('../../src/daemon/server-group')
 const servers = require('../../src/cli/servers')
-
-const testDir = path.join(__dirname, '/../../tmp')
 
 module.exports = {
   before,
@@ -15,9 +15,20 @@ module.exports = {
 // Set request timeout to 10 seconds instead of 5 seconds for slower CI servers
 conf.timeout = 10000
 
+const serverKey = path.join(__dirname, '../../src/daemon/certs/server.key')
+const serverCrt = path.join(__dirname, '../../src/daemon/certs/server.crt')
+
 let app
 
 function before () {
+  mock({
+    [untildify('~/.hotel')]: {},
+    // Needed to avoid 404
+    [path.join(__dirname, '../../src/daemon/public/index.html')]: 'hello world',
+    [serverKey]: fs.readFileSync(serverKey),
+    [serverCrt]: fs.readFileSync(serverCrt)
+  })
+
   servers.add('node index.js', {
     n: 'node',
     p: 51234,
@@ -40,8 +51,5 @@ function before () {
 }
 
 function after (done) {
-  app.group.shutdown(() => {
-    rmrf.sync(testDir)
-    done()
-  })
+  app.group.shutdown(done)
 }

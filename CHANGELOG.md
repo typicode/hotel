@@ -3,13 +3,13 @@
 ## Unreleased
 
 * Bundle front-end dependencies to make homepage work without network access.
-* Support subdomains
-* Support `https` and `wss`
+* Support subdomains.
+* Support `https` and `wss`.
 
 ## 0.4.6
 
-* Bug fixes (0.4.3 to 0.4.5 deprecated)
-* Added `~/.hotel/daemon.pid` file
+* Bug fixes (0.4.3 to 0.4.5 deprecated).
+* Added `~/.hotel/daemon.pid` file.
 
 ## 0.4.3
 

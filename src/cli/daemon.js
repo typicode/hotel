@@ -1,9 +1,10 @@
+const fs = require('fs')
 const path = require('path')
-const untildify = require('untildify')
+const mkdirp = require('mkdirp')
 const startup = require('user-startup')
+const common = require('../common')
 const conf = require('../conf')
-const pidFile = require('../pid-file')
-const debug = require('../utils/debug')
+const uninstall = require('../scripts/uninstall')
 
 module.exports = {
   start,
@@ -14,24 +15,20 @@ module.exports = {
 function start () {
   const node = process.execPath
   const daemonFile = path.join(__dirname, '../daemon')
-  const daemonLog = path.resolve(untildify('~/.hotel/daemon.log'))
   const startupFile = startup.getFile('hotel')
 
-  debug(`creating ${startupFile}`)
-  startup.create('hotel', node, [daemonFile], daemonLog)
+  startup.create('hotel', node, [daemonFile], common.logFile)
+
+  // Save startup file path in ~/.hotel
+  // Will be used later by uninstall script
+  mkdirp.sync(common.hotelDir)
+  fs.writeFileSync(common.startupFile, startupFile)
 
   console.log(`Started http://localhost:${conf.port}`)
 }
 
-// Stop daemon using PID
+// Stop daemon (same as uninstall)
 function stop () {
-  startup.remove('hotel')
-  const pid = pidFile.read()
-  if (pid) {
-    try {
-      // May fail in some cases
-      process.kill(pid)
-    } catch (err) {}
-  }
+  uninstall()
   console.log('Stopped')
 }
