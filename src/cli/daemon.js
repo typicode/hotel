@@ -27,8 +27,10 @@ function start () {
   console.log(`Started http://localhost:${conf.port}`)
 }
 
-// Stop daemon (same as uninstall)
+// Stop daemon
 function stop () {
+  startup.remove('hotel')
+  // kills process and clean stuff in ~/.hotel
   uninstall()
   console.log('Stopped')
 }
