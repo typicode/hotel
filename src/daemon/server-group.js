@@ -31,7 +31,7 @@ function getCommand (cmd) {
 function addServer (group, file) {
   let server = JSON.parse(fs.readFileSync(file, 'utf8'))
   let id = getId(file)
-  getPort().then(port => {
+  getPort().then((port) => {
     process.env.PORT = port
     let opts = {
       cwd: server.cwd,
@@ -52,7 +52,7 @@ function addServer (group, file) {
       mon.tail = ''
 
       if (logFile) {
-        fs.unlink(logFile, err => { if (err) util.log(err.message) })
+        fs.unlink(logFile, (err) => { if (err) util.log(err.message) })
       }
     }
 
@@ -65,7 +65,7 @@ function addServer (group, file) {
         .join('\n')
 
       if (logFile) {
-        fs.appendFile(logFile, data, err => { if (err) util.log(err.message) })
+        fs.appendFile(logFile, data, (err) => { if (err) util.log(err.message) })
       }
     }
 
@@ -116,15 +116,15 @@ module.exports = (watch = true) => {
   if (watch) {
     chokidar.watch(serversDir)
       .on('add', (file) => {
-        util.log(`created ${file}`)
+        util.log(`Created ${file}`)
         addServer(group, file)
       })
       .on('change', (file) => {
-        util.log(`changed ${file}`)
+        util.log(`Changed ${file}`)
         updateServer(group, file)
       })
       .on('unlink', (file) => {
-        util.log(`removed ${file}`)
+        util.log(`Removed ${file}`)
         removeServer(group, file)
       })
   }

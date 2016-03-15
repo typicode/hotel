@@ -5,12 +5,13 @@ const express = require('express')
 module.exports = (servers) => {
   const app = express.Router()
 
-  // Redirect http://hotel.dev/:id to http://:id.dev
+  // Redirect http(s)://hotel.dev/:id to http(s)://:id.dev
   app.use('/:id', (req, res, next) => {
+    const { protocol } = req
     const { id } = req.params
 
     if (servers.has(id)) {
-      const target = `http://${id}.dev`
+      const target = `${protocol}://${id}.dev`
       util.log(`Redirect to ${target}`)
       return res.redirect(target)
     }

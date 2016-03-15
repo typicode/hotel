@@ -1,2 +1,1 @@
-#!/usr/bin/env node
-require('../lib/scripts/uninstall')
+require('../lib/scripts/uninstall')()

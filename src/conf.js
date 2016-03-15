@@ -1,12 +1,9 @@
 const fs = require('fs')
 const mkdirp = require('mkdirp')
-const untildify = require('untildify')
+const { hotelDir, confFile } = require('./common')
 
 // Create dir
-mkdirp.sync(untildify('~/.hotel'))
-
-// Path
-const file = untildify('~/.hotel/conf.json')
+mkdirp.sync(hotelDir)
 
 // Defaults
 const defaults = {
@@ -16,12 +13,12 @@ const defaults = {
   tld: 'dev'
 }
 
-// Create file it it doesn't exist
+// Create conf it it doesn't exist
 const data = JSON.stringify(defaults, null, 2)
-if (!fs.existsSync(file)) fs.writeFileSync(file, data)
+if (!fs.existsSync(confFile)) fs.writeFileSync(confFile, data)
 
 // Read file
-const conf = JSON.parse(fs.readFileSync(file))
+const conf = JSON.parse(fs.readFileSync(confFile))
 
 // Assign defaults and export
 module.exports = Object.assign(defaults, conf)

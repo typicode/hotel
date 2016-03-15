@@ -14,7 +14,7 @@ describe('routers/api', () => {
         .get('/_/servers')
         .expect(200, (err, res) => {
           if (err) return done(err)
-          assert.equal(res.body.monitors.length, 2)
+          assert.equal(res.body.monitors.length, 3)
           done()
         })
     })

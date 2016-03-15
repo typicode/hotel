@@ -4,10 +4,12 @@
 
 ![](http://i.imgur.com/dAhxGMj.gif)
 
+
 ## Features
 
 * __Shortcut access__ (`http://localhost:2000/project`)
 * __Local domain support__ (`http://project.dev` *)
+* __SSL support via self-signed certificate__ (`https://project.dev` *)
 * __Servers are only started when you access them__
 * __Random or fixed ports__
 * Works with any server (Node, Ruby, PHP, ...)
@@ -15,7 +17,7 @@
 * Plays nice with other servers (Apache, Nginx, ...)
 * No port 80 or admin/root privileges needed
 
-_(*) Local `.dev` domains are optional. To use them, configure your network or browser to use hotel's proxy auto-config file (`proxy.pac`). See instructions [here](https://github.com/typicode/hotel/blob/master/docs/README.md)._
+_* Local `.dev` domains are optional. To use them, configure your network or browser to use hotel's proxy auto-config file (`proxy.pac`). See instructions [here](https://github.com/typicode/hotel/blob/master/docs/README.md)._
 
 ## Install
 
