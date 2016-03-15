@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.8
+
+* Bug fix
+
 ## 0.4.7
 
 * Bundle front-end dependencies to make homepage work without network access.
