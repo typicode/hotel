@@ -1,9 +1,9 @@
 # Change Log
 
-## Unreleased
+## 0.4.7
 
 * Bundle front-end dependencies to make homepage work without network access.
-* Support subdomains.
+* Support subdomains `http://sub.app.dev`.
 * Support `https` and `wss`.
 
 ## 0.4.6
