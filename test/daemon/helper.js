@@ -12,8 +12,8 @@ module.exports = {
   after
 }
 
-// Set request timeout to 10 seconds instead of 5 seconds for slower CI servers
-conf.timeout = 10000
+// Set request timeout to 20 seconds instead of 5 seconds for slower CI servers
+conf.timeout = 20000
 
 const serverKey = path.join(__dirname, '../../src/daemon/certs/server.key')
 const serverCrt = path.join(__dirname, '../../src/daemon/certs/server.crt')
