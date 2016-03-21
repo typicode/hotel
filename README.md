@@ -11,11 +11,12 @@
 * __Local domain support__ (`http://project.dev` *)
 * __SSL support via self-signed certificate__ (`https://project.dev` *)
 * __Servers are only started when you access them__
-* __Random or fixed ports__
 * Works with any server (Node, Ruby, PHP, ...)
 * Cross-platform (OS X, Linux and Windows)
 * Plays nice with other servers (Apache, Nginx, ...)
 * No port 80 or admin/root privileges needed
+* Random or fixed ports
+* See Roadmap for upcoming features :)
 
 _* Local `.dev` domains are optional. To use them, configure your network or browser to use hotel's proxy auto-config file (`proxy.pac`). See instructions [here](https://github.com/typicode/hotel/blob/master/docs/README.md)._
 
@@ -131,6 +132,11 @@ hotel add "cmd -p %PORT%" # Windows
 
 * [Hotel Clerk](https://github.com/therealklanni/hotel-clerk) OS X menubar
 * [HotelX](https://github.com/djyde/HotelX) Another OS X menubar (only 1.6MB)
+
+## Roadmap
+
+- [ ] In-browser logs
+- [ ] Sub-domains support
 
 ## License
 
