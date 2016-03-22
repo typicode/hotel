@@ -11,7 +11,7 @@
   "scripts": {
     "test": "mocha && standard",
     "start": "npm run nodemon & npm run watch:webpack & wait",
-    "prepublish": "npm test && npm run build",
+    "prepublish": "npm run build",
     "uninstall": "node bin/uninstall.js",
     "precommit": "npm test",
     "nodemon": "nodemon -- src/daemon",
