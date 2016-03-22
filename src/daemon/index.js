@@ -7,12 +7,13 @@ const conf = require('../conf')
 const pidFile = require('../pid-file')
 const servers = require('./server-group')()
 const server = require('./app')(servers)
-
+ 
 pidFile.create()
 exitHook(() => {
   console.log('Exiting')
   console.log('Remove pid file')
   pidFile.remove()
+  process.exit()
 })
 
 const proxy = httpProxy.createServer({
