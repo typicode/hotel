@@ -10,15 +10,15 @@
   },
   "scripts": {
     "test": "mocha && standard",
-    "start": "npm run babel:watch & npm run webpack:watch & npm run nodemon & wait",
-    "prepublish": "npm test && npm run babel:build && npm run webpack:build",
+    "start": "npm run nodemon & npm run watch:webpack & wait",
+    "prepublish": "npm test && npm run build",
     "uninstall": "node bin/uninstall.js",
     "precommit": "npm test",
-    "nodemon": "nodemon lib/daemon --ignore lib/daemon/public",
-    "babel:build": "babel src --out-dir lib --copy-files --loose all --ignore src/client",
-    "babel:watch": "npm run babel:build -- --watch",
-    "webpack:build": "webpack --colors",
-    "webpack:watch": "npm run webpack:build -- --watch"
+    "nodemon": "nodemon -- src/daemon",
+    "watch:webpack": "webpack -d --watch",
+    "build": "npm run build:webpack && npm run build:babel",
+    "build:babel": "babel src -d lib --copy-files --ignore src/daemon/public/bundle.js",
+    "build:webpack": "webpack -p --output-path lib/daemon/public"
   },
   "repository": {
     "type": "git",

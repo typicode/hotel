@@ -1,5 +1,5 @@
 .DS_Store
 *.log
 node_modules
-tmp
+src/daemon/public/bundle.js
 lib

@@ -1,8 +1,8 @@
 module.exports = {
   entry: './src/client/main.js',
   output: {
-    path: './lib/daemon/public',
-    filename: 'build.js'
+    path: './src/daemon/public',
+    filename: 'bundle.js'
   },
   module: {
     loaders: [
