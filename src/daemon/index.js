@@ -15,15 +15,28 @@ exitHook(() => {
   pidFile.remove()
 })
 
+const ssl = {}
+const {
+  HOME,
+  HOMEPATH,
+  USERPROFILE
+} = process.env
+const home_path = HOME || HOMEPATH || USERPROFILE
+
+if (conf.key_path && conf.cert_path) {
+  ssl.key = fs.readFileSync(path.join(home_path, conf.key_path))
+  ssl.cert = fs.readFileSync(path.join(home_path, conf.cert_path))
+} else {
+  ssl.key = fs.readFileSync(path.join(__dirname, 'certs/server.key'))
+  ssl.cert = fs.readFileSync(path.join(__dirname, 'certs/server.crt'))
+}
+
 const proxy = httpProxy.createServer({
   target: {
     host: '127.0.0.1',
     port: conf.port
   },
-  ssl: {
-    key: fs.readFileSync(path.join(__dirname, 'certs/server.key')),
-    cert: fs.readFileSync(path.join(__dirname, 'certs/server.crt'))
-  },
+  ssl,
   ws: true
 })
 
