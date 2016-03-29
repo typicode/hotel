@@ -13,7 +13,6 @@ exitHook(() => {
   console.log('Exiting')
   console.log('Remove pid file')
   pidFile.remove()
-  process.exit()
 })
 
 const proxy = httpProxy.createServer({

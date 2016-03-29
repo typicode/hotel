@@ -2,4 +2,5 @@
 *.log
 node_modules
 src/daemon/public/bundle.js
+src/daemon/public/bundle.js.map
 lib

@@ -14,5 +14,24 @@ module.exports = (servers) => {
     sendState()
   })
 
+  router.get('/output/:id', sse, (req, res) => {
+    const { id } = req.params
+    const mon = servers.get(id)
+    if (!mon) return res.sendStatus(404)
+
+    function sendOutput (data) {
+      res.json({
+        output: data.toString()
+      })
+    }
+
+    if (mon.tail) {
+      res.json({ output: mon.tail })
+    }
+
+    mon.on('stdout', sendOutput)
+    mon.on('stderr', sendOutput)
+  })
+
   return router
 }

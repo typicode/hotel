@@ -47,6 +47,9 @@ function addServer (group, file) {
 
     let mon = group.add(id, getCommand(server.cmd), opts)
 
+    // Init tail
+    mon.tail = ''
+
     // On start reset logfile and mon.tail
     let onStart = () => {
       mon.tail = ''

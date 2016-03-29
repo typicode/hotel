@@ -1,4 +1,7 @@
 {
   "exec": "babel-node",
-  "ignore": "src/daemon/public"
+  "ignore": [
+    "src/client",
+    "src/daemon/public"
+  ]
 }

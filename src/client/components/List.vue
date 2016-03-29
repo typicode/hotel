@@ -12,13 +12,13 @@ tr {
   height: 40px;
 }
 
-td.actions {
+td.action {
   width: 30px;
   text-align: right;
-  font-size: 18px;
+  font-size: 16px;
 }
 
-td.actions .fa {
+td.action .fa {
   font-size: 20px;
 }
 
@@ -26,83 +26,99 @@ td.actions .fa {
   font-size: 12px;
 }
 
-tr.stopped, tr.crashed {
+.stopped, .crashed {
   color: #bdc3c7;
 }
 
-tr.running td.actions a {
+.active {
   color: #2ecc71 !important;
 }
 
-tr.running td.actions a:hover {
+a:hover {
   color: #27ae60 !important;
-}
-
-.empty a {
-  text-decoration: underline;
 }
 </style>
 
 <template>
   <table>
-    <tr v-if="monitors.length" v-for="monitor in monitors" class="monitor {{monitor.status}}">
+    <tr v-if="monitors.length" v-for="monitor in monitors">
 
       <td class="details">
-        <a href="/{{monitor.id}}" title="{{monitor.cwd}}$ {{monitor.command[2]}}">
+        <a
+          href="/{{monitor.id}}"
+          title="{{monitor.cwd}}$ {{monitor.command[2]}}"
+          class="monitor"
+          v-bind:class="{ active: isRunning(monitor.status)}"
+        >
           {{monitor.id}}<span class="status"> - {{monitor.status}}</span>
         </a>
       </td>
 
       <td class="actions">
-        <a v-if="monitor.status !== 'running'" v-on:click.prevent="start(monitor.id)" class="start">
-          <i class="fa fa-toggle-off"></i>
+        <a
+          class="output"
+          v-bind:class="{ active: isSelected(monitor.id) }"
+          v-on:click.prevent="toggleOutput(monitor.id)"
+        >
+          <i class="fa fa-eye"></i>
         </a>
-        <a v-if="monitor.status === 'running'" v-on:click.prevent="stop(monitor.id)" class="stop">
-          <i class="fa fa-toggle-on"></i>
+      </td>
+
+      <td class="actions">
+        <a
+          class="control"
+          v-bind:class="[isRunning(monitor.id) ? 'stop' : 'start']"
+          v-on:click.prevent="toggleMonitor(monitor.id, monitor.status)"
+        >
+          <i v-bind:class="['fa', isRunning(monitor.id) ? 'fa-toggle-on' : 'fa-toggle-off']"></i>
         </a>
       </td>
 
     </tr>
   </table>
 
-  <div v-if="!monitors.length" class="empty">
-    <p>Welcome (^_^)</p>
+  <div v-if="!monitors.length">
+    <p>Welcome, please enjoy your stay!</p>
     <p><em>Use hotel command-line to add servers</em></p>
   </div>
+
+  <Output v-show="outputId"><Output>
 </template>
 
 <script>
-const API_ROOT = '_'
+import Output from './Output.vue'
+import * as actions from '../actions'
 
 export default {
-  created() {
-    if (EventSource) {
-      new EventSource(`${API_ROOT}/events`).onmessage = event => {
-        const data = JSON.parse(event.data)
-        this.monitors = data.monitors
-      }
-    } else {
-      setInterval(() => {
-        fetch(`${API_ROOT}/servers`)
-          .then(response => response.json())
-          .then(json => this.monitors = json)
-      }, 1000)
-    }
-  },
+  components: { Output },
 
-  data() {
-    return {
-      monitors: null
-    }
+  vuex: {
+    getters: {
+      monitors: (state) => state.monitors,
+      outputId: (state) => state.outputId
+    },
+    actions
   },
 
   methods: {
-    start(id) {
-      fetch(`${API_ROOT}/servers/${id}/start`, { method: 'POST' })
+    isSelected(id) {
+      return id === this.outputId
     },
 
-    stop: function (id) {
-      fetch(`${API_ROOT}/servers/${id}/stop`, { method: 'POST' })
+    isRunning(status) {
+      return status === 'running'
+    },
+
+    toggleOutput(id) {
+      this.isSelected(id)
+        ? this.unwatchOutput()
+        : this.watchOutput(id)
+    },
+
+    toggleMonitor(id, status) {
+      this.isRunning(status)
+        ? this.stopMonitor(id)
+        : this.startMonitor(id)
     }
   }
 }
