@@ -18,19 +18,20 @@ const mutations = {
   SET_MONITORS (state, monitors) {
     state.monitors = monitors
   },
-  CLEAR_OUTPUT (state) {
-    state.output = []
-  },
   PUSH_OUTPUT (state, line) {
     state.output.push(line)
+    console.log(state.output.length)
     if (state.output.length > 1000) {
+      console.log('shift')
       state.output.shift()
     }
   },
   WATCH_OUTPUT (state, id) {
+    state.output = []
     state.outputId = id
   },
   UNWATCH_OUTPUT (state, id) {
+    state.output = []
     state.outputId = ''
   }
 }

@@ -1,23 +1,10 @@
-<style>
-#log {
-  overflow-y: scroll;
-  padding: 10px;
-  font-family: monospace;
-  font-size: 14px;
-  word-break: break-all;
-  background: #222;
-  color: #EEE;
-  position: absolute;
-  left: 360px;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
-</style>
-
 <template>
-  <div id="log" v-on:scroll="onScroll">
-    <div v-for="item in items" v-bind:style="{ height: itemHeight + 'px'}">
+  <div class="output" v-on:scroll="onScroll">
+    <div
+      v-for="item in output"
+      v-bind:style="{ height: itemHeight + 'px'}"
+      track-by="$index"
+    >
       {{ item }}
     </div>
   </div>
@@ -40,13 +27,12 @@ export default {
   },
 
   watch: {
-    output() {
+    output(now, before) {
       this.$nextTick(() => {
         if (this.scroll) this.$el.scrollTop = this.$el.scrollHeight
       })
 
-      if (this.output.length > this.scrollback) {
-        this.output.shift()
+      if (now[0] !== before[0]) {
         this.$el.scrollTop -= this.itemHeight
       }
     }

@@ -1,76 +1,39 @@
-<style>
-table {
-  width: 100%;
-  max-width: 320px;
-  border-collapse: collapse;
-}
-
-tr {
-  border: solid #EEE;
-  border-width: 1px 0 1px 0;
-  vertical-align: middle;
-  height: 40px;
-}
-
-td.action {
-  width: 30px;
-  text-align: right;
-  font-size: 16px;
-}
-
-td.action .fa {
-  font-size: 20px;
-}
-
-.status {
-  font-size: 12px;
-}
-
-.stopped, .crashed {
-  color: #bdc3c7;
-}
-
-.active {
-  color: #2ecc71 !important;
-}
-
-a:hover {
-  color: #27ae60 !important;
-}
-</style>
-
 <template>
   <table>
     <tr v-if="monitors.length" v-for="monitor in monitors">
 
-      <td class="details">
+      <td>
         <a
           href="/{{monitor.id}}"
           title="{{monitor.cwd}}$ {{monitor.command[2]}}"
           class="monitor"
-          v-bind:class="{ active: isRunning(monitor.status)}"
+          v-bind:class="monitor.status"
         >
           {{monitor.id}}<span class="status"> - {{monitor.status}}</span>
         </a>
       </td>
 
-      <td class="actions">
+      <td>
         <a
-          class="output"
-          v-bind:class="{ active: isSelected(monitor.id) }"
-          v-on:click.prevent="toggleOutput(monitor.id)"
+          class="toggle"
+          v-bind:class="isRunning(monitor.status) ? 'on' : 'off'"
+          v-on:click.prevent="toggleMonitor(monitor.id, monitor.status)"
         >
-          <i class="fa fa-eye"></i>
+          <i
+            class="fa"
+            v-bind:class="isRunning(monitor.status) ? 'fa-toggle-on' : 'fa-toggle-off'"
+          >
+          </i>
         </a>
       </td>
 
-      <td class="actions">
+      <td>
         <a
-          class="control"
-          v-bind:class="[isRunning(monitor.id) ? 'stop' : 'start']"
-          v-on:click.prevent="toggleMonitor(monitor.id, monitor.status)"
+          class="toggle-output"
+          v-bind:class="{ selected: isSelected(monitor.id) }"
+          v-on:click.prevent="toggleOutput(monitor.id)"
         >
-          <i v-bind:class="['fa', isRunning(monitor.id) ? 'fa-toggle-on' : 'fa-toggle-off']"></i>
+          <i class="fa fa-angle-right"></i>
         </a>
       </td>
 

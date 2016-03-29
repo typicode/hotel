@@ -1,6 +1,13 @@
 <template>
   <List></List>
-  <Output></Output>
+  
+  <footer>
+    <p>
+      <a href="https://github.com/typicode/hotel">
+        <i class="fa fa-building-o"></i> <span>README</span>
+      </a>
+    </p>
+  </footer>
 </template>
 
 <script>

@@ -1,4 +1,12 @@
-/* Available status: running, stopping, stopped, crashed, sleeping */
+$text: #212121;
+$link: $text;
+$hover: #E0E0E0;
+$muted: #BDBDBD;
+$on: #00C853;
+$off: $muted;
+$output-background: #EEEEEE;
+$output-color: $text;
+
 [v-cloak] {
   display: none;
 }
@@ -7,27 +15,25 @@ body {
   font-family: "Helvetica Neue", Helvetica, arial, sans-serif;
   font-size: 18px;
   padding: 10px;
-  color: #34495e;
+  color: $text;
 }
 
 a {
   text-decoration: none;
   outline: 0;
-  color: inherit;
   cursor: pointer;
+  color: $link;
 }
 
 a:hover, a:focus {
-  color: #2c3e50 !important;
+  color: $hover;
 }
 
-code {
-  font-family: monospace;
-  font-size: 14px;
-  background: #F9F9F9;
-  padding: 4px;
+.empty a {
+  text-decoration: underline;
 }
 
+// List
 table {
   width: 100%;
   max-width: 320px;
@@ -41,13 +47,7 @@ tr {
   height: 40px;
 }
 
-td.actions {
-  width: 30px;
-  text-align: right;
-  font-size: 18px;
-}
-
-td.actions .fa {
+.fa {
   font-size: 20px;
 }
 
@@ -55,24 +55,42 @@ td.actions .fa {
   font-size: 12px;
 }
 
-tr.stopped, tr.crashed {
-  color: #bdc3c7;
+.monitor.stopped,
+.monitor.crashed,
+.toggle.off,
+.toggle-output {
+  color: $off;
 }
 
-tr.running td.actions a {
-  color: #2ecc71 !important;
+.toggle.on {
+  color: $on;
 }
 
-tr.running td.actions a:hover {
-  color: #27ae60 !important;
+.monitor.running,
+.toggle-output.selected,
+a:hover {
+  color: inherit !important;
 }
 
-.empty a {
-  text-decoration: underline;
+// Output
+.output {
+  overflow-y: scroll;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 14px;
+  word-break: break-all;
+  background: $output-background;
+  color: $output-color;
+  position: absolute;
+  left: 360px;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }
 
+// footer
 footer {
-  color: #bdc3c7;
+  color: $muted;
 }
 
 footer a span {
