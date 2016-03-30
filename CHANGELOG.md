@@ -1,5 +1,9 @@
 # Change Log
 
+## Unreleased
+
+* Add server logs in the browser.
+
 ## 0.4.8
 
 * Bug fix

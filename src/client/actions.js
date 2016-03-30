@@ -47,5 +47,6 @@ function watchOutput ({ dispatch }, id) {
 }
 
 function unwatchOutput ({ dispatch }, id) {
+  eventSource && eventSource.close()
   dispatch('UNWATCH_OUTPUT')
 }

@@ -20,9 +20,7 @@ const mutations = {
   },
   PUSH_OUTPUT (state, line) {
     state.output.push(line)
-    console.log(state.output.length)
     if (state.output.length > 1000) {
-      console.log('shift')
       state.output.shift()
     }
   },
