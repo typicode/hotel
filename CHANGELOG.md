@@ -3,6 +3,7 @@
 ## Unreleased
 
 * Add server logs in the browser.
+* Bundle icons to make them available without network access.
 
 ## 0.4.8
 
