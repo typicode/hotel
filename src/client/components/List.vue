@@ -29,6 +29,7 @@
 
       <td>
         <a
+          title="view logs"
           class="toggle-output"
           v-bind:class="{ selected: isSelected(monitor.id) }"
           v-on:click.prevent="toggleOutput(monitor.id)"

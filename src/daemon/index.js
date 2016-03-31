@@ -11,6 +11,8 @@ const server = require('./app')(servers)
 pidFile.create()
 exitHook(() => {
   console.log('Exiting')
+  proxy.close()
+  server.close()
   console.log('Remove pid file')
   pidFile.remove()
 })

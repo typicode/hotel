@@ -25,12 +25,9 @@ module.exports = (servers) => {
       })
     }
 
-    if (mon.tail) {
-      res.json({ output: mon.tail })
-    }
-
     mon.on('stdout', sendOutput)
     mon.on('stderr', sendOutput)
+    sendOutput('')
   })
 
   return router

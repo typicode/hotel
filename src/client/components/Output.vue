@@ -1,5 +1,6 @@
 <template>
   <div class="output" v-on:scroll="onScroll">
+    <p>Viewing {{ outputId }} logs...</p>
     <div
       v-for="item in output"
       v-bind:style="{ height: itemHeight + 'px'}"
@@ -22,6 +23,7 @@ export default {
 
   vuex: {
     getters: {
+      outputId: (state) => state.outputId,
       output: (state) => state.output
     }
   },

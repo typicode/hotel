@@ -3,8 +3,9 @@ $link: $text;
 $hover: #E0E0E0;
 $muted: #BDBDBD;
 $on: #00C853;
+$on-hover: $on;
 $off: $muted;
-$output-background: #EEEEEE;
+$output-background: #FFFFFF;
 $output-color: $text;
 
 [v-cloak] {
@@ -66,9 +67,12 @@ tr {
   color: $on;
 }
 
+.toggle.on:hover {
+  color: $on-hover !important;
+}
+
 .monitor.running,
-.toggle-output.selected,
-a:hover {
+.toggle-output.selected {
   color: inherit !important;
 }
 
@@ -81,6 +85,7 @@ a:hover {
   word-break: break-all;
   background: $output-background;
   color: $output-color;
+  border-left: 1px solid #EEE;
   position: absolute;
   left: 360px;
   right: 0;
