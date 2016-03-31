@@ -128,6 +128,22 @@ hotel add "cmd -p %PORT%" # Windows
 ~/.hotel/servers/<app-name>.json
 ```
 
+### Self-signed certificate
+
+To use self-signed certificate, please put the cert and key to `~/.hotel/`, and add `key_path` and `cert_path` to `~/.hotel.conf.json`.
+
+### Example
+```json
+{
+  "port": 2000,
+  "host": "127.0.0.1",
+  "timeout": 5000,
+  "tld": "dev",
+  "key_path": ".hotel/hotel.key",
+  "cert_path": ".hotel/hotel.crt"
+}
+```
+
 ## Third-party tools
 
 * [Hotel Clerk](https://github.com/therealklanni/hotel-clerk) OS X menubar
