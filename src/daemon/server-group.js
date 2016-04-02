@@ -38,7 +38,7 @@ function addServer (group, file) {
       env: Object.assign({}, process.env, server.env)
     }
 
-    util.log(`Add server id: ${id} cmd: ${opts.cmd} port: ${opts.env.PORT}`)
+    util.log(`Add server id: ${id} cmd: ${server.cmd} port: ${opts.env.PORT}`)
 
     let logFile
     if (server.out) {
@@ -46,6 +46,9 @@ function addServer (group, file) {
     }
 
     let mon = group.add(id, getCommand(server.cmd), opts)
+
+    // Init tail
+    mon.tail = ''
 
     // On start reset logfile and mon.tail
     let onStart = () => {
@@ -80,8 +83,9 @@ function addServer (group, file) {
 
 // Update server
 function updateServer (group, file) {
-  addServer(group, file)
-  group.restart(getId(file))
+  group.stop(getId(file), () => {
+    addServer(group, file)
+  })
 }
 
 // Remove server

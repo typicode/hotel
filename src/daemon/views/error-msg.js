@@ -8,13 +8,16 @@ module.exports = function (server) {
   const command = server.command.join(' ')
   const tail = stripAnsi(server.tail)
 
-  let msg = `Can't connect to server on port ${PORT}.\n`
-  msg += `Server crashed or timeout of ${timeout}ms exceeded. Retry or check logs.\n`
-  msg += '<pre><code>'
-  msg += command
-  msg += '\n\n'
-  msg += tail
-  msg += '</code></pre>'
+  return `
+Can't connect to server on PORT=<a href="http://localhost:${PORT}">${PORT}</a>.
+Possible causes:
+- Server crashed or timeout of ${timeout}ms exceeded.
+- Server isn't listening on PORT environment variable.'
+Try to reload or check logs.
+<pre><code>
+${command}
 
-  return msg
+${tail}
+</code></pre>
+`
 }
