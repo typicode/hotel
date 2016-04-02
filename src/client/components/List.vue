@@ -29,7 +29,7 @@
 
       <td>
         <a
-          title="view logs"
+          title="logs"
           class="toggle-output"
           v-bind:class="{ selected: isSelected(monitor.id) }"
           v-on:click.prevent="toggleOutput(monitor.id)"
@@ -46,7 +46,7 @@
     <p><em>Use hotel command-line to add servers</em></p>
   </div>
 
-  <Output v-show="outputId"><Output>
+  <Output class="output" v-show="outputId"><Output>
 </template>
 
 <script>

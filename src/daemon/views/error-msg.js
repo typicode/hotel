@@ -9,7 +9,7 @@ module.exports = function (server) {
   const tail = stripAnsi(server.tail)
 
   return `
-Can't connect to server on PORT=${PORT}.
+Can't connect to server on PORT=<a href="http://localhost:${PORT}">${PORT}</a>.
 Possible causes:
 - Server crashed or timeout of ${timeout}ms exceeded.
 - Server isn't listening on PORT environment variable.'

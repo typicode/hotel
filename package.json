@@ -87,6 +87,7 @@
     "standard": "^4.5.4",
     "style-loader": "^0.13.1",
     "supertest": "^0.15.0",
+    "uid": "0.0.2",
     "untildify": "^2.1.0",
     "url-loader": "^0.5.7",
     "vue": "^1.0.18",

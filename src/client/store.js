@@ -1,6 +1,6 @@
 const Vue = require('vue')
 const Vuex = require('vuex')
-const createLogger = require('vuex/logger')
+const uid = require('uid')
 
 Vue.use(Vuex)
 
@@ -19,7 +19,7 @@ const mutations = {
     state.monitors = monitors
   },
   PUSH_OUTPUT (state, line) {
-    state.output.push(line)
+    state.output.push({ line, _uid: uid() })
     if (state.output.length > 1000) {
       state.output.shift()
     }
@@ -36,6 +36,6 @@ const mutations = {
 
 module.exports = new Vuex.Store({
   state,
-  mutations,
-  middlewares: [createLogger()]
+  mutations
+  // middlewares: [require('vuex/logger')()]
 })

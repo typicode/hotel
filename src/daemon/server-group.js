@@ -83,8 +83,9 @@ function addServer (group, file) {
 
 // Update server
 function updateServer (group, file) {
-  addServer(group, file)
-  group.restart(getId(file))
+  group.stop(getId(file), () => {
+    addServer(group, file)
+  })
 }
 
 // Remove server

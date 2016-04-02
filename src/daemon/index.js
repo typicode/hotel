@@ -11,6 +11,7 @@ const server = require('./app')(servers)
 pidFile.create()
 exitHook(() => {
   console.log('Exiting')
+  console.log('Stop daemon')
   proxy.close()
   server.close()
   console.log('Remove pid file')

@@ -1,12 +1,7 @@
 <template>
-  <div class="output" v-on:scroll="onScroll">
-    <p>Viewing {{ outputId }} logs...</p>
-    <div
-      v-for="item in output"
-      v-bind:style="{ height: itemHeight + 'px'}"
-      track-by="$index"
-    >
-      {{ item }}
+  <div v-on:scroll="onScroll">
+    <div v-for="item in output" track-by="_uid">
+      {{ item.line }}
     </div>
   </div>
 </template>
@@ -31,12 +26,9 @@ export default {
   watch: {
     output(now, before) {
       this.$nextTick(() => {
+        // keep scroll at the bottom if it already is
         if (this.scroll) this.$el.scrollTop = this.$el.scrollHeight
       })
-
-      if (now[0] !== before[0]) {
-        this.$el.scrollTop -= this.itemHeight
-      }
     }
   },
 
