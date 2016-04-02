@@ -1,6 +1,6 @@
 # hotel [![Mac/Linux Build Status](https://img.shields.io/travis/typicode/hotel/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/typicode/hotel) [![Windows Build status](https://img.shields.io/appveyor/ci/typicode/hotel/master.svg?label=Windows)](https://ci.appveyor.com/project/typicode/hotel/branch/master) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel)
 
-> No need to worry about ports, remember commands, manage terminal tabs, ... access and start your servers from the browser. You can even use local `.dev` domains or any other tld, and it works everywhere (OS X, Linux, Windows) :+1:
+> No need to worry about ports, remember commands, manage terminal tabs, mess with /etc/hosts ... access and start your servers from the browser. You can even use local `.dev` domains or any other tld, and it works everywhere (OS X, Linux, Windows) :+1:
 
 ![](http://i.imgur.com/dAhxGMj.gif)
 
@@ -14,7 +14,7 @@
 * Works with any server (Node, Ruby, PHP, ...)
 * Cross-platform (OS X, Linux and Windows)
 * Plays nice with other servers (Apache, Nginx, ...)
-* No port 80 or admin/root privileges needed
+* No port 80, /etc/hosts or admin/root privileges needed
 * Random or fixed ports
 * See Roadmap for upcoming features :)
 
@@ -25,6 +25,8 @@ _* Local `.dev` domains are optional. To use them, configure your network or bro
 ```bash
 npm install -g hotel && hotel start
 ```
+
+If you don't have Node installed, use [brew](http://brew.sh/) or [nvm](https://github.com/creationix/nvm).
 
 ## Quick start
 
