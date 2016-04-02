@@ -1,9 +1,10 @@
 # Change Log
 
-## Unreleased
+## 0.4.9
 
 * Add server logs in the browser.
 * Bundle icons to make them available without network access.
+* Bug fixes
 
 ## 0.4.8
 
