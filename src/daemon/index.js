@@ -28,6 +28,16 @@ const proxy = httpProxy.createServer({
   ws: true
 })
 
+proxy.on('proxyReq', (proxyReq, req) => {
+  req._proxyReq = proxyReq
+})
+
+proxy.on('error', (err, req) => {
+  if (req.socket.destroyed && err.code === 'ECONNRESET') {
+    req._proxyReq.abort()
+  }
+})
+
 proxy.listen(conf.port + 1)
 
 server.listen(conf.port, conf.host, function () {
