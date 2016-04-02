@@ -38,7 +38,7 @@ function addServer (group, file) {
       env: Object.assign({}, process.env, server.env)
     }
 
-    util.log(`Add server id: ${id} cmd: ${opts.cmd} port: ${opts.env.PORT}`)
+    util.log(`Add server id: ${id} cmd: ${server.cmd} port: ${opts.env.PORT}`)
 
     let logFile
     if (server.out) {
