@@ -39,13 +39,19 @@ Add your servers commands.
 
 Now, you can access, start and stop your servers from [localhost:2000](http://localhost:2000) or [hotel.dev](http://hotel.dev).
 
-You can also directly go to:
+And you get access to the following URLs:
 
-```bash
+```
 http://localhost:2000/one
 http://localhost:2000/two
+```
+
+```
 http://one.dev
 http://two.dev
+```
+
+```
 https://one.dev
 https://two.dev
 ```
