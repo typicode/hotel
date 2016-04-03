@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.10
+
+* Fix IE and Safari issue (added fetch polyfill)
+
 ## 0.4.9
 
 * Add server logs in the browser.
