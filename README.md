@@ -39,21 +39,18 @@ Add your servers commands.
 
 Now, you can access, start and stop your servers from [localhost:2000](http://localhost:2000) or [hotel.dev](http://hotel.dev).
 
-As a shortcut, you can also directly go to:
+You can also directly go to:
 
 ```bash
 http://localhost:2000/one
 http://localhost:2000/two
-```
-
-And
-
-```bash
 http://one.dev
 http://two.dev
+https://one.dev
+https://two.dev
 ```
 
-Other servers examples:
+Here are some other servers examples:
 
 ```bash
 hotel add 'jekyll --port $PORT'
@@ -65,9 +62,7 @@ hotel add 'php -S 127.0.0.1:$PORT'
 
 On __Windows__ use `"%PORT%"` instead of `'$PORT'`
 
-## Usage
-
-To add a server
+## CLI usage and options
 
 ```bash
 hotel add <cmd> [opts]
@@ -77,23 +72,8 @@ hotel add 'nodemon app.js' -o out.log # Set output file (default: none)
 hotel add 'nodemon app.js' -n name    # Set custom name (default: current dir name)
 hotel add 'nodemon app.js' -p 3000    # Set a fixed port (default: random port)
 hotel add 'nodemon app.js' -e PATH    # Store PATH environment variable in server config
-```
 
-To list, start and stop servers go to
-
-```
-http://localhost:2000
-```
-
-To start and access directly your server go to
-
-```
-http://localhost:2000/<app-name>
-```
-
-Other commands
-
-```bash
+# Other commands
 hotel ls        # List servers
 hotel rm [name] # Remove server
 hotel start     # Start hotel daemon
