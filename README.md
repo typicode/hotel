@@ -137,7 +137,7 @@ hotel add "cmd -p %PORT%" # Windows
 
 ## Roadmap
 
-- [ ] In-browser logs
+- [X] In-browser logs
 - [ ] Sub-domains support
 
 ## License
