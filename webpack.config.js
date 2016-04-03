@@ -1,3 +1,5 @@
+const webpack = require('webpack')
+
 module.exports = {
   entry: './src/client/main.js',
   output: {
@@ -28,5 +30,11 @@ module.exports = {
         loader: 'url'
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      'Promise': 'es6-promise',
+      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+    })
+  ]
 }
