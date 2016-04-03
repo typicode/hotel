@@ -20,7 +20,8 @@ describe('routers/index', () => {
     it('should redirect to node server', done => {
       request(app)
         .get('/node')
-        .expect('location', /:51234/)
+        .set('Host', 'localhost')
+        .expect('location', /http:\/\/localhost:51234/)
         .expect(302, (err, res) => {
           if (err) throw err
           assert.equal(app.group.get('node').status, 'running')
@@ -29,11 +30,12 @@ describe('routers/index', () => {
     })
   })
 
-  // describe('GET http://127.0.0.1:2000/node', () => {
-  //   it('should use the same hostname to redirect', done => {
-  //     request(`http://127.0.0.1:2000`)
-  //       .get('/name')
-  //       .expect('location', /http:\/\/127.0.0.1/)
-  //       .expect(302, done)
-  //   })
+  describe('GET http://127.0.0.1:2000/node', () => {
+    it('should use the same hostname to redirect', done => {
+      request(app)
+        .get('/node')
+        .expect('location', /http:\/\/127.0.0.1:51234/)
+        .expect(302, done)
+    })
+  })
 })
