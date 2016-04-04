@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.11
+
+* Strip ANSI when viewing logs in the browser
+
 ## 0.4.10
 
 * Fix IE and Safari issue (added fetch polyfill)
