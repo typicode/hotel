@@ -19,6 +19,14 @@ You can also edit `~/.hotel/conf.json` to use another Top-level Domain. For exam
 
 Don't forget to restart hotel and reload network or browser configuration.
 
+## Subdomains
+
+If you wish your app to be accessible via arbitrary subdomains, e.g. `http://www.project.dev` in addition to `http://project.dev`, use the `-w` argument to `hotel add`:
+
+```
+hotel add 'nodemon app.js' -w
+```
+
 ## System configuration (recommended)
 
 ##### OS X

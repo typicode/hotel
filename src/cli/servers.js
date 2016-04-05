@@ -45,6 +45,11 @@ function add (cmd, opts = {}) {
     obj.env.PORT = opts.p
   }
 
+  // enable wildcard IDs
+  if (opts.w) {
+    obj.env.HOTEL_WILDCARD = true
+  }
+
   const data = JSON.stringify(obj, null, 2)
 
   console.log(`Create ${tildify(file)}`)
