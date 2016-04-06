@@ -4,10 +4,7 @@ _This step is totally optional and you can use hotel without it._
 
 To use local `.dev` domain, you need to configure your browser or network to use hotel's proxy auto-config file which is available at `http://localhost:2000/proxy.pac` [[view file content](../src/daemon/views/proxy-pac.js)].
 
-After that, you'll be able to access servers using `.dev` domains:
-
-* `http://hotel.dev  ` <-> `http://localhost:2000`
-* `http://project.dev` <-> `http://localhost:2000/project`
+__Important__ hotel MUST be running before configuring your network or browser so that `http://localhost:2000/proxy.pac` is available. If hotel is started after and you can't access `.dev` domains, simply disable/enable network or restart browser.
 
 You can also edit `~/.hotel/conf.json` to use another Top-level Domain. For example `.test`:
 
@@ -27,7 +24,7 @@ Don't forget to restart hotel and reload network or browser configuration.
 
 ##### Windows
 
-`Settings > Network and Internet > Proxy > Use setup script
+`Settings > Network and Internet > Proxy > Use setup script`
 
 ##### Linux
 
@@ -39,15 +36,15 @@ Browsers can be configured to use a specific proxy. Use this method as an altern
 
 ##### Chrome
 
+Exit Chrome and start it using the following option:
+
 ```sh
 # Linux
-google-chrome --proxy-pac-url=http://localhost:2000/proxy.pac
+$ google-chrome --proxy-pac-url=http://localhost:2000/proxy.pac
 
 # OS X
-/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --proxy-pac-url=http://localhost:2000/proxy.pac 
+$ /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --proxy-pac-url=http://localhost:2000/proxy.pac 
 ```
-
-__Note__ Exit Chrome before running these commands.
 
 ##### Firefox
 
@@ -56,7 +53,3 @@ __Note__ Exit Chrome before running these commands.
 ##### Internet Explorer
 
 Uses system network configuration.
-
-## Troubleshooting
-
-Make sure that you have started `hotel` and that `http://localhost:2000/proxy.pac` is available when setting proxy auto-config URL.
