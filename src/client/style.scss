@@ -5,8 +5,11 @@ $muted: #BDBDBD;
 $on: #00C853;
 $on-hover: $on;
 $off: $muted;
-$output-background: #FFFFFF;
-$output-color: $text;
+$output-background-white: #FFFFFF;
+$output-color-white: $text;
+
+$output-background-black: $text;
+$output-color-black: $hover;
 
 [v-cloak] {
   display: none;
@@ -83,14 +86,28 @@ tr {
   font-family: monospace;
   font-size: 14px;
   word-break: break-all;
-  background: $output-background;
-  color: $output-color;
   border-left: 1px solid #EEE;
   position: absolute;
   left: 360px;
   right: 0;
   top: 0;
   bottom: 0;
+
+  &.white {
+    background: $output-background-white;
+    color: $output-color-white;
+  }
+
+  &.black {
+    background: $output-background-black;
+    color: $output-color-black;
+  }
+}
+
+.toggle-background {
+  position: fixed;
+  right: 20px;
+  top: 10px;
 }
 
 // footer
