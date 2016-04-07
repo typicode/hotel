@@ -1,7 +1,7 @@
 <template>
   <div v-on:scroll="onScroll">
     <div v-for="item in output" track-by="_uid">
-      {{ item.line }}
+      {{{ item.line }}}
     </div>
   </div>
 </template>
