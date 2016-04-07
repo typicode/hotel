@@ -1,5 +1,5 @@
 {
-  "exec": "babel-node",
+  "exec": "node_modules/.bin/babel-node",
   "ignore": [
     "src/client",
     "src/daemon/public"
