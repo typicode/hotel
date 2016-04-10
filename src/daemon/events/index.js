@@ -1,6 +1,6 @@
 const express = require('express')
 const connectSSE = require('connect-sse')
-const stripAnsi = require('strip-ansi')
+const ansiUp = require('ansi_up')
 const sse = connectSSE()
 
 module.exports = (servers) => {
@@ -22,7 +22,7 @@ module.exports = (servers) => {
 
     function sendOutput (data) {
       res.json({
-        output: stripAnsi(data.toString())
+        output: ansiUp.ansi_to_html(data.toString())
       })
     }
 

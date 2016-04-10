@@ -46,7 +46,12 @@
     <p><em>Use hotel command-line to add servers</em></p>
   </div>
 
-  <Output class="output" v-show="outputId"><Output>
+  <Output 
+    v-bind:class="lightsOn() ? 'output white' : 'output black'"
+    v-show="outputId"
+    :lights="lightsOn()"
+  >
+  <Output>
 </template>
 
 <script>
@@ -55,6 +60,12 @@ import * as actions from '../actions'
 
 export default {
   components: { Output },
+
+  data() {
+    return {
+      lights: false
+    }
+  },
 
   vuex: {
     getters: {
@@ -83,6 +94,17 @@ export default {
       this.isRunning(status)
         ? this.stopMonitor(id)
         : this.startMonitor(id)
+    },
+
+    lightsOn() {
+      return this.lights;
+    },
+
+  },
+
+  events: {
+    'toggle-lights': function() {
+      this.lights = !this.lights;
     }
   }
 }
