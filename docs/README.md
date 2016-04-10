@@ -43,7 +43,7 @@ Exit Chrome and start it using the following option:
 $ google-chrome --proxy-pac-url=http://localhost:2000/proxy.pac
 
 # OS X
-$ /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --proxy-pac-url=http://localhost:2000/proxy.pac 
+$ open -a "Google Chrome" --args --proxy-pac-url=http://localhost:2000/proxy.pac
 ```
 
 ##### Firefox
