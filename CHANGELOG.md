@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## 0.4.12
 
 * Add wildcard subdomains `http://*.app.dev`
 
