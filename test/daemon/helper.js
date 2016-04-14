@@ -36,9 +36,9 @@ function before () {
   })
 
   servers.add('node index.js', {
-   n: 'subdomain.node',
-   p: 51235,
-   d: path.join(__dirname, '../fixtures/app')
+    n: 'subdomain.node',
+    p: 51235,
+    d: path.join(__dirname, '../fixtures/app')
   })
 
   servers.add('unknown-cmd', { n: 'failing' })

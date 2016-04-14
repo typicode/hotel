@@ -3,10 +3,11 @@ const once = require('once')
 const express = require('express')
 const httpProxy = require('http-proxy')
 const serverReady = require('server-ready')
+const getServerId = require('./utils/get-server-id')
 const errorMsg = require('../views/error-msg')
 const conf = require('../../conf')
 
-// *.dev vhost
+// *.tld vhost
 module.exports = (servers) => {
   const app = express.Router()
   const proxy = httpProxy.createProxyServer()
@@ -14,7 +15,10 @@ module.exports = (servers) => {
   app.use((req, res, next) => {
     const { hostname } = req
     const regexp = new RegExp(`.${conf.tld}$`)
-    const id = hostname.replace(regexp, '')
+    const id = getServerId(
+      servers.list().map(s => s.id),
+      hostname.replace(regexp, '')
+    )
 
     if (!servers.has(id)) {
       const msg = `Can't find server for http://${hostname}`
@@ -27,7 +31,7 @@ module.exports = (servers) => {
 
     // Target
     const { PORT } = server.env
-    const target = `http://127.0.0.1:${PORT}`
+    const target = `http://localhost:${PORT}`
 
     // Make sure to send only one response
     const forward = once(err => {

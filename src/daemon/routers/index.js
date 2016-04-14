@@ -27,6 +27,8 @@ module.exports = function (servers) {
 
     // Target
     const { PORT } = server.env
+
+    // When redirecting keep hostname (i.e. localhost or 127.0.0.1)
     const { hostname } = req
     const target = `http://${hostname}:${PORT}`
 

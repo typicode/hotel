@@ -1,5 +1,9 @@
 # Change Log
 
+## Unreleased
+
+* Add wildcard subdomains `http://*.app.dev`
+
 ## 0.4.11
 
 * Strip ANSI when viewing logs in the browser
