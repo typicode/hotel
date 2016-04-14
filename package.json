@@ -39,6 +39,7 @@
   },
   "homepage": "https://github.com/typicode/hotel",
   "dependencies": {
+    "array-find": "^1.0.0",
     "body-parser": "^1.14.2",
     "chokidar": "^1.2.0",
     "connect-sse": "^1.2.0",

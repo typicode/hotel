@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.13
+
+* Fix issue with Node 0.12
+
 ## 0.4.12
 
 * Add wildcard subdomains `http://*.app.dev`

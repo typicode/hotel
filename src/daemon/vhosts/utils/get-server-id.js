@@ -1,6 +1,7 @@
 const matcher = require('matcher')
+const find = require('array-find') // Node 0.12 ponyfill
 
-// Wildcard host matching
+// "wildcard" host matching
 // (['app'], 'foo.app') -> app
 // (['app', 'foo.app'], 'foo.app') -> foo.app
 module.exports = (hosts, host) => {
@@ -13,8 +14,8 @@ module.exports = (hosts, host) => {
       wildcard: matcher.isMatch(host, `*.${h}`)
     }))
 
-  const strictMatch = arr.find(h => h.strict)
-  const wildcardMatch = arr.find(h => h.wildcard)
+  const strictMatch = find(arr, h => h.strict)
+  const wildcardMatch = find(arr, h => h.wildcard)
 
   if (strictMatch) return strictMatch.host
   if (wildcardMatch) return wildcardMatch.host
