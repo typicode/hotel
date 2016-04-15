@@ -2,6 +2,7 @@ const updateNotifier = require('update-notifier')
 const sudoBlock = require('sudo-block')
 const servers = require('./servers')
 const daemon = require('./daemon')
+const proxyconf = require('./proxyconf')
 const pkg = require('../../package.json')
 
 module.exports = (processArgv) => {
@@ -17,10 +18,12 @@ module.exports = (processArgv) => {
     .command('ls', 'List servers')
     .command('start', 'Start daemon')
     .command('stop', 'Stop daemon')
+    .command('proxyconf <cmd>', 'Enable/Disable local domains')
     .example('$0 add nodemon')
     .example('$0 add -o app.log \'serve -p $PORT\'')
     .example('$0 add -n app \'serve -p $PORT\'')
     .example('$0 add -e PATH \'serve -p $PORT\'')
+    .example('$0 domains enable')
     .epilog('https://github.com/typicode/hotel')
     .demand(1)
 
@@ -45,6 +48,10 @@ module.exports = (processArgv) => {
 
   if (_[0] === 'stop') {
     return daemon.stop()
+  }
+
+  if (_[0] === 'proxyconf' && _[1]) {
+    return proxyconf[_[1]].call(argv)
   }
 
   yargs.showHelp()
