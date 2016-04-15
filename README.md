@@ -60,7 +60,7 @@ Using other servers? Here are some examples to get you started :)
 
 ```bash
 hotel add 'jekyll --port $PORT'
-hotel add 'rails server --port $PORT'
+hotel add 'rails server --port $PORT -b 127.0.0.1'
 hotel add 'python -m SimpleHTTPServer $PORT'
 hotel add 'php -S 127.0.0.1:$PORT'
 # ...
