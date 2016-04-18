@@ -1,8 +1,7 @@
 # Change Log
 
-## Unreleased
+## 0.4.14
 
-* Add colors to server logs.
 * Fix UI issues.
 
 ## 0.4.13
