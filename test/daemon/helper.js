@@ -24,7 +24,7 @@ function before () {
   mock({
     [untildify('~/.hotel')]: {},
     // Needed to avoid 404
-    [path.join(__dirname, '../../src/daemon/public/index.html')]: 'hello world',
+    [path.join(__dirname, '../../src/daemon/public/index.html')]: 'index.html content',
     [serverKey]: fs.readFileSync(serverKey),
     [serverCrt]: fs.readFileSync(serverCrt)
   })
