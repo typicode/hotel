@@ -30,16 +30,16 @@ If you don't have Node installed, use [brew](http://brew.sh), [nvm](https://gith
 
 ## Quick start
 
-1. Add your servers commands.
+Add your servers commands.
 
 ```bash
 ~/projects/one$ hotel add nodemon
 ~/projects/two$ hotel add 'serve -p $PORT'
 ```
 
-2. Go to [localhost:2000](http://localhost:2000) or [hotel.dev](http://hotel.dev).
+Go to [localhost:2000](http://localhost:2000) or [hotel.dev](http://hotel.dev).
 
-3. Alternatively you can directly go to:
+Alternatively you can directly go to:
 
 ```
 http://localhost:2000/one
@@ -60,7 +60,7 @@ Using other servers? Here are some examples to get you started :)
 
 ```bash
 hotel add 'jekyll --port $PORT'
-hotel add 'rails server --port $PORT -b 127.0.0.1'
+hotel add 'rails server -p $PORT -b 127.0.0.1'
 hotel add 'python -m SimpleHTTPServer $PORT'
 hotel add 'php -S 127.0.0.1:$PORT'
 # ...
@@ -127,8 +127,10 @@ If you're offline or can't configure your browser to use `.dev` domains, you can
 
 ## Roadmap
 
-- [X] In-browser logs
-- [X] Wildcard domains support
+- [X] Add in-browser logs
+- [X] Add Wildcard domains support
+- [ ] Add colors to in-browser logs
+- [ ] Add Domain redirection
 
 ## License
 
