@@ -4,9 +4,9 @@
 
       <td>
         <a
-          href="/{{monitor.id}}"
           title="{{monitor.cwd}}$ {{monitor.command[2]}}"
           class="monitor"
+          href="{{href(monitor.id)}}"
           v-bind:class="monitor.status"
         >
           {{monitor.id}}<span class="status"> - {{monitor.status}}</span>
@@ -65,6 +65,16 @@ export default {
   },
 
   methods: {
+    href(id) {
+      const { protocol, hostname } = window.location
+      if (/hotel\./.test(hostname)) {
+        const tld = hostname.split('.').slice(-1)[0]
+        return `${protocol}//${id}.${tld}`
+      } else {
+        return `/${id}`
+      }
+    },
+
     isSelected(id) {
       return id === this.outputId
     },

@@ -11,13 +11,21 @@ const conf = require('../../conf')
 module.exports = (servers) => {
   const app = express.Router()
   const proxy = httpProxy.createProxyServer()
+  const hotelRegExp = new RegExp(`hotel\.${conf.tld}$`)
+  const tldRegExp = new RegExp(`.${conf.tld}$`)
 
   app.use((req, res, next) => {
     const { hostname } = req
-    const regexp = new RegExp(`.${conf.tld}$`)
+
+    // Skip hotel.tld
+    if (hotelRegExp.test(hostname)) {
+      return next()
+    }
+
+    // Get id from hostname
     const id = getServerId(
       servers.list().map(s => s.id),
-      hostname.replace(regexp, '')
+      hostname.replace(tldRegExp, '')
     )
 
     if (!servers.has(id)) {

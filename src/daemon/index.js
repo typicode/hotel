@@ -30,6 +30,7 @@ const proxy = httpProxy.createServer({
   ws: true
 })
 
+// See https://github.com/typicode/hotel/pull/61
 proxy.on('proxyReq', (proxyReq, req) => {
   req._proxyReq = proxyReq
 })

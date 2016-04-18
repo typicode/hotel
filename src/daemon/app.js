@@ -11,8 +11,7 @@ const tcpProxy = require('./tcp-proxy')
 const IndexRouter = require('./routers')
 const APIRouter = require('./routers/api')
 const Events = require('./events')
-const HotelHost = require('./vhosts/hotel-dev')
-const DevHost = require('./vhosts/dev')
+const TLDHost = require('./vhosts/tld')
 
 const API_ROOT = '/_'
 
@@ -34,8 +33,7 @@ module.exports = (servers) => {
   const indexRouter = IndexRouter(servers)
   const api = APIRouter(servers)
   const events = Events(servers)
-  const hotelHost = HotelHost(servers)
-  const devHost = DevHost(servers)
+  const tldHost = TLDHost(servers)
 
   // requests timeout
   serverReady.timeout = conf.timeout
@@ -46,14 +44,13 @@ module.exports = (servers) => {
   // API
   app.use(`${API_ROOT}/servers`, api)
 
-  // .dev hosts
-  app.use(vhost(`hotel.${conf.tld}`, hotelHost))
-  app.use(vhost(new RegExp(`.*\.${conf.tld}`), devHost))
+  // .tld host
+  app.use(vhost(new RegExp(`.*\.${conf.tld}`), tldHost))
 
   // public
   app.use(express.static(`${__dirname}/public`))
 
-  // Server router
+  // localhost router
   app.use(indexRouter)
 
   // Handle CONNECT, used by WebSockets and https when accessing .dev domains
