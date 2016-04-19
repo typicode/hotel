@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.15
+
+* Fix blank page issue in `v0.4.14`.
+
 ## 0.4.14
 
 * Fix UI issues.
