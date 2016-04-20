@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.16
+
+* Fix issue with project names containing characters not allowed for a domain name. By default, `hotel add` will now replace spaces and `_` characters in project names.
+
 ## 0.4.15
 
 * Fix blank page issue in `v0.4.14`.
