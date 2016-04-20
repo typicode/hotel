@@ -19,6 +19,7 @@ describe('add|rm', () => {
 
   it('should create file', () => {
     servers.add('node index.js')
+
     const file = path.join(serversDir, 'app.json')
     const conf = {
       cmd: 'node index.js',
@@ -32,6 +33,27 @@ describe('add|rm', () => {
       JSON.parse(fs.readFileSync(file)),
       conf
     )
+  })
+
+  it('should create file with URL safe characters by defaults', () => {
+    servers.add('node index.js', {
+      d: '/_-Some Project_Name--'
+    })
+
+    const file = path.join(serversDir, 'some-project-name.json')
+
+    assert(fs.existsSync(file))
+  })
+
+  it('should be possible to force a name', () => {
+    servers.add('node index.js', {
+      n: 'Some Project_Name',
+      d: '/Some Project_Name'
+    })
+
+    const file = path.join(serversDir, 'Some Project_Name.json')
+
+    assert(fs.existsSync(file))
   })
 
   it('should support options', () => {

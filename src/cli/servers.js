@@ -12,8 +12,18 @@ module.exports = {
   ls
 }
 
-function getId (name) {
-  return name || path.basename(process.cwd())
+// Converts '_-Some Project_Name--' to 'some-project-name'
+function domainize (str) {
+  return str
+    .toLowerCase()
+    // Replace all _ and spaces with -
+    .replace(/(_| )/g, '-')
+    // Trim - characters
+    .replace(/(^-*|-*$)/g, '')
+}
+
+function getId (cwd) {
+  return domainize(path.basename(cwd))
 }
 
 function getServerFile (id) {
@@ -23,9 +33,9 @@ function getServerFile (id) {
 function add (cmd, opts = {}) {
   mkdirp.sync(serversDir)
 
-  const id = getId(opts.n)
-  const file = getServerFile(id)
   const cwd = opts.d || process.cwd()
+  const id = opts.n || getId(cwd)
+  const file = getServerFile(id)
   const obj = { cwd, cmd }
 
   if (opts.o) obj.out = opts.o
