@@ -2,7 +2,7 @@
 
 ## 0.4.16
 
-* Fix issue with project names containing characters not allowed for a domain name. By default, `hotel add` will now replace spaces and `_` characters in project names.
+* Fix issue with project names containing characters not allowed for a domain name. By default, `hotel add` will now convert name to lower case and will replace space and `_` characters. However, you can still use `-n` to force a specific name or specific characters.
 
 ## 0.4.15
 
