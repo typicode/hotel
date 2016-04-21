@@ -1,4 +1,5 @@
 const webpack = require('webpack')
+const simpleVars = require('postcss-simple-vars')
 
 module.exports = {
   entry: './src/client/main.js',
@@ -18,12 +19,8 @@ module.exports = {
         loader: 'vue'
       },
       {
-        test: /\.scss$/,
-        loaders: ['style', 'css', 'sass']
-      },
-      {
         test: /\.css$/,
-        loaders: ['style', 'css']
+        loaders: ['style', 'css', 'postcss']
       },
       {
         test: /\.(eot|svg|ttf|woff(2)?)(\?v=\d+\.\d+\.\d+)?/,
@@ -32,9 +29,13 @@ module.exports = {
     ]
   },
   plugins: [
+    // window.fetch polyfill
     new webpack.ProvidePlugin({
       'Promise': 'es6-promise',
       'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
     })
-  ]
+  ],
+  postcss: function () {
+    return [simpleVars]
+  }
 }
