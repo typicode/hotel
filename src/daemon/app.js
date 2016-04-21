@@ -15,19 +15,23 @@ const TLDHost = require('./vhosts/tld')
 
 const API_ROOT = '/_'
 
-const proxy = httpProxy.createProxyServer()
-
 // Take a req and extract server id based on host
 function parseReq (req) {
-  const [hostname, port] = req.headers.host.split(':')
-  const regexp = new RegExp(`.${conf.tld}$`)
-  const id = hostname.replace(regexp, '')
-  return { id, port }
+  if (req.headers.host) {
+    const [hostname, port] = req.headers.host.split(':')
+    const regexp = new RegExp(`.${conf.tld}$`)
+    const id = hostname.replace(regexp, '')
+    return { id, port }
+  } else {
+    util.log('No host header found')
+    return {}
+  }
 }
 
 module.exports = (servers) => {
   const app = express()
   const server = http.createServer(app)
+  const proxy = httpProxy.createProxyServer()
 
   // Initialize routes
   const indexRouter = IndexRouter(servers)

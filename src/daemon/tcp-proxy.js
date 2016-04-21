@@ -6,7 +6,7 @@ module.exports = (source, targetPort) => {
   source.pipe(target).pipe(source)
 
   const handleError = (err) => {
-    if (err) util.log(err)
+    util.log(err)
     source.destroy()
     target.destroy()
   }
