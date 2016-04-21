@@ -1,0 +1,121 @@
+$text: #212121;
+$link: $text;
+$hover: #E0E0E0;
+$muted: #BDBDBD;
+$on: #00C853;
+$on-hover: $on;
+$off: $muted;
+$output-background: #FFFFFF;
+$output-color: $text;
+
+[v-cloak] {
+  display: none;
+}
+
+body {
+  font-family: "Helvetica Neue", Helvetica, arial, sans-serif;
+  font-size: 18px;
+  padding: 10px;
+  color: $text;
+}
+
+a {
+  text-decoration: none;
+  outline: 0;
+  cursor: pointer;
+  color: $link;
+}
+
+a:hover, a:focus {
+  color: $hover;
+}
+
+.empty a {
+  text-decoration: underline;
+}
+
+table {
+  width: 100%;
+  max-width: 320px;
+  border-collapse: collapse;
+}
+
+tr {
+  border: solid #EEE;
+  border-width: 1px 0 1px 0;
+  vertical-align: middle;
+  height: 40px;
+}
+
+.fa {
+  font-size: 20px;
+}
+
+.status {
+  font-size: 12px;
+}
+
+.monitor.stopped,
+.monitor.crashed,
+.toggle.off,
+.toggle-output {
+  color: $off;
+}
+
+.toggle.on {
+  color: $on;
+}
+
+.toggle.on:hover {
+  color: $on-hover !important;
+}
+
+.monitor.running,
+.toggle-output.selected {
+  color: inherit !important;
+}
+
+.output {
+  overflow-y: scroll;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 14px;
+  word-break: break-all;
+  background: $output-background;
+  color: $output-color;
+  border-left: 1px solid #EEE;
+  position: absolute;
+  left: 360px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+footer a {
+  color: $muted;
+}
+
+footer a span {
+  visibility: hidden;
+  font-size: 14px;
+}
+
+footer a:hover span {
+  visibility: visible;
+}
+
+/* Sticky footer */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 28px; /* bottom = footer height */
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 320px;
+}
