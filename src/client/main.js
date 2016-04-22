@@ -3,7 +3,7 @@ const App = require('./components/App.vue')
 const store = require('./store')
 
 require('font-awesome/css/font-awesome.css')
-require('./style.scss')
+require('./style.css')
 
 /* eslint-disable no-new */
 new Vue({
