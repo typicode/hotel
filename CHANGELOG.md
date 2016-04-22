@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.4.17
+
+* Add `proxy` conf, use it if you're behind a corporate proxy.
+* Bug fix
+
 ## 0.4.16
 
 * Fix issue with project names containing characters not allowed for a domain name. By default, `hotel add` will now convert name to lower case and will replace space and `_` characters. However, you can still use `-n` to force a specific name or specific characters.
