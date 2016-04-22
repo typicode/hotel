@@ -39,4 +39,4 @@ const withProxy =
 }
 `
 
-module.exports = conf.proxy ? simple : withProxy
+module.exports = conf.proxy ? withProxy : simple
