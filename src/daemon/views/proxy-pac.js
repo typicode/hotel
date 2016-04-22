@@ -14,7 +14,7 @@ const simple =
 
 // Same as above, except that it lets you use hotel behind a corporate proxy.
 // Set conf.proxy in ~/.hotel/conf.json to your proxy address and port.
-// For example: { proxy: '1.2.3.4:5000' }
+// For example: { "proxy": "1.2.3.4:5000" }
 //
 // See also https://en.wikipedia.org/wiki/Private_network
 const withProxy =
