@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.18
+
+* Bug fix
+
 ## 0.4.17
 
 * Add `proxy` conf, use it if you're behind a corporate proxy.
