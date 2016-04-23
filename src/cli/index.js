@@ -13,7 +13,7 @@ module.exports = (processArgv) => {
     .help('help').alias('h', 'help')
     .usage('Usage: $0 <command> [options]')
     .command('add [-n name] [-o file] [-e env] [-p port] <cmd>', 'Add server')
-    .command('rm [name]', 'Remove server')
+    .command('rm [name]', 'Remove server').alias('remove', 'rm')
     .command('ls', 'List servers')
     .command('start', 'Start daemon')
     .command('stop', 'Stop daemon')
