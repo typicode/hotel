@@ -1,6 +1,6 @@
 # hotel [![Mac/Linux Build Status](https://img.shields.io/travis/typicode/hotel/master.svg)](https://travis-ci.org/typicode/hotel) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel)
 
-> No need to worry about ports, remember commands, manage terminal tabs, modify /etc/hosts ... access and start your servers from the browser. You can even use local `.dev` domains or any other tld, and it works everywhere (OS X, Linux, Windows) :+1:
+> No need to worry about ports, remember commands, manage terminal tabs... access and start your servers from the browser. You can even use local `.dev` domains or any other tld, and it works everywhere (OS X, Linux, Windows) :+1:
 
 ![](http://i.imgur.com/dAhxGMj.gif)
 
@@ -11,10 +11,10 @@
 * __SSL via self-signed certificate__ (`https://project.dev` *)
 * __Wildcard subdomains__ (`http://*.project.dev`)
 * Servers are only started when you access them
-* Works with any server (Node, Ruby, PHP, ...)
-* Cross-platform (OS X, Linux and Windows)
+* __Works with any server__ (Node, Ruby, PHP, ...)
+* Cross-platform (__OS X__, __Linux__ and __Windows__)
 * Plays nice with other servers (Apache, Nginx, ...)
-* No port 80, /etc/hosts or admin/root privileges needed
+* __System-friendly__ (no messing with `port 80`, `/etc/hosts` or `sudo`)
 * Random or fixed ports
 * See Roadmap for upcoming features :)
 
