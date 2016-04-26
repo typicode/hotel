@@ -7,8 +7,8 @@
 ## Features
 
 * __Shortcut access__ (`http://localhost:2000/project`)
-* __Local domains__ (`http://project.dev` *)
-* __SSL via self-signed certificate__ (`https://project.dev` *)
+* __Local domains__ (`http://project.dev`)
+* __SSL via self-signed certificate__ (`https://project.dev`)
 * __Wildcard subdomains__ (`http://*.project.dev`)
 * __Works with any server__ (Node, Ruby, PHP, ...)
 * __Works on OS X, Linux and Windows__
