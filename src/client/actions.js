@@ -36,13 +36,18 @@ let eventSource
 function watchOutput ({ dispatch }, id) {
   eventSource && eventSource.close()
   dispatch('WATCH_OUTPUT', id)
-  eventSource = new EventSource(`${API_ROOT}/events/output/${id}`)
-  eventSource.onmessage = (event) => {
-    JSON
-      .parse(event.data)
-      .output
-      .split('\n')
-      .forEach((line) => dispatch('PUSH_OUTPUT', line))
+
+  if (window.EventSource) {
+    eventSource = new EventSource(`${API_ROOT}/events/output/${id}`)
+    eventSource.onmessage = (event) => {
+      JSON
+        .parse(event.data)
+        .output
+        .split('\n')
+        .forEach((line) => dispatch('PUSH_OUTPUT', line))
+    }
+  } else {
+    dispatch('PUSH_OUTPUT', 'Sorry, server logs aren\'t supported on this browser :(')
   }
 }
 
