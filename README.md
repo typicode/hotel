@@ -6,13 +6,13 @@
 
 ## Features
 
-* __Shortcut access__ (`http://localhost:2000/project`)
-* __Local domains__ (`http://project.dev`)
-* __SSL via self-signed certificate__ (`https://project.dev`)
-* __Wildcard subdomains__ (`http://*.project.dev`)
-* __Works with any server__ (Node, Ruby, PHP, ...)
-* __Works on OS X, Linux and Windows__
-* __System-friendly__ (no messing with `port 80`, `/etc/hosts` or `sudo`)
+* __Shortcut access__ → `http://localhost:2000/project`
+* __Local domains__ → `http://project.dev`
+* __SSL via self-signed certificate__ → `https://project.dev`
+* __Wildcard subdomains__ → `http://*.project.dev`
+* __Works with any server__ → Node, Ruby, PHP, ...
+* __Works everywhere__ → OS X, Linux and Windows
+* __System-friendly__ → no messing with `port 80`, `/etc/hosts` or `sudo`
 * Servers are only started when you access them
 * Plays nice with other servers (Apache, Nginx, ...)
 * Random or fixed ports
