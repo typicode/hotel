@@ -1,12 +1,15 @@
 <template>
   <div v-on:scroll="onScroll">
     <div v-for="item in output" track-by="_uid">
-      {{ item.line }}
+      {{{ item.line | escape | ansi }}}
     </div>
   </div>
 </template>
 
 <script>
+const escapeHTML = require('escape-html')
+const ansiHTML = require('ansi-html')
+
 export default {
   data() {
     return {
@@ -21,6 +24,11 @@ export default {
       outputId: (state) => state.outputId,
       output: (state) => state.output
     }
+  },
+
+  filters: {
+    ansi: ansiHTML,
+    escape: escapeHTML
   },
 
   watch: {

@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.19
+
+* Support ANSI colors in the browser
+
 ## 0.4.18
 
 * Bug fix

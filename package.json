@@ -64,6 +64,7 @@
     "yargs": "^3.29.0"
   },
   "devDependencies": {
+    "ansi-html": "0.0.5",
     "babel-cli": "^6.1.2",
     "babel-core": "^6.7.4",
     "babel-loader": "^6.2.4",
@@ -74,6 +75,7 @@
     "babel-runtime": "^5.8.35",
     "css-loader": "^0.23.1",
     "es6-promise": "^3.1.2",
+    "escape-html": "^1.0.3",
     "exports-loader": "^0.6.3",
     "file-loader": "^0.8.5",
     "font-awesome": "^4.5.0",
