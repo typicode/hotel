@@ -10,11 +10,11 @@
 * __Local domains__ (`http://project.dev` *)
 * __SSL via self-signed certificate__ (`https://project.dev` *)
 * __Wildcard subdomains__ (`http://*.project.dev`)
-* Servers are only started when you access them
 * __Works with any server__ (Node, Ruby, PHP, ...)
-* Cross-platform (__OS X__, __Linux__ and __Windows__)
-* Plays nice with other servers (Apache, Nginx, ...)
+* __Works on OS X, Linux and Windows__
 * __System-friendly__ (no messing with `port 80`, `/etc/hosts` or `sudo`)
+* Servers are only started when you access them
+* Plays nice with other servers (Apache, Nginx, ...)
 * Random or fixed ports
 * See Roadmap for upcoming features :)
 
