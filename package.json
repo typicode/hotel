@@ -18,7 +18,8 @@
     "watch:webpack": "webpack -d --watch",
     "build": "npm run build:webpack && npm run build:babel",
     "build:babel": "babel src -d lib --copy-files --ignore src/daemon/public/bundle.js",
-    "build:webpack": "webpack -p --output-path lib/daemon/public"
+    "build:webpack": "webpack -p --output-path lib/daemon/public",
+    "np": "np"
   },
   "repository": {
     "type": "git",
@@ -84,6 +85,7 @@
     "mocha": "^2.4.2",
     "mock-fs": "^3.6.0",
     "nodemon": "^1.8.1",
+    "np": "^1.2.1",
     "postcss-loader": "^0.8.2",
     "postcss-simple-vars": "^1.2.0",
     "sinon": "^1.17.3",
