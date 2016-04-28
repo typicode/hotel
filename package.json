@@ -85,7 +85,6 @@
     "mocha": "^2.4.2",
     "mock-fs": "^3.6.0",
     "nodemon": "^1.8.1",
-    "np": "^1.2.1",
     "postcss-loader": "^0.8.2",
     "postcss-simple-vars": "^1.2.0",
     "sinon": "^1.17.3",
