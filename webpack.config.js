@@ -30,9 +30,10 @@ module.exports = {
   },
   plugins: [
     // window.fetch polyfill
+    // See https://gist.github.com/Couto/b29676dd1ab8714a818f
     new webpack.ProvidePlugin({
-      'Promise': 'es6-promise',
-      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+      'Promise': 'exports?global.Promise!es6-promise',
+      'fetch': 'exports?self.fetch!whatwg-fetch'
     })
   ],
   postcss: function () {

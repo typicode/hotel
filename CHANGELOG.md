@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.20
+
+* Fix UI issue with Safari 9
+
 ## 0.4.19
 
 * Support ANSI colors in the browser
