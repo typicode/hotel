@@ -18,7 +18,7 @@ function stopMonitor (store, id) {
 }
 
 function watchMonitors ({ dispatch }) {
-  if (EventSource) {
+  if (window.EventSource) {
     new EventSource(`${API_ROOT}/events`).onmessage = event => {
       const data = JSON.parse(event.data)
       dispatch('SET_MONITORS', data.monitors)
