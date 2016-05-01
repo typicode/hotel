@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.21
+
+* Fix UI issue with IE
+
 ## 0.4.20
 
 * Fix UI issue with Safari 9
