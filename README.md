@@ -129,7 +129,7 @@ If you're offline or can't configure your browser to use `.dev` domains, you can
 
 - [X] Add in-browser logs
 - [X] Add Wildcard domains support
-- [ ] Add colors to in-browser logs
+- [X] Add colors to in-browser logs
 - [ ] Add Domain redirection
 
 ## License
