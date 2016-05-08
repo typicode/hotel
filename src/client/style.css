@@ -1,6 +1,6 @@
 $text: #212121;
 $link: $text;
-$hover: #E0E0E0;
+$hover: #999;
 $muted: #BDBDBD;
 $on: #00C853;
 $on-hover: $on;
@@ -27,7 +27,7 @@ a {
 }
 
 a:hover, a:focus {
-  color: $hover;
+  color: $hover !important;
 }
 
 .empty a {
@@ -45,6 +45,16 @@ tr {
   border-width: 1px 0 1px 0;
   vertical-align: middle;
   height: 40px;
+}
+
+td a {
+  display: block;
+  padding: 10px;
+}
+
+td:nth-child(2), td:nth-child(3) {
+  width: 30px;
+  text-align: right;
 }
 
 .fa {
@@ -91,6 +101,11 @@ tr {
   bottom: 0;
 }
 
+footer {
+  position: absolute;
+  bottom: 0;
+}
+
 footer a {
   color: $muted;
 }
@@ -104,18 +119,8 @@ footer a:hover span {
   visibility: visible;
 }
 
-/* Sticky footer */
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 28px; /* bottom = footer height */
-}
-
-footer {
-  position: absolute;
-  bottom: 0;
-  width: 320px;
+@media (max-width: 375px) {
+  td:nth-child(3), .output {
+    display: none;
+  }
 }

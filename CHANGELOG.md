@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.22
+
+* UI tweaks
+
 ## 0.4.21
 
 * Fix UI issue with IE
