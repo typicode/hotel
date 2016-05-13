@@ -1,6 +1,8 @@
 # hotel [![Mac/Linux Build Status](https://img.shields.io/travis/typicode/hotel/master.svg)](https://travis-ci.org/typicode/hotel) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel)
 
-> No need to worry about ports, remember commands, manage terminal tabs... access and start your servers from the browser. You can even use local `.dev` domains or any other tld, and it works everywhere (OS X, Linux, Windows) :+1:
+> No need to worry about ports, remember commands, manage terminal tabs... access and start your servers from the browser.
+
+> You can even use local `.dev` domains or any other tld, and it __works everywhere with any server__ (OS X, Linux, Windows) :+1:
 
 ![](http://i.imgur.com/dAhxGMj.gif)
 
