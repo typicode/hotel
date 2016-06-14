@@ -1,26 +1,23 @@
 const express = require('express')
 
-module.exports = (servers) => {
+module.exports = (group) => {
   const router = express.Router()
 
-  const exists = (req, res, next) => {
-    if (servers.has(req.params.id)) return next()
-    res.sendStatus(404)
-  }
-
   router.get('/', (req, res) => {
-    res.json({ monitors: servers.list() })
+    res.json(group.list())
   })
 
-  router.post('/:id/start', exists, (req, res) => {
-    servers.start(req.params.id)
-    res.end()
-  })
+  router.post('/:id/start',
+    group.exists.bind(group),
+    group.start.bind(group),
+    (req, res) => res.end()
+  )
 
-  router.post('/:id/stop', exists, (req, res) => {
-    servers.stop(req.params.id)
-    res.end()
-  })
+  router.post('/:id/stop',
+    group.exists.bind(group),
+    group.stop.bind(group),
+    (req, res) => res.end()
+  )
 
   return router
 }

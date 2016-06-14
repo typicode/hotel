@@ -1,7 +1,11 @@
 const net = require('net')
 const util = require('util')
 
-module.exports = (source, targetPort) => {
+module.exports = {
+  proxy
+}
+
+function proxy (source, targetPort, targetHost) {
   const target = net.connect(targetPort)
   source.pipe(target).pipe(source)
 

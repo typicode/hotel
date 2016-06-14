@@ -2,32 +2,42 @@ const express = require('express')
 const connectSSE = require('connect-sse')
 const sse = connectSSE()
 
-module.exports = (servers) => {
+module.exports = (group) => {
   const router = express.Router()
 
   router.get('/', sse, (req, res) => {
     function sendState () {
-      res.json({ monitors: servers.list() })
+      res.json(group.list())
     }
 
-    servers.on('change', sendState)
+    // Bootstrap
     sendState()
+
+    // Listen
+    group.on('change', sendState)
   })
 
-  router.get('/output/:id', sse, (req, res) => {
-    const { id } = req.params
-    const mon = servers.get(id)
-    if (!mon) return res.sendStatus(404)
-
-    function sendOutput (data) {
+  router.get('/output', sse, (req, res) => {
+    function sendOutput (id, data) {
       res.json({
+        id,
         output: data.toString()
       })
     }
 
-    mon.on('stdout', sendOutput)
-    mon.on('stderr', sendOutput)
-    sendOutput('')
+    // Bootstrap
+    const list = group.list()
+    Object
+      .keys(list)
+      .forEach((id) => {
+        var mon = list[id]
+        if (mon && mon.tail) {
+          sendOutput(id, mon.tail)
+        }
+      })
+
+    // Listen
+    group.on('output', sendOutput)
   })
 
   return router
