@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const test = require('ava')
 const mock = require('mock-fs')
+const sinon = require('sinon')
 const servers = require('../../src/cli/servers')
 const cli = require('../../src/cli')
 const { serversDir } = require('../../src/common')
@@ -10,10 +11,6 @@ test.before(() => {
   mock({
     [serversDir]: {}
   })
-})
-
-test.afterEach(() => {
-  mock.restore()
 })
 
 test('add should create file', (t) => {
@@ -102,7 +99,6 @@ test('add should support url', (t) => {
     'add', 'http://1.2.3.4',
     '-n', 'proxy'
   ])
-  servers.add()
 
   const file = path.join(serversDir, 'proxy.json')
   const conf = {
@@ -136,4 +132,10 @@ test('rm should remove file using name', (t) => {
     '-n', name
   ])
   t.true(!fs.existsSync(file))
+})
+
+test('ls', (t) => {
+  sinon.spy(servers, 'ls')
+  cli(['', '', 'ls'])
+  sinon.assert.calledOnce(servers.ls)
 })

@@ -53,7 +53,7 @@ module.exports = (processArgv) => {
       'ls',
       'List servers',
       {},
-      (argv) => servers.rm(argv)
+      (argv) => servers.ls(argv)
     )
     .command(
       'start',
