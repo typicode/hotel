@@ -35,13 +35,14 @@ new Vue({ // eslint-disable-line
     watchList () {
       if (window.EventSource) {
         new EventSource('/_/events').onmessage = (event) => {
-          this.list = JSON.parse(event.data)
+          console.log(Object.keys(JSON.parse(event.data)))
+          Vue.set(this, 'list', JSON.parse(event.data))
         }
       } else {
         setInterval(() => {
           fetch('/_/events')
             .then(response => response.json())
-            .then(data => { this.list = data })
+            .then(data => Vue.set(this, 'list', data))
         }, 1000)
       }
     },
@@ -150,8 +151,8 @@ new Vue({ // eslint-disable-line
 
       Object
         .keys(this.list)
-        .filter(function (key) { return this.list[key].status }.bind(this))
-        .forEach(function (key) { obj[key] = this.list[key] }.bind(this))
+        .filter((key) => { return this.list[key].status })
+        .forEach((key) => { obj[key] = this.list[key] })
 
       return obj
     },
@@ -160,8 +161,8 @@ new Vue({ // eslint-disable-line
 
       Object
         .keys(this.list)
-        .filter(function (key) { return !this.list[key].status }.bind(this))
-        .forEach(function (key) { obj[key] = this.list[key] }.bind(this))
+        .filter((key) => { return !this.list[key].status })
+        .forEach((key) => { obj[key] = this.list[key] })
 
       return obj
     }
