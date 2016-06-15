@@ -96,9 +96,16 @@ hotel add http://192.168.1.10 -n app  # map local domain to URL
 
 # Other commands
 hotel ls        # List servers
-hotel rm [name] # Remove server
+hotel rm # Remove server
 hotel start     # Start hotel daemon
 hotel stop      # Stop hotel daemon
+```
+
+To get help
+
+```bash
+hotel --help
+hotel --help <cmd> 
 ```
 
 ## Port
