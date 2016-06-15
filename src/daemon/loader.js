@@ -5,22 +5,29 @@ const mkdirp = require('mkdirp')
 const chokidar = require('chokidar')
 const common = require('../common')
 
-function _parse (file) {
-  return {
-    id: path.basename(file, '.json'),
-    conf: JSON.parse(fs.readFileSync(file, 'utf8'))
-  }
+function getId (file) {
+  return path.basename(file, '.json')
+}
+
+function getConf (file) {
+  return JSON.parse(fs.readFileSync(file, 'utf8'))
 }
 
 function handleAdd (group, file) {
   util.log(`${file} added`)
-  const { id, conf } = _parse(file)
-  group.add(id, conf)
+  const id = getId(file)
+
+  try {
+    const conf = JSON.parse(fs.readFileSync(file, 'utf8'))
+    group.add(id, conf)
+  } catch (err) {
+    util.log(`Error: Failed to parse ${file}`, err)
+  }
 }
 
 function handleUnlink (group, file, cb) {
   util.log(`${file} unlinked`)
-  const { id } = _parse(file)
+  const id = getId(file)
   group.remove(id, cb)
 }
 

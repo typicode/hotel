@@ -224,6 +224,6 @@ test.cb('Removing a server should make it unavailable', (t) => {
     request(app)
       .get('/')
       .set('Host', 'to-be-removed.dev')
-      .expect(502, t.end)
+      .expect(404, t.end)
   })
 })

@@ -133,7 +133,7 @@ class Group extends EventEmitter {
 
   remove (id, cb) {
     const item = this.find(id)
-    if (item && item.cmd) {
+    if (item) {
       if (item.stop) {
         item.stop(cb)
         item.removeAllListeners()
