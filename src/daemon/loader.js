@@ -9,10 +9,6 @@ function getId (file) {
   return path.basename(file, '.json')
 }
 
-function getConf (file) {
-  return JSON.parse(fs.readFileSync(file, 'utf8'))
-}
-
 function handleAdd (group, file) {
   util.log(`${file} added`)
   const id = getId(file)
