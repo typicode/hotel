@@ -3,10 +3,10 @@ const path = require('path')
 const test = require('ava')
 const mock = require('mock-fs')
 const servers = require('../../src/cli/servers')
+const cli = require('../../src/cli')
 const { serversDir } = require('../../src/common')
 
 test.before(() => {
-  process.chdir(path.join(__dirname, '../fixtures/app'))
   mock({
     [serversDir]: {}
   })
@@ -17,7 +17,8 @@ test.afterEach(() => {
 })
 
 test('add should create file', (t) => {
-  servers.add('node index.js')
+  process.cwd = () => path.join(__dirname, '../fixtures/app')
+  cli(['', '', 'add', 'node index.js'])
 
   const file = path.join(serversDir, 'app.json')
   const conf = {
@@ -35,45 +36,57 @@ test('add should create file', (t) => {
 })
 
 test('add should create file with URL safe characters by defaults', (t) => {
-  servers.add('node index.js', {
-    d: '/_-Some Project_Name--'
-  })
+  cli([
+    '', '',
+    'add', 'node index.js',
+    '-d', '/_-Some Project_Name--'
+  ])
 
   const file = path.join(serversDir, 'some-project-name.json')
 
-  t.truthy(fs.existsSync(file))
+  t.true(fs.existsSync(file))
 })
 
 test('add should be possible to force a name', (t) => {
-  servers.add('node index.js', {
-    n: 'Some Project_Name',
-    d: '/Some Project_Name'
-  })
+  cli([
+    '', '',
+    'add', 'node index.js',
+    '-n', 'Some Project_Name',
+    '-d', '/Some Project_Name'
+  ])
 
   const file = path.join(serversDir, 'Some Project_Name.json')
 
-  t.truthy(fs.existsSync(file))
+  t.true(fs.existsSync(file))
 })
 
 test('add should support options', (t) => {
   process.env.FOO = 'FOO'
-  const opts = {
-    n: 'project',
-    o: '/some/path/out.log',
-    e: 'FOO',
-    p: 3000
-  }
-  servers.add('node index.js', opts)
+  const cmd = 'node index.js'
+  const n = 'project'
+  const o = '/some/path/out.log'
+  const e = 'FOO'
+  const p = 3000
+
+  // servers.add('node index.js', opts)
+  cli([
+    '', '',
+    'add', cmd,
+    '-n', n,
+    '-o', o,
+    '-e', e,
+    '-p', p
+  ])
 
   const file = path.join(serversDir, 'project.json')
   const conf = {
     cmd: 'node index.js',
     cwd: process.cwd(),
-    out: opts.o,
+    out: o,
     env: {
       PATH: process.env.PATH,
       FOO: process.env.FOO,
-      PORT: opts.p
+      PORT: p
     }
   }
 
@@ -84,9 +97,14 @@ test('add should support options', (t) => {
 })
 
 test('add should support url', (t) => {
-  servers.add('http://1.2.3.4')
+  cli([
+    '', '',
+    'add', 'http://1.2.3.4',
+    '-n', 'proxy'
+  ])
+  servers.add()
 
-  const file = path.join(serversDir, 'app.json')
+  const file = path.join(serversDir, 'proxy.json')
   const conf = {
     target: 'http://1.2.3.4'
   }
@@ -98,11 +116,24 @@ test('add should support url', (t) => {
 })
 
 test('rm should remove file', (t) => {
-  const app = path.join(serversDir, 'app.json')
-  const project = path.join(serversDir, 'project.json')
-  servers.rm({})
-  servers.rm({ n: 'project' })
-  t.truthy(!fs.existsSync(app))
-  t.truthy(!fs.existsSync(project))
+  const name = 'some-app'
+  const file = path.join(serversDir, `${name}.json`)
+  process.cwd = () => path.join('/projects', name)
+
+  fs.writeFileSync(file, '')
+  cli(['', '', 'rm'])
+  t.true(!fs.existsSync(file))
 })
 
+test('rm should remove file using name', (t) => {
+  const name = 'some-other-app'
+  const file = path.join(serversDir, `${name}.json`)
+
+  fs.writeFileSync(file, '')
+  cli([
+    '', '',
+    'rm',
+    '-n', name
+  ])
+  t.true(!fs.existsSync(file))
+})

@@ -1,3 +1,4 @@
+const yargs = require('yargs')
 const updateNotifier = require('update-notifier')
 const sudoBlock = require('sudo-block')
 const servers = require('./servers')
@@ -8,45 +9,76 @@ module.exports = (processArgv) => {
   sudoBlock('\nShould not be run as root, please retry without sudo.\n')
   updateNotifier({ pkg }).notify()
 
-  const yargs = require('yargs')(processArgv.slice(2))
+  yargs(processArgv.slice(2))
     .version(pkg.version).alias('v', 'version')
-    .help('help').alias('h', 'help')
-    .usage('Usage: $0 <command> [options]')
-    .command('add [-n name] [-o file] [-e env] [-p port] <cmd|url>', 'Add server or proxy')
-    .command('rm [-n name]', 'Remove server or proxy')
-    .command('ls', 'List servers')
-    .command('start', 'Start daemon')
-    .command('stop', 'Stop daemon')
+    .help('h').alias('h', 'help')
+    .command(
+      'add <cmd|url> [options]',
+      'Add server or proxy',
+      (yargs) => {
+        yargs
+          .option('name', {
+            alias: 'n',
+            describe: 'Name'
+          })
+          .option('out', {
+            alias: 'o',
+            describe: 'Output'
+          })
+          .option('env', {
+            alias: 'e',
+            describe: 'Env'
+          })
+          .option('port', {
+            alias: 'p',
+            describe: 'Port'
+          })
+          .demand(1)
+      },
+      (argv) => servers.add(argv['cmd|url'], argv)
+    )
+    .command(
+      'rm [options]',
+      'Remove server or proxy',
+      (yargs) => {
+        yargs
+          .option('name', {
+            alias: 'n',
+            describe: 'Name'
+          })
+      },
+      (argv) => servers.rm(argv)
+    )
+    .command(
+      'ls',
+      'List servers',
+      {},
+      (argv) => servers.rm(argv)
+    )
+    .command(
+      'start',
+      'Start daemon',
+      {},
+      () => daemon.start()
+    )
+    .command(
+      'stop',
+      'Stop daemon',
+      {},
+      () => daemon.stop()
+    )
+    .example('$0 add --help')
     .example('$0 add nodemon')
-    .example('$0 add -o app.log \'serve -p $PORT\'')
-    .example('$0 add -n app \'serve -p $PORT\'')
-    .example('$0 add -e PATH \'serve -p $PORT\'')
-    .example('$0 add -n app http://192.168.1.10')
+    .example('$0 add npm start')
+    .example('$0 add \'cmd -p $PORT\'')
+    .example('$0 add \'cmd -p $PORT\' --port 4000')
+    .example('$0 add \'cmd -p $PORT\' --output app.log')
+    .example('$0 add \'cmd -p $PORT\' --name app')
+    .example('$0 add \'cmd -p $PORT\' --env PATH')
+    .example('$0 add http://192.168.1.10 -n app ')
     .epilog('https://github.com/typicode/hotel')
     .demand(1)
-
-  const { argv } = yargs
-  const { _ } = argv
-
-  if (_[0] === 'add' && _[1]) {
-    return servers.add(_[1], argv)
-  }
-
-  if (_[0] === 'rm') {
-    return servers.rm(argv)
-  }
-
-  if (_[0] === 'ls') {
-    return servers.ls()
-  }
-
-  if (_[0] === 'start') {
-    return daemon.start()
-  }
-
-  if (_[0] === 'stop') {
-    return daemon.stop()
-  }
-
-  yargs.showHelp()
+    .strict()
+    .help()
+    .argv
 }

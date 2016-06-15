@@ -6,7 +6,7 @@ const mock = require('mock-fs')
 const untildify = require('untildify')
 const userStartup = require('user-startup')
 const common = require('../../src/common')
-const daemon = require('../../src/cli/daemon')
+const cli = require('../../src/cli')
 
 test.before(() => {
   sinon.stub(userStartup, 'create')
@@ -18,7 +18,7 @@ test('start should start daemon', (t) => {
   const daemonFile = path.join(__dirname, '../../src/daemon')
   const daemonLog = path.resolve(untildify('~/.hotel/daemon.log'))
 
-  daemon.start()
+  cli(['', '', 'start'])
 
   sinon.assert.calledWithExactly(
     userStartup.create,
@@ -38,14 +38,15 @@ test('stop should stop daemon', (t) => {
     [common.startupFile]: userStartup.getFile('hotel'),
     [userStartup.getFile('hotel')]: 'startup script'
   })
-  daemon.stop()
 
-  t.truthy(
+  cli(['', '', 'stop'])
+
+  t.true(
     !fs.existsSync(userStartup.getFile('hotel')),
     'user-startup script not removed'
   )
 
-  t.truthy(
+  t.true(
     !fs.existsSync(common.startupFile),
     '~/.hotel/startup not removed'
   )
