@@ -18,16 +18,17 @@ function handleAdd (group, file) {
   group.add(id, conf)
 }
 
-function handleUnlink (group, file) {
+function handleUnlink (group, file, cb) {
   util.log(`${file} unlinked`)
   const { id } = _parse(file)
-  group.remove(id)
+  group.remove(id, cb)
 }
 
 function handleChange (group, file) {
   util.log(`${file} changed`)
-  handleAdd(group, file)
-  handleUnlink(group, file)
+  handleUnlink(group, file, () => {
+    handleAdd(group, file)
+  })
 }
 
 module.exports = (group, opts = { watch: true }) => {

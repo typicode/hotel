@@ -141,7 +141,7 @@ class Group extends EventEmitter {
       delete this._list[id]
       this._change()
     }
-    cb()
+    cb && cb()
   }
 
   update (id, conf) {
