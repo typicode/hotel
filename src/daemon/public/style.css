@@ -14,7 +14,7 @@ aside, main {
 }
 
 aside {
-  width: 365px;
+  min-width: 365px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
