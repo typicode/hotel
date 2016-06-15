@@ -22,6 +22,7 @@ aside {
 }
 
 main {
+  position: relative; /* needed for #down */
   flex-grow: 1;
   background: #F9F9F9;
   color: #212121;
