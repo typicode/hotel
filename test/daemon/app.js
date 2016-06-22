@@ -147,7 +147,7 @@ test.cb('GET /_/servers', t => {
     .get('/_/servers')
     .expect(200, (err, res) => {
       if (err) return t.end(err)
-      t.is(Object.keys(res.body).length, 6, 'got wrong number of servers')
+      t.is(Object.keys(res.body).length, 7, 'got wrong number of servers')
       t.end()
     })
 })

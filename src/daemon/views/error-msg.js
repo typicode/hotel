@@ -3,12 +3,12 @@ const stripAnsi = require('strip-ansi')
 
 // Simple error message used in vhosts/dev and router
 module.exports = function (server) {
-  const { PORT } = server.env
-  const { timeout } = serverReady
-  const command = server.command.join(' ')
-  const tail = stripAnsi(server.tail)
-
-  return `
+  if (server.start) {
+    const { PORT } = server.env
+    const { timeout } = serverReady
+    const command = server.command.join(' ')
+    const tail = stripAnsi(server.tail)
+    return `
 Can't connect to server on PORT=<a href="http://localhost:${PORT}">${PORT}</a>.<br>
 Possible causes:
 <ul>
@@ -20,6 +20,8 @@ Try to reload or check logs.
 ${command}
 
 ${tail}
-</code></pre>
-`
+</code></pre>`
+  }
+
+  return `Can't proxy request to <a href="${server.target}">${server.target}</a>.`
 }
