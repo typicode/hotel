@@ -62,6 +62,9 @@ test.before((cb) => {
   // Add URL
   servers.add('http://localhost:4000', { n: 'proxy' })
 
+  // Add unavailable URL
+  servers.add('http://localhost:4100', { n: 'unavailable-proxy' })
+
   const group = Group()
   app = App(group)
   app.group = group
@@ -126,6 +129,13 @@ test.cb('GET http://proxy.dev should return 502', (t) => {
     .get('/')
     .set('Host', 'proxy.dev')
     .expect(200, t.end)
+})
+
+test.cb('GET http://unavailable-proxy.dev should return 502', (t) => {
+  request(app)
+    .get('/')
+    .set('Host', 'unavailable-proxy.dev')
+    .expect(502, t.end)
 })
 
 //
