@@ -1,8 +1,6 @@
 # hotel [![Mac/Linux Build Status](https://img.shields.io/travis/typicode/hotel/master.svg)](https://travis-ci.org/typicode/hotel) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel)
 
-> No need to worry about ports, remember commands, manage terminal tabs... access and start your servers from the browser.
-
-> You can even use local `.dev` domains or any other tld, and it __works everywhere with any server__ (OS X, Linux, Windows) :+1:
+> No need to worry about ports, remember commands, manage terminal tabs... access and start your servers from the browser. You can even use local `.dev` domains or any other tld, and it works everywhere (OS X, Linux, Windows) :+1:
 
 ![](http://i.imgur.com/dAhxGMj.gif)
 
@@ -32,7 +30,9 @@ If you don't have Node installed, use [brew](http://brew.sh), [nvm](https://gith
 
 ## Quick start
 
-Add your servers commands.
+### Servers
+
+Add your servers commands
 
 ```bash
 ~/projects/one$ hotel add nodemon
@@ -41,7 +41,7 @@ Add your servers commands.
 
 Go to [localhost:2000](http://localhost:2000) or [hotel.dev](http://hotel.dev).
 
-Alternatively you can directly go to:
+Alternatively you can directly go to
 
 ```
 http://localhost:2000/one
@@ -70,22 +70,42 @@ hotel add 'php -S 127.0.0.1:$PORT'
 
 On __Windows__ use `"%PORT%"` instead of `'$PORT'`
 
+### Local domain to URL mapping
+
+You can also map local domains to URLs
+
+```bash
+~$ hotel add http://foo.com -n bar
+~$ hotel add http://1.2.3.4 -n some-server
+
+bar.dev -> http://foo.com
+some-server.dev -> http://1.2.3.4
+```
+
 ## CLI usage and options
 
 ```bash
-hotel add <cmd> [opts]
+hotel add <cmd|url> [opts]
 
 # Examples:
 hotel add 'nodemon app.js' -o out.log # Set output file (default: none)
 hotel add 'nodemon app.js' -n name    # Set custom name (default: current dir name)
 hotel add 'nodemon app.js' -p 3000    # Set a fixed port (default: random port)
 hotel add 'nodemon app.js' -e PATH    # Store PATH environment variable in server config
+hotel add http://192.168.1.10 -n app  # map local domain to URL
 
 # Other commands
 hotel ls        # List servers
-hotel rm [name] # Remove server
+hotel rm # Remove server
 hotel start     # Start hotel daemon
 hotel stop      # Stop hotel daemon
+```
+
+To get help
+
+```bash
+hotel --help
+hotel --help <cmd> 
 ```
 
 ## Port
@@ -132,7 +152,7 @@ If you're offline or can't configure your browser to use `.dev` domains, you can
 - [X] Add in-browser logs
 - [X] Add Wildcard domains support
 - [X] Add colors to in-browser logs
-- [ ] Add Domain redirection
+- [X] Add URL mapping
 
 ## License
 

@@ -1,95 +1,141 @@
-/* global describe, before, afterEach, it */
 const fs = require('fs')
 const path = require('path')
-const assert = require('assert')
+const test = require('ava')
 const mock = require('mock-fs')
+const sinon = require('sinon')
 const servers = require('../../src/cli/servers')
+const cli = require('../../src/cli')
 const { serversDir } = require('../../src/common')
 
-describe('add|rm', () => {
-
-  before(() => {
-    process.chdir(path.join(__dirname, '../fixtures/app'))
-    mock({
-      [serversDir]: {}
-    })
+test.before(() => {
+  mock({
+    [serversDir]: {}
   })
+})
 
-  afterEach(() => mock.restore())
+test('add should create file', (t) => {
+  process.cwd = () => path.join(__dirname, '../fixtures/app')
+  cli(['', '', 'add', 'node index.js'])
 
-  it('should create file', () => {
-    servers.add('node index.js')
-
-    const file = path.join(serversDir, 'app.json')
-    const conf = {
-      cmd: 'node index.js',
-      cwd: process.cwd(),
-      env: {
-        PATH: process.env.PATH
-      }
+  const file = path.join(serversDir, 'app.json')
+  const conf = {
+    cmd: 'node index.js',
+    cwd: process.cwd(),
+    env: {
+      PATH: process.env.PATH
     }
+  }
 
-    assert.deepEqual(
-      JSON.parse(fs.readFileSync(file)),
-      conf
-    )
-  })
+  t.deepEqual(
+    JSON.parse(fs.readFileSync(file)),
+    conf
+  )
+})
 
-  it('should create file with URL safe characters by defaults', () => {
-    servers.add('node index.js', {
-      d: '/_-Some Project_Name--'
-    })
+test('add should create file with URL safe characters by defaults', (t) => {
+  cli([
+    '', '',
+    'add', 'node index.js',
+    '-d', '/_-Some Project_Name--'
+  ])
 
-    const file = path.join(serversDir, 'some-project-name.json')
+  const file = path.join(serversDir, 'some-project-name.json')
 
-    assert(fs.existsSync(file))
-  })
+  t.true(fs.existsSync(file))
+})
 
-  it('should be possible to force a name', () => {
-    servers.add('node index.js', {
-      n: 'Some Project_Name',
-      d: '/Some Project_Name'
-    })
+test('add should be possible to force a name', (t) => {
+  cli([
+    '', '',
+    'add', 'node index.js',
+    '-n', 'Some Project_Name',
+    '-d', '/Some Project_Name'
+  ])
 
-    const file = path.join(serversDir, 'Some Project_Name.json')
+  const file = path.join(serversDir, 'Some Project_Name.json')
 
-    assert(fs.existsSync(file))
-  })
+  t.true(fs.existsSync(file))
+})
 
-  it('should support options', () => {
-    process.env.FOO = 'FOO'
-    const opts = {
-      n: 'project',
-      o: '/some/path/out.log',
-      e: 'FOO',
-      p: 3000
+test('add should support options', (t) => {
+  process.env.FOO = 'FOO'
+  const cmd = 'node index.js'
+  const n = 'project'
+  const o = '/some/path/out.log'
+  const e = 'FOO'
+  const p = 3000
+
+  // servers.add('node index.js', opts)
+  cli([
+    '', '',
+    'add', cmd,
+    '-n', n,
+    '-o', o,
+    '-e', e,
+    '-p', p
+  ])
+
+  const file = path.join(serversDir, 'project.json')
+  const conf = {
+    cmd: 'node index.js',
+    cwd: process.cwd(),
+    out: o,
+    env: {
+      PATH: process.env.PATH,
+      FOO: process.env.FOO,
+      PORT: p
     }
-    servers.add('node index.js', opts)
+  }
 
-    const file = path.join(serversDir, 'project.json')
-    const conf = {
-      cmd: 'node index.js',
-      cwd: process.cwd(),
-      out: opts.o,
-      env: {
-        PATH: process.env.PATH,
-        FOO: process.env.FOO,
-        PORT: opts.p
-      }
-    }
+  t.deepEqual(
+    JSON.parse(fs.readFileSync(file)),
+    conf
+  )
+})
 
-    assert.deepEqual(
-      JSON.parse(fs.readFileSync(file)),
-      conf
-    )
-  })
+test('add should support url', (t) => {
+  cli([
+    '', '',
+    'add', 'http://1.2.3.4',
+    '-n', 'proxy'
+  ])
 
-  it('should remove file', () => {
-    const app = path.join(serversDir, 'app.json')
-    const project = path.join(serversDir, 'project.json')
-    servers.rm()
-    servers.rm('project')
-    assert(!fs.existsSync(project))
-    assert(!fs.existsSync(app))
-  })
+  const file = path.join(serversDir, 'proxy.json')
+  const conf = {
+    target: 'http://1.2.3.4'
+  }
+
+  t.deepEqual(
+    JSON.parse(fs.readFileSync(file)),
+    conf
+  )
+})
+
+test('rm should remove file', (t) => {
+  const name = 'some-app'
+  const file = path.join(serversDir, `${name}.json`)
+  process.cwd = () => path.join('/projects', name)
+
+  fs.writeFileSync(file, '')
+  cli(['', '', 'rm'])
+  t.true(!fs.existsSync(file))
+})
+
+test('rm should remove file using name', (t) => {
+  const name = 'some-other-app'
+  const file = path.join(serversDir, `${name}.json`)
+
+  fs.writeFileSync(file, '')
+  cli([
+    '', '',
+    'rm',
+    '-n', name
+  ])
+  t.true(!fs.existsSync(file))
+})
+
+test('ls', (t) => {
+  sinon.spy(servers, 'ls')
+  cli(['', '', 'ls'])
+  sinon.assert.calledOnce(servers.ls)
 })

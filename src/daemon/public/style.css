@@ -1,0 +1,107 @@
+body {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  color: #212121;
+  padding: 0;
+  margin: 0;
+}
+
+#app {
+  display: flex;
+}
+
+aside, main {
+  height: 100vh;
+}
+
+aside {
+  min-width: 365px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: auto;
+}
+
+main {
+  position: relative; /* needed for #down */
+  flex-grow: 1;
+  background: #F9F9F9;
+  color: #212121;
+  font-family: "Courier New", Courier, monospace;
+  overflow-y: scroll;
+}
+
+#down {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  color: #999;
+  cursor: pointer;
+}
+
+/* Used to avoid setting padding on aside and main (breaks layout) */
+ul, footer, .container {
+  padding: 20px;
+}
+
+footer {
+  color: #AAA;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+ul {
+  margin: 0;
+}
+
+li {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #F0F0F0;
+}
+
+li div {
+  flex-grow: 1;
+  padding: 16px 0 16px 0;
+}
+
+li small {
+  color: #CECECE;
+}
+
+input {
+  display: none;
+}
+
+input + i {
+  display: block;
+  cursor: pointer;
+  color: #CECECE;
+  padding: 10px;
+  font-size: 24px;
+}
+
+input[type=checkbox] + i {
+  padding-top: 12px;
+  font-size: 28px;
+}
+
+input:checked[type=checkbox] + i {
+  color: #14B8CC;
+}
+
+input[type=radio] + i {
+  font-size: 14px;
+}
+
+input:checked[type=radio] + i {
+  color: #212121;
+}

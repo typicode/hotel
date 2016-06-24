@@ -1,5 +1,14 @@
 # Change Log
 
+## 0.5.0 (beta)
+
+* Various UI improvements
+* Add URL mapping support
+```sh
+hotel add http://192.168.1.10 -n remote
+# remote.dev -> http://192.168.1.10
+```
+
 ## 0.4.22
 
 * UI tweaks
