@@ -133,7 +133,7 @@ See instructions [here](https://github.com/typicode/hotel/blob/master/docs/READM
 
 ## Fallback URL
 
-If you're offline or can't configure your browser to use `.dev` domains, you can __always__ access your local servers by going to http://localhost:2000.
+If you're offline or can't configure your browser to use `.dev` domains, you can __always__ access your local servers by going to [localhost:2000](http://localhost:2000).
 
 ## Configurations and logs
 
