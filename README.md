@@ -6,17 +6,17 @@
 
 ## Features
 
-* __Shortcut access__ - `http://localhost:2000/project`
 * __Local domains__ - `http://project.dev`
 * __SSL via self-signed certificate__ - `https://project.dev`
 * __Wildcard subdomains__ - `http://*.project.dev`
 * __Works everywhere__ - OS X, Linux and Windows
 * __Works with any server__ - Node, Ruby, PHP, ...
-* __System-friendly__ - no messing with `port 80`, `/etc/hosts` or `sudo`
+* __Proxy__ - Map local domains to remote servers
+* __System-friendly__ - No messing with `port 80`, `/etc/hosts`, `sudo` or additional software
+* Fallback URL - `http://localhost:2000/project`
 * Servers are only started when you access them
 * Plays nice with other servers (Apache, Nginx, ...)
 * Random or fixed ports
-* See Roadmap for upcoming features :)
 
 _* Local `.dev` domains are optional. To use them, configure your network or browser to use hotel's proxy auto-config file (`proxy.pac`). See instructions [here](https://github.com/typicode/hotel/blob/master/docs/README.md)._
 
@@ -26,7 +26,7 @@ _* Local `.dev` domains are optional. To use them, configure your network or bro
 npm install -g hotel && hotel start
 ```
 
-If you don't have Node installed, use [brew](http://brew.sh), [nvm](https://github.com/creationix/nvm) or go to [nodejs.org](https://nodejs.org).
+If you don't have Node installed, use [brew](http://brew.sh) `brew install node`, [nvm](https://github.com/creationix/nvm) `nvm install stable` or go to [nodejs.org](https://nodejs.org).
 
 ## Quick start
 
@@ -70,16 +70,20 @@ hotel add 'php -S 127.0.0.1:$PORT'
 
 On __Windows__ use `"%PORT%"` instead of `'$PORT'`
 
-### Local domain to URL mapping
+### Proxy
 
-You can also map local domains to URLs
+Add your remote servers
 
 ```bash
-~$ hotel add http://foo.com -n bar
-~$ hotel add http://1.2.3.4 -n some-server
+~$ hotel add http://foo.com --name bar
+~$ hotel add http://192.168.1.12:1337 --name some-server
+```
 
-bar.dev -> http://foo.com
-some-server.dev -> http://1.2.3.4
+You can now access them using
+
+```bash
+http://bar.dev # http://foo.com
+http://some-server.dev # http://192.168.1.12:1337
 ```
 
 ## CLI usage and options
@@ -88,15 +92,15 @@ some-server.dev -> http://1.2.3.4
 hotel add <cmd|url> [opts]
 
 # Examples:
-hotel add 'nodemon app.js' -o out.log # Set output file (default: none)
-hotel add 'nodemon app.js' -n name    # Set custom name (default: current dir name)
-hotel add 'nodemon app.js' -p 3000    # Set a fixed port (default: random port)
-hotel add 'nodemon app.js' -e PATH    # Store PATH environment variable in server config
-hotel add http://192.168.1.10 -n app  # map local domain to URL
+hotel add 'nodemon app.js' -out out.log   # Set output file (default: none)
+hotel add 'nodemon app.js' --name name    # Set custom name (default: current dir name)
+hotel add 'nodemon app.js' --port 3000    # Set a fixed port (default: random port)
+hotel add 'nodemon app.js' --env PATH     # Store PATH environment variable in server config
+hotel add http://192.168.1.10 --name app  # map local domain to URL
 
 # Other commands
 hotel ls        # List servers
-hotel rm # Remove server
+hotel rm        # Remove server
 hotel start     # Start hotel daemon
 hotel stop      # Stop hotel daemon
 ```
@@ -146,13 +150,6 @@ If you're offline or can't configure your browser to use `.dev` domains, you can
 
 * [Hotel Clerk](https://github.com/therealklanni/hotel-clerk) OS X menubar
 * [HotelX](https://github.com/djyde/HotelX) Another OS X menubar (only 1.6MB)
-
-## Roadmap
-
-- [X] Add in-browser logs
-- [X] Add Wildcard domains support
-- [X] Add colors to in-browser logs
-- [X] Add URL mapping
 
 ## License
 
