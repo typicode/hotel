@@ -1,7 +1,7 @@
 {
   "name": "hotel",
   "version": "0.5.0-beta.5",
-  "description": "Easily start, stop and access your servers from the browser",
+  "description": "Local domains for everyone and more! ",
   "main": "lib",
   "bin": "bin/index.js",
   "preferGlobal": true,
@@ -29,7 +29,9 @@
     "process",
     "manager",
     "local",
-    "server"
+    "server",
+    "host",
+    "proxy"
   ],
   "author": "Typicode <typicode@gmail.com>",
   "license": "MIT",
