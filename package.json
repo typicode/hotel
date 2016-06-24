@@ -72,6 +72,7 @@
     "babel-polyfill": "^6.9.1",
     "babel-preset-es2015": "^6.5.0",
     "babel-preset-stage-2": "^6.5.0",
+    "babel-register": "^6.9.0",
     "babel-runtime": "^6.6.1",
     "escape-html": "^1.0.3",
     "husky": "^0.11.3",
@@ -83,7 +84,6 @@
     "standard": "^7.1.2",
     "supertest": "^1.2.0",
     "uid": "0.0.2",
-    "untildify": "^3.0.2",
     "vue": "^1.0.18",
     "webpack": "^1.12.13",
     "whatwg-fetch": "^1.0.0"
