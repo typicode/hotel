@@ -99,17 +99,17 @@ hotel add 'nodemon app.js' --env PATH     # Store PATH environment variable in s
 hotel add http://192.168.1.10 --name app  # map local domain to URL
 
 # Other commands
-hotel ls        # List servers
-hotel rm        # Remove server
-hotel start     # Start hotel daemon
-hotel stop      # Stop hotel daemon
+hotel ls     # List servers
+hotel rm     # Remove server
+hotel start  # Start hotel daemon
+hotel stop   # Stop hotel daemon
 ```
 
 To get help
 
 ```bash
 hotel --help
-hotel --help <cmd> 
+hotel --help <cmd>
 ```
 
 ## Port
