@@ -56,6 +56,7 @@
     "sudo-block": "^1.2.0",
     "tildify": "^1.1.2",
     "unquote": "^1.1.0",
+    "untildify": "^2.1.0",
     "update-notifier": "^1.0.0",
     "user-startup": "^0.2.1",
     "vhost": "^3.0.2",
