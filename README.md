@@ -92,7 +92,7 @@ http://some-server.dev # http://192.168.1.12:1337
 hotel add <cmd|url> [opts]
 
 # Examples:
-hotel add 'nodemon app.js' -out out.log   # Set output file (default: none)
+hotel add 'nodemon app.js' --out dev.log  # Set output file (default: none)
 hotel add 'nodemon app.js' --name name    # Set custom name (default: current dir name)
 hotel add 'nodemon app.js' --port 3000    # Set a fixed port (default: random port)
 hotel add 'nodemon app.js' --env PATH     # Store PATH environment variable in server config
