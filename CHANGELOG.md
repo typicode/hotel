@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.1
+
+* Fix conf issue
+
 ## 0.5.0
 
 * Various UI improvements
