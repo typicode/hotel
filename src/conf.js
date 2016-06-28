@@ -24,4 +24,4 @@ if (!fs.existsSync(confFile)) fs.writeFileSync(confFile, data)
 const conf = JSON.parse(fs.readFileSync(confFile))
 
 // Assign defaults and export
-module.exports = { ...defaults, conf }
+module.exports = { ...defaults, ...conf }
