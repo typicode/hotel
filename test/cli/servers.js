@@ -7,14 +7,21 @@ const servers = require('../../src/cli/servers')
 const cli = require('../../src/cli')
 const { serversDir } = require('../../src/common')
 
+const appDir = path.join(__dirname, '../fixtures/app')
+const otherAppDir = path.join(__dirname, '../fixtures/other-app')
+
 test.before(() => {
   mock({
-    [serversDir]: {}
+    [serversDir]: {},
+    [appDir]: {
+      'index.js': fs.readFileSync(path.join(appDir, 'index.js'))
+    },
+    [otherAppDir]: {}
   })
 })
 
 test('add should create file', (t) => {
-  process.cwd = () => path.join(__dirname, '../fixtures/app')
+  process.chdir(appDir)
   cli(['', '', 'add', 'node index.js'])
 
   const file = path.join(serversDir, 'app.json')
@@ -112,11 +119,10 @@ test('add should support url', (t) => {
 })
 
 test('rm should remove file', (t) => {
-  const name = 'some-app'
-  const file = path.join(serversDir, `${name}.json`)
-  process.cwd = () => path.join('/projects', name)
-
+  const file = path.join(serversDir, 'other-app.json')
   fs.writeFileSync(file, '')
+
+  process.chdir(otherAppDir)
   cli(['', '', 'rm'])
   t.true(!fs.existsSync(file))
 })
