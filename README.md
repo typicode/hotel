@@ -2,7 +2,7 @@
 
 > No need to worry about ports, remember commands, manage terminal tabs... access and start your servers from the browser. You can even use local `.dev` domains or any other tld, and it works everywhere (OS X, Linux, Windows) :+1:
 
-![](http://i.imgur.com/dAhxGMj.gif)
+![](http://i.imgur.com/DrLjbIi.gif)
 
 ## Features
 
