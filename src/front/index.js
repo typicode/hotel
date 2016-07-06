@@ -35,7 +35,6 @@ new Vue({ // eslint-disable-line
     watchList () {
       if (window.EventSource) {
         new EventSource('/_/events').onmessage = (event) => {
-          console.log(Object.keys(JSON.parse(event.data)))
           Vue.set(this, 'list', JSON.parse(event.data))
         }
       } else {
