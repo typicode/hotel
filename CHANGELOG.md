@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.3
+
+* UI tweaks
+
 ## 0.5.2
 
 * Fix option alias issue [#109](https://github.com/typicode/hotel/issues/109)
