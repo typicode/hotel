@@ -10,26 +10,24 @@ module.exports = (processArgv) => {
     .command(
       'add <cmd|url> [options]',
       'Add server or proxy',
-      (yargs) => {
-        yargs
-          .option('name', {
-            alias: 'n',
-            describe: 'Name'
-          })
-          .option('out', {
-            alias: 'o',
-            describe: 'Output'
-          })
-          .option('env', {
-            alias: 'e',
-            describe: 'Env'
-          })
-          .option('port', {
-            alias: 'p',
-            describe: 'Port'
-          })
-          .demand(1)
-      },
+      (yargs) => yargs
+        .option('name', {
+          alias: 'n',
+          describe: 'Name'
+        })
+        .option('out', {
+          alias: 'o',
+          describe: 'Output'
+        })
+        .option('env', {
+          alias: 'e',
+          describe: 'Env'
+        })
+        .option('port', {
+          alias: 'p',
+          describe: 'Port'
+        })
+        .demand(1),
       (argv) => servers.add(argv['cmd|url'], argv)
     )
     .command(

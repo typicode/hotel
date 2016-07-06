@@ -72,7 +72,6 @@ test('add should support options', (t) => {
   const e = 'FOO'
   const p = 3000
 
-  // servers.add('node index.js', opts)
   cli([
     '', '',
     'add', cmd,
@@ -98,6 +97,21 @@ test('add should support options', (t) => {
     JSON.parse(fs.readFileSync(file)),
     conf
   )
+})
+
+test('add should support option aliases', (t) => {
+  process.env.FOO = 'FOO'
+  const cmd = 'node index.js'
+  const n = 'alias-test'
+
+  cli([
+    '', '',
+    'add', cmd,
+    '--name', n
+  ])
+
+  const file = path.join(serversDir, 'alias-test.json')
+  t.true(fs.existsSync(file))
 })
 
 test('add should support url', (t) => {
