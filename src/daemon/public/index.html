@@ -11,6 +11,13 @@
     <div id="app" v-cloak>
       <!-- list -->
       <aside>
+        <div class="container" v-show="isListEmpty">
+          <p>No server found. Here's how to add one:</p>
+          <pre><code>
+$ hotel add 'cmd'
+$ hotel add http://192.16.1.2:3000
+          </code></pre>
+        </div>
         <ul>
           <li v-for="(id, item) in monitors | orderBy id">
             <div class="{{item.status}}">

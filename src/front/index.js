@@ -164,6 +164,9 @@ new Vue({ // eslint-disable-line
         .forEach((key) => { obj[key] = this.list[key] })
 
       return obj
+    },
+    isListEmpty () {
+      return Object.keys(this.list).length === 0
     }
   }
 })
