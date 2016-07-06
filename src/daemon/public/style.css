@@ -9,6 +9,11 @@ body {
   display: flex;
 }
 
+/* Hide template until Vue finishes compilation */
+[v-cloak] {
+  display: none;
+}
+
 aside, main {
   height: 100vh;
 }
