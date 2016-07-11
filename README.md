@@ -11,7 +11,7 @@ _Tip: if you don't enable local domains, hotel can still be used as a catalog of
 ## Features
 
 * __Local domains__ - `http://project.dev`
-* __SSL via self-signed certificate__ - `https://project.dev`
+* __HTTPS via self-signed certificate__ - `https://project.dev`
 * __Wildcard subdomains__ - `http://*.project.dev`
 * __Works everywhere__ - OS X, Linux and Windows
 * __Works with any server__ - Node, Ruby, PHP, ...
