@@ -6,7 +6,7 @@
 
 It works everywhere (OS X, Linux, Windows) with any server (Node, Go, Rails, PHP, ...).
 
-Protip: you can even use hotel without local domains as a simple server manager :wink:
+_Tip: if you don't enable local domains, hotel can still be used as a catalog of local servers._
 
 ## Features
 
