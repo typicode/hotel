@@ -132,7 +132,6 @@ test('add should support url', (t) => {
   )
 })
 
-
 /*
 FIXME fails for an unknown reason only in CI, process.chdir doesn't seem to change dir
 test('rm should remove file', (t) => {
