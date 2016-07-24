@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.4
+
+* Fix Node 0.12 issue
+
 ## 0.5.3
 
 * UI tweaks
