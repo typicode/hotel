@@ -4,5 +4,5 @@ var sudoBlock = require('sudo-block')
 var pkg = require('../package.json')
 
 sudoBlock('\nShould not be run as root, please retry without sudo.\n')
-updateNotifier({ pkg }).notify()
+updateNotifier({ pkg: pkg }).notify()
 require('../lib/cli')(process.argv)
