@@ -6,7 +6,11 @@
 
 It works everywhere (OS X, Linux, Windows) with any server (Node, Go, Rails, PHP, ...).
 
-_Tip: if you don't enable local domains, hotel can still be used as a catalog of local servers._
+_Tip: if you don't enable local domains, hotel can still be used as a **catalog of local servers**._
+
+## Video
+
+* [Starting apps with Hotel - Spacedojo Code Kata by Josh Owens](https://www.youtube.com/watch?v=BHW4tzctQ0k)
 
 ## Features
 
