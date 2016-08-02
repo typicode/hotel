@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import ansiHTML from 'ansi-html'
+import ansiHTML from 'ansi2html'
 import escapeHTML from 'escape-html'
 import difference from 'lodash.difference'
 import uid from 'uid'
