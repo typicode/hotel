@@ -13,6 +13,12 @@ module.exports = (group) => {
     (req, res) => res.end()
   )
 
+  router.post('/:id/restart',
+    group.exists.bind(group),
+    group.restart.bind(group),
+    (req, res) => res.end()
+  )
+
   router.post('/:id/stop',
     group.exists.bind(group),
     group.stop.bind(group),

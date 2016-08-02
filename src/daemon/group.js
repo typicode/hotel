@@ -99,6 +99,7 @@ class Group extends EventEmitter {
 
     // Emit change
     mon.on('start', () => this._change())
+    mon.on('restart', () => this._change())
     mon.on('stop', () => this._change())
     mon.on('crash', () => this._change())
     mon.on('sleep', () => this._change())
@@ -106,6 +107,7 @@ class Group extends EventEmitter {
 
     // Log status
     mon.on('start', () => util.log(id, 'has started'))
+    mon.on('restart', () => util.log(id, 'has restarted'))
     mon.on('stop', () => util.log(id, 'has stopped'))
     mon.on('crash', () => util.log(id, 'has crashed'))
     mon.on('sleep', () => util.log(id, 'is sleeping'))
@@ -239,6 +241,12 @@ class Group extends EventEmitter {
       item.stop()
     }
 
+    next()
+  }
+
+  restart (req, res, next) {
+    this.stop(req, res, next)
+    this.start(req, res, next)
     next()
   }
 
