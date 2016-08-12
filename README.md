@@ -162,3 +162,7 @@ If you're offline or can't configure your browser to use `.dev` domains, you can
 ## License
 
 MIT - [Typicode](https://github.com/typicode)
+
+## Attribution
+
+Favicon provided free by [EmojiOne](http://emojione.com)
