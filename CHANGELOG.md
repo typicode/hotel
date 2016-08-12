@@ -1,5 +1,9 @@
 # Change Log
 
+## Unreleased
+
+* Add `favicon`
+
 ## 0.5.4
 
 * Fix Node 0.12 issue
