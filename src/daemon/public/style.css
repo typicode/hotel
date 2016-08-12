@@ -26,6 +26,14 @@ aside {
   overflow-y: auto;
 }
 
+pre {
+  padding: 10px;
+}
+
+pre, code {
+  background: #F9F9F9;
+}
+
 main {
   position: relative; /* needed for #down */
   flex-grow: 1;

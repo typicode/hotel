@@ -13,18 +13,24 @@
       <!-- list -->
       <aside>
         <div class="container" v-show="isListEmpty">
-          <p>No server found. Here's how to add one:</p>
-          <pre><code>
-$ hotel add 'cmd'
-$ hotel add http://192.16.1.2:3000
-          </code></pre>
+          <p>
+            Congrats!<br>
+            You're successfully running hotel.
+          </p>
+          <p>
+            To add a server, use <code style="padding: 5px">hotel add</code></pre>
+          </p>
+          <pre><code>~/app$ hotel add 'cmd'
+~/app$ hotel add 'cmd -p $PORT'
+~/app$ hotel add http://192.16.1.2:3000</code></pre>
         </div>
         <ul>
           <li v-for="(id, item) in monitors | orderBy id">
             <div class="{{item.status}}">
               <a
                 href="{{href(id)}}"
-                title="{{title(id)}}">{{ id }}</a>
+                title="{{title(id)}}"
+                target="{{target}}">{{ id }}</a>
               <br>
               <small>{{item.status}}</small>
             </div>
@@ -50,7 +56,8 @@ $ hotel add http://192.16.1.2:3000
             <div>
               <a
                 href="{{href(id)}}"
-                title="{{title(id)}}">{{ id }}</a>
+                title="{{title(id)}}"
+                target="{{target}}">{{ id }}</a>
               <br>
               <small>{{ item.target }}</small>
             </div>
@@ -58,7 +65,7 @@ $ hotel add http://192.16.1.2:3000
         </ul>
 
         <footer>
-          <a href="https://github.com/typicode/hotel">
+          <a target="{{target}}" href="https://github.com/typicode/hotel">
             readme
           </a>
         </footer>

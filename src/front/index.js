@@ -14,13 +14,19 @@ function blankLine (val) {
   return val.trim() === '' ? '&nbsp;' : val
 }
 
+// Menu mode?
+const target = window.location.hash === '#menu'
+  ? '_blank'
+  : ''
+
 new Vue({ // eslint-disable-line
   el: '#app',
   data: {
     list: {},
     selected: null,
     outputs: {},
-    outputScroll: true
+    outputScroll: true,
+    target
   },
   created () {
     this.watchList()
