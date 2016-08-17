@@ -65,11 +65,12 @@ test('add should be possible to force a name', (t) => {
 })
 
 test('add should support options', (t) => {
-  process.env.FOO = 'FOO'
+  process.env.FOO = 'FOO_VALUE'
+  process.env.BAR = 'BAR_VALUE'
   const cmd = 'node index.js'
   const n = 'project'
   const o = '/some/path/out.log'
-  const e = 'FOO'
+  const e = 'FOO BAR'
   const p = 3000
 
   cli([
@@ -89,6 +90,7 @@ test('add should support options', (t) => {
     env: {
       PATH: process.env.PATH,
       FOO: process.env.FOO,
+      BAR: process.env.BAR,
       PORT: p
     }
   }

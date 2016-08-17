@@ -13,19 +13,20 @@ module.exports = (processArgv) => {
       (yargs) => yargs
         .option('name', {
           alias: 'n',
-          describe: 'Name'
+          describe: 'Server name'
         })
         .option('out', {
           alias: 'o',
-          describe: 'Output'
+          describe: 'Output file'
         })
         .option('env', {
           alias: 'e',
-          describe: 'Env'
+          array: true,
+          describe: 'Additional environment variables'
         })
         .option('port', {
           alias: 'p',
-          describe: 'Port'
+          describe: 'Set PORT environment variable'
         })
         .demand(1),
       (argv) => servers.add(argv['cmd|url'], argv)

@@ -61,8 +61,13 @@ function add (param, opts = {}) {
     conf.env.PATH = process.env.PATH
 
     // Copy other env option
-    if (opts.e && process.env[opts.e]) {
-      conf.env[opts.e] = process.env[opts.e]
+    if (opts.e) {
+      opts.e.forEach((envName) => {
+        const envValue = process.env(envName)
+        if (envValue) {
+          conf.env[envName] = envValue
+        }
+      })
     }
 
     // Copy port option
