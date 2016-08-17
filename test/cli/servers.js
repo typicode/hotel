@@ -70,7 +70,7 @@ test('add should support options', (t) => {
   const cmd = 'node index.js'
   const n = 'project'
   const o = '/some/path/out.log'
-  const e = 'FOO BAR'
+  const e = ['FOO', 'BAR']
   const p = 3000
 
   cli([
@@ -78,7 +78,7 @@ test('add should support options', (t) => {
     'add', cmd,
     '-n', n,
     '-o', o,
-    '-e', e,
+    '-e', e[0], e[1],
     '-p', p
   ])
 

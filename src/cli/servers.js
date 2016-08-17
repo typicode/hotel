@@ -62,10 +62,10 @@ function add (param, opts = {}) {
 
     // Copy other env option
     if (opts.e) {
-      opts.e.forEach((envName) => {
-        const envValue = process.env(envName)
-        if (envValue) {
-          conf.env[envName] = envValue
+      opts.e.forEach((key) => {
+        const value = process.env[key]
+        if (value) {
+          conf.env[key] = value
         }
       })
     }
