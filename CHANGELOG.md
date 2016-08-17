@@ -3,6 +3,7 @@
 ## Unreleased
 
 * Add `favicon`
+* Support an array of environment variables for the CLI option `--env`
 
 ## 0.5.4
 
