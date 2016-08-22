@@ -119,6 +119,7 @@ new Vue({ // eslint-disable-line
     },
     scrollToBottom () {
       this.outputScroll = true
+      // TODO: CONVERT EL TO REFS FOR 2.0
       this.$els.output.scrollTop = this.$els.output.scrollHeight
     }
   },

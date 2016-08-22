@@ -25,6 +25,7 @@
 ~/app$ hotel add http://192.16.1.2:3000</code></pre>
         </div>
         <ul>
+          <!-- TODO: VUE 2.0 - (value, key, index) in obj -->
           <li v-for="(id, item) in monitors | orderBy id">
             <div class="{{item.status}}">
               <a
@@ -52,6 +53,7 @@
               <i class="ion-chevron-right"></i>
             </label>
           </li>
+          <!-- TODO: VUE 2.0 - (value, key, index) in obj -->
           <li v-for="(id, item) in proxies | orderBy id">
             <div>
               <a
@@ -71,6 +73,7 @@
         </footer>
       </aside>
       <!-- output -->
+      <!-- TODO: CONVERT EL TO REFS FOR 2.0 -->
       <main
         v-el:output
         v-on:scroll="onScroll"
@@ -82,6 +85,7 @@
           <div v-if="output.length === 0">
             # No output
           </div>
+          <!-- VUE 2.0 - (value, index) in arr -->
           <div
             v-for="item in output"
             track-by="uid">
