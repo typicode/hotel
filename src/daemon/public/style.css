@@ -118,3 +118,30 @@ input[type=radio] + i {
 input:checked[type=radio] + i {
   color: #212121;
 }
+
+// ANIMATE ASIDE ITEMS
+@-webkit-keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation-name: fade-in;
+  animation-duration: 0.2s;
+  animation-fill-mode: both;
+}

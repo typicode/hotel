@@ -12,7 +12,7 @@
     <div id="app" v-cloak>
       <!-- list -->
       <aside>
-        <div class="container" v-show="isListEmpty">
+        <div class="container fade-in" v-show="isListFetched && isListEmpty">
           <p>
             Congrats!<br>
             You're successfully running hotel.
@@ -26,7 +26,7 @@
         </div>
         <ul>
           <!-- TODO: VUE 2.0 - (value, key, index) in obj -->
-          <li v-for="(id, item) in monitors | orderBy id">
+          <li class="fade-in" v-for="(id, item) in monitors | orderBy id">
             <div class="{{item.status}}">
               <a
                 href="{{href(id)}}"
