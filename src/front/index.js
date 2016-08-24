@@ -26,7 +26,8 @@ new Vue({ // eslint-disable-line
     selected: null,
     outputs: {},
     outputScroll: true,
-    target
+    target,
+    isListFetched: false
   },
   created () {
     this.watchList()
@@ -42,6 +43,7 @@ new Vue({ // eslint-disable-line
       if (window.EventSource) {
         new EventSource('/_/events').onmessage = (event) => {
           Vue.set(this, 'list', JSON.parse(event.data))
+          Vue.set(this, 'isListFetched', true)
         }
       } else {
         setInterval(() => {
@@ -119,6 +121,7 @@ new Vue({ // eslint-disable-line
     },
     scrollToBottom () {
       this.outputScroll = true
+      // TODO: CONVERT EL TO REFS FOR 2.0
       this.$els.output.scrollTop = this.$els.output.scrollHeight
     }
   },
