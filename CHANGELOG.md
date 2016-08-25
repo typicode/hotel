@@ -4,6 +4,7 @@
 
 * Add `favicon`
 * Support an array of environment variables for the CLI option `--env`
+* UI tweaks
 
 ## 0.5.4
 
