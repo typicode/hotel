@@ -6,7 +6,7 @@ import uid from 'uid'
 
 /* eslint-env browser */
 
-// Expose Vue for Vue devtools, maybe a better way using WebPack
+// Expose Vue for Vue devtools
 window.Vue = Vue
 
 // Blank line filter
@@ -14,11 +14,14 @@ function blankLine (val) {
   return val.trim() === '' ? '&nbsp;' : val
 }
 
-// Menu mode?
+// If in "menu" mode, links should be opened in a new window
+// Useful only for third-party tools displaying this page in a menu
+// Example: https://github.com/typicode/hotel#third-party-tools
 const target = window.location.hash === '#menu'
   ? '_blank'
   : ''
 
+// Template can be found in daemon/public/index.html
 new Vue({ // eslint-disable-line
   el: '#app',
   data: {
@@ -43,7 +46,6 @@ new Vue({ // eslint-disable-line
       if (window.EventSource) {
         new EventSource('/_/events').onmessage = (event) => {
           Vue.set(this, 'list', JSON.parse(event.data))
-          Vue.set(this, 'isListFetched', true)
         }
       } else {
         setInterval(() => {
@@ -116,8 +118,8 @@ new Vue({ // eslint-disable-line
       }
     },
     onScroll (event) {
-      const element = event.target
-      this.outputScroll = element.scrollHeight - element.scrollTop === element.clientHeight
+      const { scrollHeight, scrollTop, clientHeight } = event.target.element
+      this.outputScroll = scrollHeight - scrollTop === clientHeight
     },
     scrollToBottom () {
       this.outputScroll = true
@@ -127,6 +129,9 @@ new Vue({ // eslint-disable-line
   },
   watch: {
     list (list, oldList) {
+      // Flag to know if the first request to the server has been made
+      this.isListFetched = true
+
       difference(Object.keys(list), Object.keys(oldList))
         .forEach((key) => Vue.delete(this.outputs, key))
 
