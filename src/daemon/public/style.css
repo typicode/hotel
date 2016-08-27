@@ -86,6 +86,7 @@ li div {
 
 li small {
   color: #CECECE;
+  cursor: pointer;
 }
 
 input {

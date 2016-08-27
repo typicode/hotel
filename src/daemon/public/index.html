@@ -36,7 +36,9 @@
                 :title="title(id)"
                 :target="target">{{ id }}</a>
               <br>
-              <small>{{item.status}}</small>
+              <small @click="select(id)">
+                {{item.status}}
+              </small>
             </div>
 
             <label>
@@ -80,6 +82,7 @@
         @scroll="onScroll">
         <div
           id="down"
+          title="scroll to bottom"
           @click="scrollToBottom">
           <i class="ion-arrow-down-a"></i>
         </div>
