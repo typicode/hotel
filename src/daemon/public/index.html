@@ -78,7 +78,9 @@
         ref="output"
         :style="{ display: selected ? 'block' : 'none' }"
         @scroll="onScroll">
-        <div id="down" v-on:click="scrollToBottom">
+        <div
+          id="down"
+          @click="scrollToBottom">
           <i class="ion-arrow-down-a"></i>
         </div>
         <div class="container">
