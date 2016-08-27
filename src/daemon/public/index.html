@@ -29,13 +29,12 @@
 ~/app$ hotel add http://192.16.1.2:3000</code></pre>
         </div>
         <ul>
-          <!-- TODO: VUE 2.0 - (value, key, index) in obj -->
-          <li class="fade-in" v-for="(id, item) in monitors | orderBy id">
-            <div class="{{item.status}}">
+          <li class="fade-in" v-for="(item, id) in monitors">
+            <div class="item.status">
               <a
-                href="{{href(id)}}"
-                title="{{title(id)}}"
-                target="{{target}}">{{ id }}</a>
+                :href="href(id)"
+                :title="title(id)"
+                :target="target">{{ id }}</a>
               <br>
               <small>{{item.status}}</small>
             </div>
@@ -43,27 +42,26 @@
             <label>
               <input
                 type="checkbox"
-                v-on:click="toggle(id)"
-                v-bind:checked="isRunning(id)">
-              <i class="{{isRunning(id) ? 'ion-toggle-filled' : 'ion-toggle' }}"></i>
+                :checked="isRunning(id)"
+                @click="toggle(id)">
+              <i :class="isRunning(id) ? 'ion-toggle-filled' : 'ion-toggle'"></i>
             </label>
 
             <label>
               <input
                 type="radio"
-                value="{{id}}"
                 v-model="selected"
-                v-on:click="select(id)">
+                :value="id"
+                @click="select(id)">
               <i class="ion-chevron-right"></i>
             </label>
           </li>
-          <!-- TODO: VUE 2.0 - (value, key, index) in obj -->
-          <li v-for="(id, item) in proxies | orderBy id">
+          <li v-for="(item, id) in proxies">
             <div>
               <a
-                href="{{href(id)}}"
-                title="{{title(id)}}"
-                target="{{target}}">{{ id }}</a>
+                :href="href(id)"
+                :title="title(id)"
+                :target="target">{{ id }}</a>
               <br>
               <small>{{ item.target }}</small>
             </div>
@@ -71,17 +69,15 @@
         </ul>
 
         <footer>
-          <a target="{{target}}" href="https://github.com/typicode/hotel">
+          <a :target="target" href="https://github.com/typicode/hotel">
             readme
           </a>
         </footer>
       </aside>
-      <!-- output -->
-      <!-- TODO: CONVERT EL TO REFS FOR 2.0 -->
       <main
-        v-el:output
-        v-on:scroll="onScroll"
-        v-bind:style="{ display: selected ? 'block' : 'none' }">
+        ref="output"
+        :style="{ display: selected ? 'block' : 'none' }"
+        @scroll="onScroll">
         <div id="down" v-on:click="scrollToBottom">
           <i class="ion-arrow-down-a"></i>
         </div>
@@ -89,11 +85,10 @@
           <div v-if="output.length === 0">
             # No output
           </div>
-          <!-- VUE 2.0 - (value, index) in arr -->
           <div
             v-for="item in output"
-            track-by="uid">
-            {{{ item.text | escape | ansi | blank }}}
+            v-html="item.text"
+            :key="uid">
           </div>
         </div>
       </main>

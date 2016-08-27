@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import ansiHTML from 'ansi2html'
+import ansi2HTML from 'ansi2html'
 import escapeHTML from 'escape-html'
 import difference from 'lodash.difference'
 import uid from 'uid'
@@ -36,11 +36,6 @@ new Vue({ // eslint-disable-line
     this.watchList()
     this.watchOutput()
   },
-  filters: {
-    ansi: ansiHTML,
-    escape: escapeHTML,
-    blank: blankLine
-  },
   methods: {
     watchList () {
       if (window.EventSource) {
@@ -65,6 +60,13 @@ new Vue({ // eslint-disable-line
           output
             .replace(/\n$/, '')
             .split('\n')
+            .map((line) => {
+              // filter line
+              line = escapeHTML(line)
+              line = ansi2HTML(line)
+              line = blankLine(line)
+              return line
+            })
             .forEach((line) => {
               const arr = this.outputs[id]
               arr.push({ text: line, uid: uid() })
@@ -123,8 +125,7 @@ new Vue({ // eslint-disable-line
     },
     scrollToBottom () {
       this.outputScroll = true
-      // TODO: CONVERT EL TO REFS FOR 2.0
-      this.$els.output.scrollTop = this.$els.output.scrollHeight
+      this.$refs.output.scrollTop = this.$refs.output.scrollHeight
     }
   },
   watch: {
@@ -164,7 +165,11 @@ new Vue({ // eslint-disable-line
 
       Object
         .keys(this.list)
-        .filter((key) => { return this.list[key].status })
+        .sort()
+        .filter((key) => {
+          const isMonitor = this.list[key].status
+          return isMonitor
+        })
         .forEach((key) => { obj[key] = this.list[key] })
 
       return obj
@@ -174,7 +179,11 @@ new Vue({ // eslint-disable-line
 
       Object
         .keys(this.list)
-        .filter((key) => { return !this.list[key].status })
+        .sort()
+        .filter((key) => {
+          const isProxy = !this.list[key].status
+          return isProxy
+        })
         .forEach((key) => { obj[key] = this.list[key] })
 
       return obj
