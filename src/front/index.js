@@ -30,7 +30,8 @@ new Vue({ // eslint-disable-line
     outputs: {},
     outputScroll: true,
     target,
-    isListFetched: false
+    isListFetched: false,
+    uid: uid()
   },
   created () {
     this.watchList()
@@ -123,7 +124,7 @@ new Vue({ // eslint-disable-line
       }
     },
     onScroll (event) {
-      const { scrollHeight, scrollTop, clientHeight } = event.target.element
+      const { scrollHeight, scrollTop, clientHeight } = event.target
       this.outputScroll = scrollHeight - scrollTop === clientHeight
     },
     scrollToBottom () {
