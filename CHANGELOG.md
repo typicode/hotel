@@ -5,7 +5,7 @@
 * Add `favicon`
 * Add `X-Forwarded-Proto` header for ssl proxy 
 * Support an array of environment variables for the CLI option `--env`
-* UI tweaks
+* UI enhancements
 
 ## 0.5.4
 
