@@ -162,6 +162,16 @@ test.cb('POST /_/servers/:id/start', t => {
     })
 })
 
+test.cb('POST /_/servers/:id/restart', t => {
+  request(app)
+    .post('/_/servers/node/restart')
+    .expect(200, err => {
+      if (err) return t.end(err)
+      t.is(app.group.find('node').status, 'running')
+      t.end()
+    })
+})
+
 test.cb('POST /_/servers/:id/stop', t => {
   request(app)
     .post('/_/servers/node/stop')

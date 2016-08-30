@@ -30,7 +30,8 @@ new Vue({ // eslint-disable-line
     outputs: {},
     outputScroll: true,
     target,
-    isListFetched: false
+    isListFetched: false,
+    uid: uid()
   },
   created () {
     this.watchList()
@@ -86,6 +87,9 @@ new Vue({ // eslint-disable-line
     stopMonitor (id) {
       fetch(`/_/servers/${id}/stop`, { method: 'POST' })
     },
+    restart (id) {
+      fetch(`/_/servers/${id}/restart`, { method: 'POST' })
+    },
     href (id) {
       const { protocol, hostname } = window.location
       if (/hotel\./.test(hostname)) {
@@ -120,7 +124,7 @@ new Vue({ // eslint-disable-line
       }
     },
     onScroll (event) {
-      const { scrollHeight, scrollTop, clientHeight } = event.target.element
+      const { scrollHeight, scrollTop, clientHeight } = event.target
       this.outputScroll = scrollHeight - scrollTop === clientHeight
     },
     scrollToBottom () {

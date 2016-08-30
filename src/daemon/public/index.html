@@ -30,6 +30,13 @@
         </div>
         <ul>
           <li class="fade-in" v-for="(item, id) in monitors">
+            <label>
+              <input
+                type="input"
+                :value="id"
+                @click="restart(id)">
+              <i class="ion-loop"></i>
+            </label>
             <div class="item.status">
               <a
                 :href="href(id)"
