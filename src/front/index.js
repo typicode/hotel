@@ -3,6 +3,7 @@ import ansi2HTML from 'ansi2html'
 import escapeHTML from 'escape-html'
 import difference from 'lodash.difference'
 import uid from 'uid'
+import { version } from '../../package.json'
 
 /* eslint-env browser */
 
@@ -30,7 +31,8 @@ new Vue({ // eslint-disable-line
     outputs: {},
     outputScroll: true,
     target,
-    isListFetched: false
+    isListFetched: false,
+    version
   },
   created () {
     this.watchList()

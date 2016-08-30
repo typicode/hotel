@@ -58,6 +58,18 @@ footer {
   color: #AAA;
 }
 
+footer a:hover {
+  text-decoration: none;
+}
+
+footer a .version {
+  visibility: hidden;
+}
+
+footer a:hover .version {
+  visibility: visible
+}
+
 a {
   text-decoration: none;
   color: inherit;
