@@ -28,6 +28,10 @@ module.exports = (processArgv) => {
           alias: 'p',
           describe: 'Set PORT environment variable'
         })
+        .option('host', {
+          alias: 'H',
+          describe: 'Set HOST environment variable'
+        })
         .demand(1),
       (argv) => servers.add(argv['cmd|url'], argv)
     )

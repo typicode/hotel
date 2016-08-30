@@ -44,6 +44,15 @@ test.before((cb) => {
     o: '/tmp/logs/app.log'
   })
 
+  // Bind server to 127.0.0.2
+  servers.add('node index.js', {
+    n: 'node2',
+    p: 61234,
+    H: '127.0.0.2',
+    d: path.join(__dirname, '../fixtures/app'),
+    o: '/tmp/logs/app.log'
+  })
+
   // Add server with subdomain
   servers.add('node index.js', {
     n: 'subdomain.node',
@@ -93,6 +102,13 @@ test.cb('GET http://node.dev should proxy request', (t) => {
   request(app)
     .get('/')
     .set('Host', 'node.dev')
+    .expect(200, /Hello World/, t.end)
+})
+
+test.cb('GET http://node2.dev should proxy request', (t) => {
+  request(app)
+    .get('/')
+    .set('Host', 'node2.dev')
     .expect(200, /Hello World/, t.end)
 })
 
@@ -147,7 +163,7 @@ test.cb('GET /_/servers', t => {
     .get('/_/servers')
     .expect(200, (err, res) => {
       if (err) return t.end(err)
-      t.is(Object.keys(res.body).length, 7, 'got wrong number of servers')
+      t.is(Object.keys(res.body).length, 8, 'got wrong number of servers')
       t.end()
     })
 })
@@ -207,6 +223,26 @@ test.cb('GET http://localhost:2000/proxy should redirect to target', t => {
     .get('/proxy')
     .set('Host', 'localhost')
     .expect('location', /http:\/\/localhost:4000/)
+    .expect(302, t.end)
+})
+
+test.cb('GET http://localhost:2000/node2 should use the custom HOST to redirect', t => {
+  // temporary disable this test on AppVeyor
+  // Randomly fails
+  if (process.env.APPVEYOR) return t.end()
+  request(app)
+    .get('/node2')
+    .expect('location', /http:\/\/127.0.0.2:61234/)
+    .expect(302, t.end)
+})
+
+test.cb('GET http://127.0.0.1:2000/node2 should use the custom HOST to redirect', t => {
+  // temporary disable this test on AppVeyor
+  // Randomly fails
+  if (process.env.APPVEYOR) return t.end()
+  request(app)
+    .get('/node2')
+    .expect('location', /http:\/\/127.0.0.2:61234/)
     .expect(302, t.end)
 })
 

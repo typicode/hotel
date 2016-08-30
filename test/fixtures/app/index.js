@@ -1,5 +1,8 @@
 var http = require('http')
 
+var port = process.env.PORT
+var host = process.env.HOST || '127.0.0.1'
+
 http.createServer(function (req, res) {
   res.writeHead(200, {'Content-Type': 'text/plain'})
   res.end([
@@ -7,6 +10,6 @@ http.createServer(function (req, res) {
     process.env.FOO,
     process.env.PATH
   ].join('/n'))
-}).listen(process.env.PORT, '127.0.0.1')
+}).listen(port, host)
 
-console.log('Server running on port', process.env.PORT)
+console.log('Server running on port:', port, 'host:', host)

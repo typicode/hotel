@@ -72,6 +72,7 @@ test('add should support options', (t) => {
   const o = '/some/path/out.log'
   const e = ['FOO', 'BAR']
   const p = 3000
+  const h = '127.0.0.1'
 
   cli([
     '', '',
@@ -79,7 +80,8 @@ test('add should support options', (t) => {
     '-n', n,
     '-o', o,
     '-e', e[0], e[1],
-    '-p', p
+    '-p', p,
+    '-H', h
   ])
 
   const file = path.join(serversDir, 'project.json')
@@ -91,7 +93,8 @@ test('add should support options', (t) => {
       PATH: process.env.PATH,
       FOO: process.env.FOO,
       BAR: process.env.BAR,
-      PORT: p
+      PORT: p,
+      HOST: h
     }
   }
 

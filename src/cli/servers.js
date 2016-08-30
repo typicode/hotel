@@ -74,6 +74,11 @@ function add (param, opts = {}) {
     if (opts.p) {
       conf.env.PORT = opts.p
     }
+
+    // Copy host option
+    if (opts.H) {
+      conf.env.HOST = opts.H
+    }
   }
 
   const data = JSON.stringify(conf, null, 2)
