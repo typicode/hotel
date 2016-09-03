@@ -4,7 +4,7 @@
 
 ![](http://i.imgur.com/DrLjbIi.gif)
 
-It's __lightweight__, works everywhere (OS X, Linux, Windows) and with any server (Node, Go, Rails, PHP, ...).
+It works everywhere (OS X, Linux, Windows) and with any server (Node, Go, Rails, PHP, ...).
 
 _Tip: if you don't enable local domains, hotel can still be used as a **catalog of local servers**._
 
