@@ -4,6 +4,10 @@
 
 * Add `favicon`
 
+## 0.5.6
+
+* Fix Safari bug
+
 ## 0.5.5
 
 * Add `X-Forwarded-Proto` header for ssl proxy
