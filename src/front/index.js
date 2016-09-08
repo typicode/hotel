@@ -23,7 +23,7 @@ const target = window.location.hash === '#menu'
   : ''
 
 // Template can be found in daemon/public/index.html
-new Vue({ // eslint-disable-line
+let vueApp =  new Vue({ // eslint-disable-line
   el: '#app',
   data: {
     list: {},

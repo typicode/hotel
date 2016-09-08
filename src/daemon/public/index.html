@@ -49,14 +49,14 @@
               <i :class="isRunning(id) ? 'ion-toggle-filled' : 'ion-toggle'"></i>
             </label>
 
-            <label>
-              <input
-                type="radio"
-                v-model="selected"
-                :value="id"
-                @click="select(id)">
+            
+            <span
+              v-model="selected"
+              :value="id"
+              :class="(selected===id) ? 'chevron selected' : 'chevron'"
+              @click="select(id)">
               <i class="ion-chevron-right"></i>
-            </label>
+            </span>
           </li>
           <li v-for="(item, id) in proxies">
             <div>

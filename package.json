@@ -10,7 +10,7 @@
   },
   "scripts": {
     "test": "ava && standard",
-    "start": "npm run nodemon & npm run webpack -- --watch & wait",
+    "start": "npm run nodemon & npm run webpack -- --watch -d & wait",
     "prepublish": "npm run build",
     "uninstall": "node bin/uninstall.js",
     "precommit": "npm test",
