@@ -122,13 +122,17 @@ input:checked[type=checkbox] + i {
   color: #14B8CC;
 }
 
-input[type=radio] + i {
+.chevron {
+  display: block;
+  cursor: pointer;
+  color: #CECECE;
+  padding: 10px;
+  font-size: 24px;
   font-size: 14px;
 }
-
-input:checked[type=radio] + i {
-  color: #212121;
-}
+  .chevron.selected {
+    color: #212121;
+  }
 
 // ANIMATE ASIDE ITEMS
 @-webkit-keyframes fade-in {
