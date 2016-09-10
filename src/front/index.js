@@ -23,7 +23,7 @@ const target = window.location.hash === '#menu'
   : ''
 
 // Template can be found in daemon/public/index.html
-let vueApp =  new Vue({ // eslint-disable-line
+window.vm = new Vue({ // eslint-disable-line
   el: '#app',
   data: {
     list: {},
@@ -46,7 +46,7 @@ let vueApp =  new Vue({ // eslint-disable-line
         }
       } else {
         setInterval(() => {
-          fetch('/_/events')
+          fetch('/_/servers')
             .then(response => response.json())
             .then(data => Vue.set(this, 'list', data))
         }, 1000)
@@ -83,9 +83,19 @@ let vueApp =  new Vue({ // eslint-disable-line
       }
     },
     startMonitor (id) {
+      // optimistic update
+      if (this.list[id]) {
+        this.list[id].status = 'running'
+      }
+      // change server state
       fetch(`/_/servers/${id}/start`, { method: 'POST' })
     },
     stopMonitor (id) {
+      // optimistic update
+      if (this.list[id]) {
+        this.list[id].status = 'stopped'
+      }
+      // change server state
       fetch(`/_/servers/${id}/stop`, { method: 'POST' })
     },
     href (id) {

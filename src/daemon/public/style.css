@@ -54,10 +54,6 @@ ul, footer, .container {
   padding: 20px;
 }
 
-footer {
-  color: #AAA;
-}
-
 footer a:hover {
   text-decoration: none;
 }
@@ -89,11 +85,11 @@ li {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #F0F0F0;
+  height: 64px;
 }
 
 li div {
   flex-grow: 1;
-  padding: 16px 0 16px 0;
 }
 
 li small {
@@ -101,40 +97,33 @@ li small {
   cursor: pointer;
 }
 
-input {
-  display: none;
-}
-
-input + i {
-  display: block;
+button {
+  border: none;
+  background: none;
+  outline:none;
   cursor: pointer;
   color: #CECECE;
-  padding: 10px;
-  font-size: 24px;
+  height: 100%;
 }
 
-input[type=checkbox] + i {
-  padding-top: 12px;
-  font-size: 28px;
+button.status {
+  padding-top: 5px;
+  font-size: 29px;
 }
 
-input:checked[type=checkbox] + i {
+button.status.running {
   color: #14B8CC;
 }
 
-.chevron {
-  display: block;
-  cursor: pointer;
-  color: #CECECE;
-  padding: 10px;
-  font-size: 24px;
+button.logs {
   font-size: 14px;
 }
-  .chevron.selected {
-    color: #212121;
-  }
 
-// ANIMATE ASIDE ITEMS
+button.logs.selected {
+  color: #212121;
+}
+
+/*ANIMATE ASIDE ITEMS*/
 @-webkit-keyframes fade-in {
   from {
     opacity: 0;
