@@ -1,8 +1,9 @@
 # Change Log
 
-## Unreleased
+## 0.5.7
 
 * Add `favicon`
+* Fix Safari and IE bug
 
 ## 0.5.6
 
