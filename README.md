@@ -1,4 +1,4 @@
-# hotel [![Mac/Linux Build Status](https://img.shields.io/travis/typicode/hotel/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/typicode/hotel) [![Windows Build status](https://img.shields.io/appveyor/ci/typicode/hotel/master.svg?label=Windows)](https://ci.appveyor.com/project/typicode/hotel/branch/master) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel)
+# hotel [![Mac/Linux Build Status](https://img.shields.io/travis/typicode/hotel/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/typicode/hotel) [![Windows Build status](https://img.shields.io/appveyor/ci/typicode/hotel/master.svg?label=Windows)](https://ci.appveyor.com/project/typicode/hotel/branch/master) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel) [![](https://img.shields.io/badge/share%20on-twitter-00aced.svg)](https://twitter.com/intent/tweet?text=Start%20apps%20from%20your%20browser%20and%20get%20local%20domains%20without%20editing%20/etc/hosts%20http://i.imgur.com/DrLjbIi.gif&url=https://github.com/typicode/hotel)
 
 > Start apps from your browser and get local domains in seconds!
 
