@@ -1,11 +1,9 @@
 # Change Log
 
-## 0.5.7
+## 0.5.8
 
 * Add `favicon`
 * Fix Safari and IE bug
-
-__Deprecated: hotel start issue, please use 0.5.6__
 
 ## 0.5.6
 
