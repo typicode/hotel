@@ -4,6 +4,7 @@ const chalk = require('chalk')
 const tildify = require('tildify')
 const mkdirp = require('mkdirp')
 const common = require('../common')
+const serverConf = require('../conf')
 
 const serversDir = common.serversDir
 
@@ -59,6 +60,12 @@ function add (param, opts = {}) {
 
     // By default, save PATH env for version managers users
     conf.env.PATH = process.env.PATH
+
+    // Save hotel reference for proxying
+    conf.env.http_proxy =
+      conf.env.https_proxy =
+      conf.env.HTTP_PROXY =
+      conf.env.HTTPS_PROXY = `http://127.0.0.1:${serverConf.port}/proxy.pac`
 
     // Copy other env option
     if (opts.e) {
