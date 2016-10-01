@@ -26,8 +26,6 @@ _Tip: if you don't enable local domains, hotel can still be used as a **catalog 
 * Plays nice with other servers (Apache, Nginx, ...)
 * Random or fixed ports
 
-_* Local `.dev` domains are optional. To use them, configure your network or browser to use hotel's proxy auto-config file (`proxy.pac`). See instructions [here](https://github.com/typicode/hotel/blob/master/docs/README.md)._
-
 ## Install
 
 ```bash
@@ -37,6 +35,12 @@ npm install -g hotel && hotel start
 If you don't have Node installed, use [brew](http://brew.sh) `brew install node`, [nvm](https://github.com/creationix/nvm) `nvm install stable` or go to [nodejs.org](https://nodejs.org).
 
 ## Quick start
+
+### Local dev domains (optional)
+
+To use local `.dev` domains, you need to configure your network or browser to use hotel's proxy auto-config file or you can skip this step for the moment and go directly to http://localhost:2000
+
+[__See instructions here__](https://github.com/typicode/hotel/blob/master/docs/README.md).
 
 ### Servers
 
@@ -134,10 +138,6 @@ server.listen(port)
 hotel add 'cmd -p $PORT'  # OS X, Linux
 hotel add "cmd -p %PORT%" # Windows
 ```
-
-## Dev domain support
-
-See instructions [here](https://github.com/typicode/hotel/blob/master/docs/README.md).
 
 ## Fallback URL
 
