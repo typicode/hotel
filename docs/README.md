@@ -28,7 +28,11 @@ Don't forget to restart hotel and reload network or browser configuration.
 
 ##### Linux
 
-Check your network manager and look for proxy configuration. Use browser configuration as an alternative.
+On Ubuntu
+
+`System Settings > Network > Network Proxy > Automatic`
+
+For other distributions, check your network manager and look for proxy configuration. Use browser configuration as an alternative.
 
 ## Browser configuration
 
