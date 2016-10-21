@@ -227,7 +227,7 @@ export default {
       return this.selected === id
     },
     onScroll (event) {
-      const { scrollHeight, scrollTop, clientHeight } = event.target.element
+      const { scrollHeight, scrollTop, clientHeight } = event.target
       this.outputScroll = scrollHeight - scrollTop === clientHeight
     },
     scrollToBottom () {
