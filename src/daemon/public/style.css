@@ -49,11 +49,6 @@ main {
   cursor: pointer;
 }
 
-/* Improve tab navigation by outlining focus */
-a:focus, button:focus {
-  outline: 1px solid #212121;
-}
-
 /* Used to avoid setting padding on aside and main (breaks layout) */
 ul, footer, .container {
   padding: 20px;

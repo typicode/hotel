@@ -2,7 +2,7 @@
 
 ## 0.5.9
 
-* UI bug fix and enhancements
+* UI bug fix
 
 ## 0.5.8
 
