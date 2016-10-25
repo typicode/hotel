@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.9
+
+* UI bug fix and enhancements
+
 ## 0.5.8
 
 * Add `favicon`

@@ -69,12 +69,12 @@
       ref="output"
       :style="{ display: selected ? 'block' : 'none' }"
       @scroll="onScroll">
-      <div
+      <button
         id="down"
         title="scroll to bottom"
         @click="scrollToBottom">
         <i class="ion-arrow-down-c"></i>
-      </div>
+      </button>
       <div class="container">
         <div v-if="output.length === 0">
           # No output
