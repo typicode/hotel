@@ -33,7 +33,7 @@ module.exports = (group) => {
   app.use(`${API_ROOT}/servers`, api)
 
   // .tld host
-  app.use(vhost(new RegExp(`.*\.${conf.tld}`), tldHost))
+  app.use(vhost(new RegExp(`.*.${conf.tld}`), tldHost))
 
   // Static files
   // index.html, style.css, vendors, etc...
