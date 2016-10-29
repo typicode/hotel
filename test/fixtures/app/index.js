@@ -5,8 +5,8 @@ http.createServer(function (req, res) {
   res.end([
     'Hello World',
     process.env.FOO,
-    process.env.PATH
-  ].join('/n'))
+    process.env.HTTP_PROXY
+  ].join(' '))
 }).listen(process.env.PORT, '127.0.0.1')
 
 console.log('Server running on port', process.env.PORT)
