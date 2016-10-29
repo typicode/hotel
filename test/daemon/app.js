@@ -1,9 +1,9 @@
 const fs = require('fs')
 const path = require('path')
 const http = require('http')
+const test = require('ava')
 const mock = require('mock-fs')
 const untildify = require('untildify')
-const test = require('ava')
 const request = require('supertest')
 const conf = require('../../src/conf')
 const App = require('../../src/daemon/app')
@@ -13,7 +13,7 @@ const servers = require('../../src/cli/servers')
 
 let app
 
-test.before((cb) => {
+test.before(() => {
   // Set request timeout to 20 seconds instead of 5 seconds for slower CI servers
   conf.timeout = 20000
 
