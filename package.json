@@ -9,7 +9,7 @@
     "node": ">= 0.12"
   },
   "scripts": {
-    "test": "ava && standard",
+    "test": "ava && standard --fix",
     "start": "run-p start:*",
     "start:webpack": "rimraf dist && webpack -d --watch",
     "start:nodemon": "nodemon -- src/daemon",

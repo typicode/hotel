@@ -52,6 +52,16 @@ test.before((cb) => {
     o: '/tmp/logs/app.log'
   })
 
+  // Add server with custom env
+  process.env.FOO = 'FOO_VALUE'
+  servers.add('node index.js', {
+    n: 'custom-env',
+    p: 51236,
+    d: path.join(__dirname, '../fixtures/app'),
+    o: '/tmp/logs/app.log',
+    e: ['FOO']
+  })
+
   // Add failing server
   servers.add('unknown-cmd', { n: 'failing' })
 
@@ -147,7 +157,7 @@ test.cb('GET /_/servers', t => {
     .get('/_/servers')
     .expect(200, (err, res) => {
       if (err) return t.end(err)
-      t.is(Object.keys(res.body).length, 7, 'got wrong number of servers')
+      t.is(Object.keys(res.body).length, 8, 'got wrong number of servers')
       t.end()
     })
 })
@@ -224,6 +234,24 @@ test.cb('GET /bundle.js should render bundle.js', (t) => {
   request(app)
     .get('/bundle.js')
     .expect(200, t.end)
+})
+
+//
+// Test env variables
+//
+
+test.cb('GET / should contain custom env values', (t) => {
+  request(app)
+    .get('/')
+    .set('Host', 'custom-env.dev')
+    .expect(200, /FOO_VALUE/, t.end)
+})
+
+test.cb('GET / should contain proxy env values', (t) => {
+  request(app)
+    .get('/')
+    .set('Host', 'custom-env.dev')
+    .expect(200, /http:\/\/127.0.0.1:2000\/proxy.pac/, t.end)
 })
 
 //

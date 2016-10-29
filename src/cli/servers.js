@@ -117,9 +117,9 @@ function ls () {
       const serverFile = getServerFile(id)
       const server = JSON.parse(fs.readFileSync(serverFile))
       if (server.cmd) {
-        return `${id}\n  ${chalk.gray(tildify(server.cwd))}\n  ${chalk.gray(server.cmd)}`
+        return `${id}\n${chalk.gray(tildify(server.cwd))}\n${chalk.gray(server.cmd)}`
       } else {
-        return `${id}\n  ${chalk.gray(server.target)}`
+        return `${id}\n${chalk.gray(server.target)}`
       }
     })
     .join('\n\n')

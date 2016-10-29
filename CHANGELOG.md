@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.10
+
+* Pass `HTTP_PROXY` env to servers started by hotel
+
 ## 0.5.9
 
 * UI bug fix

@@ -14,7 +14,7 @@ const serverReady = require('server-ready')
 const arrayFind = require('array-find')
 const errorMsg = require('./views/error-msg')
 const tcpProxy = require('./tcp-proxy')
-const conf = require('../conf')
+const daemonConf = require('../conf')
 
 module.exports = () => new Group()
 
@@ -71,9 +71,21 @@ class Group extends EventEmitter {
 
     util.log(`Add server ${id}`)
 
+    const HTTP_PROXY = `http://127.0.0.1:${daemonConf.port}/proxy.pac`
+
     conf.env = {
       ...process.env,
       ...conf.env
+    }
+
+    if (daemonConf.http_proxy) {
+      conf.env = {
+        HTTP_PROXY,
+        HTTPS_PROXY: HTTP_PROXY,
+        http_proxy: HTTP_PROXY,
+        https_proxy: HTTP_PROXY,
+        ...conf.env
+      }
     }
 
     let logFile
@@ -186,7 +198,7 @@ class Group extends EventEmitter {
   exists (req, res, next) {
     // Resolve using either hostname `app.tld`
     // or id param `http://localhost:2000/app`
-    const tld = new RegExp(`.${conf.tld}$`)
+    const tld = new RegExp(`.${daemonConf.tld}$`)
     const id = req.params.id
       ? this.resolve(req.params.id)
       : this.resolve(req.hostname.replace(tld, ''))
@@ -295,7 +307,7 @@ class Group extends EventEmitter {
   parseReq (req) {
     if (req.headers.host) {
       const [hostname, port] = req.headers.host.split(':')
-      const regexp = new RegExp(`.${conf.tld}$`)
+      const regexp = new RegExp(`.${daemonConf.tld}$`)
       const id = hostname.replace(regexp, '')
       return { id, port }
     } else {
@@ -308,7 +320,7 @@ class Group extends EventEmitter {
   handleUpgrade (req, socket, head) {
     if (req.headers.host) {
       const [hostname] = req.headers.host.split(':')
-      const tld = new RegExp(`.${conf.tld}$`)
+      const tld = new RegExp(`.${daemonConf.tld}$`)
       const id = this.resolve(hostname.replace(tld, ''))
       const item = this.find(id)
 
@@ -337,10 +349,10 @@ class Group extends EventEmitter {
 
       // If https make socket go through https proxy on 2001
       if (port === '443') {
-        return tcpProxy.proxy(socket, conf.port + 1, hostname)
+        return tcpProxy.proxy(socket, daemonConf.port + 1, hostname)
       }
 
-      const tld = new RegExp(`.${conf.tld}$`)
+      const tld = new RegExp(`.${daemonConf.tld}$`)
       const id = this.resolve(hostname.replace(tld, ''))
       const item = this.find(id)
 
