@@ -23,7 +23,7 @@ class Group extends EventEmitter {
     super()
 
     this._list = {}
-    this._proxy = httpProxy.createProxyServer()
+    this._proxy = httpProxy.createProxyServer({ xfwd: true })
     this._proxy.on('error', this.handleProxyError)
   }
 

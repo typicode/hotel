@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.11
+
+* Add more x-forward headers
+
 ## 0.5.10
 
 * Pass `HTTP_PROXY` env to servers started by hotel

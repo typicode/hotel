@@ -255,6 +255,12 @@ test.cb('GET / should contain proxy env values', (t) => {
 })
 
 //
+// Test headers
+//
+
+test.todo('GET / should contain X-FORWARD headers')
+
+//
 // Test remove
 //
 
