@@ -6,7 +6,7 @@
 
 _Tip: if you don't enable local domains, hotel can still be used as a **catalog of local servers**._
 
-Hotel works great on any (OS X, Linux, Windows) and with __all servers :heart:__ 
+Hotel works great on any OS (OS X, Linux, Windows) and with __all servers :heart:__ 
 * Node (Express, Webpack)
 * PHP (Laravel, Symfony)
 * Ruby (Rails, Sinatra, Jekyll)
