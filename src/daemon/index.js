@@ -40,12 +40,12 @@ const proxy = httpProxy.createServer({
     key: fs.readFileSync(path.join(__dirname, 'certs/server.key')),
     cert: fs.readFileSync(path.join(__dirname, 'certs/server.crt'))
   },
-  ws: true
+  ws: true,
+  xfwd: true
 })
 
 // See https://github.com/typicode/hotel/pull/61
 proxy.on('proxyReq', (proxyReq, req) => {
-  proxyReq.setHeader('X-Forwarded-Proto', 'https')
   req._proxyReq = proxyReq
 })
 
