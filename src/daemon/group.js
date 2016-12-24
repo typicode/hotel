@@ -9,6 +9,7 @@ const getPort = require('get-port')
 const matcher = require('matcher')
 const unquote = require('unquote')
 const respawn = require('respawn')
+const afterAll = require('after-all')
 const httpProxy = require('http-proxy')
 const serverReady = require('server-ready')
 const arrayFind = require('array-find')
@@ -157,6 +158,18 @@ class Group extends EventEmitter {
     }
 
     cb && cb()
+  }
+
+  stopAll (cb) {
+    const next = afterAll(cb)
+
+    Object
+      .keys(this._list)
+      .forEach((key) => {
+        if (this._list[key].stop) {
+          this._list[key].stop(next())
+        }
+      })
   }
 
   update (id, conf) {

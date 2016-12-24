@@ -41,6 +41,7 @@
   },
   "homepage": "https://github.com/typicode/hotel",
   "dependencies": {
+    "after-all": "^2.0.2",
     "ansi2html": "0.0.1",
     "array-find": "^1.0.0",
     "chalk": "^1.1.3",

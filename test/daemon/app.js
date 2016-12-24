@@ -81,6 +81,8 @@ test.before(() => {
   Loader(group, { watch: false })
 })
 
+test.cb.after((t) => app.group.stopAll(t.end))
+
 //
 // Test daemon/vhosts/tld.js
 //
