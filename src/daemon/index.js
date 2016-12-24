@@ -44,17 +44,6 @@ const proxy = httpProxy.createServer({
   xfwd: true
 })
 
-// See https://github.com/typicode/hotel/pull/61
-proxy.on('proxyReq', (proxyReq, req) => {
-  req._proxyReq = proxyReq
-})
-
-proxy.on('error', (err, req) => {
-  if (req.socket.destroyed && err.code === 'ECONNRESET') {
-    req._proxyReq.abort()
-  }
-})
-
 // Start HTTPS proxy and HTTP server
 proxy.listen(conf.port + 1)
 
