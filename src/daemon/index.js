@@ -24,7 +24,7 @@ exitHook(() => {
   console.log('Stop daemon')
   proxy.close()
   app.close()
-  app.group.stopAll()
+  group.stopAll()
 
   console.log('Remove pid file')
   pidFile.remove()
