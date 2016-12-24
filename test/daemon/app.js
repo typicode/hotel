@@ -260,7 +260,12 @@ test.cb('GET / should contain proxy env values', (t) => {
 // Test headers
 //
 
-test.todo('GET / should contain X-FORWARD headers')
+test.cb('GET / should contain X-FORWARD headers', (t) => {
+  request(app)
+    .get('/')
+    .set('Host', 'node.dev')
+    .expect(200, /x-forwarded-host: node.dev/, t.end)
+})
 
 //
 // Test remove
