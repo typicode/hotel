@@ -1,8 +1,13 @@
 # Change Log
 
+## Unreleased
+
+* Add dark theme
+* Update `x-forward-port` header
+
 ## 0.5.11
 
-* Add more x-forward headers
+* Add more `x-forward` headers
 
 ## 0.5.10
 
