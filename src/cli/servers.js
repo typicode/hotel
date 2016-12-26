@@ -91,6 +91,10 @@ function add (param, opts = {}) {
   } else {
     console.log('Output No log file specified (use \'-o app.log\')')
   }
+
+  if (!opts.p) {
+    console.log('Port Random port (use \'-p 1337\' to set a fixed port)')
+  }
 }
 
 function rm (opts = {}) {
