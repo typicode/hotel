@@ -68,12 +68,19 @@
     <main
       ref="output"
       :style="{ display: selected ? 'block' : 'none' }"
+      :class="{ dark: isDark }"
       @scroll="onScroll">
       <button
         id="down"
         title="scroll to bottom"
         @click="scrollToBottom">
         <i class="ion-arrow-down-c"></i>
+      </button>
+      <button
+        id="theme"
+        title="switch theme"
+        @click="switchTheme">
+        <i class="ion-lightbulb"></i>
       </button>
       <div class="container">
         <div v-if="output.length === 0">
@@ -123,7 +130,8 @@ export default {
       outputScroll: true,
       target,
       isListFetched: false,
-      version
+      version,
+      isDark: localStorage.getItem('isDark') || false
     }
   },
   created () {
@@ -233,6 +241,10 @@ export default {
     scrollToBottom () {
       this.outputScroll = true
       this.$refs.output.scrollTop = this.$refs.output.scrollHeight
+    },
+    switchTheme () {
+      this.isDark = !this.isDark
+      localStorage.setItem('isDark', this.isDark)
     }
   },
   watch: {

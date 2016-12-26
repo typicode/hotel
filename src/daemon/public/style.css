@@ -45,8 +45,20 @@ main {
   position: absolute;
   right: 30px;
   top: 20px;
-  color: #999;
   cursor: pointer;
+}
+
+#theme {
+  position: absolute;
+  right: 50px;
+  top: 20px;
+  cursor: pointer;
+}
+
+.dark {
+  background: #212121;
+  color: #F9F9F9;
+  transition: background 0.2s, color 0.2s;
 }
 
 /* Used to avoid setting padding on aside and main (breaks layout) */
