@@ -66,6 +66,32 @@ test('group.handleUpgrade with app', (t) => {
   })
 })
 
+test(
+  'group.handleUpgrade with app and port, port should take precedence',
+  (t) => {
+    const port = 5000
+    const group = Group()
+    const req = {
+      headers: {
+        host: `app.dev:${port}`
+      }
+    }
+    const head = {}
+    const socket = {}
+
+    sinon.stub(group._proxy, 'ws')
+
+    group.add('app', {
+      cmd: 'cmd',
+      cwd: '/some/path'
+    })
+    group.handleUpgrade(req, head, socket)
+
+    sinon.assert.calledWith(group._proxy.ws, req, head, socket, {
+      target: `ws://127.0.0.1:${port}`
+    })
+  })
+
 test('group.handleConnect with proxy', (t) => {
   const group = Group()
   const target = 'example.com'

@@ -33,7 +33,7 @@ test.before(() => {
   // Fake server to respond to URL
   http.createServer((req, res) => {
     res.statusCode = 200
-    res.end()
+    res.end('ok')
   }).listen(4000)
 
   // Add server
@@ -141,6 +141,13 @@ test.cb('GET http://proxy.dev should return 502', (t) => {
     .get('/')
     .set('Host', 'proxy.dev')
     .expect(200, t.end)
+})
+
+test.cb('GET http://node.dev:4000 should proxy to localhost:4000', (t) => {
+  request(app)
+    .get('/')
+    .set('Host', 'node.dev:4000')
+    .expect(200, /ok/, t.end)
 })
 
 test.cb('GET http://unavailable-proxy.dev should return 502', (t) => {

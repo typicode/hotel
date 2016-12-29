@@ -4,6 +4,7 @@
 
 * Add dark theme
 * Update `x-forward-port` header
+* Improve `ember-cli` and `livereload` support
 
 ## 0.5.11
 
