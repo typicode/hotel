@@ -40,7 +40,17 @@ Hotel works great on any OS (OS X, Linux, Windows) and with __all servers :heart
 npm install -g hotel && hotel start
 ```
 
-If you don't have Node installed, use [brew](http://brew.sh) `brew install node`, [nvm](https://github.com/creationix/nvm) `nvm install stable` or go to [nodejs.org](https://nodejs.org).
+Hotel requires Node to be installed, if you don't have it, you can simply install it using one of the following method.
+
+```sh
+# http://brew.sh
+brew install node
+
+# https://github.com/creationix/nvm
+nvm install stable
+```
+
+You can also visit https://nodejs.org.
 
 ## Quick start
 
