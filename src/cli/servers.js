@@ -18,7 +18,11 @@ function isUrl (str) {
 }
 
 function isDirectory (str) {
-  return fs.lstatSync(str).isDirectory()
+  try {
+    return fs.lstatSync(str).isDirectory()
+  } catch (e) {
+    return false
+  }
 }
 
 // Converts '_-Some Project_Name--' to 'some-project-name'
@@ -51,9 +55,10 @@ function add (param, opts = {}) {
     conf = {
       target: param
     }
-  } else if (isDirectory) {
+  } else if (isDirectory(param)) {
+    console.log(param)
     conf = {
-      cwd
+      dir: path.resolve(param)
     }
   } else {
     conf = {

@@ -8,20 +8,28 @@ const cli = require('../../src/cli')
 const { serversDir } = require('../../src/common')
 
 const appDir = path.join(__dirname, '../fixtures/app')
+const staticDir = path.join(__dirname, '../fixtures/static')
 const otherAppDir = path.join(__dirname, '../fixtures/other-app')
 
-test.before(() => {
+test.beforeEach(() => {
   mock({
     [serversDir]: {},
     [appDir]: {
       'index.js': fs.readFileSync(path.join(appDir, 'index.js'))
     },
+    [staticDir]: {
+      'index.html': 'static'
+    },
     [otherAppDir]: {}
   })
+
+  // By default
+  process.chdir(appDir)
 })
 
+test.afterEach(() => mock.restore())
+
 test('add should create file', (t) => {
-  process.chdir(appDir)
   cli(['', '', 'add', 'node index.js'])
 
   const file = path.join(serversDir, 'app.json')
@@ -126,6 +134,24 @@ test('add should support url', (t) => {
   const file = path.join(serversDir, 'proxy.json')
   const conf = {
     target: 'http://1.2.3.4'
+  }
+
+  t.deepEqual(
+    JSON.parse(fs.readFileSync(file)),
+    conf
+  )
+})
+
+test('add should support directory', (t) => {
+  process.chdir(staticDir)
+  cli([
+    '', '',
+    'add', '.'
+  ])
+
+  const file = path.join(serversDir, 'static.json')
+  const conf = {
+    dir: staticDir
   }
 
   t.deepEqual(

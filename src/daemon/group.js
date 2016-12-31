@@ -71,12 +71,13 @@ class Group extends EventEmitter {
       return
     }
 
-    if (conf.cwd && !conf.cmd) {
+    console.log(conf)
+    if (conf.dir) {
       util.log(`Add directory ${id}`)
       this._list[id] = conf
       this._change()
       return
-    } 
+    }
 
     util.log(`Add server ${id}`)
 
@@ -294,7 +295,7 @@ class Group extends EventEmitter {
         this._proxy.web(req, res, { target: item.target })
       } else {
         util.log(`Serve http://${hostname} from dir ${item.cwd}`)
-        express.static(item.cwd)(req, res, () => res.sendStatus(404))
+        express.static(item.dir)(req, res, () => res.sendStatus(404))
       }
     })
 

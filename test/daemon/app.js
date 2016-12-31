@@ -25,6 +25,9 @@ test.before(() => {
     // Needed to avoid 404
     [path.join(__dirname, '../../src/daemon/public/index.html')]: 'index.html content',
     [path.join(__dirname, '../../dist/bundle.js')]: 'bundle.js content',
+    [path.join(__dirname, '../fixtures/static')]: {
+      'index.html': 'static'
+    },
     [serverKey]: fs.readFileSync(serverKey),
     [serverCrt]: fs.readFileSync(serverCrt),
     '/tmp/logs': {}
@@ -74,6 +77,9 @@ test.before(() => {
 
   // Add unavailable URL
   servers.add('http://localhost:4100', { n: 'unavailable-proxy' })
+
+  // Add directory
+  servers.add(path.join(__dirname, '../fixtures/static'), { n: 'static' })
 
   const group = Group()
   app = App(group)
@@ -157,6 +163,13 @@ test.cb('GET http://unavailable-proxy.dev should return 502', (t) => {
     .expect(502, t.end)
 })
 
+test.cb('GET http://static.dev should return 502', (t) => {
+  request(app)
+    .get('/')
+    .set('Host', 'static.dev')
+    .expect(200, /static/, t.end)
+})
+
 //
 // TEST daemon/routers/api.js
 //
@@ -166,7 +179,7 @@ test.cb('GET /_/servers', t => {
     .get('/_/servers')
     .expect(200, (err, res) => {
       if (err) return t.end(err)
-      t.is(Object.keys(res.body).length, 8, 'got wrong number of servers')
+      t.is(Object.keys(res.body).length, 9, 'got wrong number of servers')
       t.end()
     })
 })
