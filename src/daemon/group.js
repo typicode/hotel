@@ -10,6 +10,7 @@ const matcher = require('matcher')
 const unquote = require('unquote')
 const respawn = require('respawn')
 const afterAll = require('after-all')
+const express = require('express')
 const httpProxy = require('http-proxy')
 const serverReady = require('server-ready')
 const arrayFind = require('array-find')
@@ -69,6 +70,13 @@ class Group extends EventEmitter {
       this._change()
       return
     }
+
+    if (conf.cwd && !conf.cmd) {
+      util.log(`Add directory ${id}`)
+      this._list[id] = conf
+      this._change()
+      return
+    } 
 
     util.log(`Add server ${id}`)
 
@@ -281,8 +289,13 @@ class Group extends EventEmitter {
 
     // Make sure to send only one response
     const send = once(() => {
-      util.log(`Proxy http://${hostname} to ${item.target}`)
-      this._proxy.web(req, res, { target: item.target })
+      if (item.target) {
+        util.log(`Proxy http://${hostname} to ${item.target}`)
+        this._proxy.web(req, res, { target: item.target })
+      } else {
+        util.log(`Serve http://${hostname} from dir ${item.cwd}`)
+        express.static(item.cwd)(req, res, () => res.sendStatus(404))
+      }
     })
 
     if (item.start) {

@@ -17,6 +17,10 @@ function isUrl (str) {
   return /^(http|https):/.test(str)
 }
 
+function isDirectory (str) {
+  return fs.lstatSync(str).isDirectory()
+}
+
 // Converts '_-Some Project_Name--' to 'some-project-name'
 function domainify (str) {
   return str
@@ -46,6 +50,10 @@ function add (param, opts = {}) {
   if (isUrl(param)) {
     conf = {
       target: param
+    }
+  } else if (isDirectory) {
+    conf = {
+      cwd
     }
   } else {
     conf = {
@@ -82,7 +90,7 @@ function add (param, opts = {}) {
   fs.writeFileSync(file, data)
 
   // if we're mapping a domain to a URL there's no additional info to output
-  if (conf.target) return
+  if (conf.target || (conf.cwd && !conf.cmd)) return
 
   // if we're mapping a domain to a local server add some info
   if (conf.out) {
