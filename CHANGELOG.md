@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.13
+
+* Fix `hotel add` CLI bug
+
 ## 0.5.12
 
 * Add dark theme
