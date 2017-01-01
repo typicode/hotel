@@ -8,7 +8,7 @@ module.exports = (processArgv) => {
     .version(pkg.version).alias('v', 'version')
     .help('h').alias('h', 'help')
     .command(
-      'add <cmd|url> [options]',
+      'add <cmd_or_url> [options]',
       'Add server or proxy',
       (yargs) => yargs
         .option('name', {
@@ -29,7 +29,7 @@ module.exports = (processArgv) => {
           describe: 'Set PORT environment variable'
         })
         .demand(1),
-      (argv) => servers.add(argv['cmd|url'], argv)
+      (argv) => servers.add(argv['cmd_or_url'], argv)
     )
     .command(
       'rm [options]',
