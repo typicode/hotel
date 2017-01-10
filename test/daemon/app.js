@@ -33,7 +33,7 @@ test.before(() => {
   // Fake server to respond to URL
   http.createServer((req, res) => {
     res.statusCode = 200
-    res.end('ok')
+    res.end(`ok - host: ${req.headers.host}`)
   }).listen(4000)
 
   // Add server
@@ -72,6 +72,9 @@ test.before(() => {
   // Add URL
   servers.add('http://localhost:4000', { n: 'proxy' })
 
+  // Add https URL
+  servers.add('https://jsonplaceholder.typicode.com', { n: 'proxy-with-https-target' })
+
   // Add unavailable URL
   servers.add('http://localhost:4100', { n: 'unavailable-proxy' })
 
@@ -101,12 +104,16 @@ test.cb('GET http://hotel.dev/index.html should serve index.html', (t) => {
     .expect(200, t.end)
 })
 
-test.cb('GET http://node.dev should proxy request', (t) => {
-  request(app)
-    .get('/')
-    .set('Host', 'node.dev')
-    .expect(200, /Hello World/, t.end)
-})
+test.cb(
+  'GET http://node.dev should proxy request and host should be node.dev',
+  (t) => {
+    request(app)
+      .get('/')
+      .set('Host', 'node.dev')
+      .expect(/host: node.dev/)
+      .expect(200, /Hello World/, t.end)
+  }
+)
 
 test.cb('GET http://subdomain.node.dev should proxy request', (t) => {
   request(app)
@@ -136,10 +143,20 @@ test.cb('GET http://failing.dev should return 502', (t) => {
     .expect(502, t.end)
 })
 
-test.cb('GET http://proxy.dev should return 502', (t) => {
+test.cb(
+  'GET http://proxy.dev should return 200 and host should be proxy.dev',
+  (t) => {
+    request(app)
+      .get('/')
+      .set('Host', 'proxy.dev')
+      .expect(200, /host: proxy.dev/, t.end)
+  }
+)
+
+test.cb('GET http://proxy-with-https-target.dev should return 200', (t) => {
   request(app)
     .get('/')
-    .set('Host', 'proxy.dev')
+    .set('Host', 'proxy-with-https-target.dev')
     .expect(200, t.end)
 })
 
@@ -166,7 +183,7 @@ test.cb('GET /_/servers', t => {
     .get('/_/servers')
     .expect(200, (err, res) => {
       if (err) return t.end(err)
-      t.is(Object.keys(res.body).length, 8, 'got wrong number of servers')
+      t.is(Object.keys(res.body).length, 9, 'got wrong number of servers')
       t.end()
     })
 })

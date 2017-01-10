@@ -7,7 +7,8 @@ http.createServer(function (req, res) {
     'Hello World',
     process.env.FOO,
     process.env.HTTP_PROXY,
-    'x-forwarded-host: ' + req.headers['x-forwarded-host']
+    'x-forwarded-host: ' + req.headers['x-forwarded-host'],
+    'host: ' + req.headers.host
   ].join(' '))
 }).listen(process.env.PORT, '127.0.0.1')
 

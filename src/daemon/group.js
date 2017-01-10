@@ -24,7 +24,9 @@ class Group extends EventEmitter {
     super()
 
     this._list = {}
-    this._proxy = httpProxy.createProxyServer({ xfwd: true })
+    this._proxy = httpProxy.createProxyServer({
+      xfwd: true
+    })
     this._proxy.on('error', this.handleProxyError)
   }
 
@@ -281,8 +283,16 @@ class Group extends EventEmitter {
 
     // Make sure to send only one response
     const send = once(() => {
-      util.log(`Proxy http://${hostname} to ${item.target}`)
-      this._proxy.web(req, res, { target: item.target })
+      const isHTTPS = /^https:\/\//.test(item.target)
+      util.log(
+        `Proxy http://${hostname} to ${item.target}`,
+        isHTTPS ? '(changeOrigin: true)' : ''
+      )
+      this._proxy.web(req, res, {
+        target: item.target,
+        // https won't work if host doesn't match certificate, so we're changing it
+        changeOrigin: isHTTPS
+      })
     })
 
     if (item.start) {
