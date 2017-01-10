@@ -3,7 +3,7 @@
   "version": "0.5.13",
   "description": "Local domains for everyone and more! ",
   "main": "lib",
-  "bin": "bin/index.js",
+  "bin": "lib/cli/bin.js",
   "preferGlobal": true,
   "engines": {
     "node": ">= 0.12"
