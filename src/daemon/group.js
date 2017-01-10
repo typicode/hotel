@@ -202,9 +202,9 @@ class Group extends EventEmitter {
   // Middlewares
   //
 
-  handleProxyError (_, req, res) {
-    util.log('Proxy error')
-    const msg = errorMsg(req.hotel.item)
+  handleProxyError (err, req, res) {
+    util.log('Proxy error -', err.message)
+    const msg = errorMsg(err, req.hotel.item)
     res.status(502).send(msg)
   }
 

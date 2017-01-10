@@ -2,7 +2,7 @@ const serverReady = require('server-ready')
 const stripAnsi = require('strip-ansi')
 
 // Simple error message used in vhosts/dev and router
-module.exports = function (server) {
+module.exports = function (err, server) {
   if (server.start) {
     const { PORT } = server.env
     const { timeout } = serverReady
@@ -23,5 +23,10 @@ ${tail}
 </code></pre>`
   }
 
-  return `Can't proxy request to <a href="${server.target}">${server.target}</a>.`
+  return `
+Can't proxy request to <a href="${server.target}">${server.target}</a>.
+<pre><code>
+${err.message}
+</code></pre>
+`
 }
