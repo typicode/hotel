@@ -4,6 +4,7 @@
 
 * Fix proxying to `https` target `hotel add https://example.com`
 * Log proxy errors
+* Add `--xfwd` and `--change-origin` proxy options to `hotel add` command
 
 ## 0.5.13
 

@@ -15,18 +15,31 @@ module.exports = (processArgv) => {
           alias: 'n',
           describe: 'Server name'
         })
+        .option('port', {
+          alias: 'p',
+          describe: 'Set PORT environment variable',
+          number: true
+        })
         .option('out', {
           alias: 'o',
           describe: 'Output file'
         })
         .option('env', {
           alias: 'e',
-          array: true,
-          describe: 'Additional environment variables'
+          describe: 'Additional environment variables',
+          array: true
         })
-        .option('port', {
-          alias: 'p',
-          describe: 'Set PORT environment variable'
+        .option('xfwd', {
+          alias: 'x',
+          describe: 'Adds x-forward headers',
+          default: false,
+          boolean: true
+        })
+        .option('change-origin', {
+          alias: 'co',
+          describe: 'Changes the origin of the host header to the target URL',
+          default: false,
+          boolean: true
         })
         .demand(1),
       (argv) => servers.add(argv['cmd_or_url'], argv)

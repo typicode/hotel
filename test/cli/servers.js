@@ -33,17 +33,15 @@ test('add should create file', (t) => {
     }
   }
 
-  t.deepEqual(
-    JSON.parse(fs.readFileSync(file)),
-    conf
-  )
+  const actual = JSON.parse(fs.readFileSync(file))
+  t.deepEqual(actual, conf)
 })
 
 test('add should create file with URL safe characters by defaults', (t) => {
   cli([
     '', '',
     'add', 'node index.js',
-    '-d', '/_-Some Project_Name--'
+    '--dir', '/_-Some Project_Name--'
   ])
 
   const file = path.join(serversDir, 'some-project-name.json')
@@ -56,7 +54,7 @@ test('add should be possible to force a name', (t) => {
     '', '',
     'add', 'node index.js',
     '-n', 'Some Project_Name',
-    '-d', '/Some Project_Name'
+    '--dir', '/Some Project_Name'
   ])
 
   const file = path.join(serversDir, 'Some Project_Name.json')
@@ -68,55 +66,57 @@ test('add should support options', (t) => {
   process.env.FOO = 'FOO_VALUE'
   process.env.BAR = 'BAR_VALUE'
   const cmd = 'node index.js'
-  const n = 'project'
-  const o = '/some/path/out.log'
-  const e = ['FOO', 'BAR']
-  const p = 3000
+  const name = 'project'
+  const port = 3000
+  const out = '/some/path/out.log'
+  const env = ['FOO', 'BAR']
 
   cli([
     '', '',
     'add', cmd,
-    '-n', n,
-    '-o', o,
-    '-e', e[0], e[1],
-    '-p', p
+    '-n', name,
+    '-p', port,
+    '-o', out,
+    '-e', env[0], env[1],
+    '-x',
+    '--co'
   ])
 
   const file = path.join(serversDir, 'project.json')
   const conf = {
     cmd: 'node index.js',
     cwd: process.cwd(),
-    out: o,
+    out: out,
     env: {
       PATH: process.env.PATH,
       FOO: process.env.FOO,
       BAR: process.env.BAR,
-      PORT: p
-    }
+      PORT: port
+    },
+    xfwd: true,
+    changeOrigin: true
   }
 
-  t.deepEqual(
-    JSON.parse(fs.readFileSync(file)),
-    conf
-  )
+  const actual = JSON.parse(fs.readFileSync(file))
+  t.deepEqual(actual, conf)
 })
 
 test('add should support option aliases', (t) => {
   process.env.FOO = 'FOO'
   const cmd = 'node index.js'
-  const n = 'alias-test'
+  const name = 'alias-test'
 
   cli([
     '', '',
     'add', cmd,
-    '--name', n
+    '-n', name
   ])
 
   const file = path.join(serversDir, 'alias-test.json')
   t.true(fs.existsSync(file))
 })
 
-test('add should support url', (t) => {
+test('add should support URL', (t) => {
   cli([
     '', '',
     'add', 'http://1.2.3.4',
@@ -128,10 +128,28 @@ test('add should support url', (t) => {
     target: 'http://1.2.3.4'
   }
 
-  t.deepEqual(
-    JSON.parse(fs.readFileSync(file)),
-    conf
-  )
+  const actual = JSON.parse(fs.readFileSync(file))
+  t.deepEqual(actual, conf)
+})
+
+test('add should support URL and options', (t) => {
+  cli([
+    '', '',
+    'add', 'http://1.2.3.4',
+    '-n', 'proxy',
+    '-x',
+    '--co'
+  ])
+
+  const file = path.join(serversDir, 'proxy.json')
+  const conf = {
+    target: 'http://1.2.3.4',
+    xfwd: true,
+    changeOrigin: true
+  }
+
+  const actual = JSON.parse(fs.readFileSync(file))
+  t.deepEqual(actual, conf)
 })
 
 /*

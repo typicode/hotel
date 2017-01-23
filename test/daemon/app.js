@@ -38,45 +38,53 @@ test.before(() => {
 
   // Add server
   servers.add('node index.js', {
-    n: 'node',
-    p: 51234,
-    d: path.join(__dirname, '../fixtures/app'),
-    o: '/tmp/logs/app.log'
+    name: 'node',
+    port: 51234,
+    dir: path.join(__dirname, '../fixtures/app'),
+    out: '/tmp/logs/app.log',
+    xfwd: true
   })
 
   // Add server with subdomain
   servers.add('node index.js', {
-    n: 'subdomain.node',
-    p: 51235,
-    d: path.join(__dirname, '../fixtures/app'),
-    o: '/tmp/logs/app.log'
+    name: 'subdomain.node',
+    port: 51235,
+    dir: path.join(__dirname, '../fixtures/app'),
+    out: '/tmp/logs/app.log'
   })
 
   // Add server with custom env
   process.env.FOO = 'FOO_VALUE'
   servers.add('node index.js', {
-    n: 'custom-env',
-    p: 51236,
-    d: path.join(__dirname, '../fixtures/app'),
-    o: '/tmp/logs/app.log',
-    e: ['FOO']
+    name: 'custom-env',
+    port: 51236,
+    dir: path.join(__dirname, '../fixtures/app'),
+    out: '/tmp/logs/app.log',
+    env: ['FOO']
   })
 
   // Add failing server
-  servers.add('unknown-cmd', { n: 'failing' })
+  servers.add('unknown-cmd', { name: 'failing' })
 
   // Add server and proxy for testing removal
-  servers.add('unknown-cmd', { n: 'server-to-remove' })
-  servers.add('http://example.com', { n: 'proxy-to-remove' })
+  servers.add('unknown-cmd', { name: 'server-to-remove' })
+  servers.add('http://example.com', { name: 'proxy-to-remove' })
 
   // Add URL
-  servers.add('http://localhost:4000', { n: 'proxy' })
+  servers.add('http://localhost:4000', { name: 'proxy' })
 
   // Add https URL
-  servers.add('https://jsonplaceholder.typicode.com', { n: 'proxy-with-https-target' })
+  servers.add('https://jsonplaceholder.typicode.com', {
+    name: 'working-proxy-with-https-target',
+    changeOrigin: true
+  })
+
+  servers.add('https://jsonplaceholder.typicode.com', {
+    name: 'failing-proxy-with-https-target'
+  })
 
   // Add unavailable URL
-  servers.add('http://localhost:4100', { n: 'unavailable-proxy' })
+  servers.add('http://localhost:4100', { name: 'unavailable-proxy' })
 
   const group = Group()
   app = App(group)
@@ -153,18 +161,29 @@ test.cb(
   }
 )
 
-test.cb('GET http://proxy-with-https-target.dev should return 200', (t) => {
-  request(app)
-    .get('/')
-    .set('Host', 'proxy-with-https-target.dev')
-    .expect(200, t.end)
-})
-
 test.cb('GET http://node.dev:4000 should proxy to localhost:4000', (t) => {
   request(app)
     .get('/')
     .set('Host', 'node.dev:4000')
     .expect(200, /ok/, t.end)
+})
+
+//
+// Test proxy to URLs
+//
+
+test.cb('GET http://working-proxy-with-https-target.dev should return 200', (t) => {
+  request(app)
+    .get('/')
+    .set('Host', 'working-proxy-with-https-target.dev')
+    .expect(200, t.end)
+})
+
+test.cb('GET http://failing-proxy-with-https-target.dev should return 502', (t) => {
+  request(app)
+    .get('/')
+    .set('Host', 'failing-proxy-with-https-target.dev')
+    .expect(502, t.end)
 })
 
 test.cb('GET http://unavailable-proxy.dev should return 502', (t) => {
@@ -183,7 +202,7 @@ test.cb('GET /_/servers', t => {
     .get('/_/servers')
     .expect(200, (err, res) => {
       if (err) return t.end(err)
-      t.is(Object.keys(res.body).length, 9, 'got wrong number of servers')
+      t.is(Object.keys(res.body).length, 10, 'got wrong number of servers')
       t.end()
     })
 })
@@ -284,11 +303,18 @@ test.cb('GET / should contain proxy env values', (t) => {
 // Test headers
 //
 
-test.cb('GET / should contain X-FORWARD headers', (t) => {
+test.cb('GET node.dev/ should contain X-FORWARD headers', (t) => {
   request(app)
     .get('/')
     .set('Host', 'node.dev')
     .expect(200, /x-forwarded-host: node.dev/, t.end)
+})
+
+test.cb('GET subdomain.node.dev/ should not contain X-FORWARD headers', (t) => {
+  request(app)
+    .get('/')
+    .set('Host', 'subdomain.node.dev')
+    .expect(200, /x-forwarded-host: undefined/, t.end)
 })
 
 //

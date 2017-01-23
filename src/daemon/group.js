@@ -107,6 +107,10 @@ class Group extends EventEmitter {
 
     this._list[id] = mon
 
+    // Add proxy config
+    mon.xfwd = conf.xfwd || false
+    mon.changeOrigin = conf.changeOrigin || false
+
     // Emit output
     mon.on('stdout', (data) => this._output(id, data))
     mon.on('stderr', (data) => this._output(id, data))
@@ -277,21 +281,25 @@ class Group extends EventEmitter {
     // http://app.dev:5000 should proxy to http://localhost:5000
     if (port) {
       const target = `http://127.0.0.1:${port}`
+      const { xfwd, changeOrigin } = item
+
       util.log(`Proxy http://${req.headers.host} to ${target}`)
-      return this._proxy.web(req, res, { target })
+      return this._proxy.web(req, res, {
+        target,
+        xfwd,
+        changeOrigin
+      })
     }
 
     // Make sure to send only one response
     const send = once(() => {
-      const isHTTPS = /^https:\/\//.test(item.target)
-      util.log(
-        `Proxy http://${hostname} to ${item.target}`,
-        isHTTPS ? '(changeOrigin: true)' : ''
-      )
+      const { target, xfwd, changeOrigin } = item
+
+      util.log(`Proxy http://${hostname} to ${target}`)
       this._proxy.web(req, res, {
-        target: item.target,
-        // https won't work if host doesn't match certificate, so we're changing it
-        changeOrigin: isHTTPS
+        target,
+        xfwd,
+        changeOrigin
       })
     })
 

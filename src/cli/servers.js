@@ -38,19 +38,30 @@ function getServerFile (id) {
 function add (param, opts = {}) {
   mkdirp.sync(serversDir)
 
-  const cwd = opts.d || process.cwd()
-  const id = opts.n || getId(cwd)
+  const cwd = opts.dir || process.cwd()
+  const id = opts.name || getId(cwd)
   const file = getServerFile(id)
 
-  let conf
+  let conf = {}
+
+  if (opts.xfwd) {
+    conf.xfwd = opts.xfwd
+  }
+
+  if (opts.changeOrigin) {
+    conf.changeOrigin = opts.changeOrigin
+  }
+
   if (isUrl(param)) {
     conf = {
-      target: param
+      target: param,
+      ...conf
     }
   } else {
     conf = {
       cwd,
-      cmd: param
+      cmd: param,
+      ...conf
     }
 
     if (opts.o) conf.out = opts.o
@@ -61,8 +72,8 @@ function add (param, opts = {}) {
     conf.env.PATH = process.env.PATH
 
     // Copy other env option
-    if (opts.e) {
-      opts.e.forEach((key) => {
+    if (opts.env) {
+      opts.env.forEach((key) => {
         const value = process.env[key]
         if (value) {
           conf.env[key] = value
@@ -71,8 +82,8 @@ function add (param, opts = {}) {
     }
 
     // Copy port option
-    if (opts.p) {
-      conf.env.PORT = opts.p
+    if (opts.port) {
+      conf.env.PORT = opts.port
     }
   }
 
