@@ -80,7 +80,7 @@
     "babel-runtime": "^6.6.1",
     "css-loader": "^0.25.0",
     "escape-html": "^1.0.3",
-    "husky": "^0.11.3",
+    "husky": "^0.13.1",
     "json-loader": "^0.5.4",
     "lodash.difference": "^4.3.0",
     "mock-fs": "^3.9.0",
