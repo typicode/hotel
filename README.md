@@ -6,7 +6,7 @@
 
 _Tip: if you don't enable local domains, hotel can still be used as a **catalog of local servers**._
 
-Hotel works great on any OS (OS X, Linux, Windows) and with __all servers :heart:__ 
+Hotel works great on any OS (OS X, Linux, Windows) and with __all servers :heart:__
 * Node (Express, Webpack)
 * PHP (Laravel, Symfony)
 * Ruby (Rails, Sinatra, Jekyll)
@@ -118,6 +118,8 @@ You can now access them using
 http://bar.dev # http://foo.com
 http://some-server.dev # http://192.168.1.12:1337
 ```
+
+__Note__ if your remote server is using `https`, you may need to `--change-origin` to match the host(s) of your remote server certificate.
 
 ## CLI usage and options
 
