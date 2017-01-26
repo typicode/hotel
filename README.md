@@ -119,8 +119,6 @@ http://bar.dev # http://foo.com
 http://some-server.dev # http://192.168.1.12:1337
 ```
 
-__Note__ if your remote server is using `https`, you may need to `--change-origin` to match the host(s) of your remote server certificate.
-
 ## CLI usage and options
 
 ```bash
@@ -182,6 +180,34 @@ If you're offline or can't configure your browser to use `.dev` domains, you can
 * [Hotel Clerk](https://github.com/therealklanni/hotel-clerk) OS X menubar
 * [HotelX](https://github.com/djyde/HotelX) Another OS X menubar (only 1.6MB)
 
+## FAQ
+
+#### Adding `X-Forwarded-*` headers to requests
+
+```sh
+hotel add --xfwd 'server-cmd'
+```
+
+Alias `-x`
+
+#### Seting a fixed port
+
+```sh
+hotel add --port 3000 'server-cmd $PORT' 
+```
+
+Alias `-p`
+
+### Proxying requests to a remote `https` server
+
+```sh
+hotel add --change-origin 'https://jsonplaceholder.typicode.com'
+```
+
+Alias `--co`
+
+_When proxying to a `https` server, you may get an error because your local `.dev` domain doesn't match the host defined in the server certificate. With this flag, `host` header is changed to match the target URL._
+
 ## License
 
-MIT - [Typicode](https://github.com/typicode)
+MIT - [Typicode :cactus:](https://github.com/typicode)

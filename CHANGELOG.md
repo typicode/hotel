@@ -1,10 +1,13 @@
 # Change Log
 
-## Unreleased
+## 0.6.0
 
-* Fix proxying to `https` target `hotel add https://example.com`
+* Add `--xfwd` and `--change-origin` flags to `hotel add` command
 * Log proxy errors
-* Add `--xfwd` and `--change-origin` proxy options to `hotel add` command
+
+__Breaking__
+
+* If you want hotel to add `X-Forwarded-*` headers to requests, you need now to explicitly pass `-x/--xfwd` flags when adding a server.
 
 ## 0.5.13
 
@@ -13,12 +16,12 @@
 ## 0.5.12
 
 * Add dark theme
-* Update `x-forward-port` header
+* Update `X-Forwarded-Port` header
 * Improve `ember-cli` and `livereload` support
 
 ## 0.5.11
 
-* Add more `x-forward` headers
+* Add more `X-Forwarded-*` headers
 
 ## 0.5.10
 
