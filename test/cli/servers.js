@@ -49,15 +49,14 @@ test('add should create file with URL safe characters by defaults', (t) => {
   t.true(fs.existsSync(file))
 })
 
-test('add should be possible to force a name', (t) => {
+test('add should create file with URL safe characters by defaults', (t) => {
   cli([
     '', '',
     'add', 'node index.js',
-    '-n', 'Some Project_Name',
-    '--dir', '/Some Project_Name'
+    '--name', '/_-Some Project_Name--'
   ])
 
-  const file = path.join(serversDir, 'Some Project_Name.json')
+  const file = path.join(serversDir, 'some-project-name.json')
 
   t.true(fs.existsSync(file))
 })

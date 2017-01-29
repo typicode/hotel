@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.6.1
+
+* Prevent using unsupported characters with `hotel add --name` [#100](https://github.com/typicode/hotel/issues/100)
+
 ## 0.6.0
 
 * Add `--xfwd` and `--change-origin` flags to `hotel add` command

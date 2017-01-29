@@ -39,7 +39,10 @@ function add (param, opts = {}) {
   mkdirp.sync(serversDir)
 
   const cwd = opts.dir || process.cwd()
-  const id = opts.name || getId(cwd)
+  const id = opts.name
+    ? domainify(opts.name)
+    : getId(cwd)
+
   const file = getServerFile(id)
 
   let conf = {}
