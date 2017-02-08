@@ -179,6 +179,7 @@ If you're offline or can't configure your browser to use `.dev` domains, you can
 
 * [Hotel Clerk](https://github.com/therealklanni/hotel-clerk) OS X menubar
 * [HotelX](https://github.com/djyde/HotelX) Another OS X menubar (only 1.6MB)
+* [alfred-hotel](https://github.com/exah/alfred-hotel) Alfred 3 workflow
 
 ## FAQ
 
