@@ -45,6 +45,39 @@ module.exports = (processArgv) => {
       (argv) => servers.add(argv['cmd_or_url'], argv)
     )
     .command(
+      'run <cmd> [options]',
+      'Run server and get a temporary local domain',
+      (yargs) => yargs
+        .option('name', {
+          alias: 'n',
+          describe: 'Server name'
+        })
+        .option('port', {
+          alias: 'p',
+          describe: 'Set PORT environment variable',
+          number: true
+        })
+        .option('env', {
+          alias: 'e',
+          describe: 'Additional environment variables',
+          array: true
+        })
+        .option('xfwd', {
+          alias: 'x',
+          describe: 'Adds x-forward headers',
+          default: false,
+          boolean: true
+        })
+        .option('change-origin', {
+          alias: 'co',
+          describe: 'Changes the origin of the host header to the target URL',
+          default: false,
+          boolean: true
+        })
+        .demand(1),
+      (argv) => servers.run(argv['cmd'], argv)
+    )
+    .command(
       'rm [options]',
       'Remove server or proxy',
       (yargs) => {

@@ -1,4 +1,3 @@
-const os = require('os')
 const fs = require('fs')
 const path = require('path')
 const util = require('util')
@@ -7,7 +6,6 @@ const url = require('url')
 const once = require('once')
 const getPort = require('get-port')
 const matcher = require('matcher')
-const unquote = require('unquote')
 const respawn = require('respawn')
 const afterAll = require('after-all')
 const httpProxy = require('http-proxy')
@@ -16,6 +14,7 @@ const arrayFind = require('array-find')
 const errorMsg = require('./views/error-msg')
 const tcpProxy = require('./tcp-proxy')
 const daemonConf = require('../conf')
+const getCmd = require('../get-cmd')
 
 module.exports = () => new Group()
 
@@ -96,9 +95,7 @@ class Group extends EventEmitter {
       logFile = path.resolve(conf.cwd, conf.out)
     }
 
-    let command = (os.platform() === 'win32')
-      ? ['cmd', '/c'].concat(conf.cmd.split(' '))
-      : ['sh', '-c'].concat(unquote(conf.cmd))
+    const command = getCmd(conf.cmd)
 
     const mon = respawn(command, {
       ...conf,

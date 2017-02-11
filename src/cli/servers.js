@@ -1,14 +1,19 @@
 const fs = require('fs')
 const path = require('path')
+const cp = require('child_process')
+const exitHook = require('exit-hook')
 const chalk = require('chalk')
 const tildify = require('tildify')
 const mkdirp = require('mkdirp')
+const getPort = require('get-port')
 const common = require('../common')
+const getCmd = require('../get-cmd')
 
 const serversDir = common.serversDir
 
 module.exports = {
   add,
+  run,
   rm,
   ls
 }
@@ -143,4 +148,28 @@ function ls () {
     .join('\n\n')
 
   console.log(list)
+}
+
+function run (cmd, opts = {}) {
+  const startServer = (port) => {
+    process.env.PORT = port
+
+    const serverAddress = `http://localhost:${port}`
+
+    add(serverAddress, opts)
+    console.log(serverAddress)
+
+    exitHook(() => rm(opts))
+
+    const [command, ...args] = getCmd(cmd)
+    cp.spawnSync(command, args, {
+      stdio: 'inherit'
+    })
+  }
+
+  if (opts.port) {
+    startServer(opts.port)
+  } else {
+    getPort(startServer)
+  }
 }
