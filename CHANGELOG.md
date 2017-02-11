@@ -1,5 +1,10 @@
 # Change Log
 
+## Unreleased
+
+* Add `run` command
+* Drop Node `0.12` support
+
 ## 0.6.1
 
 * Prevent using unsupported characters with `hotel add --name` [#100](https://github.com/typicode/hotel/issues/100)

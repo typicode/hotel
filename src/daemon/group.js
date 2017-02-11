@@ -10,7 +10,6 @@ const respawn = require('respawn')
 const afterAll = require('after-all')
 const httpProxy = require('http-proxy')
 const serverReady = require('server-ready')
-const arrayFind = require('array-find')
 const errorMsg = require('./views/error-msg')
 const tcpProxy = require('./tcp-proxy')
 const daemonConf = require('../conf')
@@ -194,8 +193,8 @@ class Group extends EventEmitter {
         isWildcardMatch: matcher.isMatch(str, `*.${h}`)
       }))
 
-    const strictMatch = arrayFind(arr, h => h.isStrictMatch)
-    const wildcardMatch = arrayFind(arr, h => h.isWildcardMatch)
+    const strictMatch = arr.find(h => h.isStrictMatch)
+    const wildcardMatch = arr.find(h => h.isWildcardMatch)
 
     if (strictMatch) return strictMatch.host
     if (wildcardMatch) return wildcardMatch.host
