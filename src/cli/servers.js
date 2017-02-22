@@ -60,6 +60,10 @@ function add (param, opts = {}) {
     conf.changeOrigin = opts.changeOrigin
   }
 
+  if (opts.httpProxyEnv) {
+    conf.httpProxyEnv = opts.httpProxyEnv
+  }
+
   if (isUrl(param)) {
     conf = {
       target: param,

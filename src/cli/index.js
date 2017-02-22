@@ -41,6 +41,11 @@ module.exports = (processArgv) => {
           default: false,
           boolean: true
         })
+        .option('http-proxy-env', {
+          describe: 'Adds HTTP_PROXY environment variable',
+          default: false,
+          boolean: true
+        })
         .demand(1),
       (argv) => servers.add(argv['cmd_or_url'], argv)
     )
@@ -71,6 +76,11 @@ module.exports = (processArgv) => {
         .option('change-origin', {
           alias: 'co',
           describe: 'Changes the origin of the host header to the target URL',
+          default: false,
+          boolean: true
+        })
+        .option('http-proxy-env', {
+          describe: 'Adds HTTP_PROXY environment variable',
           default: false,
           boolean: true
         })

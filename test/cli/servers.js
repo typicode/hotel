@@ -78,7 +78,8 @@ test('add should support options', (t) => {
     '-o', out,
     '-e', env[0], env[1],
     '-x',
-    '--co'
+    '--co',
+    '--http-proxy-env'
   ])
 
   const file = path.join(serversDir, 'project.json')
@@ -93,7 +94,8 @@ test('add should support options', (t) => {
       PORT: port
     },
     xfwd: true,
-    changeOrigin: true
+    changeOrigin: true,
+    httpProxyEnv: true
   }
 
   const actual = JSON.parse(fs.readFileSync(file))

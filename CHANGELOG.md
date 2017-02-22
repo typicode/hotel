@@ -3,7 +3,12 @@
 ## Unreleased
 
 * Add `run` command
+* Add `http-proxy-env` flag to `hotel add`
 * Drop Node `0.12` support
+
+__Breaking__
+
+* By default no `HTTP_PROXY` env will be passed to servers. To pass `HTTP_PROXY` you need to set it in your server configuration or use the flag `http-proxy-env` when adding your server.
 
 ## 0.6.1
 
