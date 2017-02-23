@@ -60,7 +60,8 @@ test.before(() => {
     port: 51236,
     dir: path.join(__dirname, '../fixtures/app'),
     out: '/tmp/logs/app.log',
-    env: ['FOO']
+    env: ['FOO'],
+    httpProxyEnv: true
   })
 
   // Add failing server
@@ -119,7 +120,15 @@ test.cb(
       .get('/')
       .set('Host', 'node.dev')
       .expect(/host: node.dev/)
-      .expect(200, /Hello World/, t.end)
+      .expect(200, /Hello World/, (err, res) => {
+        if (err) return t.end(err)
+        t.notRegex(
+          res.body,
+          /http:\/\/127.0.0.1:2000\/proxy.pac/,
+          `shouldn't be started with HTTP_PROXY env set`
+        )
+        return t.end()
+      })
   }
 )
 

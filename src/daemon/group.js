@@ -79,7 +79,7 @@ class Group extends EventEmitter {
       ...conf.env
     }
 
-    if (daemonConf.http_proxy) {
+    if (conf.httpProxyEnv) {
       conf.env = {
         HTTP_PROXY,
         HTTPS_PROXY: HTTP_PROXY,
