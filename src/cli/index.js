@@ -3,6 +3,44 @@ const servers = require('./servers')
 const daemon = require('./daemon')
 const pkg = require('../../package.json')
 
+const addOptions = {
+  name: {
+    alias: 'n',
+    describe: 'Server name'
+  },
+  port: {
+    alias: 'p',
+    describe: 'Set PORT environment variable',
+    number: true
+  },
+  out: {
+    alias: 'o',
+    describe: 'Output file'
+  },
+  env: {
+    alias: 'e',
+    describe: 'Additional environment variables',
+    array: true
+  },
+  xfwd: {
+    alias: 'x',
+    describe: 'Adds x-forward headers',
+    default: false,
+    boolean: true
+  },
+  'change-origin': {
+    alias: 'co',
+    describe: 'Changes the origin of the host header to the target URL',
+    default: false,
+    boolean: true
+  },
+  'http-proxy-env': {
+    describe: 'Adds HTTP_PROXY environment variable',
+    default: false,
+    boolean: true
+  }
+}
+
 module.exports = (processArgv) => {
   yargs(processArgv.slice(2))
     .version(pkg.version).alias('v', 'version')
@@ -11,80 +49,20 @@ module.exports = (processArgv) => {
       'add <cmd_or_url> [options]',
       'Add server or proxy',
       (yargs) => yargs
-        .option('name', {
-          alias: 'n',
-          describe: 'Server name'
-        })
-        .option('port', {
-          alias: 'p',
-          describe: 'Set PORT environment variable',
-          number: true
-        })
-        .option('out', {
-          alias: 'o',
-          describe: 'Output file'
-        })
-        .option('env', {
-          alias: 'e',
-          describe: 'Additional environment variables',
-          array: true
-        })
-        .option('xfwd', {
-          alias: 'x',
-          describe: 'Adds x-forward headers',
-          default: false,
-          boolean: true
-        })
-        .option('change-origin', {
-          alias: 'co',
-          describe: 'Changes the origin of the host header to the target URL',
-          default: false,
-          boolean: true
-        })
-        .option('http-proxy-env', {
-          describe: 'Adds HTTP_PROXY environment variable',
-          default: false,
-          boolean: true
-        })
+        .options(addOptions)
         .demand(1),
       (argv) => servers.add(argv['cmd_or_url'], argv)
     )
     .command(
       'run <cmd> [options]',
       'Run server and get a temporary local domain',
-      (yargs) => yargs
-        .option('name', {
-          alias: 'n',
-          describe: 'Server name'
-        })
-        .option('port', {
-          alias: 'p',
-          describe: 'Set PORT environment variable',
-          number: true
-        })
-        .option('env', {
-          alias: 'e',
-          describe: 'Additional environment variables',
-          array: true
-        })
-        .option('xfwd', {
-          alias: 'x',
-          describe: 'Adds x-forward headers',
-          default: false,
-          boolean: true
-        })
-        .option('change-origin', {
-          alias: 'co',
-          describe: 'Changes the origin of the host header to the target URL',
-          default: false,
-          boolean: true
-        })
-        .option('http-proxy-env', {
-          describe: 'Adds HTTP_PROXY environment variable',
-          default: false,
-          boolean: true
-        })
-        .demand(1),
+      (yargs) => {
+        const runOptions = { ...addOptions }
+        delete runOptions['out']
+        return yargs
+          .options(addOptions)
+          .demand(1)
+      },
       (argv) => servers.run(argv['cmd'], argv)
     )
     .command(
