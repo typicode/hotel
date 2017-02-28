@@ -43,7 +43,7 @@ npm install -g hotel && hotel start
 Hotel requires Node to be installed, if you don't have it, you can simply install it using one of the following method.
 
 ```sh
-# http://brew.sh
+# https://brew.sh
 brew install node
 
 # https://github.com/creationix/nvm
@@ -88,6 +88,8 @@ https://one.dev
 https://two.dev
 ```
 
+__Tip__ you can also use `hotel run <cmd>` to start your server in the terminal and get a temporary local domain.
+
 #### Popular servers examples
 
 Using other servers? Here are some examples to get you started :)
@@ -123,15 +125,20 @@ http://some-server.dev # http://192.168.1.12:1337
 
 ```bash
 hotel add <cmd|url> [opts]
+hotel run <cmd> [opts]
 
-# Examples:
+# Examples
+
 hotel add 'nodemon app.js' --out dev.log  # Set output file (default: none)
 hotel add 'nodemon app.js' --name name    # Set custom name (default: current dir name)
 hotel add 'nodemon app.js' --port 3000    # Set a fixed port (default: random port)
 hotel add 'nodemon app.js' --env PATH     # Store PATH environment variable in server config
 hotel add http://192.168.1.10 --name app  # map local domain to URL
 
+hotel run 'nodemon app.js'                # Run server and get a temporary local domain
+
 # Other commands
+
 hotel ls     # List servers
 hotel rm     # Remove server
 hotel start  # Start hotel daemon
