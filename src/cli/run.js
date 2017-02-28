@@ -1,6 +1,5 @@
 const cp = require('child_process')
 const getPort = require('get-port')
-const exitHook = require('exit-hook')
 const servers = require('./servers')
 const getCmd = require('../get-cmd')
 
@@ -22,11 +21,9 @@ function spawn (cmd, opts = {}) {
     process.env.PORT = port
     servers.add(serverAddress, opts)
 
-    process.on('SIGTERM', exit)
-    process.on('SIGINT', exit)
-    process.on('SIGHUP', exit)
+    signals.forEach((signal) => process.on(signal, exit))
 
-    const [command, ...args] = getCmd(cmd)
+    const [ command, ...args ] = getCmd(cmd)
     const { status, error } = cp.spawnSync(command, args, {
       stdio: 'inherit',
       cwd: process.cwd()

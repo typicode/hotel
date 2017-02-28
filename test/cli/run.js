@@ -18,29 +18,29 @@ test.before(() => {
       'index.js': fs.readFileSync(path.join(appDir, 'index.js'))
     }
   })
+})
+
+test.after(() => {
+  process.exit.restore()
+})
+
+test('spawn with port', (t) => {
+  const status = 1
 
   sinon.spy(servers, 'add')
   sinon.spy(servers, 'rm')
-})
 
-test.afterEach(() => {
-  process.exit.restore && process.exit.restore()
-  run.spawn.restore && run.spawn.restore()
-})
-
-test.cb('spawn', (t) => {
-  t.plan(4)
-  const status = 1
   sinon.stub(process, 'exit', () => {})
   sinon.stub(cp, 'spawnSync', () => ({ status }))
 
   process.chdir(appDir)
 
-  const opts = {}
+  const opts = { port: 5000 }
 
   run.spawn('node index.js', opts)
 
   // test that everything was called correctly
+  t.true(servers.add.called)
   t.regex(
     servers.add.firstCall.args[0], /http:\/\/localhost:/,
     'should add a target'
@@ -52,12 +52,14 @@ test.cb('spawn', (t) => {
     'should pass options to add'
   )
 
+  t.true(servers.rm.called)
   t.is(
     servers.rm.firstCall.args[0],
     opts,
     'should use same options to remove'
   )
 
+  t.true(process.exit.called)
   t.is(
     process.exit.firstCall.args[0],
     status,
@@ -67,6 +69,8 @@ test.cb('spawn', (t) => {
 
 test('cli', (t) => {
   sinon.stub(run, 'spawn', () => {})
+
   cli([ '', '', 'run', 'node index.js' ])
+
   t.true(run.spawn.called)
 })
