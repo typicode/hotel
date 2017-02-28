@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const cp = require('child_process')
 const test = require('ava')
 const mock = require('mock-fs')
 const sinon = require('sinon')
@@ -29,41 +30,38 @@ test.afterEach(() => {
 
 test.cb('spawn', (t) => {
   t.plan(4)
+  const status = 1
   sinon.stub(process, 'exit', () => {})
+  sinon.stub(cp, 'spawnSync', () => ({ status }))
+
   process.chdir(appDir)
 
   const opts = {}
 
-  run.spawn(
-    'node index.js',
+  run.spawn('node index.js', opts)
+
+  // test that everything was called correctly
+  t.regex(
+    servers.add.firstCall.args[0], /http:\/\/localhost:/,
+    'should add a target'
+  )
+
+  t.is(
+    servers.add.firstCall.args[1],
     opts,
-    (child) => {
-      t.regex(
-        servers.add.firstCall.args[0], /http:\/\/localhost:/,
-        'should add a target'
-      )
-      t.is(
-        servers.add.firstCall.args[1],
-        opts,
-        'should pass options to add'
-      )
+    'should pass options to add'
+  )
 
-      child.on('exit', () => {
-        t.is(
-          servers.rm.firstCall.args[0],
-          opts,
-          'should use same options to remove'
-        )
-        t.is(
-          process.exit.firstCall.args[0],
-          null,
-          'should exit'
-        )
-        t.end()
-      })
+  t.is(
+    servers.rm.firstCall.args[0],
+    opts,
+    'should use same options to remove'
+  )
 
-      child.kill()
-    }
+  t.is(
+    process.exit.firstCall.args[0],
+    status,
+    'should exit'
   )
 })
 
