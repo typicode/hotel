@@ -190,29 +190,31 @@ If you're offline or can't configure your browser to use `.dev` domains, you can
 
 ## FAQ
 
-#### Adding `X-Forwarded-*` headers to requests
-
-```sh
-hotel add --xfwd 'server-cmd'
-```
-
-Alias `-x`
-
 #### Seting a fixed port
 
 ```sh
 hotel add --port 3000 'server-cmd $PORT' 
 ```
 
-Alias `-p`
+#### Adding `X-Forwarded-*` headers to requests
 
-### Proxying requests to a remote `https` server
+```sh
+hotel add --xfwd 'server-cmd'
+```
+
+#### Setting `HTTP_PROXY` env
+
+Use `--http-proxy-env` flag when adding your server or edit your server configuration in `~/.hotel/servers`
+
+```sh
+hotel add --http-proxy-env 'server-cmd'
+```
+
+#### Proxying requests to a remote `https` server
 
 ```sh
 hotel add --change-origin 'https://jsonplaceholder.typicode.com'
 ```
-
-Alias `--co`
 
 _When proxying to a `https` server, you may get an error because your local `.dev` domain doesn't match the host defined in the server certificate. With this flag, `host` header is changed to match the target URL._
 
