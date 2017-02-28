@@ -1,5 +1,6 @@
 const yargs = require('yargs')
 const servers = require('./servers')
+const run = require('./run')
 const daemon = require('./daemon')
 const pkg = require('../../package.json')
 
@@ -63,7 +64,7 @@ module.exports = (processArgv) => {
           .options(addOptions)
           .demand(1)
       },
-      (argv) => servers.run(argv['cmd'], argv)
+      (argv) => run.spawn(argv['cmd'], argv)
     )
     .command(
       'rm [options]',

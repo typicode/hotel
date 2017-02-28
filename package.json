@@ -67,7 +67,7 @@
     "yargs": "^6.3.0"
   },
   "devDependencies": {
-    "ava": "^0.16.0",
+    "ava": "^0.18.2",
     "babel-cli": "^6.1.2",
     "babel-core": "^6.7.4",
     "babel-loader": "^6.2.4",
