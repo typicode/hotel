@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## 0.7.0
 
 * Add `run` command
 * Add `http-proxy-env` flag to `hotel add`
