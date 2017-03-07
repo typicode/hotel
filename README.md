@@ -218,9 +218,9 @@ hotel add --change-origin 'https://jsonplaceholder.typicode.com'
 
 _When proxying to a `https` server, you may get an error because your local `.dev` domain doesn't match the host defined in the server certificate. With this flag, `host` header is changed to match the target URL._
 
-#### `ENOSPC` or `EACCES` error
+#### `ENOSPC` and `EACCES` errors
 
-If you're seeing one of these errors in `~/.hotel/daemon.log`, this usually means that there's some permissions issues. `hotel` daemon and `~/.hotel` should belong to `$USER`.
+If you're seeing one of these errors in `~/.hotel/daemon.log`, this usually means that there's some permissions issues. `hotel` daemon should be started without `sudo` and `~/.hotel` should belong to `$USER`.
 
 To fix permissions, run `sudo chown -R $USER: $HOME/.hotel`.
 
