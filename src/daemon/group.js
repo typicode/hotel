@@ -359,6 +359,9 @@ class Group extends EventEmitter {
       const id = this.resolve(hostname.replace(tld, ''))
       const item = this.find(id)
 
+      // Need to be tracked for handleProxyError
+      req.hotel = { item }
+
       if (item) {
         let target
         if (port !== '80') {

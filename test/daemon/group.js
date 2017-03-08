@@ -151,4 +151,3 @@ test('group.handleConnect on port 443', (t) => {
 
   sinon.assert.calledWith(tcpProxy.proxy, socket, conf.port + 1)
 })
-
