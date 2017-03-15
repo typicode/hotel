@@ -10,7 +10,7 @@ function proxy (source, targetPort, targetHost) {
   source.pipe(target).pipe(source)
 
   const handleError = (err) => {
-    util.log(err)
+    util.log('TCP Proxy - Error', err)
     source.destroy()
     target.destroy()
   }

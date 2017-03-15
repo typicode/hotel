@@ -204,12 +204,6 @@ class Group extends EventEmitter {
   // Middlewares
   //
 
-  handleProxyError (err, req, res) {
-    util.log('Proxy error -', err.message)
-    const msg = errorMsg(err, req.hotel.item)
-    res.status(502).send(msg)
-  }
-
   exists (req, res, next) {
     // Resolve using either hostname `app.tld`
     // or id param `http://localhost:2000/app`
@@ -269,6 +263,20 @@ class Group extends EventEmitter {
     next()
   }
 
+  proxyWeb (req, res, target) {
+    const { xfwd, changeOrigin } = req.hotel.item
+
+    this._proxy.web(req, res, {
+      target,
+      xfwd,
+      changeOrigin
+    }, (err) => {
+      util.log('Proxy - Error', err.message)
+      const msg = errorMsg(err, req.hotel.item)
+      res.status(502).send(msg)
+    })
+  }
+
   proxy (req, res) {
     const [ hostname, port ] = req.headers.host && req.headers.host.split(':')
     const { item } = req.hotel
@@ -277,26 +285,17 @@ class Group extends EventEmitter {
     // http://app.dev:5000 should proxy to http://localhost:5000
     if (port) {
       const target = `http://127.0.0.1:${port}`
-      const { xfwd, changeOrigin } = item
 
-      util.log(`Proxy http://${req.headers.host} to ${target}`)
-      return this._proxy.web(req, res, {
-        target,
-        xfwd,
-        changeOrigin
-      })
+      util.log(`Proxy - http://${req.headers.host} → ${target}`)
+      return this.proxyWeb(req, res, target)
     }
 
     // Make sure to send only one response
     const send = once(() => {
-      const { target, xfwd, changeOrigin } = item
+      const { target } = item
 
-      util.log(`Proxy http://${hostname} to ${target}`)
-      this._proxy.web(req, res, {
-        target,
-        xfwd,
-        changeOrigin
-      })
+      util.log(`Proxy - http://${hostname} → ${target}`)
+      this.proxyWeb(req, res, target)
     })
 
     if (item.start) {
@@ -320,7 +319,7 @@ class Group extends EventEmitter {
 
     // Make sure to send only one response
     const send = once(() => {
-      util.log(`Redirect ${id} to ${item.target}`)
+      util.log(`Redirect - ${id} → ${item.target}`)
       res.redirect(item.target)
     })
 
@@ -339,32 +338,23 @@ class Group extends EventEmitter {
     }
   }
 
-  parseReq (req) {
-    if (req.headers.host) {
-      const [hostname, port] = req.headers.host.split(':')
-      const regexp = new RegExp(`.${daemonConf.tld}$`)
-      const id = hostname.replace(regexp, '')
-      return { id, port }
-    } else {
-      util.log('No host header found')
-      return {}
-    }
+  parseHost (host) {
+    const [hostname, port] = host.split(':')
+    const tld = new RegExp(`.${daemonConf.tld}$`)
+    const id = this.resolve(hostname.replace(tld, ''))
+    return { id, hostname, port }
   }
 
   // Needed to proxy WebSocket from CONNECT
   handleUpgrade (req, socket, head) {
     if (req.headers.host) {
-      const [hostname, port] = req.headers.host.split(':')
-      const tld = new RegExp(`.${daemonConf.tld}$`)
-      const id = this.resolve(hostname.replace(tld, ''))
+      const { host } = req.headers
+      const { id, port } = this.parseHost(host)
       const item = this.find(id)
-
-      // Need to be tracked for handleProxyError
-      req.hotel = { item }
 
       if (item) {
         let target
-        if (port !== '80') {
+        if (port && port !== '80') {
           target = `ws://127.0.0.1:${port}`
         } else if (item.start) {
           target = `ws://127.0.0.1:${item.env.PORT}`
@@ -372,8 +362,10 @@ class Group extends EventEmitter {
           const { hostname } = url.parse(item.target)
           target = `ws://${hostname}`
         }
-        util.log(`WebSocket - proxy WebSocket to ${target}`)
-        this._proxy.ws(req, socket, head, { target })
+        util.log(`WebSocket - ${host} → ${target}`)
+        this._proxy.ws(req, socket, head, { target }, (err) => {
+          util.log('WebSocket - Error', err.message)
+        })
       } else {
         util.log(`WebSocket - No server matching ${id}`)
       }
@@ -385,7 +377,8 @@ class Group extends EventEmitter {
   // Handle CONNECT, used by WebSockets and https when accessing .dev domains
   handleConnect (req, socket, head) {
     if (req.headers.host) {
-      const [hostname, port] = req.headers.host.split(':')
+      const { host } = req.headers
+      const { id, hostname, port } = this.parseHost(host)
 
       // If https make socket go through https proxy on 2001
       // TODO find a way to detect https and wss without relying on port number
@@ -393,22 +386,21 @@ class Group extends EventEmitter {
         return tcpProxy.proxy(socket, daemonConf.port + 1, hostname)
       }
 
-      const tld = new RegExp(`.${daemonConf.tld}$`)
-      const id = this.resolve(hostname.replace(tld, ''))
       const item = this.find(id)
 
       if (item) {
-        if (port !== '80') {
-          util.log(`Connect - proxy socket to ${port}`)
+        if (port && port !== '80') {
+          util.log(`Connect - ${host} → ${port}`)
           tcpProxy.proxy(socket, port)
         } else if (item.start) {
           const { PORT } = item.env
-          util.log(`Connect - proxy socket to ${PORT}`)
+          util.log(`Connect - ${host} → ${PORT}`)
           tcpProxy.proxy(socket, PORT)
         } else {
           const { hostname, port } = url.parse(item.target)
-          util.log(`Connect - proxy socket to ${hostname}:${port}`)
-          tcpProxy.proxy(socket, port || 80, hostname)
+          const targetPort = port || 80
+          util.log(`Connect - ${host} → ${hostname}:${port}`)
+          tcpProxy.proxy(socket, targetPort, hostname)
         }
       } else {
         util.log(`Connect - Can't find server for ${id}`)
