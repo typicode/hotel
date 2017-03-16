@@ -1,0 +1,27 @@
+<%- include('_header') -%>
+<div class="container">
+<% if (server.start) { %>
+  <p>
+    Cannot connect to server on PORT=<a href="http://localhost:<%= server.env.PORT %>"><%= server.env.PORT %></a>.<br>
+    Possible causes:
+  </p>
+  <ul>
+    <li>Server crashed or timeout of <%= serverReady.timeout %>ms exceeded.</li>
+    <li>Server is not listening on PORT environment variable.</li>
+  </ul>
+
+  <p>
+    Try to reload or check logs.
+  </p>
+  <pre><code><%= server.command.join(' ') %>
+
+  <%= server.tail %>
+  </code></pre>
+<% } else { %>
+  <p>
+    Cannot proxy request to <a href="<%= server.target %>"><%= server.target %></a>.
+  </p>
+  <pre><code><%= err.message %></code></pre>
+<% } %>
+</div>
+<%- include('_footer') -%>

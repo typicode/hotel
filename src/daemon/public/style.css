@@ -91,7 +91,7 @@ ul {
   margin: 0;
 }
 
-li {
+#app li {
   list-style: none;
   display: flex;
   justify-content: space-between;
@@ -100,11 +100,11 @@ li {
   height: 64px;
 }
 
-li div {
+#app li div {
   flex-grow: 1;
 }
 
-li small {
+#app li small {
   color: #CECECE;
   cursor: pointer;
 }

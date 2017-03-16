@@ -10,7 +10,6 @@ const respawn = require('respawn')
 const afterAll = require('after-all')
 const httpProxy = require('http-proxy')
 const serverReady = require('server-ready')
-const errorMsg = require('./views/error-msg')
 const tcpProxy = require('./tcp-proxy')
 const daemonConf = require('../conf')
 const getCmd = require('../get-cmd')
@@ -272,8 +271,11 @@ class Group extends EventEmitter {
       changeOrigin
     }, (err) => {
       util.log('Proxy - Error', err.message)
-      const msg = errorMsg(err, req.hotel.item)
-      res.status(502).send(msg)
+      res.status(502).render('error', {
+        err,
+        serverReady,
+        server: req.hotel.item
+      })
     })
   }
 
