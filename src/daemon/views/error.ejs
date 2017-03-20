@@ -1,13 +1,16 @@
 <%- include('_header') -%>
-<div class="container">
+<div id="error">
 <% if (server.start) { %>
   <p>
-    Cannot connect to server on PORT=<a href="http://localhost:<%= server.env.PORT %>"><%= server.env.PORT %></a>.<br>
+    Cannot connect to server on
+    <a href="http://localhost:<%= server.env.PORT %>">
+      <code>PORT=<%= server.env.PORT %></code>
+    </a>.<br>
     Possible causes:
   </p>
   <ul>
     <li>Server crashed or timeout of <%= serverReady.timeout %>ms exceeded.</li>
-    <li>Server is not listening on PORT environment variable.</li>
+    <li>Server is not listening on <code>PORT</code> environment variable.</li>
   </ul>
 
   <p>
