@@ -42,7 +42,7 @@ module.exports = (group) => {
   // app.get('/', (req, res) => res.render('index'))
 
   // Static files
-  // index.html, style.css, vendors, etc...
+  // style.css, vendors, etc...
   app.use(express.static(path.join(__dirname, 'public')))
   // bundle.js
   app.use(express.static(path.join(__dirname, '/../../dist')))

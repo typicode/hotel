@@ -15,6 +15,11 @@ body {
 #error {
   max-width: 1280px;
   margin: 0 auto;
+  padding: 20px;
+}
+
+#error li {
+  list-style: none;
 }
 
 aside, main {
@@ -29,8 +34,9 @@ aside {
   overflow-y: auto;
 }
 
-pre {
+code {
   padding: 10px;
+  display: inline-block;
 }
 
 pre, code {

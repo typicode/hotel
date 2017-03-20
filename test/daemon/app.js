@@ -13,21 +13,34 @@ const servers = require('../../src/cli/servers')
 
 let app
 
+function load (filenames) {
+  const obj = {}
+  filenames.forEach((filename) => {
+    const f = path.join(__dirname, filename)
+    obj[f] = fs.readFileSync(f)
+  })
+  return obj
+}
+
 test.before(() => {
   // Set request timeout to 20 seconds instead of 5 seconds for slower CI servers
   conf.timeout = 20000
 
-  const serverKey = path.join(__dirname, '../../src/daemon/certs/server.key')
-  const serverCrt = path.join(__dirname, '../../src/daemon/certs/server.crt')
-
   mock({
     [untildify('~/.hotel')]: {},
     // Needed to avoid 404
-    [path.join(__dirname, '../../src/daemon/public/index.html')]: 'index.html content',
     [path.join(__dirname, '../../dist/bundle.js')]: 'bundle.js content',
-    [serverKey]: fs.readFileSync(serverKey),
-    [serverCrt]: fs.readFileSync(serverCrt),
-    '/tmp/logs': {}
+    '/tmp/logs': {},
+    ...load([
+      '../../src/daemon/certs/server.key',
+      '../../src/daemon/certs/server.crt',
+      '../../src/daemon/public/style.css',
+      '../../src/daemon/views/_header.ejs',
+      '../../src/daemon/views/_footer.ejs',
+      '../../src/daemon/views/error.ejs',
+      '../../src/daemon/views/index.ejs',
+      '../../src/daemon/views/proxy-pac.ejs'
+    ])
   })
 
   // Fake server to respond to URL
@@ -102,13 +115,6 @@ test.cb.after((t) => app.group.stopAll(t.end))
 test.cb('GET http://hotel.dev should return 200', (t) => {
   request(app)
     .get('/')
-    .set('Host', 'hotel.dev')
-    .expect(200, t.end)
-})
-
-test.cb('GET http://hotel.dev/index.html should serve index.html', (t) => {
-  request(app)
-    .get('/index.html')
     .set('Host', 'hotel.dev')
     .expect(200, t.end)
 })

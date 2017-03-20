@@ -1,13 +1,18 @@
 <%- include('_header') -%>
 <div id="error">
+  <h1>Error</h1>
 <% if (server.start) { %>
+
   <p>
     Cannot connect to server on
-    <a href="http://localhost:<%= server.env.PORT %>">
-      <code>PORT=<%= server.env.PORT %></code>
-    </a>.<br>
-    Possible causes:
+    <code>PORT=<%= server.env.PORT %></code>
+    [ <a href="http://localhost:<%= server.env.PORT %>">http://localhost:<%= server.env.PORT %></a> ]
   </p>
+
+  <h2>
+    Possible causes
+  </h2>
+
   <ul>
     <li>Server crashed or timeout of <%= serverReady.timeout %>ms exceeded.</li>
     <li>Server is not listening on <code>PORT</code> environment variable.</li>
@@ -16,15 +21,21 @@
   <p>
     Try to reload or check logs.
   </p>
-  <pre><code><%= server.command.join(' ') %>
 
-  <%= server.tail %>
-  </code></pre>
+  <h2>Logs</h2>
+  <pre><code><%= server.command.join(' ') %>
+---
+<%= server.tail %></code></pre>
+
 <% } else { %>
+
   <p>
     Cannot proxy request to <a href="<%= server.target %>"><%= server.target %></a>.
   </p>
+
   <pre><code><%= err.message %></code></pre>
+
 <% } %>
 </div>
+
 <%- include('_footer') -%>
