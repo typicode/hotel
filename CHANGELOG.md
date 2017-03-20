@@ -1,5 +1,9 @@
 # Change Log
 
+## Unreleased
+
+* Error page UI update
+
 ## 0.7.1
 
 * Fix daemon error
