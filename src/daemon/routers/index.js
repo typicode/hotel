@@ -1,16 +1,21 @@
 const util = require('util')
 const express = require('express')
-const proxyPac = require('../views/proxy-pac')
+const conf = require('../../conf')
 
 module.exports = function (group) {
-  let router = express.Router()
+  const router = express.Router()
+
+  function index (req, res) {
+    res.render('index')
+  }
 
   function pac (req, res) {
     util.log('Serve proxy.pac')
-    res.send(proxyPac)
+    res.render('proxy-pac', { conf })
   }
 
   router
+    .get('/', index)
     .get('/proxy.pac', pac)
     .get(
       '/:id',

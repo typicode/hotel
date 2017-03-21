@@ -12,6 +12,16 @@ body {
   display: flex;
 }
 
+#error {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+#error li {
+  list-style: none;
+}
+
 aside, main {
   height: 100vh;
 }
@@ -24,8 +34,9 @@ aside {
   overflow-y: auto;
 }
 
-pre {
+code {
   padding: 10px;
+  display: inline-block;
 }
 
 pre, code {
@@ -91,7 +102,7 @@ ul {
   margin: 0;
 }
 
-li {
+#app li {
   list-style: none;
   display: flex;
   justify-content: space-between;
@@ -100,11 +111,11 @@ li {
   height: 64px;
 }
 
-li div {
+#app li div {
   flex-grow: 1;
 }
 
-li small {
+#app li small {
   color: #CECECE;
   cursor: pointer;
 }

@@ -11,8 +11,8 @@
           To add a server, use <code style="padding: 5px">hotel add</code>
         </p>
         <pre><code>~/app$ hotel add 'cmd'
-    ~/app$ hotel add 'cmd -p $PORT'
-    ~/app$ hotel add http://192.16.1.2:3000</code></pre>
+~/app$ hotel add 'cmd -p $PORT'
+~/app$ hotel add http://192.16.1.2:3000</code></pre>
       </div>
       <ul>
         <!-- monitors list -->

@@ -26,6 +26,10 @@ module.exports = (group) => {
   // requests timeout
   serverReady.timeout = conf.timeout
 
+  // Templates
+  app.set('views', path.join(__dirname, 'views'))
+  app.set('view engine', 'ejs')
+
   // Server-sent events for servers
   app.use(`${API_ROOT}/events`, events)
 
@@ -35,8 +39,10 @@ module.exports = (group) => {
   // .tld host
   app.use(vhost(new RegExp(`.*.${conf.tld}`), tldHost))
 
+  // app.get('/', (req, res) => res.render('index'))
+
   // Static files
-  // index.html, style.css, vendors, etc...
+  // style.css, vendors, etc...
   app.use(express.static(path.join(__dirname, 'public')))
   // bundle.js
   app.use(express.static(path.join(__dirname, '/../../dist')))
