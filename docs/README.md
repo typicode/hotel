@@ -6,7 +6,9 @@ To use local `.dev` domain, you need to configure your browser or network to use
 
 __Important__ hotel MUST be running before configuring your network or browser so that `http://localhost:2000/proxy.pac` is available. If hotel is started after and you can't access `.dev` domains, simply disable/enable network or restart browser.
 
-You can also edit `~/.hotel/conf.json` to use another Top-level Domain. For example `.test`:
+## Configuring another .tld
+
+You can edit `~/.hotel/conf.json` to use another Top-level Domain than `.dev`.
 
 ```json
 {
@@ -14,7 +16,7 @@ You can also edit `~/.hotel/conf.json` to use another Top-level Domain. For exam
 }
 ```
 
-Don't forget to restart hotel and reload network or browser configuration.
+__Important__ Don't forget to restart hotel and reload network or browser configuration.
 
 ## System configuration (recommended)
 
