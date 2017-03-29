@@ -64,7 +64,7 @@
     "update-notifier": "^1.0.0",
     "user-startup": "^0.2.1",
     "vhost": "^3.0.2",
-    "yargs": "^6.3.0"
+    "yargs": "^7.0.2"
   },
   "devDependencies": {
     "ava": "^0.18.2",
@@ -83,7 +83,7 @@
     "husky": "^0.13.1",
     "json-loader": "^0.5.4",
     "lodash.difference": "^4.3.0",
-    "mock-fs": "^3.9.0",
+    "mock-fs": "^4.2.0",
     "nodemon": "^1.8.1",
     "npm-run-all": "^3.1.0",
     "pkg-ok": "^1.0.1",
@@ -91,6 +91,7 @@
     "sinon": "^1.17.7",
     "standard": "^8.5.0",
     "supertest": "^2.0.1",
+    "tempy": "^0.1.0",
     "uid": "0.0.2",
     "vue": "^2.1.0",
     "vue-loader": "^10.0.0",

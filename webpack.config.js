@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   target: 'web',
   entry: [
@@ -6,7 +8,7 @@ module.exports = {
     './src/front/index.js'
   ],
   output: {
-    path: 'dist',
+    path: path.join(__dirname, 'dist'),
     filename: 'bundle.js'
   },
   module: {
@@ -21,12 +23,11 @@ module.exports = {
         loader: 'json-loader'
       },
       {
-        test: /\.vue$/, // a regex for matching all files that end in `.vue`
-        loader: 'vue-loader'   // loader to use for matched files
+        test: /\.vue$/,
+        loader: 'vue-loader'
       }
     ]
   },
-  // https://github.com/vuejs/vue/wiki/Vue-2.0-RC-Starter-Resources#standalone-vs-runtime-builds
   resolve: {
     alias: {
       vue: 'vue/dist/vue.js'
