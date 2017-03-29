@@ -39,6 +39,10 @@ const addOptions = {
     describe: 'Adds HTTP_PROXY environment variable',
     default: false,
     boolean: true
+  },
+  dir: {
+    describe: 'Server directory',
+    string: true
   }
 }
 
@@ -49,9 +53,8 @@ module.exports = (processArgv) => {
     .command(
       'add <cmd_or_url> [options]',
       'Add server or proxy',
-      (yargs) => yargs
-        .options(addOptions)
-        .demand(1),
+      (yargs) => yargs.options(addOptions),
+        // .demand(1),
       (argv) => servers.add(argv['cmd_or_url'], argv)
     )
     .command(

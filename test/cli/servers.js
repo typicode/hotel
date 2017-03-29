@@ -1,24 +1,17 @@
+const os = require('os')
 const fs = require('fs')
 const path = require('path')
 const test = require('ava')
 const mock = require('mock-fs')
 const sinon = require('sinon')
+const tempy = require('tempy')
+sinon.stub(os, 'homedir').returns(tempy.directory())
 const servers = require('../../src/cli/servers')
 const cli = require('../../src/cli')
 const { serversDir } = require('../../src/common')
 
 const appDir = path.join(__dirname, '../fixtures/app')
 const otherAppDir = path.join(__dirname, '../fixtures/other-app')
-
-test.before(() => {
-  mock({
-    [serversDir]: {},
-    [appDir]: {
-      'index.js': fs.readFileSync(path.join(appDir, 'index.js'))
-    },
-    [otherAppDir]: {}
-  })
-})
 
 test('add should create file', (t) => {
   process.chdir(appDir)
