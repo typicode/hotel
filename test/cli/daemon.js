@@ -1,8 +1,10 @@
+const os = require('os')
 const fs = require('fs')
 const path = require('path')
 const test = require('ava')
 const sinon = require('sinon')
-const mock = require('mock-fs')
+const tempy = require('tempy')
+sinon.stub(os, 'homedir').returns(tempy.directory())
 const untildify = require('untildify')
 const userStartup = require('user-startup')
 const common = require('../../src/common')
@@ -10,6 +12,7 @@ const cli = require('../../src/cli')
 
 test.before(() => {
   sinon.stub(userStartup, 'create')
+  sinon.stub(userStartup, 'remove')
   sinon.stub(process, 'kill')
 })
 
@@ -33,23 +36,10 @@ test('start should start daemon', (t) => {
 })
 
 test('stop should stop daemon', (t) => {
-  mock({
-    [common.pidFile]: '1234',
-    [common.startupFile]: userStartup.getFile('hotel'),
-    [userStartup.getFile('hotel')]: 'startup script'
-  })
+  fs.writeFileSync(common.pidFile, '1234')
 
   cli(['', '', 'stop'])
 
-  t.true(
-    !fs.existsSync(userStartup.getFile('hotel')),
-    'user-startup script not removed'
-  )
-
-  t.true(
-    !fs.existsSync(common.startupFile),
-    '~/.hotel/startup not removed'
-  )
-
+  sinon.assert.calledWithExactly(userStartup.remove, 'hotel')
   sinon.assert.calledWithExactly(process.kill, '1234')
 })
