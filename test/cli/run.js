@@ -1,28 +1,17 @@
+const os = require('os')
 const fs = require('fs')
 const path = require('path')
 const cp = require('child_process')
 const test = require('ava')
-const mock = require('mock-fs')
 const sinon = require('sinon')
+const tempy = require('tempy')
+sinon.stub(os, 'homedir').returns(tempy.directory())
 const cli = require('../../src/cli')
 const servers = require('../../src/cli/servers')
 const run = require('../../src/cli/run')
 
 const { serversDir } = require('../../src/common')
 const appDir = path.join(__dirname, '../fixtures/app')
-
-test.before(() => {
-  mock({
-    [serversDir]: {},
-    [appDir]: {
-      'index.js': fs.readFileSync(path.join(appDir, 'index.js'))
-    }
-  })
-})
-
-test.after(() => {
-  process.exit.restore()
-})
 
 test('spawn with port', (t) => {
   const status = 1
@@ -67,10 +56,9 @@ test('spawn with port', (t) => {
   )
 })
 
-test('cli', (t) => {
-  sinon.stub(run, 'spawn', () => {})
-
+test('cli run should call run.spawn', (t) => {
+  sinon.stub(run, 'spawn')
   cli([ '', '', 'run', 'node index.js' ])
 
-  t.true(run.spawn.called)
+  t.is(run.spawn.firstCall.args[0], 'node index.js')
 })

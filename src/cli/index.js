@@ -61,8 +61,8 @@ module.exports = (processArgv) => {
         const runOptions = { ...addOptions }
         delete runOptions['out']
         return yargs
-          .options(addOptions)
-          .demand(1)
+          .options(runOptions)
+          // TODO demand(1) ?
       },
       (argv) => run.spawn(argv['cmd'], argv)
     )
