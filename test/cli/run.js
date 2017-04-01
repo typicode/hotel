@@ -1,16 +1,11 @@
-const os = require('os')
-const fs = require('fs')
 const path = require('path')
 const cp = require('child_process')
 const test = require('ava')
 const sinon = require('sinon')
-const tempy = require('tempy')
-sinon.stub(os, 'homedir').returns(tempy.directory())
 const cli = require('../../src/cli')
 const servers = require('../../src/cli/servers')
 const run = require('../../src/cli/run')
 
-const { serversDir } = require('../../src/common')
 const appDir = path.join(__dirname, '../fixtures/app')
 
 test('spawn with port', (t) => {

@@ -9,13 +9,14 @@
     "node": ">= 4"
   },
   "scripts": {
-    "test": "ava && standard --fix",
+    "test": "ava",
+    "lint": "standard --fix",
     "start": "run-p start:*",
     "start:webpack": "rimraf dist && webpack -d --watch",
     "start:nodemon": "nodemon -- src/daemon",
     "prepublish": "npm run build && pkg-ok",
     "uninstall": "node bin/uninstall.js",
-    "precommit": "npm test",
+    "precommit": "npm test && npm run lint",
     "build": "run-s build:*",
     "build:babel": "rimraf lib && babel src -d lib --copy-files --ignore src/front",
     "build:webpack": "rimraf dist && cross-env NODE_ENV=production webpack -p"
@@ -103,7 +104,8 @@
     "serial": true,
     "verbose": true,
     "require": [
-      "babel-register"
+      "babel-register",
+      "./test/_setup"
     ],
     "babel": "inherit"
   }

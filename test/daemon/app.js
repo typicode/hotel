@@ -1,9 +1,6 @@
-const fs = require('fs')
 const path = require('path')
 const http = require('http')
 const test = require('ava')
-const mock = require('mock-fs')
-const untildify = require('untildify')
 const request = require('supertest')
 const conf = require('../../src/conf')
 const App = require('../../src/daemon/app')
@@ -13,35 +10,9 @@ const servers = require('../../src/cli/servers')
 
 let app
 
-function load (filenames) {
-  const obj = {}
-  filenames.forEach((filename) => {
-    const f = path.join(__dirname, filename)
-    obj[f] = fs.readFileSync(f)
-  })
-  return obj
-}
-
 test.before(() => {
   // Set request timeout to 20 seconds instead of 5 seconds for slower CI servers
   conf.timeout = 20000
-
-  mock({
-    [untildify('~/.hotel')]: {},
-    // Needed to avoid 404
-    [path.join(__dirname, '../../dist/bundle.js')]: 'bundle.js content',
-    '/tmp/logs': {},
-    ...load([
-      '../../src/daemon/certs/server.key',
-      '../../src/daemon/certs/server.crt',
-      '../../src/daemon/public/style.css',
-      '../../src/daemon/views/_header.ejs',
-      '../../src/daemon/views/_footer.ejs',
-      '../../src/daemon/views/error.ejs',
-      '../../src/daemon/views/index.ejs',
-      '../../src/daemon/views/proxy-pac.ejs'
-    ])
-  })
 
   // Fake server to respond to URL
   http.createServer((req, res) => {
