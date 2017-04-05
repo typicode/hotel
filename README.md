@@ -222,7 +222,12 @@ _When proxying to a `https` server, you may get an error because your local `.de
 
 If you're seeing one of these errors in `~/.hotel/daemon.log`, this usually means that there's some permissions issues. `hotel` daemon should be started without `sudo` and `~/.hotel` should belong to `$USER`.
 
-To fix permissions, run `sudo chown -R $USER: $HOME/.hotel`.
+```bash
+# to fix permissions
+sudo chown -R $USER: $HOME/.hotel
+```
+
+See also, https://docs.npmjs.com/getting-started/fixing-npm-permissions
 
 ## License
 
