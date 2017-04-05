@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## 0.7.0
 
 * Error page UI update
 
