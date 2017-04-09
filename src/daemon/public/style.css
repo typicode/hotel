@@ -12,16 +12,6 @@ body {
   display: flex;
 }
 
-#error {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-#error li {
-  list-style: none;
-}
-
 aside, main {
   height: 100vh;
 }

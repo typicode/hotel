@@ -1,0 +1,7 @@
+extends _error.pug
+
+block content
+  p Cannot proxy request to 
+    a(href=server.target)= server.target
+
+  pre: code=err.message

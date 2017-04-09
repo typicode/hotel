@@ -1,0 +1,10 @@
+.
+  // Proxy only *.tld requests to hotel (.dev by default)
+  // Send direct all other traffic
+  function FindProxyForURL (url, host) {
+    if (dnsDomainIs(host, '.#{conf.tld}')) {
+      return 'PROXY 127.0.0.1:#{conf.port}';
+    }
+
+    return 'DIRECT';
+  }

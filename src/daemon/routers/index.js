@@ -11,7 +11,11 @@ module.exports = function (group) {
 
   function pac (req, res) {
     util.log('Serve proxy.pac')
-    res.render('proxy-pac', { conf })
+    if (conf.proxy) {
+      res.render('proxy-pac-with-proxy', { conf })
+    } else {
+      res.render('proxy-pac', { conf })
+    }
   }
 
   router

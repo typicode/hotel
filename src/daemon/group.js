@@ -271,10 +271,14 @@ class Group extends EventEmitter {
       changeOrigin
     }, (err) => {
       util.log('Proxy - Error', err.message)
-      res.status(502).render('error', {
+      const server = req.hotel.item
+      const view = server.start
+        ? 'server-error'
+        : 'target-error'
+      res.status(502).render(view, {
         err,
         serverReady,
-        server: req.hotel.item
+        server
       })
     })
   }

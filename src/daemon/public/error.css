@@ -1,0 +1,38 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+  color: #212121;
+  padding: 0;
+  margin: 0 auto;
+  display: flex;
+  max-width: 960px;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+h1, h2 {
+  margin-top: 60px;
+}
+
+li {
+  list-style: square;
+}
+
+pre {
+  background: #F9F9F9;
+  padding: 20px;
+}
+
+a {
+  color: inherit;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  padding: 20px 0;
+}

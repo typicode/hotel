@@ -1,0 +1,16 @@
+extends _error.pug
+
+block content
+  p Can't connect to server on PORT=#{server.env.PORT}
+  p: a(href=`http://localhost:${server.env.PORT}`) http://localhost:#{server.env.PORT}
+
+  h2 Possible causes
+  ul
+    li Server crashed or timeout of #{serverReady.timeout}ms exceeded.
+    li Server is not listening on PORT environment variable.
+
+  p Try to reload or check logs.
+
+  h2 Logs
+  pre: code= server.command.join(' ')
+  pre: code= server.tail
