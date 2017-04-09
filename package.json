@@ -19,7 +19,7 @@
     "precommit": "npm test && npm run lint",
     "build": "run-s build:*",
     "build:babel": "rimraf lib && babel src -d lib --copy-files --ignore src/front",
-    "build:webpack": "rimraf dist && cross-env NODE_ENV=production webpack -p"
+    "build:webpack": "rimraf dist && webpack -p"
   },
   "repository": {
     "type": "git",
@@ -78,7 +78,6 @@
     "babel-preset-stage-2": "^6.5.0",
     "babel-register": "^6.9.0",
     "babel-runtime": "^6.6.1",
-    "cross-env": "^3.1.4",
     "css-loader": "^0.25.0",
     "escape-html": "^1.0.3",
     "husky": "^0.13.1",
@@ -94,10 +93,10 @@
     "supertest": "^2.0.1",
     "tempy": "^0.1.0",
     "uid": "0.0.2",
-    "vue": "^2.1.0",
-    "vue-loader": "^10.0.0",
-    "vue-template-compiler": "^2.1.10",
-    "webpack": "^2.2.1",
+    "vue": "^2.2.6",
+    "vue-loader": "^11.3.4",
+    "vue-template-compiler": "^2.2.6",
+    "webpack": "^2.3.3",
     "whatwg-fetch": "^1.0.0"
   },
   "ava": {

@@ -261,9 +261,9 @@ test.cb('GET / should render index.html', (t) => {
     .expect(200, t.end)
 })
 
-test.cb('GET /bundle.js should render bundle.js', (t) => {
+test.cb('GET /style.css should render style.css', (t) => {
   request(app)
-    .get('/bundle.js')
+    .get('/style.css')
     .expect(200, t.end)
 })
 

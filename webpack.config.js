@@ -1,4 +1,7 @@
 const path = require('path')
+const webpack = require('webpack')
+
+process.env.NODE_ENV = 'production'
 
 module.exports = {
   target: 'web',
@@ -12,7 +15,7 @@ module.exports = {
     filename: 'bundle.js'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -30,7 +33,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      vue: 'vue/dist/vue.js'
+      'vue$': 'vue/dist/vue.esm.js'
     }
   }
 }
