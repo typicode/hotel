@@ -1,7 +1,4 @@
 const path = require('path')
-const webpack = require('webpack')
-
-process.env.NODE_ENV = 'production'
 
 module.exports = {
   target: 'web',
