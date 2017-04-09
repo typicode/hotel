@@ -2,7 +2,8 @@
 
 ## Unreleased
 
-* Error page UI update
+* Update error page UI
+* Update Self-Signed SSL Certificate (you may need to add an exception again)
 
 ## 0.7.1
 
