@@ -4,6 +4,7 @@
 
 * Update error page UI
 * Update Self-Signed SSL Certificate (__you may need to add an exception again__)
+* Fix Vue warning message in UI
 
 ## 0.7.1
 
