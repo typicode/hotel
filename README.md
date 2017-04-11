@@ -16,6 +16,10 @@ Hotel works great on any OS (OS X, Linux, Windows) and with __all servers :heart
 * Apache, Nginx
 * ...
 
+## Support
+
+You can support Hotel development on [Patreon](https://www.patreon.com/typicode)
+
 ## Video
 
 * [Starting apps with Hotel - Spacedojo Code Kata by Josh Owens](https://www.youtube.com/watch?v=BHW4tzctQ0k)
