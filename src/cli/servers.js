@@ -137,13 +137,23 @@ function ls () {
     .map((file) => {
       const id = path.basename(file, '.json')
       const serverFile = getServerFile(id)
-      const server = JSON.parse(fs.readFileSync(serverFile))
-      if (server.cmd) {
+      let server
+
+      try {
+        server = JSON.parse(fs.readFileSync(serverFile))
+      } catch (error) {
+        // Ignore mis-named or malformed files
+      }
+
+      if (!server) {
+        return null
+      } else if (server.cmd) {
         return `${id}\n${chalk.gray(tildify(server.cwd))}\n${chalk.gray(server.cmd)}`
       } else {
         return `${id}\n${chalk.gray(server.target)}`
       }
     })
+    .filter((item) => item)
     .join('\n\n')
 
   console.log(list)

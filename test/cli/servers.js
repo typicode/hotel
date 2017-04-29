@@ -171,3 +171,13 @@ test('ls', (t) => {
   cli(['', '', 'ls'])
   sinon.assert.calledOnce(servers.ls)
 })
+
+test('ls should ignore non-json files', (t) => {
+  const name = '.DS_Store'
+  const file = path.join(serversDir, `${name}`)
+  fs.writeFileSync(file, '')
+
+  t.notThrows(() => {
+    console.log(cli(['', '', 'ls']))
+  })
+})
