@@ -1,6 +1,6 @@
 # Change Log
 
-## Unreleased
+## 0.7.3
 
 * Prevent `hotel ls` from crashing when listing malformed files [#190](https://github.com/typicode/hotel/pull/190)
 

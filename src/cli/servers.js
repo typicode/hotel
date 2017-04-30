@@ -143,11 +143,10 @@ function ls () {
         server = JSON.parse(fs.readFileSync(serverFile))
       } catch (error) {
         // Ignore mis-named or malformed files
+        return
       }
 
-      if (!server) {
-        return null
-      } else if (server.cmd) {
+      if (server.cmd) {
         return `${id}\n${chalk.gray(tildify(server.cwd))}\n${chalk.gray(server.cmd)}`
       } else {
         return `${id}\n${chalk.gray(server.target)}`
