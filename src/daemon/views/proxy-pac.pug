@@ -1,5 +1,5 @@
 .
-  // Proxy only *.tld requests to hotel (.dev by default)
+  // Proxy only *.#{conf.tld} requests to hotel
   // Send direct all other traffic
   function FindProxyForURL (url, host) {
     if (dnsDomainIs(host, '.#{conf.tld}')) {
