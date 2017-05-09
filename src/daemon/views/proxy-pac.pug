@@ -1,6 +1,6 @@
 .
-  // Proxy only *.tld requests to hotel (.dev by default)
-  // Send direct all other traffic
+  // Proxy only *.#{conf.tld} requests to hotel
+  // Configuration file can be found in ~/.hotel
   function FindProxyForURL (url, host) {
     if (dnsDomainIs(host, '.#{conf.tld}')) {
       return 'PROXY 127.0.0.1:#{conf.port}';
