@@ -29,6 +29,7 @@ module.exports = (group) => {
   // Templates
   app.set('views', path.join(__dirname, 'views'))
   app.set('view engine', 'pug')
+  app.enable('view cache')
   app.locals.pretty = true
 
   // Server-sent events for servers
