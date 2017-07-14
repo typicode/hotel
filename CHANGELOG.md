@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.7.4
+
+* Remove `util.log` which has been deprecated in Node 6
+
 ## 0.7.3
 
 * Prevent `hotel ls` from crashing when listing malformed files [#190](https://github.com/typicode/hotel/pull/190)
