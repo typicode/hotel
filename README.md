@@ -1,4 +1,4 @@
-# hotel [![Mac/Linux Build Status](https://img.shields.io/travis/typicode/hotel/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/typicode/hotel) [![Windows Build status](https://img.shields.io/appveyor/ci/typicode/hotel/master.svg?label=Windows)](https://ci.appveyor.com/project/typicode/hotel/branch/master) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel) [![Support on Patreon](https://img.shields.io/badge/donate-%E2%99%A5-ff69b4.svg)](https://www.patreon.com/typicode)
+# hotel [![Mac/Linux Build Status](https://img.shields.io/travis/typicode/hotel/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/typicode/hotel) [![Windows Build status](https://img.shields.io/appveyor/ci/typicode/hotel/master.svg?label=Windows)](https://ci.appveyor.com/project/typicode/hotel/branch/master) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel)
 
 > Start apps from your browser and get local domains in seconds!
 
@@ -16,9 +16,9 @@ Hotel works great on any OS (OS X, Linux, Windows) and with __all servers :heart
 * Apache, Nginx
 * ...
 
-## Support
+## Sponsorship
 
-You can support Hotel development on [Patreon](https://www.patreon.com/typicode)
+Development of Hotel is generously supported by contributions from people. If you are benefiting from my projects and would like to help keep them financially sustainable, please visit [Patreon](https://patreon.com/typicode).
 
 ## Video
 
