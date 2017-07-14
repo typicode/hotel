@@ -13,35 +13,35 @@ module.exports = {
   ls
 }
 
-function isUrl (str) {
+function isUrl(str) {
   return /^(http|https):/.test(str)
 }
 
 // Converts '_-Some Project_Name--' to 'some-project-name'
-function domainify (str) {
-  return str
-    .toLowerCase()
-    // Replace all _ and spaces with -
-    .replace(/(_| )/g, '-')
-    // Trim - characters
-    .replace(/(^-*|-*$)/g, '')
+function domainify(str) {
+  return (
+    str
+      .toLowerCase()
+      // Replace all _ and spaces with -
+      .replace(/(_| )/g, '-')
+      // Trim - characters
+      .replace(/(^-*|-*$)/g, '')
+  )
 }
 
-function getId (cwd) {
+function getId(cwd) {
   return domainify(path.basename(cwd))
 }
 
-function getServerFile (id) {
+function getServerFile(id) {
   return `${serversDir}/${id}.json`
 }
 
-function add (param, opts = {}) {
+function add(param, opts = {}) {
   mkdirp.sync(serversDir)
 
   const cwd = opts.dir || process.cwd()
-  const id = opts.name
-    ? domainify(opts.name)
-    : getId(cwd)
+  const id = opts.name ? domainify(opts.name) : getId(cwd)
 
   const file = getServerFile(id)
 
@@ -80,7 +80,7 @@ function add (param, opts = {}) {
 
     // Copy other env option
     if (opts.env) {
-      opts.env.forEach((key) => {
+      opts.env.forEach(key => {
         const value = process.env[key]
         if (value) {
           conf.env[key] = value
@@ -107,15 +107,15 @@ function add (param, opts = {}) {
     const logFile = tildify(path.resolve(conf.out))
     console.log(`Output ${logFile}`)
   } else {
-    console.log('Output No log file specified (use \'-o app.log\')')
+    console.log("Output No log file specified (use '-o app.log')")
   }
 
   if (!opts.p) {
-    console.log('Port Random port (use \'-p 1337\' to set a fixed port)')
+    console.log("Port Random port (use '-p 1337' to set a fixed port)")
   }
 }
 
-function rm (opts = {}) {
+function rm(opts = {}) {
   const cwd = process.cwd()
   const id = opts.n || getId(cwd)
   const file = getServerFile(id)
@@ -129,12 +129,12 @@ function rm (opts = {}) {
   }
 }
 
-function ls () {
+function ls() {
   mkdirp.sync(serversDir)
 
   const list = fs
     .readdirSync(serversDir)
-    .map((file) => {
+    .map(file => {
       const id = path.basename(file, '.json')
       const serverFile = getServerFile(id)
       let server
@@ -147,12 +147,14 @@ function ls () {
       }
 
       if (server.cmd) {
-        return `${id}\n${chalk.gray(tildify(server.cwd))}\n${chalk.gray(server.cmd)}`
+        return `${id}\n${chalk.gray(tildify(server.cwd))}\n${chalk.gray(
+          server.cmd
+        )}`
       } else {
         return `${id}\n${chalk.gray(server.target)}`
       }
     })
-    .filter((item) => item)
+    .filter(item => item)
     .join('\n\n')
 
   console.log(list)

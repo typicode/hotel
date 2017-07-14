@@ -5,11 +5,11 @@ module.exports = {
   proxy
 }
 
-function proxy (source, targetPort, targetHost) {
+function proxy(source, targetPort, targetHost) {
   const target = net.connect(targetPort)
   source.pipe(target).pipe(source)
 
-  const handleError = (err) => {
+  const handleError = err => {
     util.log('TCP Proxy - Error', err)
     source.destroy()
     target.destroy()
@@ -20,8 +20,8 @@ function proxy (source, targetPort, targetHost) {
 
   source.write(
     'HTTP/1.1 200 Connection Established\r\n' +
-    'Proxy-agent: Hotel\r\n' +
-    '\r\n'
+      'Proxy-agent: Hotel\r\n' +
+      '\r\n'
   )
 
   return target

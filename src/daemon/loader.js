@@ -5,11 +5,11 @@ const mkdirp = require('mkdirp')
 const chokidar = require('chokidar')
 const common = require('../common')
 
-function getId (file) {
+function getId(file) {
   return path.basename(file, '.json')
 }
 
-function handleAdd (group, file) {
+function handleAdd(group, file) {
   util.log(`${file} added`)
   const id = getId(file)
 
@@ -21,13 +21,13 @@ function handleAdd (group, file) {
   }
 }
 
-function handleUnlink (group, file, cb) {
+function handleUnlink(group, file, cb) {
   util.log(`${file} unlinked`)
   const id = getId(file)
   group.remove(id, cb)
 }
 
-function handleChange (group, file) {
+function handleChange(group, file) {
   util.log(`${file} changed`)
   handleUnlink(group, file, () => {
     handleAdd(group, file)
@@ -45,13 +45,13 @@ module.exports = (group, opts = { watch: true }) => {
     util.log(`Watching ${dir}`)
     chokidar
       .watch(dir)
-      .on('add', (file) => handleAdd(group, file))
-      .on('change', (file) => handleChange(group, file))
-      .on('unlink', (file) => handleUnlink(group, file))
+      .on('add', file => handleAdd(group, file))
+      .on('change', file => handleChange(group, file))
+      .on('unlink', file => handleUnlink(group, file))
   }
 
   // Bootstrap
-  fs.readdirSync(dir).forEach((file) => {
+  fs.readdirSync(dir).forEach(file => {
     handleAdd(group, path.resolve(dir, file))
   })
 }

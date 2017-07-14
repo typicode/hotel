@@ -8,7 +8,7 @@ const { serversDir } = require('../../src/common')
 
 const appDir = path.join(__dirname, '../fixtures/app')
 
-test('add should create file', (t) => {
+test('add should create file', t => {
   process.chdir(appDir)
   cli(['', '', 'add', 'node index.js'])
 
@@ -25,31 +25,23 @@ test('add should create file', (t) => {
   t.deepEqual(actual, conf)
 })
 
-test('add should create file with URL safe characters by defaults', (t) => {
-  cli([
-    '', '',
-    'add', 'node index.js',
-    '--dir', '/_-Some Project_Name--'
-  ])
+test('add should create file with URL safe characters by defaults', t => {
+  cli(['', '', 'add', 'node index.js', '--dir', '/_-Some Project_Name--'])
 
   const file = path.join(serversDir, 'some-project-name.json')
 
   t.true(fs.existsSync(file))
 })
 
-test('add should create file with URL safe characters by defaults', (t) => {
-  cli([
-    '', '',
-    'add', 'node index.js',
-    '--name', '/_-Some Project_Name--'
-  ])
+test('add should create file with URL safe characters by defaults', t => {
+  cli(['', '', 'add', 'node index.js', '--name', '/_-Some Project_Name--'])
 
   const file = path.join(serversDir, 'some-project-name.json')
 
   t.true(fs.existsSync(file))
 })
 
-test('add should support options', (t) => {
+test('add should support options', t => {
   process.env.FOO = 'FOO_VALUE'
   process.env.BAR = 'BAR_VALUE'
   const cmd = 'node index.js'
@@ -59,12 +51,19 @@ test('add should support options', (t) => {
   const env = ['FOO', 'BAR']
 
   cli([
-    '', '',
-    'add', cmd,
-    '-n', name,
-    '-p', port,
-    '-o', out,
-    '-e', env[0], env[1],
+    '',
+    '',
+    'add',
+    cmd,
+    '-n',
+    name,
+    '-p',
+    port,
+    '-o',
+    out,
+    '-e',
+    env[0],
+    env[1],
     '-x',
     '--co',
     '--http-proxy-env'
@@ -90,27 +89,19 @@ test('add should support options', (t) => {
   t.deepEqual(actual, conf)
 })
 
-test('add should support option aliases', (t) => {
+test('add should support option aliases', t => {
   process.env.FOO = 'FOO'
   const cmd = 'node index.js'
   const name = 'alias-test'
 
-  cli([
-    '', '',
-    'add', cmd,
-    '-n', name
-  ])
+  cli(['', '', 'add', cmd, '-n', name])
 
   const file = path.join(serversDir, 'alias-test.json')
   t.true(fs.existsSync(file))
 })
 
-test('add should support URL', (t) => {
-  cli([
-    '', '',
-    'add', 'http://1.2.3.4',
-    '-n', 'proxy'
-  ])
+test('add should support URL', t => {
+  cli(['', '', 'add', 'http://1.2.3.4', '-n', 'proxy'])
 
   const file = path.join(serversDir, 'proxy.json')
   const conf = {
@@ -121,14 +112,8 @@ test('add should support URL', (t) => {
   t.deepEqual(actual, conf)
 })
 
-test('add should support URL and options', (t) => {
-  cli([
-    '', '',
-    'add', 'http://1.2.3.4',
-    '-n', 'proxy',
-    '-x',
-    '--co'
-  ])
+test('add should support URL and options', t => {
+  cli(['', '', 'add', 'http://1.2.3.4', '-n', 'proxy', '-x', '--co'])
 
   const file = path.join(serversDir, 'proxy.json')
   const conf = {
@@ -153,26 +138,22 @@ test('rm should remove file', (t) => {
 })
 */
 
-test('rm should remove file using name', (t) => {
+test('rm should remove file using name', t => {
   const name = 'some-other-app'
   const file = path.join(serversDir, `${name}.json`)
 
   fs.writeFileSync(file, '')
-  cli([
-    '', '',
-    'rm',
-    '-n', name
-  ])
+  cli(['', '', 'rm', '-n', name])
   t.true(!fs.existsSync(file))
 })
 
-test('ls', (t) => {
+test('ls', t => {
   sinon.spy(servers, 'ls')
   cli(['', '', 'ls'])
   sinon.assert.calledOnce(servers.ls)
 })
 
-test('ls should ignore non-json files', (t) => {
+test('ls should ignore non-json files', t => {
   const name = '.DS_Store'
   const file = path.join(serversDir, `${name}`)
   fs.writeFileSync(file, '')

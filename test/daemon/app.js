@@ -15,10 +15,12 @@ test.before(() => {
   conf.timeout = 20000
 
   // Fake server to respond to URL
-  http.createServer((req, res) => {
-    res.statusCode = 200
-    res.end(`ok - host: ${req.headers.host}`)
-  }).listen(4000)
+  http
+    .createServer((req, res) => {
+      res.statusCode = 200
+      res.end(`ok - host: ${req.headers.host}`)
+    })
+    .listen(4000)
 
   // Add server
   servers.add('node index.js', {
@@ -77,22 +79,19 @@ test.before(() => {
   Loader(group, { watch: false })
 })
 
-test.cb.after((t) => app.group.stopAll(t.end))
+test.cb.after(t => app.group.stopAll(t.end))
 
 //
 // Test daemon/vhosts/tld.js
 //
 
-test.cb('GET http://hotel.dev should return 200', (t) => {
-  request(app)
-    .get('/')
-    .set('Host', 'hotel.dev')
-    .expect(200, t.end)
+test.cb('GET http://hotel.dev should return 200', t => {
+  request(app).get('/').set('Host', 'hotel.dev').expect(200, t.end)
 })
 
 test.cb(
   'GET http://node.dev should proxy request and host should be node.dev',
-  (t) => {
+  t => {
     request(app)
       .get('/')
       .set('Host', 'node.dev')
@@ -109,37 +108,31 @@ test.cb(
   }
 )
 
-test.cb('GET http://subdomain.node.dev should proxy request', (t) => {
+test.cb('GET http://subdomain.node.dev should proxy request', t => {
   request(app)
     .get('/')
     .set('Host', 'subdomain.node.dev')
     .expect(200, /Hello World/, t.end)
 })
 
-test.cb('GET http://any.node.dev should proxy request', (t) => {
+test.cb('GET http://any.node.dev should proxy request', t => {
   request(app)
     .get('/')
     .set('Host', 'any.node.dev')
     .expect(200, /Hello World/, t.end)
 })
 
-test.cb('GET http://unknown.dev should return 404', (t) => {
-  request(app)
-    .get('/')
-    .set('Host', 'unknown.dev')
-    .expect(404, t.end)
+test.cb('GET http://unknown.dev should return 404', t => {
+  request(app).get('/').set('Host', 'unknown.dev').expect(404, t.end)
 })
 
-test.cb('GET http://failing.dev should return 502', (t) => {
-  request(app)
-    .get('/')
-    .set('Host', 'failing.dev')
-    .expect(502, t.end)
+test.cb('GET http://failing.dev should return 502', t => {
+  request(app).get('/').set('Host', 'failing.dev').expect(502, t.end)
 })
 
 test.cb(
   'GET http://proxy.dev should return 200 and host should be proxy.dev',
-  (t) => {
+  t => {
     request(app)
       .get('/')
       .set('Host', 'proxy.dev')
@@ -147,36 +140,36 @@ test.cb(
   }
 )
 
-test.cb('GET http://node.dev:4000 should proxy to localhost:4000', (t) => {
-  request(app)
-    .get('/')
-    .set('Host', 'node.dev:4000')
-    .expect(200, /ok/, t.end)
+test.cb('GET http://node.dev:4000 should proxy to localhost:4000', t => {
+  request(app).get('/').set('Host', 'node.dev:4000').expect(200, /ok/, t.end)
 })
 
 //
 // Test proxy to URLs
 //
 
-test.cb('GET http://working-proxy-with-https-target.dev should return 200', (t) => {
-  request(app)
-    .get('/')
-    .set('Host', 'working-proxy-with-https-target.dev')
-    .expect(200, t.end)
-})
+test.cb(
+  'GET http://working-proxy-with-https-target.dev should return 200',
+  t => {
+    request(app)
+      .get('/')
+      .set('Host', 'working-proxy-with-https-target.dev')
+      .expect(200, t.end)
+  }
+)
 
-test.cb('GET http://failing-proxy-with-https-target.dev should return 502', (t) => {
-  request(app)
-    .get('/')
-    .set('Host', 'failing-proxy-with-https-target.dev')
-    .expect(502, t.end)
-})
+test.cb(
+  'GET http://failing-proxy-with-https-target.dev should return 502',
+  t => {
+    request(app)
+      .get('/')
+      .set('Host', 'failing-proxy-with-https-target.dev')
+      .expect(502, t.end)
+  }
+)
 
-test.cb('GET http://unavailable-proxy.dev should return 502', (t) => {
-  request(app)
-    .get('/')
-    .set('Host', 'unavailable-proxy.dev')
-    .expect(502, t.end)
+test.cb('GET http://unavailable-proxy.dev should return 502', t => {
+  request(app).get('/').set('Host', 'unavailable-proxy.dev').expect(502, t.end)
 })
 
 //
@@ -184,33 +177,27 @@ test.cb('GET http://unavailable-proxy.dev should return 502', (t) => {
 //
 
 test.cb('GET /_/servers', t => {
-  request(app)
-    .get('/_/servers')
-    .expect(200, (err, res) => {
-      if (err) return t.end(err)
-      t.is(Object.keys(res.body).length, 10, 'got wrong number of servers')
-      t.end()
-    })
+  request(app).get('/_/servers').expect(200, (err, res) => {
+    if (err) return t.end(err)
+    t.is(Object.keys(res.body).length, 10, 'got wrong number of servers')
+    t.end()
+  })
 })
 
 test.cb('POST /_/servers/:id/start', t => {
-  request(app)
-    .post('/_/servers/node/start')
-    .expect(200, err => {
-      if (err) return t.end(err)
-      t.is(app.group.find('node').status, 'running')
-      t.end()
-    })
+  request(app).post('/_/servers/node/start').expect(200, err => {
+    if (err) return t.end(err)
+    t.is(app.group.find('node').status, 'running')
+    t.end()
+  })
 })
 
 test.cb('POST /_/servers/:id/stop', t => {
-  request(app)
-    .post('/_/servers/node/stop')
-    .expect(200, err => {
-      if (err) return t.end(err)
-      t.not(app.group.find('node').status, 'running')
-      t.end()
-    })
+  request(app).post('/_/servers/node/stop').expect(200, err => {
+    if (err) return t.end(err)
+    t.not(app.group.find('node').status, 'running')
+    t.end()
+  })
 })
 
 //
@@ -218,9 +205,7 @@ test.cb('POST /_/servers/:id/stop', t => {
 //
 
 test.cb('GET /proxy.pac should serve /proxy.pac', t => {
-  request(app)
-    .get('/proxy.pac')
-    .expect(200, t.end)
+  request(app).get('/proxy.pac').expect(200, t.end)
 })
 
 test.cb('GET http://localhost:2000/node should redirect to node server', t => {
@@ -232,15 +217,18 @@ test.cb('GET http://localhost:2000/node should redirect to node server', t => {
     .expect(302, t.end)
 })
 
-test.cb('GET http://127.0.0.1:2000/node should use the same hostname to redirect', t => {
-  // temporary disable this test on AppVeyor
-  // Randomly fails
-  if (process.env.APPVEYOR) return t.end()
-  request(app)
-    .get('/node')
-    .expect('location', /http:\/\/127.0.0.1:51234/)
-    .expect(302, t.end)
-})
+test.cb(
+  'GET http://127.0.0.1:2000/node should use the same hostname to redirect',
+  t => {
+    // temporary disable this test on AppVeyor
+    // Randomly fails
+    if (process.env.APPVEYOR) return t.end()
+    request(app)
+      .get('/node')
+      .expect('location', /http:\/\/127.0.0.1:51234/)
+      .expect(302, t.end)
+  }
+)
 
 test.cb('GET http://localhost:2000/proxy should redirect to target', t => {
   if (process.env.APPVEYOR) return t.end()
@@ -255,30 +243,26 @@ test.cb('GET http://localhost:2000/proxy should redirect to target', t => {
 // Test daemon/app.js
 //
 
-test.cb('GET / should render index.html', (t) => {
-  request(app)
-    .get('/')
-    .expect(200, t.end)
+test.cb('GET / should render index.html', t => {
+  request(app).get('/').expect(200, t.end)
 })
 
-test.cb('GET /style.css should render style.css', (t) => {
-  request(app)
-    .get('/style.css')
-    .expect(200, t.end)
+test.cb('GET /style.css should render style.css', t => {
+  request(app).get('/style.css').expect(200, t.end)
 })
 
 //
 // Test env variables
 //
 
-test.cb('GET / should contain custom env values', (t) => {
+test.cb('GET / should contain custom env values', t => {
   request(app)
     .get('/')
     .set('Host', 'custom-env.dev')
     .expect(200, /FOO_VALUE/, t.end)
 })
 
-test.cb('GET / should contain proxy env values', (t) => {
+test.cb('GET / should contain proxy env values', t => {
   request(app)
     .get('/')
     .set('Host', 'custom-env.dev')
@@ -289,14 +273,14 @@ test.cb('GET / should contain proxy env values', (t) => {
 // Test headers
 //
 
-test.cb('GET node.dev/ should contain X-FORWARD headers', (t) => {
+test.cb('GET node.dev/ should contain X-FORWARD headers', t => {
   request(app)
     .get('/')
     .set('Host', 'node.dev')
     .expect(200, /x-forwarded-host: node.dev/, t.end)
 })
 
-test.cb('GET subdomain.node.dev/ should not contain X-FORWARD headers', (t) => {
+test.cb('GET subdomain.node.dev/ should not contain X-FORWARD headers', t => {
   request(app)
     .get('/')
     .set('Host', 'subdomain.node.dev')
@@ -307,22 +291,16 @@ test.cb('GET subdomain.node.dev/ should not contain X-FORWARD headers', (t) => {
 // Test remove
 //
 
-test.cb('Removing a server should make it unavailable', (t) => {
+test.cb('Removing a server should make it unavailable', t => {
   t.truthy(app.group.find('server-to-remove'))
   app.group.remove('server-to-remove', () => {
-    request(app)
-      .get('/')
-      .set('Host', 'server-to-remove.dev')
-      .expect(404, t.end)
+    request(app).get('/').set('Host', 'server-to-remove.dev').expect(404, t.end)
   })
 })
 
-test.cb('Removing a proxy should make it unavailable', (t) => {
+test.cb('Removing a proxy should make it unavailable', t => {
   t.truthy(app.group.find('proxy-to-remove'))
   app.group.remove('proxy-to-remove', () => {
-    request(app)
-      .get('/')
-      .set('Host', 'proxy-to-remove.dev')
-      .expect(404, t.end)
+    request(app).get('/').set('Host', 'proxy-to-remove.dev').expect(404, t.end)
   })
 })

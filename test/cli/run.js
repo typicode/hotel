@@ -8,7 +8,7 @@ const run = require('../../src/cli/run')
 
 const appDir = path.join(__dirname, '../fixtures/app')
 
-test('spawn with port', (t) => {
+test('spawn with port', t => {
   const status = 1
 
   sinon.spy(servers, 'add')
@@ -26,34 +26,23 @@ test('spawn with port', (t) => {
   // test that everything was called correctly
   t.true(servers.add.called)
   t.regex(
-    servers.add.firstCall.args[0], /http:\/\/localhost:/,
+    servers.add.firstCall.args[0],
+    /http:\/\/localhost:/,
     'should add a target'
   )
 
-  t.is(
-    servers.add.firstCall.args[1],
-    opts,
-    'should pass options to add'
-  )
+  t.is(servers.add.firstCall.args[1], opts, 'should pass options to add')
 
   t.true(servers.rm.called)
-  t.is(
-    servers.rm.firstCall.args[0],
-    opts,
-    'should use same options to remove'
-  )
+  t.is(servers.rm.firstCall.args[0], opts, 'should use same options to remove')
 
   t.true(process.exit.called)
-  t.is(
-    process.exit.firstCall.args[0],
-    status,
-    'should exit'
-  )
+  t.is(process.exit.firstCall.args[0], status, 'should exit')
 })
 
-test('cli run should call run.spawn', (t) => {
+test('cli run should call run.spawn', t => {
   sinon.stub(run, 'spawn')
-  cli([ '', '', 'run', 'node index.js' ])
+  cli(['', '', 'run', 'node index.js'])
 
   t.is(run.spawn.firstCall.args[0], 'node index.js')
 })

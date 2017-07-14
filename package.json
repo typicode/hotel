@@ -10,7 +10,7 @@
   },
   "scripts": {
     "test": "ava && npm run lint",
-    "lint": "eslint src --ignore-path .gitignore",
+    "lint": "eslint . --ignore-path .gitignore",
     "fix": "npm run lint -- --fix",
     "start": "run-p start:*",
     "start:webpack": "rimraf dist && webpack -d --watch",
