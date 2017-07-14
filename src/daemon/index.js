@@ -1,10 +1,10 @@
 const fs = require('fs')
 const path = require('path')
-const util = require('util')
 const exitHook = require('exit-hook')
 const httpProxy = require('http-proxy')
 const conf = require('../conf')
 const pidFile = require('../pid-file')
+const log = require('./log')
 const Group = require('./group')
 const Loader = require('./loader')
 const App = require('./app')
@@ -48,5 +48,5 @@ const proxy = httpProxy.createServer({
 proxy.listen(conf.port + 1)
 
 app.listen(conf.port, conf.host, function() {
-  util.log(`Server listening on port ${conf.host}:${conf.port}`)
+  log(`Server listening on port ${conf.host}:${conf.port}`)
 })

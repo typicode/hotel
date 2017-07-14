@@ -1,6 +1,6 @@
-const util = require('util')
 const express = require('express')
 const conf = require('../../conf')
+const log = require('../log')
 
 // *.tld vhost
 module.exports = group => {
@@ -12,7 +12,7 @@ module.exports = group => {
 
     // Skip hotel.tld
     if (hotelRegExp.test(hostname)) {
-      util.log('hotel.dev')
+      log('hotel.dev')
       return next()
     }
 

@@ -1,6 +1,5 @@
 const fs = require('fs')
 const path = require('path')
-const util = require('util')
 const EventEmitter = require('events')
 const url = require('url')
 const once = require('once')
@@ -10,6 +9,7 @@ const respawn = require('respawn')
 const afterAll = require('after-all')
 const httpProxy = require('http-proxy')
 const serverReady = require('server-ready')
+const log = require('./log')
 const tcpProxy = require('./tcp-proxy')
 const daemonConf = require('../conf')
 const getCmd = require('../get-cmd')
@@ -36,7 +36,7 @@ class Group extends EventEmitter {
 
     if (logFile) {
       fs.appendFile(logFile, data, err => {
-        if (err) util.log(err.message)
+        if (err) log(err.message)
       })
     }
   }
@@ -59,13 +59,13 @@ class Group extends EventEmitter {
 
   add(id, conf) {
     if (conf.target) {
-      util.log(`Add target ${id}`)
+      log(`Add target ${id}`)
       this._list[id] = conf
       this._change()
       return
     }
 
-    util.log(`Add server ${id}`)
+    log(`Add server ${id}`)
 
     const HTTP_PROXY = `http://127.0.0.1:${daemonConf.port}/proxy.pac`
 
@@ -115,11 +115,11 @@ class Group extends EventEmitter {
     mon.on('exit', () => this._change())
 
     // Log status
-    mon.on('start', () => util.log(id, 'has started'))
-    mon.on('stop', () => util.log(id, 'has stopped'))
-    mon.on('crash', () => util.log(id, 'has crashed'))
-    mon.on('sleep', () => util.log(id, 'is sleeping'))
-    mon.on('exit', () => util.log(id, 'child process has exited'))
+    mon.on('start', () => log(id, 'has started'))
+    mon.on('stop', () => log(id, 'has stopped'))
+    mon.on('crash', () => log(id, 'has crashed'))
+    mon.on('sleep', () => log(id, 'is sleeping'))
+    mon.on('exit', () => log(id, 'child process has exited'))
 
     // Handle logs
     mon.tail = ''
@@ -133,7 +133,7 @@ class Group extends EventEmitter {
 
       if (logFile) {
         fs.unlink(logFile, err => {
-          if (err) util.log(err.message)
+          if (err) log(err.message)
         })
       }
     })
@@ -176,7 +176,7 @@ class Group extends EventEmitter {
   //
 
   resolve(str) {
-    util.log(`Resolve ${str}`)
+    log(`Resolve ${str}`)
     const arr = Object.keys(this._list).sort().reverse().map(h => ({
       host: h,
       isStrictMatch: matcher.isMatch(str, h),
@@ -208,7 +208,7 @@ class Group extends EventEmitter {
     // Not found
     if (!id || !item) {
       const msg = `Can't find server id: ${id}`
-      util.log(msg)
+      log(msg)
       return res.status(404).send(msg)
     }
 
@@ -265,7 +265,7 @@ class Group extends EventEmitter {
         changeOrigin
       },
       err => {
-        util.log('Proxy - Error', err.message)
+        log('Proxy - Error', err.message)
         const server = req.hotel.item
         const view = server.start ? 'server-error' : 'target-error'
         res.status(502).render(view, {
@@ -286,7 +286,7 @@ class Group extends EventEmitter {
     if (port) {
       const target = `http://127.0.0.1:${port}`
 
-      util.log(`Proxy - http://${req.headers.host} → ${target}`)
+      log(`Proxy - http://${req.headers.host} → ${target}`)
       return this.proxyWeb(req, res, target)
     }
 
@@ -294,7 +294,7 @@ class Group extends EventEmitter {
     const send = once(() => {
       const { target } = item
 
-      util.log(`Proxy - http://${hostname} → ${target}`)
+      log(`Proxy - http://${hostname} → ${target}`)
       this.proxyWeb(req, res, target)
     })
 
@@ -319,7 +319,7 @@ class Group extends EventEmitter {
 
     // Make sure to send only one response
     const send = once(() => {
-      util.log(`Redirect - ${id} → ${item.target}`)
+      log(`Redirect - ${id} → ${item.target}`)
       res.redirect(item.target)
     })
 
@@ -362,15 +362,15 @@ class Group extends EventEmitter {
           const { hostname } = url.parse(item.target)
           target = `ws://${hostname}`
         }
-        util.log(`WebSocket - ${host} → ${target}`)
+        log(`WebSocket - ${host} → ${target}`)
         this._proxy.ws(req, socket, head, { target }, err => {
-          util.log('WebSocket - Error', err.message)
+          log('WebSocket - Error', err.message)
         })
       } else {
-        util.log(`WebSocket - No server matching ${id}`)
+        log(`WebSocket - No server matching ${id}`)
       }
     } else {
-      util.log('WebSocket - No host header found')
+      log('WebSocket - No host header found')
     }
   }
 
@@ -390,24 +390,24 @@ class Group extends EventEmitter {
 
       if (item) {
         if (port && port !== '80') {
-          util.log(`Connect - ${host} → ${port}`)
+          log(`Connect - ${host} → ${port}`)
           tcpProxy.proxy(socket, port)
         } else if (item.start) {
           const { PORT } = item.env
-          util.log(`Connect - ${host} → ${PORT}`)
+          log(`Connect - ${host} → ${PORT}`)
           tcpProxy.proxy(socket, PORT)
         } else {
           const { hostname, port } = url.parse(item.target)
           const targetPort = port || 80
-          util.log(`Connect - ${host} → ${hostname}:${port}`)
+          log(`Connect - ${host} → ${hostname}:${port}`)
           tcpProxy.proxy(socket, targetPort, hostname)
         }
       } else {
-        util.log(`Connect - Can't find server for ${id}`)
+        log(`Connect - Can't find server for ${id}`)
         socket.end()
       }
     } else {
-      util.log('Connect - No host header found')
+      log('Connect - No host header found')
     }
   }
 }

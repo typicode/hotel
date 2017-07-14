@@ -1,8 +1,8 @@
 const fs = require('fs')
 const path = require('path')
-const util = require('util')
 const mkdirp = require('mkdirp')
 const chokidar = require('chokidar')
+const log = require('./log')
 const common = require('../common')
 
 function getId(file) {
@@ -10,25 +10,25 @@ function getId(file) {
 }
 
 function handleAdd(group, file) {
-  util.log(`${file} added`)
+  log(`${file} added`)
   const id = getId(file)
 
   try {
     const conf = JSON.parse(fs.readFileSync(file, 'utf8'))
     group.add(id, conf)
   } catch (err) {
-    util.log(`Error: Failed to parse ${file}`, err)
+    log(`Error: Failed to parse ${file}`, err)
   }
 }
 
 function handleUnlink(group, file, cb) {
-  util.log(`${file} unlinked`)
+  log(`${file} unlinked`)
   const id = getId(file)
   group.remove(id, cb)
 }
 
 function handleChange(group, file) {
-  util.log(`${file} changed`)
+  log(`${file} changed`)
   handleUnlink(group, file, () => {
     handleAdd(group, file)
   })
@@ -42,7 +42,7 @@ module.exports = (group, opts = { watch: true }) => {
 
   // Watch ~/.hotel/servers
   if (opts.watch) {
-    util.log(`Watching ${dir}`)
+    log(`Watching ${dir}`)
     chokidar
       .watch(dir)
       .on('add', file => handleAdd(group, file))

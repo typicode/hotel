@@ -1,5 +1,5 @@
 const net = require('net')
-const util = require('util')
+const log = require('./log')
 
 module.exports = {
   proxy
@@ -10,7 +10,7 @@ function proxy(source, targetPort, targetHost) {
   source.pipe(target).pipe(source)
 
   const handleError = err => {
-    util.log('TCP Proxy - Error', err)
+    log('TCP Proxy - Error', err)
     source.destroy()
     target.destroy()
   }

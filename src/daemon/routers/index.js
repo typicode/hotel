@@ -1,6 +1,6 @@
-const util = require('util')
 const express = require('express')
 const conf = require('../../conf')
+const log = require('../log')
 
 module.exports = function(group) {
   const router = express.Router()
@@ -10,7 +10,7 @@ module.exports = function(group) {
   }
 
   function pac(req, res) {
-    util.log('Serve proxy.pac')
+    log('Serve proxy.pac')
     if (conf.proxy) {
       res.render('proxy-pac-with-proxy', { conf })
     } else {

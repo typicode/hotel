@@ -61,6 +61,7 @@
     "strip-ansi": "^3.0.0",
     "sudo-block": "^1.2.0",
     "tildify": "^1.1.2",
+    "tinydate": "^1.0.0",
     "unquote": "^1.1.0",
     "untildify": "^3.0.2",
     "update-notifier": "^1.0.0",
