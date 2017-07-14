@@ -2,14 +2,14 @@ const util = require('util')
 const express = require('express')
 const conf = require('../../conf')
 
-module.exports = function (group) {
+module.exports = function(group) {
   const router = express.Router()
 
-  function index (req, res) {
+  function index(req, res) {
     res.render('index')
   }
 
-  function pac (req, res) {
+  function pac(req, res) {
     util.log('Serve proxy.pac')
     if (conf.proxy) {
       res.render('proxy-pac-with-proxy', { conf })

@@ -1,7 +1,7 @@
 const fs = require('fs')
 const { startupFile, pidFile } = require('../common')
 
-function killProcess () {
+function killProcess() {
   if (!fs.existsSync(pidFile)) return
 
   const pid = fs.readFileSync(pidFile, 'utf-8')
@@ -12,7 +12,7 @@ function killProcess () {
   fs.unlinkSync(pidFile)
 }
 
-function removeStartup () {
+function removeStartup() {
   if (!fs.existsSync(startupFile)) return
   const startupFilePath = fs.readFileSync(startupFile, 'utf-8')
   fs.unlinkSync(startupFile)

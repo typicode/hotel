@@ -6,7 +6,7 @@ const conf = require('../../src/conf')
 
 sinon.stub(tcpProxy, 'proxy')
 
-test('group.resolve should find the correct server or target id', (t) => {
+test('group.resolve should find the correct server or target id', t => {
   const group = Group()
   const conf = { target: 'http://example.com' }
   group.add('app', conf)
@@ -18,7 +18,7 @@ test('group.resolve should find the correct server or target id', (t) => {
   t.is(group.resolve('baz.foo.app'), 'foo.app')
 })
 
-test('group.handleUpgrade with proxy', (t) => {
+test('group.handleUpgrade with proxy', t => {
   const group = Group()
   const target = 'example.com'
   const req = {
@@ -39,7 +39,7 @@ test('group.handleUpgrade with proxy', (t) => {
   })
 })
 
-test('group.handleUpgrade with app', (t) => {
+test('group.handleUpgrade with app', t => {
   const group = Group()
   const PORT = '9000'
   const req = {
@@ -66,33 +66,31 @@ test('group.handleUpgrade with app', (t) => {
   })
 })
 
-test(
-  'group.handleUpgrade with app and port, port should take precedence',
-  (t) => {
-    const port = 5000
-    const group = Group()
-    const req = {
-      headers: {
-        host: `app.dev:${port}`
-      }
+test('group.handleUpgrade with app and port, port should take precedence', t => {
+  const port = 5000
+  const group = Group()
+  const req = {
+    headers: {
+      host: `app.dev:${port}`
     }
-    const head = {}
-    const socket = {}
+  }
+  const head = {}
+  const socket = {}
 
-    sinon.stub(group._proxy, 'ws')
+  sinon.stub(group._proxy, 'ws')
 
-    group.add('app', {
-      cmd: 'cmd',
-      cwd: '/some/path'
-    })
-    group.handleUpgrade(req, head, socket)
-
-    sinon.assert.calledWith(group._proxy.ws, req, head, socket, {
-      target: `ws://127.0.0.1:${port}`
-    })
+  group.add('app', {
+    cmd: 'cmd',
+    cwd: '/some/path'
   })
+  group.handleUpgrade(req, head, socket)
 
-test('group.handleConnect with proxy', (t) => {
+  sinon.assert.calledWith(group._proxy.ws, req, head, socket, {
+    target: `ws://127.0.0.1:${port}`
+  })
+})
+
+test('group.handleConnect with proxy', t => {
   const group = Group()
   const target = 'example.com'
   const req = {
@@ -111,7 +109,7 @@ test('group.handleConnect with proxy', (t) => {
   sinon.assert.calledWith(tcpProxy.proxy, socket, 80, 'example.com')
 })
 
-test('group.handleConnect with app', (t) => {
+test('group.handleConnect with app', t => {
   const group = Group()
   const PORT = '9000'
   const req = {
@@ -136,7 +134,7 @@ test('group.handleConnect with app', (t) => {
   sinon.assert.calledWith(tcpProxy.proxy, socket, PORT)
 })
 
-test('group.handleConnect on port 443', (t) => {
+test('group.handleConnect on port 443', t => {
   const group = Group()
   const req = {
     headers: {

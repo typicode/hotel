@@ -2,11 +2,7 @@ const path = require('path')
 
 module.exports = {
   target: 'web',
-  entry: [
-    'babel-polyfill',
-    'whatwg-fetch',
-    './src/front/index.js'
-  ],
+  entry: ['babel-polyfill', 'whatwg-fetch', './src/front/index.js'],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js'
@@ -30,7 +26,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.esm.js'
+      vue$: 'vue/dist/vue.esm.js'
     }
   }
 }

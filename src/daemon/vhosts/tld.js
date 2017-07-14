@@ -3,7 +3,7 @@ const express = require('express')
 const conf = require('../../conf')
 
 // *.tld vhost
-module.exports = (group) => {
+module.exports = group => {
   const app = express.Router()
   const hotelRegExp = new RegExp(`hotel.${conf.tld}$`)
 

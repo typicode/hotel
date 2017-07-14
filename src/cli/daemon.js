@@ -12,7 +12,7 @@ module.exports = {
 }
 
 // Start daemon in background
-function start () {
+function start() {
   const node = process.execPath
   const daemonFile = path.join(__dirname, '../daemon')
   const startupFile = startup.getFile('hotel')
@@ -28,7 +28,7 @@ function start () {
 }
 
 // Stop daemon
-function stop () {
+function stop() {
   startup.remove('hotel')
   // kills process and clean stuff in ~/.hotel
   uninstall()

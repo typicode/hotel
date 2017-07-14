@@ -7,18 +7,18 @@ module.exports = {
   remove
 }
 
-function create () {
+function create() {
   console.log('create', pidFile, process.pid)
   return fs.writeFileSync(pidFile, process.pid)
 }
 
-function read () {
+function read() {
   if (fs.existsSync(pidFile)) {
     return fs.readFileSync(pidFile, 'utf-8')
   }
 }
 
-function remove () {
+function remove() {
   if (fs.existsSync(pidFile)) {
     fs.unlinkSync(pidFile)
   }

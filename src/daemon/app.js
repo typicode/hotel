@@ -13,7 +13,7 @@ const TLDHost = require('./vhosts/tld')
 
 const API_ROOT = '/_'
 
-module.exports = (group) => {
+module.exports = group => {
   const app = express()
   const server = http.createServer(app)
 

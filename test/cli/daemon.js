@@ -13,16 +13,19 @@ test.before(() => {
   sinon.stub(process, 'kill')
 })
 
-test('start should start daemon', (t) => {
+test('start should start daemon', t => {
   const node = process.execPath
   const daemonFile = path.join(__dirname, '../../src/daemon')
   const daemonLog = path.resolve(untildify('~/.hotel/daemon.log'))
 
-  cli([ '', '', 'start' ])
+  cli(['', '', 'start'])
 
   sinon.assert.calledWithExactly(
     userStartup.create,
-    'hotel', node, [daemonFile], daemonLog
+    'hotel',
+    node,
+    [daemonFile],
+    daemonLog
   )
 
   t.is(
@@ -32,10 +35,10 @@ test('start should start daemon', (t) => {
   )
 })
 
-test('stop should stop daemon', (t) => {
+test('stop should stop daemon', t => {
   fs.writeFileSync(common.pidFile, '1234')
 
-  cli([ '', '', 'stop' ])
+  cli(['', '', 'stop'])
 
   sinon.assert.calledWithExactly(userStartup.remove, 'hotel')
   sinon.assert.calledWithExactly(process.kill, '1234')

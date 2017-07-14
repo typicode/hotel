@@ -17,7 +17,7 @@ const getCmd = require('../get-cmd')
 module.exports = () => new Group()
 
 class Group extends EventEmitter {
-  constructor () {
+  constructor() {
     super()
 
     this._list = {}
@@ -27,25 +27,21 @@ class Group extends EventEmitter {
     this._proxy.on('error', this.handleProxyError)
   }
 
-  _output (id, data) {
+  _output(id, data) {
     this.emit('output', id, data)
   }
 
-  _log (mon, logFile, data) {
-    mon.tail = mon.tail
-      .concat(data)
-      .split('\n')
-      .slice(-100)
-      .join('\n')
+  _log(mon, logFile, data) {
+    mon.tail = mon.tail.concat(data).split('\n').slice(-100).join('\n')
 
     if (logFile) {
-      fs.appendFile(logFile, data, (err) => {
+      fs.appendFile(logFile, data, err => {
         if (err) util.log(err.message)
       })
     }
   }
 
-  _change () {
+  _change() {
     this.emit('change', this._list)
   }
 
@@ -53,15 +49,15 @@ class Group extends EventEmitter {
   // Conf
   //
 
-  list () {
+  list() {
     return this._list
   }
 
-  find (id) {
+  find(id) {
     return this._list[id]
   }
 
-  add (id, conf) {
+  add(id, conf) {
     if (conf.target) {
       util.log(`Add target ${id}`)
       this._list[id] = conf
@@ -107,9 +103,9 @@ class Group extends EventEmitter {
     mon.changeOrigin = conf.changeOrigin || false
 
     // Emit output
-    mon.on('stdout', (data) => this._output(id, data))
-    mon.on('stderr', (data) => this._output(id, data))
-    mon.on('warn', (data) => this._output(id, data))
+    mon.on('stdout', data => this._output(id, data))
+    mon.on('stderr', data => this._output(id, data))
+    mon.on('warn', data => this._output(id, data))
 
     // Emit change
     mon.on('start', () => this._change())
@@ -128,15 +124,15 @@ class Group extends EventEmitter {
     // Handle logs
     mon.tail = ''
 
-    mon.on('stdout', (data) => this._log(mon, logFile, data))
-    mon.on('stderr', (data) => this._log(mon, logFile, data))
-    mon.on('warn', (data) => this._log(mon, logFile, data))
+    mon.on('stdout', data => this._log(mon, logFile, data))
+    mon.on('stderr', data => this._log(mon, logFile, data))
+    mon.on('warn', data => this._log(mon, logFile, data))
 
     mon.on('start', () => {
       mon.tail = ''
 
       if (logFile) {
-        fs.unlink(logFile, (err) => {
+        fs.unlink(logFile, err => {
           if (err) util.log(err.message)
         })
       }
@@ -145,7 +141,7 @@ class Group extends EventEmitter {
     this._change()
   }
 
-  remove (id, cb) {
+  remove(id, cb) {
     const item = this.find(id)
     if (item) {
       delete this._list[id]
@@ -161,19 +157,17 @@ class Group extends EventEmitter {
     cb && cb()
   }
 
-  stopAll (cb) {
+  stopAll(cb) {
     const next = afterAll(cb)
 
-    Object
-      .keys(this._list)
-      .forEach((key) => {
-        if (this._list[key].stop) {
-          this._list[key].stop(next())
-        }
-      })
+    Object.keys(this._list).forEach(key => {
+      if (this._list[key].stop) {
+        this._list[key].stop(next())
+      }
+    })
   }
 
-  update (id, conf) {
+  update(id, conf) {
     this.remove(id, () => this.add(id, conf))
   }
 
@@ -181,16 +175,13 @@ class Group extends EventEmitter {
   // Hostname resolver
   //
 
-  resolve (str) {
+  resolve(str) {
     util.log(`Resolve ${str}`)
-    const arr = Object.keys(this._list)
-      .sort()
-      .reverse()
-      .map(h => ({
-        host: h,
-        isStrictMatch: matcher.isMatch(str, h),
-        isWildcardMatch: matcher.isMatch(str, `*.${h}`)
-      }))
+    const arr = Object.keys(this._list).sort().reverse().map(h => ({
+      host: h,
+      isStrictMatch: matcher.isMatch(str, h),
+      isWildcardMatch: matcher.isMatch(str, `*.${h}`)
+    }))
 
     const strictMatch = arr.find(h => h.isStrictMatch)
     const wildcardMatch = arr.find(h => h.isWildcardMatch)
@@ -203,7 +194,7 @@ class Group extends EventEmitter {
   // Middlewares
   //
 
-  exists (req, res, next) {
+  exists(req, res, next) {
     // Resolve using either hostname `app.tld`
     // or id param `http://localhost:2000/app`
     const tld = new RegExp(`.${daemonConf.tld}$`)
@@ -229,7 +220,7 @@ class Group extends EventEmitter {
     next()
   }
 
-  start (req, res, next) {
+  start(req, res, next) {
     const { item } = req.hotel
 
     if (item.start) {
@@ -238,12 +229,12 @@ class Group extends EventEmitter {
         next()
       } else {
         getPort()
-          .then((port) => {
+          .then(port => {
             item.env.PORT = port
             item.start()
             next()
           })
-          .catch((error) => {
+          .catch(error => {
             next(error)
           })
       }
@@ -252,7 +243,7 @@ class Group extends EventEmitter {
     }
   }
 
-  stop (req, res, next) {
+  stop(req, res, next) {
     const { item } = req.hotel
 
     if (item.stop) {
@@ -262,29 +253,32 @@ class Group extends EventEmitter {
     next()
   }
 
-  proxyWeb (req, res, target) {
+  proxyWeb(req, res, target) {
     const { xfwd, changeOrigin } = req.hotel.item
 
-    this._proxy.web(req, res, {
-      target,
-      xfwd,
-      changeOrigin
-    }, (err) => {
-      util.log('Proxy - Error', err.message)
-      const server = req.hotel.item
-      const view = server.start
-        ? 'server-error'
-        : 'target-error'
-      res.status(502).render(view, {
-        err,
-        serverReady,
-        server
-      })
-    })
+    this._proxy.web(
+      req,
+      res,
+      {
+        target,
+        xfwd,
+        changeOrigin
+      },
+      err => {
+        util.log('Proxy - Error', err.message)
+        const server = req.hotel.item
+        const view = server.start ? 'server-error' : 'target-error'
+        res.status(502).render(view, {
+          err,
+          serverReady,
+          server
+        })
+      }
+    )
   }
 
-  proxy (req, res) {
-    const [ hostname, port ] = req.headers.host && req.headers.host.split(':')
+  proxy(req, res) {
+    const [hostname, port] = req.headers.host && req.headers.host.split(':')
     const { item } = req.hotel
 
     // Handle case where port is set
@@ -319,7 +313,7 @@ class Group extends EventEmitter {
     }
   }
 
-  redirect (req, res) {
+  redirect(req, res) {
     const { id } = req.params
     const { item } = req.hotel
 
@@ -344,7 +338,7 @@ class Group extends EventEmitter {
     }
   }
 
-  parseHost (host) {
+  parseHost(host) {
     const [hostname, port] = host.split(':')
     const tld = new RegExp(`.${daemonConf.tld}$`)
     const id = this.resolve(hostname.replace(tld, ''))
@@ -352,7 +346,7 @@ class Group extends EventEmitter {
   }
 
   // Needed to proxy WebSocket from CONNECT
-  handleUpgrade (req, socket, head) {
+  handleUpgrade(req, socket, head) {
     if (req.headers.host) {
       const { host } = req.headers
       const { id, port } = this.parseHost(host)
@@ -369,7 +363,7 @@ class Group extends EventEmitter {
           target = `ws://${hostname}`
         }
         util.log(`WebSocket - ${host} → ${target}`)
-        this._proxy.ws(req, socket, head, { target }, (err) => {
+        this._proxy.ws(req, socket, head, { target }, err => {
           util.log('WebSocket - Error', err.message)
         })
       } else {
@@ -381,7 +375,7 @@ class Group extends EventEmitter {
   }
 
   // Handle CONNECT, used by WebSockets and https when accessing .dev domains
-  handleConnect (req, socket, head) {
+  handleConnect(req, socket, head) {
     if (req.headers.host) {
       const { host } = req.headers
       const { id, hostname, port } = this.parseHost(host)

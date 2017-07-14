@@ -2,11 +2,11 @@ const express = require('express')
 const connectSSE = require('connect-sse')
 const sse = connectSSE()
 
-module.exports = (group) => {
+module.exports = group => {
   const router = express.Router()
 
   router.get('/', sse, (req, res) => {
-    function sendState () {
+    function sendState() {
       res.json(group.list())
     }
 
@@ -18,7 +18,7 @@ module.exports = (group) => {
   })
 
   router.get('/output', sse, (req, res) => {
-    function sendOutput (id, data) {
+    function sendOutput(id, data) {
       res.json({
         id,
         output: data.toString()
@@ -27,14 +27,12 @@ module.exports = (group) => {
 
     // Bootstrap
     const list = group.list()
-    Object
-      .keys(list)
-      .forEach((id) => {
-        var mon = list[id]
-        if (mon && mon.tail) {
-          sendOutput(id, mon.tail)
-        }
-      })
+    Object.keys(list).forEach(id => {
+      var mon = list[id]
+      if (mon && mon.tail) {
+        sendOutput(id, mon.tail)
+      }
+    })
 
     // Listen
     group.on('output', sendOutput)
