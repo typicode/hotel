@@ -46,7 +46,7 @@ const addOptions = {
   }
 }
 
-module.exports = processArgv => {
+module.exports = processArgv =>
   yargs(processArgv.slice(2))
     .version(pkg.version)
     .alias('v', 'version')
@@ -99,4 +99,3 @@ module.exports = processArgv => {
     .demand(1)
     .strict()
     .help().argv
-}
