@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-const updateNotifier = require('update-notifier')
+const upgradeNode = require('please-upgrade-node')
 const sudoBlock = require('sudo-block')
 const pkg = require('../../package.json')
 
 sudoBlock('\nShould not be run as root, please retry without sudo.\n')
-updateNotifier({ pkg }).notify()
+upgradeNode({ pkg })
 require('./')(process.argv)
