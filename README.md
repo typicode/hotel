@@ -1,5 +1,7 @@
 # hotel [![Mac/Linux Build Status](https://img.shields.io/travis/typicode/hotel/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/typicode/hotel) [![Windows Build status](https://img.shields.io/appveyor/ci/typicode/hotel/master.svg?label=Windows)](https://ci.appveyor.com/project/typicode/hotel/branch/master) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/typicode/hotel.svg)](https://greenkeeper.io/)
+
 > Start apps from your browser and get local domains in seconds!
 
 ![](http://i.imgur.com/DrLjbIi.gif)
