@@ -1,5 +1,10 @@
 # Change Log
 
+## Unreleased
+
+* Add [please-upgrade-node](https://github.com/typicode/please-upgrade-node)
+* Chore update all dependencies
+
 ## 0.7.4
 
 * Remove `util.log` which has been deprecated in Node 6
