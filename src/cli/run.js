@@ -5,14 +5,15 @@ const getCmd = require('../get-cmd')
 
 const signals = ['SIGINT', 'SIGTERM', 'SIGHUP']
 
-module.exports = {
-  spawn
+// For testing purpose
+function _exit(code) {
+  process.exit(code)
 }
 
 function spawn(cmd, opts = {}) {
   const exit = (code = 0) => {
     servers.rm(opts)
-    process.exit(code)
+    _exit(code)
   }
 
   const startServer = port => {
@@ -40,4 +41,9 @@ function spawn(cmd, opts = {}) {
       throw err
     })
   }
+}
+
+module.exports = {
+  _exit,
+  spawn
 }

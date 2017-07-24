@@ -14,7 +14,7 @@ test('spawn with port', t => {
   sinon.spy(servers, 'add')
   sinon.spy(servers, 'rm')
 
-  sinon.stub(process, 'exit').callsFake(() => {})
+  sinon.stub(run, '_exit').callsFake(() => {})
   sinon.stub(cp, 'spawnSync').callsFake(() => ({ status }))
 
   process.chdir(appDir)

@@ -34,9 +34,11 @@ test('group.handleUpgrade with proxy', t => {
   group.add('proxy', { target: `http://${target}` })
   group.handleUpgrade(req, head, socket)
 
-  sinon.assert.calledWith(group._proxy.ws, req, head, socket, {
-    target: `ws://${target}`
-  })
+  t.notThrows(() =>
+    sinon.assert.calledWith(group._proxy.ws, req, head, socket, {
+      target: `ws://${target}`
+    })
+  )
 })
 
 test('group.handleUpgrade with app', t => {
@@ -61,9 +63,11 @@ test('group.handleUpgrade with app', t => {
   })
   group.handleUpgrade(req, head, socket)
 
-  sinon.assert.calledWith(group._proxy.ws, req, head, socket, {
-    target: `ws://127.0.0.1:${PORT}`
-  })
+  t.notThrows(() =>
+    sinon.assert.calledWith(group._proxy.ws, req, head, socket, {
+      target: `ws://127.0.0.1:${PORT}`
+    })
+  )
 })
 
 test('group.handleUpgrade with app and port, port should take precedence', t => {
@@ -85,9 +89,11 @@ test('group.handleUpgrade with app and port, port should take precedence', t => 
   })
   group.handleUpgrade(req, head, socket)
 
-  sinon.assert.calledWith(group._proxy.ws, req, head, socket, {
-    target: `ws://127.0.0.1:${port}`
-  })
+  t.notThrows(() =>
+    sinon.assert.calledWith(group._proxy.ws, req, head, socket, {
+      target: `ws://127.0.0.1:${port}`
+    })
+  )
 })
 
 test('group.handleConnect with proxy', t => {
@@ -106,7 +112,9 @@ test('group.handleConnect with proxy', t => {
   group.add('proxy', { target: `http://${target}` })
   group.handleConnect(req, head, socket)
 
-  sinon.assert.calledWith(tcpProxy.proxy, socket, 80, 'example.com')
+  t.notThrows(() =>
+    sinon.assert.calledWith(tcpProxy.proxy, socket, 80, 'example.com')
+  )
 })
 
 test('group.handleConnect with app', t => {
@@ -131,7 +139,7 @@ test('group.handleConnect with app', t => {
   })
   group.handleConnect(req, head, socket)
 
-  sinon.assert.calledWith(tcpProxy.proxy, socket, PORT)
+  t.notThrows(() => sinon.assert.calledWith(tcpProxy.proxy, socket, PORT))
 })
 
 test('group.handleConnect on port 443', t => {
@@ -147,5 +155,7 @@ test('group.handleConnect on port 443', t => {
   tcpProxy.proxy.reset()
   group.handleConnect(req, head, socket)
 
-  sinon.assert.calledWith(tcpProxy.proxy, socket, conf.port + 1)
+  t.notThrows(() =>
+    sinon.assert.calledWith(tcpProxy.proxy, socket, conf.port + 1)
+  )
 })

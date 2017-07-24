@@ -20,12 +20,14 @@ test('start should start daemon', t => {
 
   cli(['', '', 'start'])
 
-  sinon.assert.calledWithExactly(
-    userStartup.create,
-    'hotel',
-    node,
-    [daemonFile],
-    daemonLog
+  t.notThrows(() =>
+    sinon.assert.calledWithExactly(
+      userStartup.create,
+      'hotel',
+      node,
+      [daemonFile],
+      daemonLog
+    )
   )
 
   t.is(
@@ -40,6 +42,6 @@ test('stop should stop daemon', t => {
 
   cli(['', '', 'stop'])
 
-  sinon.assert.calledWithExactly(userStartup.remove, 'hotel')
-  sinon.assert.calledWithExactly(process.kill, '1234')
+  t.notThrows(() => sinon.assert.calledWithExactly(userStartup.remove, 'hotel'))
+  t.notThrows(() => sinon.assert.calledWithExactly(process.kill, '1234'))
 })
