@@ -34,11 +34,10 @@ test('group.handleUpgrade with proxy', t => {
   group.add('proxy', { target: `http://${target}` })
   group.handleUpgrade(req, head, socket)
 
-  t.notThrows(() =>
-    sinon.assert.calledWith(group._proxy.ws, req, head, socket, {
-      target: `ws://${target}`
-    })
-  )
+  sinon.assert.calledWith(group._proxy.ws, req, head, socket, {
+    target: `ws://${target}`
+  })
+  t.pass()
 })
 
 test('group.handleUpgrade with app', t => {
@@ -63,11 +62,10 @@ test('group.handleUpgrade with app', t => {
   })
   group.handleUpgrade(req, head, socket)
 
-  t.notThrows(() =>
-    sinon.assert.calledWith(group._proxy.ws, req, head, socket, {
-      target: `ws://127.0.0.1:${PORT}`
-    })
-  )
+  sinon.assert.calledWith(group._proxy.ws, req, head, socket, {
+    target: `ws://127.0.0.1:${PORT}`
+  })
+  t.pass()
 })
 
 test('group.handleUpgrade with app and port, port should take precedence', t => {
@@ -89,11 +87,10 @@ test('group.handleUpgrade with app and port, port should take precedence', t => 
   })
   group.handleUpgrade(req, head, socket)
 
-  t.notThrows(() =>
-    sinon.assert.calledWith(group._proxy.ws, req, head, socket, {
-      target: `ws://127.0.0.1:${port}`
-    })
-  )
+  sinon.assert.calledWith(group._proxy.ws, req, head, socket, {
+    target: `ws://127.0.0.1:${port}`
+  })
+  t.pass()
 })
 
 test('group.handleConnect with proxy', t => {
