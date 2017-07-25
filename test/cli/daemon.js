@@ -20,14 +20,12 @@ test('start should start daemon', t => {
 
   cli(['', '', 'start'])
 
-  t.notThrows(() =>
-    sinon.assert.calledWithExactly(
-      userStartup.create,
-      'hotel',
-      node,
-      [daemonFile],
-      daemonLog
-    )
+  sinon.assert.calledWithExactly(
+    userStartup.create,
+    'hotel',
+    node,
+    [daemonFile],
+    daemonLog
   )
 
   t.is(
@@ -35,6 +33,8 @@ test('start should start daemon', t => {
     userStartup.getFile('hotel'),
     'startupFile should point to startup file path'
   )
+
+  t.pass()
 })
 
 test('stop should stop daemon', t => {
@@ -42,6 +42,7 @@ test('stop should stop daemon', t => {
 
   cli(['', '', 'stop'])
 
-  t.notThrows(() => sinon.assert.calledWithExactly(userStartup.remove, 'hotel'))
-  t.notThrows(() => sinon.assert.calledWithExactly(process.kill, '1234'))
+  sinon.assert.calledWithExactly(userStartup.remove, 'hotel')
+  sinon.assert.calledWithExactly(process.kill, '1234')
+  t.pass()
 })

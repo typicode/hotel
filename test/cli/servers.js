@@ -150,7 +150,8 @@ test('rm should remove file using name', t => {
 test('ls', t => {
   sinon.spy(servers, 'ls')
   cli(['', '', 'ls'])
-  t.notThrows(() => sinon.assert.calledOnce(servers.ls))
+  sinon.assert.calledOnce(servers.ls)
+  t.pass()
 })
 
 test('ls should ignore non-json files', t => {

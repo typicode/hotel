@@ -112,9 +112,8 @@ test('group.handleConnect with proxy', t => {
   group.add('proxy', { target: `http://${target}` })
   group.handleConnect(req, head, socket)
 
-  t.notThrows(() =>
-    sinon.assert.calledWith(tcpProxy.proxy, socket, 80, 'example.com')
-  )
+  sinon.assert.calledWith(tcpProxy.proxy, socket, 80, 'example.com')
+  t.pass()
 })
 
 test('group.handleConnect with app', t => {
@@ -139,7 +138,8 @@ test('group.handleConnect with app', t => {
   })
   group.handleConnect(req, head, socket)
 
-  t.notThrows(() => sinon.assert.calledWith(tcpProxy.proxy, socket, PORT))
+  sinon.assert.calledWith(tcpProxy.proxy, socket, PORT)
+  t.pass()
 })
 
 test('group.handleConnect on port 443', t => {
@@ -155,7 +155,6 @@ test('group.handleConnect on port 443', t => {
   tcpProxy.proxy.reset()
   group.handleConnect(req, head, socket)
 
-  t.notThrows(() =>
-    sinon.assert.calledWith(tcpProxy.proxy, socket, conf.port + 1)
-  )
+  sinon.assert.calledWith(tcpProxy.proxy, socket, conf.port + 1)
+  t.pass()
 })
