@@ -1,5 +1,4 @@
 const path = require('path')
-const cp = require('child_process')
 const test = require('ava')
 const sinon = require('sinon')
 const cli = require('../../src/cli')
@@ -14,8 +13,10 @@ test('spawn with port', t => {
   sinon.spy(servers, 'add')
   sinon.spy(servers, 'rm')
 
-  sinon.stub(run, '_exit').callsFake(() => {})
-  sinon.stub(cp, 'spawnSync').callsFake(() => ({ status }))
+  // Stub _exit to avoid messing with process.exit
+  sinon.stub(run, '_exit')
+  // Stub _spawnSync to immediately return avoid messing with child_process
+  sinon.stub(run, '_spawnSync').callsFake(() => ({ status }))
 
   process.chdir(appDir)
 
@@ -36,8 +37,8 @@ test('spawn with port', t => {
   t.true(servers.rm.called)
   t.is(servers.rm.firstCall.args[0], opts, 'should use same options to remove')
 
-  t.true(process.exit.called)
-  t.is(process.exit.firstCall.args[0], status, 'should exit')
+  t.true(run._exit.called)
+  t.is(run._exit.firstCall.args[0], status, 'should exit')
 })
 
 test('cli run should call run.spawn', t => {
