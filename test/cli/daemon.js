@@ -33,6 +33,8 @@ test('start should start daemon', t => {
     userStartup.getFile('hotel'),
     'startupFile should point to startup file path'
   )
+
+  t.pass()
 })
 
 test('stop should stop daemon', t => {
@@ -42,4 +44,5 @@ test('stop should stop daemon', t => {
 
   sinon.assert.calledWithExactly(userStartup.remove, 'hotel')
   sinon.assert.calledWithExactly(process.kill, '1234')
+  t.pass()
 })

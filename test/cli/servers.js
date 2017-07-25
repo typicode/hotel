@@ -151,6 +151,7 @@ test('ls', t => {
   sinon.spy(servers, 'ls')
   cli(['', '', 'ls'])
   sinon.assert.calledOnce(servers.ls)
+  t.pass()
 })
 
 test('ls should ignore non-json files', t => {
@@ -159,6 +160,6 @@ test('ls should ignore non-json files', t => {
   fs.writeFileSync(file, '')
 
   t.notThrows(() => {
-    console.log(cli(['', '', 'ls']))
+    cli(['', '', 'ls'])
   })
 })

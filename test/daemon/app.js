@@ -99,7 +99,7 @@ test.cb(
       .expect(200, /Hello World/, (err, res) => {
         if (err) return t.end(err)
         t.notRegex(
-          res.body,
+          res.text,
           /http:\/\/127.0.0.1:2000\/proxy.pac/,
           `shouldn't be started with HTTP_PROXY env set`
         )

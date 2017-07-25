@@ -6,38 +6,46 @@ const getCmd = require('../get-cmd')
 const signals = ['SIGINT', 'SIGTERM', 'SIGHUP']
 
 module.exports = {
-  spawn
-}
+  // For testing purpose, allows stubbing cp.spawnSync
+  _spawnSync(...args) {
+    cp.spawnSync(...args)
+  },
 
-function spawn(cmd, opts = {}) {
-  const exit = (code = 0) => {
-    servers.rm(opts)
-    process.exit(code)
-  }
+  // For testing purpose, allows stubbing process.exit
+  _exit(...args) {
+    process.exit(...args)
+  },
 
-  const startServer = port => {
-    const serverAddress = `http://localhost:${port}`
+  spawn(cmd, opts = {}) {
+    const cleanAndExit = (code = 0) => {
+      servers.rm(opts)
+      this._exit(code)
+    }
 
-    process.env.PORT = port
-    servers.add(serverAddress, opts)
+    const startServer = port => {
+      const serverAddress = `http://localhost:${port}`
 
-    signals.forEach(signal => process.on(signal, exit))
+      process.env.PORT = port
+      servers.add(serverAddress, opts)
 
-    const [command, ...args] = getCmd(cmd)
-    const { status, error } = cp.spawnSync(command, args, {
-      stdio: 'inherit',
-      cwd: process.cwd()
-    })
+      signals.forEach(signal => process.on(signal, cleanAndExit))
 
-    if (error) throw error
-    exit(status)
-  }
+      const [command, ...args] = getCmd(cmd)
+      const { status, error } = this._spawnSync(command, args, {
+        stdio: 'inherit',
+        cwd: process.cwd()
+      })
 
-  if (opts.port) {
-    startServer(opts.port)
-  } else {
-    getPort().then(startServer).catch(err => {
-      throw err
-    })
+      if (error) throw error
+      cleanAndExit(status)
+    }
+
+    if (opts.port) {
+      startServer(opts.port)
+    } else {
+      getPort().then(startServer).catch(err => {
+        throw err
+      })
+    }
   }
 }
