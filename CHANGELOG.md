@@ -3,7 +3,7 @@
 ## Unreleased
 
 * Add [please-upgrade-node](https://github.com/typicode/please-upgrade-node)
-* Chore update all dependencies
+* Chore: update all dependencies
 
 ## 0.7.4
 
