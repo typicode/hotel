@@ -2,7 +2,7 @@
 
 ## 0.7.6
 
-* Fix package.json not found error
+* Fix `package.json` not found error
 
 ## 0.7.5
 
