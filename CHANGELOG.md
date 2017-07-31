@@ -1,6 +1,10 @@
 # Change Log
 
-## Unreleased
+## 0.7.6
+
+* Fix package.json not found error
+
+## 0.7.5
 
 * Add [please-upgrade-node](https://github.com/typicode/please-upgrade-node)
 * Chore: update all dependencies
