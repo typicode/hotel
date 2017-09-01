@@ -89,7 +89,7 @@ module.exports = processArgv =>
     .example('$0 add npm start')
     .example("$0 add 'cmd -p $PORT'")
     .example("$0 add 'cmd -p $PORT' --port 4000")
-    .example("$0 add 'cmd -p $PORT' --output app.log")
+    .example("$0 add 'cmd -p $PORT' --out app.log")
     .example("$0 add 'cmd -p $PORT' --name app")
     .example("$0 add 'cmd -p $PORT' --env PATH")
     .example('$0 add http://192.168.1.10 -n app ')
