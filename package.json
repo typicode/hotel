@@ -20,7 +20,8 @@
     "precommit": "npm test",
     "build": "run-s build:*",
     "build:babel": "rimraf lib && babel src -d lib --copy-files --ignore src/front",
-    "build:webpack": "rimraf dist && webpack -p"
+    "build:webpack": "rimraf dist && webpack -p",
+    "addFixture": "node src/cli/bin add 'node index' --dir ./test/fixtures/app"
   },
   "repository": {
     "type": "git",
