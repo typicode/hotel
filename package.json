@@ -61,7 +61,7 @@
     "respawn": "^2.4.1",
     "server-ready": "^0.3.1",
     "strip-ansi": "^4.0.0",
-    "sudo-block": "^1.2.0",
+    "sudo-block": "^2.0.0",
     "tildify": "^1.1.2",
     "tinydate": "^1.0.0",
     "unquote": "^1.1.0",
