@@ -42,6 +42,10 @@ main {
   overflow-y: scroll;
 }
 
+main button {
+  font-size: 20px;
+}
+
 #down {
   position: absolute;
   right: 30px;
@@ -56,6 +60,20 @@ main {
   cursor: pointer;
 }
 
+#clear {
+  position: absolute;
+  right: 70px;
+  top: 20px;
+  cursor: pointer;
+}
+
+#clear-on-restart {
+  position: absolute;
+  right: 90px;
+  top: 20px;
+  cursor: pointer;
+}
+
 .dark {
   background: #212121;
   color: #F9F9F9;
@@ -65,6 +83,10 @@ main {
 /* Used to avoid setting padding on aside and main (breaks layout) */
 ul, footer, .container {
   padding: 20px;
+}
+
+.container {
+  padding-right: 150px;
 }
 
 footer a:hover {
