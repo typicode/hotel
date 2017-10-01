@@ -77,6 +77,19 @@
         <i class="ion-arrow-down-c"></i>
       </button>
       <button
+              id="clear"
+              title="clear output"
+              @click="clearOutput">
+        <i class="ion-ios-trash"></i>
+      </button>
+      <button
+              id="clear-on-restart"
+              :style="{ color: clearOutputOnRestart ? 'yellow' : 'inherit' }"
+              title="clear output on restart"
+              @click="toggleClearOutputOnRestart">
+        <i class="ion-ios-trash"></i>
+      </button>
+      <button
         id="theme"
         title="switch theme"
         @click="switchTheme">
@@ -131,7 +144,8 @@ export default {
       target,
       isListFetched: false,
       version,
-      isDark: localStorage.getItem('isDark') || false
+      isDark: localStorage.getItem('isDark') || false,
+      clearOutputOnRestart: localStorage.getItem('clearOutputOnRestart') || true
     }
   },
   created () {
@@ -189,6 +203,10 @@ export default {
       }
       // change server state
       fetch(`/_/servers/${id}/start`, { method: 'POST' })
+      // optionally clear output
+      if (this.clearOutputOnRestart) {
+          this.outputs[id] = [];
+      }
     },
     stopMonitor (id) {
       // optimistic update
@@ -245,6 +263,15 @@ export default {
     switchTheme () {
       this.isDark = !this.isDark
       localStorage.setItem('isDark', this.isDark)
+    },
+    toggleClearOutputOnRestart() {
+        this.clearOutputOnRestart = !this.clearOutputOnRestart;
+        localStorage.setItem('clearOutputOnRestart', this.clearOutputOnRestart)
+    },
+    clearOutput() {
+        if (this.selected) {
+            this.outputs[this.selected] = [];
+        }
     }
   },
   watch: {

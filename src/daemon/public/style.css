@@ -56,6 +56,20 @@ main {
   cursor: pointer;
 }
 
+#clear {
+  position: absolute;
+  right: 70px;
+  top: 20px;
+  cursor: pointer;
+}
+
+#clear-on-restart {
+  position: absolute;
+  right: 90px;
+  top: 20px;
+  cursor: pointer;
+}
+
 .dark {
   background: #212121;
   color: #F9F9F9;
@@ -165,4 +179,9 @@ button.logs.selected {
   animation-name: fade-in;
   animation-duration: 0.2s;
   animation-fill-mode: both;
+}
+
+/* Make sure icons don't overlap the text in the output area */
+.container {
+  padding-right: 150px;
 }
