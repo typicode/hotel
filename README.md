@@ -104,10 +104,13 @@ hotel add 'jekyll serve --port $PORT'
 hotel add 'rails server -p $PORT -b 127.0.0.1'
 hotel add 'python -m SimpleHTTPServer $PORT'
 hotel add 'php -S 127.0.0.1:$PORT'
+hotel add 'docker-compose up'
 # ...
 ```
 
 On __Windows__ use `"%PORT%"` instead of `'$PORT'`
+
+[__See a Docker example here.__](https://github.com/typicode/hotel/blob/master/docs/Docker.md).
 
 ### Proxy
 
