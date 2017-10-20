@@ -15,35 +15,48 @@
 ~/app$ hotel add http://192.16.1.2:3000</code></pre>
       </div>
       <ul>
-        <!-- monitors list -->
-        <li class="fade-in" v-for="(item, id) in monitors">
-          <!-- monitor -->
-          <div class="item.status">
-            <a
-              :href="href(id)"
-              :title="title(id)"
-              :target="target">{{ id }}</a>
-            <br>
-            <small @click="select(id)">
-              {{item.status}}
-            </small>
+        <!-- groups list -->
+        <li class="fade-in" v-for="(group, id) in groups" :class="group.isGroup ? 'group' : 'monitor'">
+          <div v-show="group.isGroup" class="group">
+            {{group.groupName}}
+            <button
+                    title="toggle group"
+                    class="group-toggle"
+                    @click="toggleGroup(id)">
+              <i :class="isGroupOpen(id) ? 'ion-chevron-down' : 'ion-chevron-right'"></i>
+            </button>
           </div>
+          <!-- monitor -->
+          <ul v-show="isGroupOpen(id) || !group.isGroup">
+            <li class="fade-in" v-for="(item, id) in group.items">
+              <div :class="item.status">
+                <a
+                  :href="href(id)"
+                  :title="title(id)"
+                  :target="target">{{ id }}</a>
+                <br>
+                <small @click="select(id)">
+                  {{item.status}}
+                </small>
+              </div>
 
-          <!-- start/stop button -->
-          <button
-            :title="isRunning(id) ? 'stop' : 'start'"
-            :class="['status', isRunning(id) ? 'running' : '']"
-            @click="toggle(id)">
-            <i :class="isRunning(id) ? 'ion-toggle-filled' : 'ion-toggle'"></i>
-          </button>
+              <!-- start/stop button -->
+              <button
+                :title="isRunning(id) ? 'stop' : 'start'"
+                :class="['status', isRunning(id) ? 'running' : '']"
+                @click="toggle(id)">
+                <i :class="isRunning(id) ? 'ion-toggle-filled' : 'ion-toggle'"></i>
+              </button>
 
-          <!-- view logs button -->
-          <button
-            title="view logs"
-            :class="['logs', isSelected(id) ? 'selected' : '']"
-            @click="select(id)">
-            <i class="ion-chevron-right"></i>
-          </button>
+              <!-- view logs button -->
+              <button
+                title="view logs"
+                :class="['logs', isSelected(id) ? 'selected' : '']"
+                @click="select(id)">
+                <i class="ion-chevron-right"></i>
+              </button>
+            </li>
+          </ul>
         </li>
 
         <!-- proxies list -->
@@ -123,9 +136,18 @@ const target = window.location.hash === '#menu'
 
 export default {
   data () {
+    const getOpenGroups = () => {
+      try {
+        return JSON.parse(localStorage.getItem('openGroups') || '[]')
+      } catch (e) {
+        return []
+      }
+    }
+
     return {
       list: {},
       selected: null,
+      openGroups: getOpenGroups(),
       outputs: {},
       outputScroll: true,
       target,
@@ -245,7 +267,25 @@ export default {
     switchTheme () {
       this.isDark = !this.isDark
       localStorage.setItem('isDark', this.isDark)
-    }
+    },
+    isMonitor(key) {
+      return this.list[key].status
+    },
+    isProxy(key) {
+      return !this.list[key].status
+    },
+    isGroupOpen (id) {
+      return this.openGroups.includes(id)
+    },
+    toggleGroup (id) {
+      if (this.openGroups.includes(id)) {
+        this.openGroups.splice(this.openGroups.indexOf(id), 1)
+      } else {
+        this.openGroups.push(id)
+      }
+
+      localStorage.setItem('openGroups', JSON.stringify(this.openGroups))
+    },
   },
   watch: {
     list (list, oldList) {
@@ -279,17 +319,34 @@ export default {
 
       return []
     },
-    monitors () {
+    groups () {
       const obj = {}
 
-      Object
-        .keys(this.list)
+      const listKeys = Object.keys(this.list)
         .sort()
-        .filter((key) => {
-          const isMonitor = this.list[key].status
-          return isMonitor
+        .filter(this.isMonitor)
+
+      listKeys
+        .map((key) => key.split('.')[0])
+        .forEach(groupName => {
+          obj[groupName] = {
+            groupName,
+            isGroup: true,
+            isOpen: false,
+            items: {},
+          }
+
+          listKeys
+            .filter((key) => key.startsWith(`${groupName}.`))
+            .forEach((key) => {
+                obj[groupName].items[key] = this.list[key]
+              })
+
+          if (!Object.keys(obj[groupName].items).length) {
+            obj[groupName].items[groupName] = this.list[groupName]
+            obj[groupName].isGroup = false
+          }
         })
-        .forEach((key) => { obj[key] = this.list[key] })
 
       return obj
     },
@@ -299,10 +356,7 @@ export default {
       Object
         .keys(this.list)
         .sort()
-        .filter((key) => {
-          const isProxy = !this.list[key].status
-          return isProxy
-        })
+        .filter(this.isProxy)
         .forEach((key) => { obj[key] = this.list[key] })
 
       return obj

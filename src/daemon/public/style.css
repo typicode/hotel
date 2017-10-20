@@ -63,7 +63,7 @@ main {
 }
 
 /* Used to avoid setting padding on aside and main (breaks layout) */
-ul, footer, .container {
+footer, .container {
   padding: 20px;
 }
 
@@ -90,18 +90,30 @@ a:hover {
 
 ul {
   margin: 0;
+  padding: 0;
 }
 
 #app li {
   list-style: none;
+  border-bottom: 1px solid #F0F0F0;
+  padding: 10px 20px;
+}
+#app li.monitor {
+  padding: 0;
+}
+#app li.group li {
+  padding-right: 0;
+}
+#app li li:last-child {
+  border-bottom: 0;
+}
+#app li li, #app div.group {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #F0F0F0;
-  height: 64px;
 }
 
-#app li div {
+#app li li div {
   flex-grow: 1;
 }
 
@@ -132,7 +144,7 @@ button.status.running {
   color: #14B8CC;
 }
 
-button.logs {
+button.logs, button.group-toggle {
   font-size: 14px;
 }
 
