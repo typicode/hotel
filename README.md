@@ -118,6 +118,7 @@ Add your remote servers
 
 ```bash
 ~$ hotel add http://foo.com --name bar
+~$ hotel add http://foo-server.dev --name bar-server
 ~$ hotel add http://192.168.1.12:1337 --name some-server
 ```
 
@@ -125,6 +126,7 @@ You can now access them using
 
 ```bash
 http://bar.dev # http://foo.com
+http://bar-server.dev # http://foo-server.dev
 http://some-server.dev # http://192.168.1.12:1337
 ```
 
