@@ -8,6 +8,7 @@ const Group = require('../../src/daemon/group')
 const Loader = require('../../src/daemon/loader')
 const servers = require('../../src/cli/servers')
 
+const { tld } = conf
 let app
 
 test.before(() => {
@@ -85,20 +86,20 @@ test.cb.after(t => app.group.stopAll(t.end))
 // Test daemon/vhosts/tld.js
 //
 
-test.cb('GET http://hotel.dev should return 200', t => {
+test.cb('GET http://hotel.tld should return 200', t => {
   request(app)
     .get('/')
-    .set('Host', 'hotel.dev')
+    .set('Host', `hotel.${tld}`)
     .expect(200, t.end)
 })
 
 test.cb(
-  'GET http://node.dev should proxy request and host should be node.dev',
+  'GET http://node.tld should proxy request and host should be node.tld',
   t => {
     request(app)
       .get('/')
-      .set('Host', 'node.dev')
-      .expect(/host: node.dev/)
+      .set('Host', `node.${tld}`)
+      .expect(new RegExp(`host: node.${tld}`))
       .expect(200, /Hello World/, (err, res) => {
         if (err) return t.end(err)
         t.notRegex(
@@ -111,48 +112,48 @@ test.cb(
   }
 )
 
-test.cb('GET http://subdomain.node.dev should proxy request', t => {
+test.cb('GET http://subdomain.node.tld should proxy request', t => {
   request(app)
     .get('/')
-    .set('Host', 'subdomain.node.dev')
+    .set('Host', `subdomain.node.${tld}`)
     .expect(200, /Hello World/, t.end)
 })
 
-test.cb('GET http://any.node.dev should proxy request', t => {
+test.cb('GET http://any.node.tld should proxy request', t => {
   request(app)
     .get('/')
-    .set('Host', 'any.node.dev')
+    .set('Host', `any.node.${tld}`)
     .expect(200, /Hello World/, t.end)
 })
 
-test.cb('GET http://unknown.dev should return 404', t => {
+test.cb('GET http://unknown.tld should return 404', t => {
   request(app)
     .get('/')
-    .set('Host', 'unknown.dev')
+    .set('Host', `unknown.${tld}`)
     .expect(404, t.end)
 })
 
-test.cb('GET http://failing.dev should return 502', t => {
+test.cb('GET http://failing.tld should return 502', t => {
   request(app)
     .get('/')
-    .set('Host', 'failing.dev')
+    .set('Host', `failing.${tld}`)
     .expect(502, t.end)
 })
 
 test.cb(
-  'GET http://proxy.dev should return 200 and host should be proxy.dev',
+  'GET http://proxy.tld should return 200 and host should be proxy.dev',
   t => {
     request(app)
       .get('/')
-      .set('Host', 'proxy.dev')
-      .expect(200, /host: proxy.dev/, t.end)
+      .set('Host', `proxy.${tld}`)
+      .expect(200, new RegExp(`host: proxy.${tld}`), t.end)
   }
 )
 
 test.cb('GET http://node.dev:4000 should proxy to localhost:4000', t => {
   request(app)
     .get('/')
-    .set('Host', 'node.dev:4000')
+    .set('Host', `node.${tld}:4000`)
     .expect(200, /ok/, t.end)
 })
 
@@ -161,29 +162,29 @@ test.cb('GET http://node.dev:4000 should proxy to localhost:4000', t => {
 //
 
 test.cb(
-  'GET http://working-proxy-with-https-target.dev should return 200',
+  'GET http://working-proxy-with-https-target.tld should return 200',
   t => {
     request(app)
       .get('/')
-      .set('Host', 'working-proxy-with-https-target.dev')
+      .set('Host', `working-proxy-with-https-target.${tld}`)
       .expect(200, t.end)
   }
 )
 
 test.cb(
-  'GET http://failing-proxy-with-https-target.dev should return 502',
+  'GET http://failing-proxy-with-https-target.tld should return 502',
   t => {
     request(app)
       .get('/')
-      .set('Host', 'failing-proxy-with-https-target.dev')
+      .set('Host', `failing-proxy-with-https-target.${tld}`)
       .expect(502, t.end)
   }
 )
 
-test.cb('GET http://unavailable-proxy.dev should return 502', t => {
+test.cb('GET http://unavailable-proxy.tld should return 502', t => {
   request(app)
     .get('/')
-    .set('Host', 'unavailable-proxy.dev')
+    .set('Host', `unavailable-proxy.${tld}`)
     .expect(502, t.end)
 })
 
@@ -285,14 +286,14 @@ test.cb('GET /style.css should render style.css', t => {
 test.cb('GET / should contain custom env values', t => {
   request(app)
     .get('/')
-    .set('Host', 'custom-env.dev')
+    .set('Host', `custom-env.${tld}`)
     .expect(200, /FOO_VALUE/, t.end)
 })
 
 test.cb('GET / should contain proxy env values', t => {
   request(app)
     .get('/')
-    .set('Host', 'custom-env.dev')
+    .set('Host', `custom-env.${tld}`)
     .expect(200, /http:\/\/127.0.0.1:2000\/proxy.pac/, t.end)
 })
 
@@ -300,17 +301,17 @@ test.cb('GET / should contain proxy env values', t => {
 // Test headers
 //
 
-test.cb('GET node.dev/ should contain X-FORWARD headers', t => {
+test.cb('GET node.tld/ should contain X-FORWARD headers', t => {
   request(app)
     .get('/')
-    .set('Host', 'node.dev')
-    .expect(200, /x-forwarded-host: node.dev/, t.end)
+    .set('Host', `node.${tld}`)
+    .expect(200, new RegExp(`x-forwarded-host: node.${tld}`), t.end)
 })
 
-test.cb('GET subdomain.node.dev/ should not contain X-FORWARD headers', t => {
+test.cb('GET subdomain.node.tld/ should not contain X-FORWARD headers', t => {
   request(app)
     .get('/')
-    .set('Host', 'subdomain.node.dev')
+    .set('Host', `subdomain.node.${tld}`)
     .expect(200, /x-forwarded-host: undefined/, t.end)
 })
 
@@ -323,7 +324,7 @@ test.cb('Removing a server should make it unavailable', t => {
   app.group.remove('server-to-remove', () => {
     request(app)
       .get('/')
-      .set('Host', 'server-to-remove.dev')
+      .set('Host', `server-to-remove.${tld}`)
       .expect(404, t.end)
   })
 })
@@ -333,7 +334,7 @@ test.cb('Removing a proxy should make it unavailable', t => {
   app.group.remove('proxy-to-remove', () => {
     request(app)
       .get('/')
-      .set('Host', 'proxy-to-remove.dev')
+      .set('Host', `proxy-to-remove.${tld}`)
       .expect(404, t.end)
   })
 })

@@ -4,6 +4,7 @@ const Group = require('../../src/daemon/group')
 const tcpProxy = require('../../src/daemon/tcp-proxy')
 const conf = require('../../src/conf')
 
+const { tld } = conf
 sinon.stub(tcpProxy, 'proxy')
 
 test('group.resolve should find the correct server or target id', t => {
@@ -23,7 +24,7 @@ test('group.handleUpgrade with proxy', t => {
   const target = 'example.com'
   const req = {
     headers: {
-      host: 'proxy.dev:80'
+      host: `proxy.${tld}:80`
     }
   }
   const head = {}
@@ -45,7 +46,7 @@ test('group.handleUpgrade with app', t => {
   const PORT = '9000'
   const req = {
     headers: {
-      host: 'app.dev:80'
+      host: `app.${tld}:80`
     }
   }
   const head = {}
@@ -73,7 +74,7 @@ test('group.handleUpgrade with app and port, port should take precedence', t => 
   const group = Group()
   const req = {
     headers: {
-      host: `app.dev:${port}`
+      host: `app.${tld}:${port}`
     }
   }
   const head = {}
@@ -98,7 +99,7 @@ test('group.handleConnect with proxy', t => {
   const target = 'example.com'
   const req = {
     headers: {
-      host: 'proxy.dev:80'
+      host: `proxy.${tld}:80`
     }
   }
   const head = {}
@@ -118,7 +119,7 @@ test('group.handleConnect with app', t => {
   const PORT = '9000'
   const req = {
     headers: {
-      host: 'app.dev:80'
+      host: `app.${tld}:80`
     }
   }
   const head = {}
@@ -143,7 +144,7 @@ test('group.handleConnect on port 443', t => {
   const group = Group()
   const req = {
     headers: {
-      host: 'anything.dev:443'
+      host: `anything.${tld}:443`
     }
   }
   const head = {}
