@@ -32,7 +32,11 @@ class Group extends EventEmitter {
   }
 
   _log(mon, logFile, data) {
-    mon.tail = mon.tail.concat(data).split('\n').slice(-100).join('\n')
+    mon.tail = mon.tail
+      .concat(data)
+      .split('\n')
+      .slice(-100)
+      .join('\n')
 
     if (logFile) {
       fs.appendFile(logFile, data, err => {
@@ -177,11 +181,14 @@ class Group extends EventEmitter {
 
   resolve(str) {
     log(`Resolve ${str}`)
-    const arr = Object.keys(this._list).sort().reverse().map(h => ({
-      host: h,
-      isStrictMatch: matcher.isMatch(str, h),
-      isWildcardMatch: matcher.isMatch(str, `*.${h}`)
-    }))
+    const arr = Object.keys(this._list)
+      .sort()
+      .reverse()
+      .map(h => ({
+        host: h,
+        isStrictMatch: matcher.isMatch(str, h),
+        isWildcardMatch: matcher.isMatch(str, `*.${h}`)
+      }))
 
     const strictMatch = arr.find(h => h.isStrictMatch)
     const wildcardMatch = arr.find(h => h.isWildcardMatch)

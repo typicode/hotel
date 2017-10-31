@@ -43,9 +43,11 @@ module.exports = {
     if (opts.port) {
       startServer(opts.port)
     } else {
-      getPort().then(startServer).catch(err => {
-        throw err
-      })
+      getPort()
+        .then(startServer)
+        .catch(err => {
+          throw err
+        })
     }
   }
 }
