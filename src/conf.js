@@ -16,9 +16,8 @@ const defaults = {
   proxy: false
 }
 
-// Create conf it it doesn't exist
-const data = JSON.stringify(defaults, null, 2)
-if (!fs.existsSync(confFile)) fs.writeFileSync(confFile, data)
+// Create empty conf it it doesn't exist
+if (!fs.existsSync(confFile)) fs.writeFileSync(confFile, '{}')
 
 // Read file
 const conf = JSON.parse(fs.readFileSync(confFile))
