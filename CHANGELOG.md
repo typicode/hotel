@@ -1,5 +1,9 @@
 # Change Log
 
+## Unreleased
+
+* Create empty `conf.json` if it doesn't exist
+
 ## 0.7.6
 
 * Fix `package.json` not found error
