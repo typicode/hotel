@@ -22,6 +22,7 @@ aside {
   flex-direction: column;
   justify-content: space-between;
   overflow-y: auto;
+  border-right: 1px solid #F0F0F0;
 }
 
 code {
