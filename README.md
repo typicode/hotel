@@ -44,7 +44,7 @@ Development of Hotel is generously supported by contributions from people. If yo
 
 ## Install
 
-```bash
+```sh
 npm install -g hotel && hotel start
 ```
 
@@ -67,7 +67,7 @@ To use local `.dev` domains, you need to configure your network or browser to us
 
 Add your servers commands
 
-```bash
+```sh
 ~/projects/one$ hotel add nodemon
 ~/projects/two$ hotel add 'serve -p $PORT'
 ```
@@ -97,7 +97,7 @@ __Tip__ you can also use `hotel run <cmd>` to start your server in the terminal 
 
 Using other servers? Here are some examples to get you started :)
 
-```bash
+```sh
 hotel add 'ember server'
 hotel add 'jekyll serve --port $PORT'
 hotel add 'rails server -p $PORT -b 127.0.0.1'
@@ -115,21 +115,21 @@ On __Windows__ use `"%PORT%"` instead of `'$PORT'`
 
 Add your remote servers
 
-```bash
-~$ hotel add http://foo.com --name bar
-~$ hotel add http://192.168.1.12:1337 --name some-server
+```sh
+~$ hotel add http://some-domain.com --name local-domain 
+~$ hotel add http://192.168.1.12:1337 --name aliased-address
 ```
 
 You can now access them using
 
-```bash
-http://bar.dev # http://foo.com
-http://some-server.dev # http://192.168.1.12:1337
+```sh
+http://local-domain.dev # will proxy requests to http://some-domain.com
+http://aliased-address.dev # will proxy requests to http://192.168.1.12:1337
 ```
 
 ## CLI usage and options
 
-```bash
+```sh
 hotel add <cmd|url> [opts]
 hotel run <cmd> [opts]
 
@@ -153,7 +153,7 @@ hotel stop   # Stop hotel daemon
 
 To get help
 
-```bash
+```sh
 hotel --help
 hotel --help <cmd>
 ```
@@ -168,7 +168,7 @@ var port = process.env.PORT || 3000
 server.listen(port)
 ```
 
-```bash
+```sh
 hotel add 'cmd -p $PORT'  # OS X, Linux
 hotel add "cmd -p %PORT%" # Windows
 ```
@@ -181,12 +181,26 @@ If you're offline or can't configure your browser to use `.dev` domains, you can
 
 `~/.hotel` contains daemon logs, servers and daemon configurations.
 
-```bash
+```sh
 ~/.hotel/conf.json
 ~/.hotel/daemon.log
 ~/.hotel/daemon.pid
 ~/.hotel/servers/<app-name>.json
 ```
+
+By default, `hotel` uses the following configuration values:
+
+```js
+{
+  "port": 2000,
+  "host": '127.0.0.1',
+  "timeout": 5000,
+  "tld": 'dev',
+  "proxy": false
+}
+```
+
+You can override them in `~/.hotel/conf.json`.
 
 ## Third-party tools
 
@@ -229,12 +243,22 @@ _When proxying to a `https` server, you may get an error because your local `.de
 
 If you're seeing one of these errors in `~/.hotel/daemon.log`, this usually means that there's some permissions issues. `hotel` daemon should be started without `sudo` and `~/.hotel` should belong to `$USER`.
 
-```bash
+```sh
 # to fix permissions
 sudo chown -R $USER: $HOME/.hotel
 ```
 
 See also, https://docs.npmjs.com/getting-started/fixing-npm-permissions
+
+#### Configuring a network proxy IP
+
+If you're behind a corporate proxy, replace `"proxy"` with your network proxy IP in `~/.hotel/conf.json`. For example:
+
+```json
+{
+  "proxy": "1.2.3.4:5000"
+}
+```
 
 ## License
 
