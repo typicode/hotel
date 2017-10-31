@@ -48,15 +48,10 @@ Development of Hotel is generously supported by contributions from people. If yo
 npm install -g hotel && hotel start
 ```
 
-Hotel requires Node to be installed, if you don't have it, you can simply install it using one of the following method.
+Hotel requires Node to be installed, if you don't have it, you can simply install it using one of the following method:
 
-```sh
-# https://brew.sh
-brew install node
-
-# https://github.com/creationix/nvm
-nvm install stable
-```
+* https://github.com/creationix/nvm `nvm install stable`
+* https://brew.sh `brew install node`
 
 You can also visit https://nodejs.org.
 
