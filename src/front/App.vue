@@ -22,7 +22,7 @@
             <a
               :href="href(id)"
               :title="title(id)"
-              :target="target">{{ id }}</a>
+              target="_blank">{{ id }}</a>
             <br>
             <small @click="select(id)">
               {{item.status}}
@@ -52,7 +52,7 @@
             <a
               :href="href(id)"
               :title="title(id)"
-              :target="target">{{ id }}</a>
+              target="_blank">{{ id }}</a>
             <br>
             <small>{{ item.target }}</small>
           </div>
@@ -60,7 +60,7 @@
       </ul>
 
       <footer>
-        <a :target="target" href="https://github.com/typicode/hotel">
+        <a target="_blank" href="https://github.com/typicode/hotel">
           readme <sup class="version">v{{ version }}</sup>
         </a>
       </footer>
@@ -102,24 +102,14 @@ import ansi2HTML from 'ansi2html'
 import escapeHTML from 'escape-html'
 import difference from 'lodash.difference'
 import uid from 'uid'
+import { blankLine } from './filters'
+import * as api from './api'
 import { version } from '../../package.json'
 
 /* eslint-env browser */
 
 // Expose Vue for Vue devtools
 window.Vue = Vue
-
-// Blank line filter
-function blankLine (val) {
-  return val.trim() === '' ? '&nbsp;' : val
-}
-
-// If in "menu" mode, links should be opened in a new window
-// Useful only for third-party tools displaying this page in a menu
-// Example: https://github.com/typicode/hotel#third-party-tools
-const target = window.location.hash === '#menu'
-  ? '_blank'
-  : ''
 
 export default {
   data () {
@@ -128,7 +118,6 @@ export default {
       selected: null,
       outputs: {},
       outputScroll: true,
-      target,
       isListFetched: false,
       version,
       isDark: localStorage.getItem('isDark') || false
@@ -140,47 +129,30 @@ export default {
   },
   methods: {
     watchList () {
-      if (window.EventSource) {
-        new EventSource('/_/events').onmessage = (event) => {
-          Vue.set(this, 'list', JSON.parse(event.data))
-        }
-      } else {
-        setInterval(() => {
-          fetch('/_/servers')
-            .then(response => response.json())
-            .then(data => Vue.set(this, 'list', data))
-        }, 1000)
-      }
+      api.watchServers(data => Vue.set(this, 'list', data))
     },
     watchOutput () {
-      if (window.EventSource) {
-        new EventSource('/_/events/output').onmessage = (event) => {
-          const obj = JSON.parse(event.data)
-          const { id, output } = obj
-
-          // add output
-          output
-            .replace(/\n$/, '')
-            .split('\n')
-            .map((line) => {
-              // filter line
-              line = escapeHTML(line)
-              line = ansi2HTML(line)
-              line = blankLine(line)
-              return line
-            })
-            .forEach((line) => {
-              const arr = this.outputs[id]
-              arr.push({ text: line, uid: uid() })
-              // keep 1000 lines only
-              if (arr.length > 1000) {
-                arr.shift()
-              }
-            })
-        }
-      } else {
-        alert('Sorry, server logs aren\'t supported on this browser :(')
-      }
+      api.watchOutput(({ id, output }) => 
+        // add output
+        output
+          .replace(/\n$/, '')
+          .split('\n')
+          .map((line) => {
+            // filter line
+            line = escapeHTML(line)
+            line = ansi2HTML(line)
+            line = blankLine(line)
+            return line
+          })
+          .forEach((line) => {
+            const arr = this.outputs[id]
+            arr.push({ text: line, uid: uid() })
+            // keep 1000 lines only
+            if (arr.length > 1000) {
+              arr.shift()
+            }
+          })
+      )
     },
     startMonitor (id) {
       // optimistic update
@@ -188,7 +160,7 @@ export default {
         this.list[id].status = 'running'
       }
       // change server state
-      fetch(`/_/servers/${id}/start`, { method: 'POST' })
+      api.startMonitor(id)
     },
     stopMonitor (id) {
       // optimistic update
@@ -196,7 +168,7 @@ export default {
         this.list[id].status = 'stopped'
       }
       // change server state
-      fetch(`/_/servers/${id}/stop`, { method: 'POST' })
+      api.stopMonitor(id)
     },
     href (id) {
       const { protocol, hostname } = window.location

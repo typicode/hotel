@@ -106,6 +106,7 @@
     "tempy": "^0.1.0",
     "uid": "0.0.2",
     "vue": "^2.2.6",
+    "vue-js-toggle-button": "^1.2.0",
     "vue-loader": "^12.2.2",
     "vue-template-compiler": "^2.2.6",
     "webpack": "^3.3.0",

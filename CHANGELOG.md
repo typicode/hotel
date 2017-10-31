@@ -3,6 +3,7 @@
 ## Unreleased
 
 * Create empty `conf.json` if it doesn't exist
+* Update UI to open links in new tabs. Should help with third-party tools.
 
 ## 0.7.6
 
