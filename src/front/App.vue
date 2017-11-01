@@ -2,7 +2,7 @@
   <div id="app">
     <!-- list -->
     <aside v-show="isListFetched">
-      <div class="container fade-in" v-show="isListEmpty">
+      <div class="fade-in" v-show="isListEmpty">
         <p>
           Congrats!<br>
           You're successfully running hotel.
@@ -14,36 +14,49 @@
 ~/app$ hotel add 'cmd -p $PORT'
 ~/app$ hotel add http://192.16.1.2:3000</code></pre>
       </div>
-      <ul>
+      <ul class="hotel-menu">
         <!-- monitors list -->
-        <li class="fade-in" v-for="(item, id) in monitors">
+        <li class="level fade-in" style="padding: 1rem; margin-bottom: 0" v-for="(item, id) in monitors">
           <!-- monitor -->
-          <div class="item.status">
-            <a
-              :href="href(id)"
-              :title="title(id)"
-              target="_blank">{{ id }}</a>
-            <br>
-            <small @click="select(id)">
-              {{item.status}}
-            </small>
+          <div class="level-left">
+            <div class="level-item">
+              <div>
+                <p>
+                  <a
+                  :href="href(id)"
+                  :title="title(id)"
+                  target="_blank">{{ id }}</a>
+                </p>
+                <p>
+                  <small @click="select(id)">
+                    {{item.status}}
+                  </small>
+                </p>
+              </div>
+            </div>
           </div>
 
           <!-- start/stop button -->
-          <button
-            :title="isRunning(id) ? 'stop' : 'start'"
-            :class="['status', isRunning(id) ? 'running' : '']"
-            @click="toggle(id)">
-            <i :class="isRunning(id) ? 'ion-toggle-filled' : 'ion-toggle'"></i>
-          </button>
+          <div class="level-right">
+            <button
+              :title="isRunning(id) ? 'stop' : 'start'"
+              :class="['status', 'button', 'level-item', isRunning(id) ? 'is-success' : 'is-white']"
+              @click="toggle(id)">
+              <span class="icon">
+                <i :class="isRunning(id) ? 'ion-toggle-filled' : 'ion-toggle'"></i>
+              </span>
+            </button>
 
-          <!-- view logs button -->
-          <button
-            title="view logs"
-            :class="['logs', isSelected(id) ? 'selected' : '']"
-            @click="select(id)">
-            <i class="ion-chevron-right"></i>
-          </button>
+            <!-- view logs button -->
+            <button
+              title="view logs"
+              :class="['logs', 'button', 'level-item', isSelected(id) ? 'is-dark' : 'is-white']"
+              @click="select(id)">
+              <span class="icon">
+                <i class="ion-eye"></i>
+              </span>
+            </button>
+          </div>
         </li>
 
         <!-- proxies list -->
@@ -68,21 +81,27 @@
     <main
       ref="output"
       :style="{ display: selected ? 'block' : 'none' }"
-      :class="{ dark: isDark }"
+      :class="[{ 'is-dark': isDark }, 'hero']"
       @scroll="onScroll">
       <button
         id="down"
+        :class="[{ 'is-black': isDark }, 'button']"
         title="scroll to bottom"
         @click="scrollToBottom">
-        <i class="ion-arrow-down-c"></i>
+        <span class="icon">
+          <i class="ion-arrow-down-c"></i>
+        </span>
       </button>
       <button
         id="theme"
+        :class="[{ 'is-black': isDark }, 'button']" 
         title="switch theme"
         @click="switchTheme">
-        <i class="ion-lightbulb"></i>
+        <span class="icon">
+          <i class="ion-lightbulb"></i>
+        </span>
       </button>
-      <div class="container">
+      <div>
         <div v-if="output.length === 0">
           # No output
         </div>
