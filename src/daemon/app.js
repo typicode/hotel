@@ -43,10 +43,12 @@ module.exports = group => {
   // app.get('/', (req, res) => res.render('index'))
 
   // Static files
-  // style.css, vendors, etc...
+  // vendors, etc...
   app.use(express.static(path.join(__dirname, 'public')))
+  // static files: style.css, etc...
+  app.use(express.static(path.join(__dirname, '../../static')))
   // bundle.js
-  app.use(express.static(path.join(__dirname, '/../../dist')))
+  app.use(express.static(path.join(__dirname, '../../dist')))
 
   // localhost router
   app.use(indexRouter)
