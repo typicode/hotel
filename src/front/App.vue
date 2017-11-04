@@ -83,24 +83,36 @@
       :style="{ display: selected ? null : 'none' }"
       :class="[{ 'is-dark': isDark }, 'hero']"
       @scroll="onScroll">
-      <button
-        id="down"
-        :class="[{ 'is-black': isDark }, 'button']"
-        title="scroll to bottom"
-        @click="scrollToBottom">
-        <span class="icon">
-          <i class="ion-arrow-down-c"></i>
-        </span>
-      </button>
-      <button
-        id="theme"
-        :class="[{ 'is-black': isDark }, 'button']" 
-        title="switch theme"
-        @click="switchTheme">
-        <span class="icon">
-          <i class="ion-lightbulb"></i>
-        </span>
-      </button>
+      <nav role="navigation" aria-label="log navigation">
+        <button
+          id="back"
+          :class="[{ 'is-black': isDark }, 'button']"
+          title="close"
+          @click="deselect">
+          <span class="icon">
+            <i class="ion-close"></i>
+          </span>
+        </button>
+        <div class="spacer"></div>
+        <button
+          id="down"
+          :class="[{ 'is-black': isDark }, 'button']"
+          title="scroll to bottom"
+          @click="scrollToBottom">
+          <span class="icon">
+            <i class="ion-arrow-down-c"></i>
+          </span>
+        </button>
+        <button
+          id="theme"
+          :class="[{ 'is-black': isDark }, 'button']"
+          title="switch theme"
+          @click="switchTheme">
+          <span class="icon">
+            <i class="ion-lightbulb"></i>
+          </span>
+        </button>
+      </nav>
       <div>
         <div v-if="output.length === 0">
           # No output
@@ -151,7 +163,7 @@ export default {
       api.watchServers(data => Vue.set(this, 'list', data))
     },
     watchOutput () {
-      api.watchOutput(({ id, output }) => 
+      api.watchOutput(({ id, output }) =>
         // add output
         output
           .replace(/\n$/, '')
@@ -224,6 +236,9 @@ export default {
     },
     isSelected (id) {
       return this.selected === id
+    },
+    deselect () {
+      this.selected = null
     },
     onScroll (event) {
       const { scrollHeight, scrollTop, clientHeight } = event.target

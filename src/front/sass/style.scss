@@ -55,18 +55,37 @@ main {
   overflow-y: scroll;
 }
 
-#down {
-  position: absolute;
-  right: 30px;
-  top: 20px;
-  cursor: pointer;
-}
 
-#theme {
-  position: absolute;
-  right: 80px;
-  top: 20px;
-  cursor: pointer;
+nav {
+  display: flex;
+  margin: -1rem;
+  margin-bottom: 0;
+
+  padding: 1rem;
+
+  background: #fcfcfc;
+  border-bottom: 1px solid #ddd;
+
+  .is-dark & {
+    background: #333;
+    border-bottom: 1px solid #444;
+  }
+
+  button:not(:first-child) {
+    margin-left: 1rem;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  .name {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 125%;
+  }
 }
 
 .dark {
@@ -94,6 +113,10 @@ button.status.running {
 
 button.logs.selected {
   color: #212121;
+}
+
+button.logs {
+  margin-right: 0 !important;
 }
 
 /*ANIMATE ASIDE ITEMS*/
