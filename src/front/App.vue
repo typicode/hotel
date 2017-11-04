@@ -16,7 +16,7 @@
       </div>
       <ul class="hotel-menu">
         <!-- monitors list -->
-        <li class="level fade-in" style="padding: 1rem; margin-bottom: 0" v-for="(item, id) in monitors">
+        <li class="level fade-in monitor" v-for="(item, id) in monitors">
           <!-- monitor -->
           <div class="level-left">
             <div class="level-item">

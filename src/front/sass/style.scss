@@ -15,6 +15,7 @@ body {
 }
 
 aside, main {
+  padding: 1rem;
   height: 100vh;
 }
 
@@ -30,6 +31,10 @@ aside {
 
 .hotel-menu {
   flex: 1;
+
+  .monitor {
+    padding: 0.5rem;
+  }
 }
 
 code {
@@ -70,20 +75,16 @@ main {
   transition: background 0.2s, color 0.2s;
 }
 
-aside, main, footer {
-  padding: 1rem;
-}
-
-footer a:hover {
-  text-decoration: none;
-}
-
-footer a .version {
-  visibility: hidden;
-}
-
-footer a:hover .version {
-  visibility: visible
+footer {
+  padding: 0.5rem;
+  a {
+    &:hover {
+      text-decoration: none;
+    }
+    &:not(:hover) .version {
+      visibility: hidden;
+    }
+  }
 }
 
 /* Make it easier to click */
