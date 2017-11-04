@@ -51,7 +51,15 @@ main {
   flex-grow: 1;
   background: #F9F9F9;
   color: #212121;
-  font-family: $monospace-font;
+  pre {
+    font-family: $monospace-font;
+    margin: 0;
+    background: transparent;
+    white-space: normal;
+    color: inherit;
+    flex: 1;
+    flex-direction: column;
+  }
   overflow-y: scroll;
 }
 

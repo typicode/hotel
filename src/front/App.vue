@@ -113,7 +113,7 @@
           </span>
         </button>
       </nav>
-      <div>
+      <pre :style="{ display: output.length === 0 ? 'flex': 'block' }">
         <div v-if="output.length === 0">
           # No output
         </div>
@@ -122,7 +122,7 @@
           v-html="item.text"
           :key="item.uid">
         </div>
-      </div>
+      </pre>
     </main>
   </div>
 </template>
