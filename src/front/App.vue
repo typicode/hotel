@@ -114,8 +114,12 @@
         </button>
       </nav>
       <pre :style="{ display: output.length === 0 ? 'flex': 'block' }">
-        <div v-if="output.length === 0">
-          # No output
+        <div v-if="monitors[selected]">
+          $ cd {{ monitors[selected].cwd }}<br>
+          $ {{ prettyCommand }}
+        </div>
+        <div class="blank-slate" v-if="output.length === 0">
+          no logs
         </div>
         <div
           v-for="item in output"
@@ -123,6 +127,11 @@
           :key="item.uid">
         </div>
       </pre>
+    </main>
+    <main
+      :style="{ display: selected ? 'none' : null }"
+      class="blank-slate hero">
+      choose an app to view its logs
     </main>
   </div>
 </template>
@@ -298,6 +307,10 @@ export default {
         .forEach((key) => { obj[key] = this.list[key] })
 
       return obj
+    },
+    prettyCommand() {
+      const command = this.list[this.selected].command
+      return command[command.length - 1]
     },
     proxies () {
       const obj = {}

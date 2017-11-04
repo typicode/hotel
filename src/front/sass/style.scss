@@ -63,6 +63,15 @@ main {
   overflow-y: scroll;
 }
 
+.blank-slate {
+  font-family: $base-font;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 150%;
+  color: #999;
+  flex: 1;
+}
 
 nav {
   display: flex;
