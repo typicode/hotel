@@ -28,7 +28,7 @@
                   target="_blank">{{ id }}</a>
                 </p>
                 <p>
-                  <small @click="select(id)">
+                  <small @click="select(id)" :title="item.pid ? `PID ${item.pid}\nStarted ${new Date(item.started).toLocaleString()}` : ''">
                     {{item.status}}
                   </small>
                 </p>
