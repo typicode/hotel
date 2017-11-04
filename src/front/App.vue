@@ -53,7 +53,7 @@
               :class="['logs', 'button', 'level-item', isSelected(id) ? 'is-dark' : 'is-white']"
               @click="select(id)">
               <span class="icon">
-                <i class="ion-eye"></i>
+                <i class="ion-ios-paper"></i>
               </span>
             </button>
           </div>
