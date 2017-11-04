@@ -80,7 +80,7 @@
     </aside>
     <main
       ref="output"
-      :style="{ display: selected ? 'block' : 'none' }"
+      :style="{ display: selected ? null : 'none' }"
       :class="[{ 'is-dark': isDark }, 'hero']"
       @scroll="onScroll">
       <button
