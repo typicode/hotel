@@ -3,6 +3,18 @@ $base-font: -apple-system, BlinkMacSystemFont,
   "Ubuntu", "Cantarell", "Fira Sans",
   "Droid Sans", "Helvetica Neue", sans-serif;
 $monospace-font: "Courier New", Courier, monospace;
+
+@mixin mobile {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+@mixin desktop {
+  @media (min-width: 769px) {
+    @content;
+  }
+}
+
 body {
   font-family: $base-font;
   color: #212121;
@@ -20,13 +32,18 @@ aside, main {
 }
 
 aside {
-  min-width: 365px;
+  @include desktop {
+    min-width: 365px;
+    border-right: 1px solid #F0F0F0;
+  }
+  @include mobile {
+    width: 100vw;
+  }
   display: flex !important;
   flex-direction: column;
   min-height: 100vh;
   justify-content: space-between;
   overflow-y: auto;
-  border-right: 1px solid #F0F0F0;
 }
 
 .hotel-menu {
@@ -59,8 +76,19 @@ main {
     color: inherit;
     flex: 1;
     flex-direction: column;
+
+    @include mobile {
+      font-size: 0.8rem;
+    }
   }
   overflow-y: scroll;
+
+  @include mobile {
+    padding-top: 5.25rem; // 2rem padding + 2.25rem button + 1rem top margin
+    position: absolute;
+    left: 0;
+    width: 100%;
+  }
 }
 
 .blank-slate {
@@ -75,8 +103,16 @@ main {
 
 nav {
   display: flex;
-  margin: -1rem;
-  margin-bottom: 0;
+  @include mobile {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+  @include desktop {
+    margin: -1rem;
+    margin-bottom: 0;
+  }
 
   padding: 1rem;
 
@@ -117,8 +153,19 @@ footer {
     &:hover {
       text-decoration: none;
     }
-    &:not(:hover) .version {
-      visibility: hidden;
+    @include mobile {
+      .version {
+        vertical-align: baseline;
+        color: gray;
+
+        &::before { content: '(' }
+        &::after { content: ')' }
+      }
+    }
+    @include desktop {
+      &:not(:hover) .version {
+        visibility: hidden;
+      }
     }
   }
 }

@@ -16,7 +16,7 @@
       </div>
       <ul class="hotel-menu">
         <!-- monitors list -->
-        <li class="level fade-in monitor" v-for="(item, id) in monitors">
+        <li class="level fade-in is-mobile monitor" v-for="(item, id) in monitors">
           <!-- monitor -->
           <div class="level-left">
             <div class="level-item">
@@ -90,10 +90,12 @@
           title="close"
           @click="deselect">
           <span class="icon">
-            <i class="ion-close"></i>
+            <i class="ion-chevron-left is-hidden-tablet"></i>
+            <i class="ion-close is-hidden-mobile"></i>
           </span>
         </button>
-        <div class="spacer"></div>
+        <div class="spacer is-hidden-mobile"></div>
+        <h1 class="name is-hidden-tablet">{{ selected }}</h1>
         <button
           id="down"
           :class="[{ 'is-black': isDark }, 'button']"
@@ -130,7 +132,7 @@
     </main>
     <main
       :style="{ display: selected ? 'none' : null }"
-      class="blank-slate hero">
+      class="blank-slate hero is-hidden-mobile">
       choose an app to view its logs
     </main>
   </div>
