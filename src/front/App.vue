@@ -139,7 +139,7 @@ export default {
       outputScroll: true,
       isListFetched: false,
       version,
-      isDark: localStorage.getItem('isDark') || false
+      isDark: JSON.parse(localStorage.getItem('isDark')) || false
     }
   },
   created () {
@@ -235,7 +235,7 @@ export default {
     },
     switchTheme () {
       this.isDark = !this.isDark
-      localStorage.setItem('isDark', this.isDark)
+      localStorage.setItem('isDark', JSON.stringify(this.isDark))
     }
   },
   watch: {
