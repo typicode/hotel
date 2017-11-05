@@ -1,8 +1,22 @@
+$base-font: -apple-system, BlinkMacSystemFont,
+  "Segoe UI", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans",
+  "Droid Sans", "Helvetica Neue", sans-serif;
+$monospace-font: "Courier New", Courier, monospace;
+
+@mixin mobile {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+@mixin desktop {
+  @media (min-width: 769px) {
+    @content;
+  }
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont,
-    "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans",
-    "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: $base-font;
   color: #212121;
   padding: 0;
   margin: 0;
@@ -13,21 +27,31 @@ body {
 }
 
 aside, main {
+  padding: 1rem;
   height: 100vh;
 }
 
 aside {
-  min-width: 365px;
+  @include desktop {
+    min-width: 365px;
+    border-right: 1px solid #F0F0F0;
+  }
+  @include mobile {
+    width: 100vw;
+  }
   display: flex !important;
   flex-direction: column;
   min-height: 100vh;
   justify-content: space-between;
   overflow-y: auto;
-  border-right: 1px solid #F0F0F0;
 }
 
 .hotel-menu {
   flex: 1;
+
+  .monitor {
+    padding: 0.5rem;
+  }
 }
 
 code {
@@ -44,22 +68,77 @@ main {
   flex-grow: 1;
   background: #F9F9F9;
   color: #212121;
-  font-family: "Courier New", Courier, monospace;
+  pre {
+    font-family: $monospace-font;
+    margin: 0;
+    background: transparent;
+    white-space: normal;
+    color: inherit;
+    flex: 1;
+    flex-direction: column;
+
+    @include mobile {
+      font-size: 0.8rem;
+    }
+  }
   overflow-y: scroll;
+
+  @include mobile {
+    padding-top: 5.25rem; // 2rem padding + 2.25rem button + 1rem top margin
+    position: absolute;
+    left: 0;
+    width: 100%;
+  }
 }
 
-#down {
-  position: absolute;
-  right: 30px;
-  top: 20px;
-  cursor: pointer;
+.blank-slate {
+  font-family: $base-font;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 150%;
+  color: #999;
+  flex: 1;
 }
 
-#theme {
-  position: absolute;
-  right: 80px;
-  top: 20px;
-  cursor: pointer;
+nav {
+  display: flex;
+  @include mobile {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+  @include desktop {
+    margin: -1rem;
+    margin-bottom: 0;
+  }
+
+  padding: 1rem;
+
+  background: #fcfcfc;
+  border-bottom: 1px solid #ddd;
+
+  .is-dark & {
+    background: #333;
+    border-bottom: 1px solid #444;
+  }
+
+  button:not(:first-child) {
+    margin-left: 1rem;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  .name {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 125%;
+  }
 }
 
 .dark {
@@ -68,20 +147,27 @@ main {
   transition: background 0.2s, color 0.2s;
 }
 
-aside, main, footer {
-  padding: 1rem;
-}
+footer {
+  padding: 0.5rem;
+  a {
+    &:hover {
+      text-decoration: none;
+    }
+    @include mobile {
+      .version {
+        vertical-align: baseline;
+        color: gray;
 
-footer a:hover {
-  text-decoration: none;
-}
-
-footer a .version {
-  visibility: hidden;
-}
-
-footer a:hover .version {
-  visibility: visible
+        &::before { content: '(' }
+        &::after { content: ')' }
+      }
+    }
+    @include desktop {
+      &:not(:hover) .version {
+        visibility: hidden;
+      }
+    }
+  }
 }
 
 /* Make it easier to click */
@@ -91,6 +177,10 @@ button.status.running {
 
 button.logs.selected {
   color: #212121;
+}
+
+button.logs {
+  margin-right: 0 !important;
 }
 
 /*ANIMATE ASIDE ITEMS*/
