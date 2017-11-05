@@ -16,7 +16,7 @@
       </div>
       <ul class="hotel-menu">
         <!-- monitors list -->
-        <li class="level fade-in" style="padding: 1rem; margin-bottom: 0" v-for="(item, id) in monitors">
+        <li class="level fade-in is-mobile monitor" v-for="(item, id) in monitors">
           <!-- monitor -->
           <div class="level-left">
             <div class="level-item">
@@ -28,7 +28,7 @@
                   target="_blank">{{ id }}</a>
                 </p>
                 <p>
-                  <small @click="select(id)">
+                  <small @click="select(id)" :title="item.pid ? `PID ${item.pid}\nStarted ${new Date(item.started).toLocaleString()}` : ''">
                     {{item.status}}
                   </small>
                 </p>
@@ -53,7 +53,7 @@
               :class="['logs', 'button', 'level-item', isSelected(id) ? 'is-dark' : 'is-white']"
               @click="select(id)">
               <span class="icon">
-                <i class="ion-eye"></i>
+                <i class="ion-ios-paper"></i>
               </span>
             </button>
           </div>
@@ -80,37 +80,60 @@
     </aside>
     <main
       ref="output"
-      :style="{ display: selected ? 'block' : 'none' }"
+      :style="{ display: selected ? null : 'none' }"
       :class="[{ 'is-dark': isDark }, 'hero']"
       @scroll="onScroll">
-      <button
-        id="down"
-        :class="[{ 'is-black': isDark }, 'button']"
-        title="scroll to bottom"
-        @click="scrollToBottom">
-        <span class="icon">
-          <i class="ion-arrow-down-c"></i>
-        </span>
-      </button>
-      <button
-        id="theme"
-        :class="[{ 'is-black': isDark }, 'button']" 
-        title="switch theme"
-        @click="switchTheme">
-        <span class="icon">
-          <i class="ion-lightbulb"></i>
-        </span>
-      </button>
-      <div>
-        <div v-if="output.length === 0">
-          # No output
+      <nav role="navigation" aria-label="log navigation">
+        <button
+          id="back"
+          :class="[{ 'is-black': isDark }, 'button']"
+          title="close"
+          @click="deselect">
+          <span class="icon">
+            <i class="ion-chevron-left is-hidden-tablet"></i>
+            <i class="ion-close is-hidden-mobile"></i>
+          </span>
+        </button>
+        <div class="spacer is-hidden-mobile"></div>
+        <h1 class="name is-hidden-tablet">{{ selected }}</h1>
+        <button
+          id="down"
+          :class="[{ 'is-black': isDark }, 'button']"
+          title="scroll to bottom"
+          @click="scrollToBottom">
+          <span class="icon">
+            <i class="ion-arrow-down-c"></i>
+          </span>
+        </button>
+        <button
+          id="theme"
+          :class="[{ 'is-black': isDark }, 'button']"
+          title="switch theme"
+          @click="switchTheme">
+          <span class="icon">
+            <i class="ion-lightbulb"></i>
+          </span>
+        </button>
+      </nav>
+      <pre :style="{ display: output.length === 0 ? 'flex': 'block' }">
+        <div v-if="monitors[selected]">
+          $ cd {{ monitors[selected].cwd }}<br>
+          $ {{ prettyCommand }}
+        </div>
+        <div class="blank-slate" v-if="output.length === 0">
+          no logs
         </div>
         <div
           v-for="item in output"
           v-html="item.text"
           :key="item.uid">
         </div>
-      </div>
+      </pre>
+    </main>
+    <main
+      :style="{ display: selected ? 'none' : null }"
+      class="blank-slate hero is-hidden-mobile">
+      choose an app to view its logs
     </main>
   </div>
 </template>
@@ -139,7 +162,7 @@ export default {
       outputScroll: true,
       isListFetched: false,
       version,
-      isDark: localStorage.getItem('isDark') || false
+      isDark: JSON.parse(localStorage.getItem('isDark')) || false
     }
   },
   created () {
@@ -151,7 +174,7 @@ export default {
       api.watchServers(data => Vue.set(this, 'list', data))
     },
     watchOutput () {
-      api.watchOutput(({ id, output }) => 
+      api.watchOutput(({ id, output }) =>
         // add output
         output
           .replace(/\n$/, '')
@@ -225,6 +248,9 @@ export default {
     isSelected (id) {
       return this.selected === id
     },
+    deselect () {
+      this.selected = null
+    },
     onScroll (event) {
       const { scrollHeight, scrollTop, clientHeight } = event.target
       this.outputScroll = scrollHeight - scrollTop === clientHeight
@@ -235,7 +261,7 @@ export default {
     },
     switchTheme () {
       this.isDark = !this.isDark
-      localStorage.setItem('isDark', this.isDark)
+      localStorage.setItem('isDark', JSON.stringify(this.isDark))
     }
   },
   watch: {
@@ -283,6 +309,10 @@ export default {
         .forEach((key) => { obj[key] = this.list[key] })
 
       return obj
+    },
+    prettyCommand() {
+      const command = this.list[this.selected].command
+      return command[command.length - 1]
     },
     proxies () {
       const obj = {}
