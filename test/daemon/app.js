@@ -275,7 +275,7 @@ test.cb('GET / should render index.html', t => {
 
 test.cb('GET /style.css should render style.css', t => {
   request(app)
-    .get('/style.css')
+    .get('/css/style.css')
     .expect(200, t.end)
 })
 
