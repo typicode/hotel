@@ -4,8 +4,11 @@ const chalk = require('chalk')
 const tildify = require('tildify')
 const mkdirp = require('mkdirp')
 const common = require('../common')
+const conf = require('../conf')
+const request = require('sync-request')
 
 const serversDir = common.serversDir
+const serverHost = `http://${conf.host}:${conf.port}`
 
 module.exports = {
   add,
@@ -35,6 +38,24 @@ function getId(cwd) {
 
 function getServerFile(id) {
   return `${serversDir}/${id}.json`
+}
+
+function colorizeIdFromStatus(text, status) {
+  // see https://github.com/mafintosh/respawn#api
+  switch (status) {
+    case 'running':
+      return chalk.green(text)
+    case 'stopping':
+      return chalk.yellow(text)
+    case 'stopped':
+      return chalk.gray(text)
+    case 'crashed':
+      return chalk.red(text)
+    case 'sleeping':
+      return chalk.gray(text)
+    default:
+      return text
+  }
 }
 
 function add(param, opts = {}) {
@@ -131,28 +152,61 @@ function rm(opts = {}) {
 
 function ls() {
   mkdirp.sync(serversDir)
-
-  const list = fs
-    .readdirSync(serversDir)
-    .map(file => {
-      const id = path.basename(file, '.json')
-      const serverFile = getServerFile(id)
-      let server
-
-      try {
-        server = JSON.parse(fs.readFileSync(serverFile))
-      } catch (error) {
-        // Ignore mis-named or malformed files
-        return
+  let servers
+  try {
+    // load from the API
+    const serverJSON = JSON.parse(
+      request('GET', `${serverHost}/_/servers`).getBody('utf-8')
+    )
+    servers = Object.keys(serverJSON).map(key => [key, serverJSON[key]])
+    servers.forEach(([k, server]) => {
+      if (server.command) {
+        server.cmd = server.command[server.command.length - 1]
       }
+    })
+  } catch (e) {
+    console.error(
+      chalk.gray(
+        'Could not load data from the API. Server status unavailable.\n'
+      )
+    )
+    // load from the config files
+    // no status available
+    servers = fs
+      .readdirSync(serversDir)
+      .map(file => {
+        const id = path.basename(file, '.json')
+        const serverFile = getServerFile(id)
+        let server
 
+        try {
+          server = JSON.parse(fs.readFileSync(serverFile))
+        } catch (error) {
+          // Ignore mis-named or malformed files
+          return
+        }
+
+        return [id, server]
+      })
+      .filter(x => x)
+  }
+
+  const list = servers
+    .map(([id, server]) => {
+      let lines = []
       if (server.cmd) {
-        return `${id}\n${chalk.gray(tildify(server.cwd))}\n${chalk.gray(
-          server.cmd
-        )}`
+        lines = [
+          colorizeIdFromStatus(id, server.status) +
+            (server.status ? chalk.gray(` (${server.status})`) : ''),
+          server.pid && chalk.gray(`PID ${server.pid}`),
+          chalk.gray(tildify(server.cwd)),
+          // we don’t need to see `sh -c`
+          chalk.gray(server.cmd)
+        ]
       } else {
-        return `${id}\n${chalk.gray(server.target)}`
+        lines = [id, chalk.gray(server.target)]
       }
+      return lines.filter(x => x).join('\n')
     })
     .filter(item => item)
     .join('\n\n')
