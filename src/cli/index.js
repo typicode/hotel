@@ -82,7 +82,7 @@ module.exports = processArgv =>
       argv => servers.rm(argv)
     )
     .command(
-      'ls',
+      ['ls', 'ps'],
       'List servers',
       yargs =>
         yargs.option('verbose', {
