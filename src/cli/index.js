@@ -81,7 +81,17 @@ module.exports = processArgv =>
       },
       argv => servers.rm(argv)
     )
-    .command('ls', 'List servers', {}, argv => servers.ls(argv))
+    .command(
+      'ls',
+      'List servers',
+      yargs =>
+        yargs.option('verbose', {
+          alias: 'V',
+          boolean: true,
+          describe: 'Show more details about the processes'
+        }),
+      argv => servers.ls(argv)
+    )
     .command('start', 'Start daemon', {}, () => daemon.start())
     .command('stop', 'Stop daemon', {}, () => daemon.stop())
     .example('$0 add --help')

@@ -150,7 +150,7 @@ function rm(opts = {}) {
   }
 }
 
-function ls() {
+function ls(opts = {}) {
   mkdirp.sync(serversDir)
   let servers
   try {
@@ -196,20 +196,24 @@ function ls() {
       let lines = []
       if (server.cmd) {
         lines = [
-          colorizeIdFromStatus(id, server.status) +
+          colorizeIdFromStatus(chalk.bold(id), server.status) +
             (server.status ? chalk.gray(` (${server.status})`) : ''),
-          server.pid && chalk.gray(`PID ${server.pid}`),
-          chalk.gray(tildify(server.cwd)),
-          // we don’t need to see `sh -c`
-          chalk.gray(server.cmd)
+          '$ cd ' + tildify(server.cwd),
+          '$ ' + server.cmd,
+          server.pid && `PID: ${server.pid}`
         ]
       } else {
-        lines = [id, chalk.gray(server.target)]
+        lines = ['🔗 ' + chalk.bold(id), '→ ' + server.target]
       }
-      return lines.filter(x => x).join('\n')
+      lines = lines.filter(x => x)
+      if (opts.verbose) {
+        return lines.join('\n  ')
+      } else {
+        return lines[0]
+      }
     })
     .filter(item => item)
-    .join('\n\n')
+    .join(opts.verbose ? '\n\n' : '\n')
 
   console.log(list)
 }
