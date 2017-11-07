@@ -4,11 +4,9 @@ const chalk = require('chalk')
 const tildify = require('tildify')
 const mkdirp = require('mkdirp')
 const common = require('../common')
-const conf = require('../conf')
-const request = require('sync-request')
+const api = require('./api')
 
 const serversDir = common.serversDir
-const serverHost = `http://${conf.host}:${conf.port}`
 
 module.exports = {
   add,
@@ -151,46 +149,14 @@ function rm(opts = {}) {
 }
 
 function ls(opts = {}) {
-  mkdirp.sync(serversDir)
-  let servers
-  try {
-    // load from the API
-    const serverJSON = JSON.parse(
-      request('GET', `${serverHost}/_/servers`).getBody('utf-8')
-    )
-    servers = Object.keys(serverJSON).map(key => [key, serverJSON[key]])
-    servers.forEach(([k, server]) => {
-      if (server.command) {
-        server.cmd = server.command[server.command.length - 1]
-      }
-    })
-  } catch (e) {
+  const { servers, fromApi } = api.getServerList()
+  if (!fromApi) {
     console.error(
       chalk.gray(
         'Could not load data from the API. Server status unavailable.\n'
       )
     )
-    // load from the config files
-    // no status available
-    servers = fs
-      .readdirSync(serversDir)
-      .map(file => {
-        const id = path.basename(file, '.json')
-        const serverFile = getServerFile(id)
-        let server
-
-        try {
-          server = JSON.parse(fs.readFileSync(serverFile))
-        } catch (error) {
-          // Ignore mis-named or malformed files
-          return
-        }
-
-        return [id, server]
-      })
-      .filter(x => x)
   }
-
   const list = servers
     .map(([id, server]) => {
       let lines = []
