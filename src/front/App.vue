@@ -1,140 +1,151 @@
 <template>
-  <div id="app">
-    <!-- list -->
-    <aside v-show="isListFetched">
-      <div class="fade-in" v-show="isListEmpty">
-        <p>
-          Congrats!<br>
-          You're successfully running hotel.
-        </p>
-        <p>
-          To add a server, use <code style="padding: 5px">hotel add</code>
-        </p>
-        <pre><code>~/app$ hotel add 'cmd'
-~/app$ hotel add 'cmd -p $PORT'
-~/app$ hotel add http://192.16.1.2:3000</code></pre>
-      </div>
-      <ul class="hotel-menu">
-        <!-- monitors list -->
-        <li class="level fade-in is-mobile monitor" v-for="(item, id) in monitors">
-          <!-- monitor -->
-          <div class="level-left">
-            <div class="level-item">
-              <div>
-                <p>
-                  <a
-                  :href="href(id)"
-                  :title="title(id)"
-                  target="_blank">{{ id }}</a>
-                </p>
-                <p>
-                  <small @click="select(id)" :title="item.pid ? `PID ${item.pid}\nStarted ${new Date(item.started).toLocaleString()}` : ''">
-                    {{item.status}}
-                  </small>
-                </p>
+  <div id="app" class="container is-fluid" v-show="isListFetched">
+    <div class="columns">
+      <div class="column is-4">
+        <!-- list -->
+        <div v-show="isListEmpty">
+          <p>
+            Congrats!<br>
+            You're successfully running hotel.
+          </p>
+          <p>
+            To add a server, use <code style="padding: 5px">hotel add</code>
+          </p>
+          <pre><code>~/app$ hotel add 'cmd'
+  ~/app$ hotel add 'cmd -p $PORT'
+  ~/app$ hotel add http://192.16.1.2:3000</code></pre>
+        </div>
+        <ul class="hotel-menu">
+          <!-- monitors list -->
+          <li class="level" v-for="(item, id) in monitors">
+            <!-- monitor -->
+            <div class="level-left">
+              <div class="level-item">
+                <div>
+                  <p>
+                    <a
+                    :href="href(id)"
+                    :title="title(id)"
+                    target="_blank">{{ id }}</a>
+                  </p>
+                  <p>
+                    <small
+                      @click="select(id)"
+                      :title="item.pid ? `PID ${item.pid}\nStarted ${new Date(item.started).toLocaleString()}` : ''">
+                      {{item.status}}
+                    </small>
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <!-- start/stop button -->
-          <div class="level-right">
+            <!-- start/stop button -->
+            <div class="level-right">
+              <div class="level-item">
+                <input
+                  :id="id"
+                  type="checkbox"
+                  class="switch is-rounded"
+                  :title="isRunning(id) ? 'stop' : 'start'"
+                  @click="toggle(id)"
+                  :checked="isRunning(id)" />
+                <label :for="id">&nbsp;</label>
+              </div>
+
+              <!-- view logs button -->
+              <div class="level-item">
+                <button
+                  title="view logs"
+                  :class="['logs', 'button', isSelected(id) ? 'is-dark' : 'is-white']"
+                  @click="select(id)">
+                  <span class="icon">
+                    <i class="ion-ios-paper"></i>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </li>
+
+          <!-- proxies list -->
+          <li v-for="(item, id) in proxies">
+            <p>
+              <a
+                :href="href(id)"
+                :title="title(id)"
+                target="_blank">{{ id }}</a>
+            </p>
+            <p>
+              <small>{{ item.target }}</small>
+            </p>
+          </li>
+        </ul>
+
+        <p>
+          <a target="_blank" href="https://github.com/typicode/hotel">
+            readme <sup class="version">v{{ version }}</sup>
+          </a>
+        </p>
+      </div>
+      <div class="column is-8">
+        <main
+          ref="output"
+          :style="{ display: selected ? null : 'none' }"
+          :class="[{ 'is-dark': isDark }]"
+          @scroll="onScroll">
+          <nav role="navigation" aria-label="log navigation">
             <button
-              :title="isRunning(id) ? 'stop' : 'start'"
-              :class="['status', 'button', 'level-item', isRunning(id) ? 'is-success' : 'is-white']"
-              @click="toggle(id)">
+              id="back"
+              :class="[{ 'is-black': isDark }, 'button']"
+              title="close"
+              @click="deselect">
               <span class="icon">
-                <i :class="isRunning(id) ? 'ion-toggle-filled' : 'ion-toggle'"></i>
+                <i class="ion-chevron-left is-hidden-tablet"></i>
+                <i class="ion-close is-hidden-mobile"></i>
               </span>
             </button>
-
-            <!-- view logs button -->
+            <div class="spacer is-hidden-mobile"></div>
+            <h1 class="name is-hidden-tablet">{{ selected }}</h1>
             <button
-              title="view logs"
-              :class="['logs', 'button', 'level-item', isSelected(id) ? 'is-dark' : 'is-white']"
-              @click="select(id)">
+              id="down"
+              :class="[{ 'is-black': isDark }, 'button']"
+              title="scroll to bottom"
+              @click="scrollToBottom">
               <span class="icon">
-                <i class="ion-ios-paper"></i>
+                <i class="ion-arrow-down-c"></i>
               </span>
             </button>
-          </div>
-        </li>
-
-        <!-- proxies list -->
-        <li v-for="(item, id) in proxies">
-          <div>
-            <a
-              :href="href(id)"
-              :title="title(id)"
-              target="_blank">{{ id }}</a>
-            <br>
-            <small>{{ item.target }}</small>
-          </div>
-        </li>
-      </ul>
-
-      <footer>
-        <a target="_blank" href="https://github.com/typicode/hotel">
-          readme <sup class="version">v{{ version }}</sup>
-        </a>
-      </footer>
-    </aside>
-    <main
-      ref="output"
-      :style="{ display: selected ? null : 'none' }"
-      :class="[{ 'is-dark': isDark }, 'hero']"
-      @scroll="onScroll">
-      <nav role="navigation" aria-label="log navigation">
-        <button
-          id="back"
-          :class="[{ 'is-black': isDark }, 'button']"
-          title="close"
-          @click="deselect">
-          <span class="icon">
-            <i class="ion-chevron-left is-hidden-tablet"></i>
-            <i class="ion-close is-hidden-mobile"></i>
-          </span>
-        </button>
-        <div class="spacer is-hidden-mobile"></div>
-        <h1 class="name is-hidden-tablet">{{ selected }}</h1>
-        <button
-          id="down"
-          :class="[{ 'is-black': isDark }, 'button']"
-          title="scroll to bottom"
-          @click="scrollToBottom">
-          <span class="icon">
-            <i class="ion-arrow-down-c"></i>
-          </span>
-        </button>
-        <button
-          id="theme"
-          :class="[{ 'is-black': isDark }, 'button']"
-          title="switch theme"
-          @click="switchTheme">
-          <span class="icon">
-            <i class="ion-lightbulb"></i>
-          </span>
-        </button>
-      </nav>
-      <pre :style="{ display: output.length === 0 ? 'flex': 'block' }">
-        <div v-if="monitors[selected]">
-          $ cd {{ monitors[selected].cwd }}<br>
-          $ {{ prettyCommand }}
-        </div>
-        <div class="blank-slate" v-if="output.length === 0">
-          no logs
-        </div>
-        <div
-          v-for="item in output"
-          v-html="item.text"
-          :key="item.uid">
-        </div>
-      </pre>
-    </main>
-    <main
-      :style="{ display: selected ? 'none' : null }"
-      class="blank-slate hero is-hidden-mobile">
-      choose an app to view its logs
-    </main>
+            <button
+              id="theme"
+              :class="[{ 'is-black': isDark }, 'button']"
+              title="switch theme"
+              @click="switchTheme">
+              <span class="icon">
+                <i class="ion-lightbulb"></i>
+              </span>
+            </button>
+          </nav>
+          <pre :style="{ display: output.length === 0 ? 'flex': 'block' }">
+            <div v-if="monitors[selected]">
+              $ cd {{ monitors[selected].cwd }}<br>
+              $ {{ prettyCommand }}
+            </div>
+            <div class="blank-slate" v-if="output.length === 0">
+              no logs
+            </div>
+            <div
+              v-for="item in output"
+              v-html="item.text"
+              :key="item.uid">
+            </div>
+          </pre>
+        </main>
+        <main
+          :style="{ display: selected ? 'none' : null }"
+          class="blank-slate hero is-hidden-mobile">
+          choose an app to view its logs
+        </main>
+      </div>
+    </div>
   </div>
 </template>
 
