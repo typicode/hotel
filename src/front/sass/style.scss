@@ -76,6 +76,11 @@ main {
   flex-grow: 1;
   background: #F9F9F9;
   color: #212121;
+  .is-dark & {
+    background: #212121;
+    color: #F9F9F9;
+  }
+
   pre {
     font-family: $monospace-font;
     margin: 0;
@@ -145,11 +150,6 @@ nav {
   }
 }
 
-.dark {
-  background: #212121;
-  color: #F9F9F9;
-  transition: background 0.2s, color 0.2s;
-}
 .flex-spacer {
   flex: 1;
 }

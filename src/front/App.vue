@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="{ 'is-dark': isDark }">
     <!-- list -->
     <aside v-show="isListFetched">
       <div class="fade-in" v-show="isListEmpty">
@@ -83,7 +83,7 @@
     <main
       ref="output"
       :style="{ display: selected ? null : 'none' }"
-      :class="[{ 'is-dark': isDark }, 'hero']"
+      class="hero"
       @scroll="onScroll">
       <nav role="navigation" aria-label="log navigation">
         <button
