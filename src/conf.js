@@ -1,9 +1,4 @@
-const fs = require('fs')
-const mkdirp = require('mkdirp')
-const { hotelDir, confFile } = require('./common')
-
-// Create dir
-mkdirp.sync(hotelDir)
+const conf = require('./raw-conf')
 
 // Defaults
 const defaults = {
@@ -15,12 +10,6 @@ const defaults = {
   // For example, if you're behind a corporate proxy
   proxy: false
 }
-
-// Create empty conf it it doesn't exist
-if (!fs.existsSync(confFile)) fs.writeFileSync(confFile, '{}')
-
-// Read file
-const conf = JSON.parse(fs.readFileSync(confFile))
 
 // Assign defaults and export
 module.exports = { ...defaults, ...conf }
