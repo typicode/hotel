@@ -2,7 +2,7 @@ const path = require('path')
 
 module.exports = {
   target: 'web',
-  entry: ['babel-polyfill', 'whatwg-fetch', './src/front/index.js'],
+  entry: ['babel-polyfill', 'whatwg-fetch', './src/front/index.jsx'],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js'
@@ -10,23 +10,17 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
       },
       {
         test: /\.json$/,
         loader: 'json-loader'
-      },
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader'
       }
     ]
   },
   resolve: {
-    alias: {
-      vue$: 'vue/dist/vue.esm.js'
-    }
+    extensions: ['.js', '.jsx']
   }
 }

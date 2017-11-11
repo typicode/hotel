@@ -1,6 +1,15 @@
 @import "../../../node_modules/bulma/bulma";
 @import "../../../node_modules/bulma-switch/switch";
 
+$base-font: -apple-system, BlinkMacSystemFont,
+  "Segoe UI", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans",
+  "Droid Sans", "Helvetica Neue", sans-serif;
+$monospace-font: "Courier New", Courier, monospace;
+
+$padding: 1rem;
+$inner-padding: $padding / 2;
+
 @mixin mobile {
   @media (max-width: 768px) {
     @content;
@@ -12,21 +21,88 @@
   }
 }
 
+[hidden] {
+  display: none !important;
+}
+
+body {
+  font-family: $base-font;
+  color: #212121;
+  padding: 0;
+  margin: 0;
+}
+
+#app {
+  display: flex;
+}
+
+aside, main {
+  padding: $padding;
+  height: 100vh;
+}
+
+aside {
+  @include desktop {
+    min-width: 365px;
+    border-right: 1px solid #F0F0F0;
+  }
+  @include mobile {
+    width: 100vw;
+  }
+  display: flex !important;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-between;
+  overflow-y: auto;
+
+  .hotel-menu {
+    flex: 1;
+
+    overflow-y: auto;
+
+    .level {
+      padding: $inner-padding;
+
+      .monitor-info {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  }
+}
+
+code {
+  padding: 10px;
+  display: inline-block;
+}
+
 pre, code {
   background: #F9F9F9;
 }
 
 main {
+  position: relative; /* needed for #down */
+  flex-grow: 1;
   background: #F9F9F9;
   color: #212121;
+  .is-dark & {
+    background: #212121;
+    color: #F9F9F9;
+  }
+
   pre {
     font-family: $monospace-font;
+    padding: 0;
+    word-break: break-all;
+  }
+  .main-content {
     margin: 0;
     background: transparent;
     white-space: normal;
     color: inherit;
     flex: 1;
     flex-direction: column;
+    min-height: 100px;
 
     @include mobile {
       font-size: 0.8rem;
@@ -35,7 +111,7 @@ main {
   overflow-y: scroll;
 
   @include mobile {
-    padding-top: 5.25rem; // 2rem padding + 2.25rem button + 1rem top margin
+    padding-top: 2rem /* padding */ + 2.25rem /* button */ + $padding /* top margin */;
     position: absolute;
     left: 0;
     width: 100%;
@@ -50,8 +126,42 @@ main {
   font-size: 150%;
   color: #999;
   flex: 1;
+  text-align: center;
+  flex-direction: column;
+
+  pre {
+    text-align: left;
+    font-size: 60%;
+  }
+
+  .main-content {
+    flex: 0;
+  }
 }
 
+<<<<<<< HEAD
+=======
+.log-line {
+  display: flex;
+  &[data-log-type='meta'] {
+    border-bottom: 1px solid #ccc;
+    margin: #{$inner-padding} #{-$padding}; // #{...} is a hack to stop it from interpreting it as `0-$padding`
+    padding: 0 $padding;
+    font-family: $base-font;
+  }
+
+  .log-body {
+    flex: 1;
+  }
+  .timestamp {
+    font-size: 0.8em;
+    opacity: 0.5;
+    pointer-events: none;
+    font-family: $base-font;
+  }
+}
+
+>>>>>>> 1ef2b23... Polish the app styles
 nav {
   display: flex;
   @include mobile {
@@ -61,11 +171,11 @@ nav {
     left: 0;
   }
   @include desktop {
-    margin: -1rem;
-    margin-bottom: 0;
+    margin: -$padding;
+    margin-bottom: $padding;
   }
 
-  padding: 1rem;
+  padding: $padding;
 
   background: #fcfcfc;
   border-bottom: 1px solid #ddd;
@@ -76,14 +186,11 @@ nav {
   }
 
   button:not(:first-child) {
-    margin-left: 1rem;
-  }
-
-  .spacer {
-    flex: 1;
+    margin-left: $padding;
   }
 
   .name {
+    padding-left: 3.25rem;
     flex: 1;
     display: flex;
     align-items: center;
@@ -92,10 +199,47 @@ nav {
   }
 }
 
-.dark {
-  background: #212121;
-  color: #F9F9F9;
-  transition: background 0.2s, color 0.2s;
+.flex-spacer {
+  flex: 1;
+}
+
+footer {
+  padding: 0 $inner-padding;
+  padding-top: $padding;
+  display: flex;
+  justify-content: space-between;
+  a {
+    &:hover {
+      text-decoration: none;
+    }
+    @include mobile {
+      .version {
+        vertical-align: baseline;
+        color: gray;
+
+        &::before { content: '(' }
+        &::after { content: ')' }
+      }
+    }
+    @include desktop {
+      &:not(:hover) .version {
+        visibility: hidden;
+      }
+    }
+  }
+}
+
+/* Make it easier to click */
+button.status.running {
+  color: #14B8CC;
+}
+
+button.logs.selected {
+  color: #212121;
+}
+
+button.logs {
+  margin-right: 0 !important;
 }
 
 /*ANIMATE ASIDE ITEMS*/
