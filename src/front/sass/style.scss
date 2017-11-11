@@ -7,6 +7,9 @@ $base-font: -apple-system, BlinkMacSystemFont,
   "Droid Sans", "Helvetica Neue", sans-serif;
 $monospace-font: "Courier New", Courier, monospace;
 
+$padding: 1rem;
+$inner-padding: $padding / 2;
+
 @mixin mobile {
   @media (max-width: 768px) {
     @content;
@@ -30,7 +33,7 @@ body {
 }
 
 aside, main {
-  padding: 1rem;
+  padding: $padding;
   height: 100vh;
 }
 
@@ -53,7 +56,7 @@ aside {
   flex: 1;
 
   .level {
-    padding: 0.5rem;
+    padding: $inner-padding;
   }
 }
 
@@ -87,7 +90,7 @@ main {
   overflow-y: scroll;
 
   @include mobile {
-    padding-top: 5.25rem; // 2rem padding + 2.25rem button + 1rem top margin
+    padding-top: 2rem /* padding */ + 2.25rem /* button */ + $padding /* top margin */;
     position: absolute;
     left: 0;
     width: 100%;
@@ -113,11 +116,11 @@ nav {
     left: 0;
   }
   @include desktop {
-    margin: -1rem;
+    margin: -$padding;
     margin-bottom: 0;
   }
 
-  padding: 1rem;
+  padding: $padding;
 
   background: #fcfcfc;
   border-bottom: 1px solid #ddd;
@@ -128,7 +131,7 @@ nav {
   }
 
   button:not(:first-child) {
-    margin-left: 1rem;
+    margin-left: $padding;
   }
 
   .spacer {
@@ -151,7 +154,7 @@ nav {
 }
 
 footer {
-  padding: 0.5rem;
+  padding: $inner-padding;
   a {
     &:hover {
       text-decoration: none;
