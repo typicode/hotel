@@ -83,12 +83,15 @@ main {
 
   pre {
     font-family: $monospace-font;
+  }
+  .main-content {
     margin: 0;
     background: transparent;
     white-space: normal;
     color: inherit;
     flex: 1;
     flex-direction: column;
+    min-height: 100px;
 
     @include mobile {
       font-size: 0.8rem;

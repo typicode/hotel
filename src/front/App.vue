@@ -117,7 +117,7 @@
           </span>
         </button>
       </nav>
-      <pre :style="{ display: output.length === 0 ? 'flex': 'block' }">
+      <pre class="main-content" :style="{ display: output.length === 0 ? 'flex': 'block' }">
         <div v-if="monitors[selected]">
           $ cd {{ monitors[selected].cwd }}<br>
           $ {{ prettyCommand }}
