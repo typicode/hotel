@@ -3,16 +3,12 @@ const path = require('path')
 const chalk = require('chalk')
 const tildify = require('tildify')
 const mkdirp = require('mkdirp')
+const inquirer = require('inquirer')
+const opn = require('opn')
 const common = require('../common')
 const api = require('./api')
 
 const serversDir = common.serversDir
-
-module.exports = {
-  add,
-  rm,
-  ls
-}
 
 function isUrl(str) {
   return /^(http|https):/.test(str)
@@ -55,6 +51,91 @@ function colorizeIdFromStatus(text, status) {
       return text
   }
 }
+
+function getCurrentApp(servers) {
+  const currentCwd = fs.realpathSync(process.cwd())
+  const serverNames = servers
+    .filter(([id, { cwd }]) => cwd) // remove proxies
+    .map(([id, { cwd }]) => [id, fs.realpathSync(cwd)])
+  const exactMatch = serverNames.filter(([id, cwd]) => cwd === currentCwd)
+  const parents = serverNames.filter(([id, cwd]) =>
+    /^(\.\.[\/\\])*\.\.$/.test(path.relative(currentCwd, cwd))
+  )
+
+  if (exactMatch.length) {
+    return exactMatch
+  } else if (parents.length) {
+    const minLength = parents
+      .map(([id, cwd]) => path.relative(currentCwd, cwd).length)
+      .reduce((a, b) => Math.min(a, b))
+
+    return parents.filter(
+      ([id, cwd]) => path.relative(currentCwd, cwd).length === minLength
+    )
+  }
+  return []
+}
+
+// NOTE: Returns a `Promise`
+function acquireAppName(hint) {
+  const servers = api
+    .getServerList()
+    .servers.filter(([id, server]) => server.cmd)
+  let results = []
+  if (hint) {
+    results = servers.filter(([id]) => id.includes(hint))
+    if (!results.length) {
+      console.error(
+        chalk.red(chalk`Could not find app matching {underline.bold ${hint}}`)
+      )
+    }
+  } else {
+    results = getCurrentApp(servers)
+    console.error(chalk.yellow('Could not find an app for this directory'))
+  }
+
+  if (!results.length) results = servers
+  if (results.length === 1) {
+    return Promise.resolve(results[0][0])
+  } else {
+    return inquirer
+      .prompt([
+        {
+          type: 'list',
+          name: 'appName',
+          message: 'Please select an app:',
+          choices: results.map(([id]) => id)
+        }
+      ])
+      .then(result => result.appName)
+      .catch(err => console.error('Thing failed\n' + chalk.gray(err.stack)))
+  }
+}
+
+function logStack(err) {
+  console.error(chalk.red('ERR! ') + err.message)
+  console.error(
+    chalk.gray(err.stack.replace('Error: ' + err.message + '\n', ''))
+  )
+}
+
+function withAppName(cb) {
+  return ({ search }) =>
+    acquireAppName(search)
+      .then(name => {
+        if (!name) return
+        cb(name)
+      })
+      .catch(logStack)
+}
+
+/*
+ *  ██████  ██████  ███    ███ ███    ███  █████  ███    ██ ██████  ███████
+ * ██      ██    ██ ████  ████ ████  ████ ██   ██ ████   ██ ██   ██ ██
+ * ██      ██    ██ ██ ████ ██ ██ ████ ██ ███████ ██ ██  ██ ██   ██ ███████
+ * ██      ██    ██ ██  ██  ██ ██  ██  ██ ██   ██ ██  ██ ██ ██   ██      ██
+ *  ██████  ██████  ██      ██ ██      ██ ██   ██ ██   ████ ██████  ███████
+ */
 
 function add(param, opts = {}) {
   mkdirp.sync(serversDir)
@@ -181,5 +262,31 @@ function ls(opts = {}) {
     .filter(item => item)
     .join(opts.verbose ? '\n\n' : '\n')
 
-  console.log(list)
+  console.log(list + '\n')
+}
+
+const up = withAppName(name => {
+  api.server(name).start()
+  console.log(chalk`Started {bold ${name}}.`)
+})
+
+const down = withAppName(name => {
+  api.server(name).start()
+  console.log(chalk`Stopped {bold ${name}}.`)
+})
+
+const open = withAppName(name => {
+  opn(`${api.host}/${name}`, {
+    wait: false // don’t wait for the tab to be closed before returning
+  })
+  console.log(chalk`Opening {bold ${name}}...`)
+})
+
+module.exports = {
+  add,
+  rm,
+  ls,
+  up,
+  down,
+  open
 }
