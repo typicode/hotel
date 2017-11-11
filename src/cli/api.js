@@ -5,6 +5,9 @@ const conf = require('../conf')
 
 const api = exports
 
+api.host = `http://${conf.host}:${conf.port}`
+api.root = `${api.host}/_/`
+
 /*
  * ██   ██ ███████ ██      ██████  ███████ ██████  ███████
  * ██   ██ ██      ██      ██   ██ ██      ██   ██ ██
@@ -15,18 +18,20 @@ const api = exports
 
 /**
  * Fetch something from the API
- * @param  {string} route The route to fetch data from
- * @return {string}       The raw response body (UTF-8 encoded)
+ * @param  {string} route          The route to fetch data from
+ * @param  {string} [method="GET"] The method to request with
+ * @return {string}                The raw response body (UTF-8 encoded)
  */
-api.fetch = route =>
-  request('GET', `http://${conf.host}:${conf.port}/_/${route}`).getBody('utf-8')
+api.fetch = (route, method = 'GET') =>
+  request(method, api.root + route).getBody('utf-8')
 
 /**
  * Load data from the API as JSON
- * @param  {string}       route The route to fetch data from
- * @return {Object|Array}       The JSON data
+ * @param  {string}       route          The route to fetch data from
+ * @param  {string}       [method="GET"] The method to request with
+ * @return {Object|Array}                The JSON data
  */
-api.json = route => JSON.parse(api.fetch(route))
+api.json = (route, method) => JSON.parse(api.fetch(route, method))
 
 /*
  * ██████   ██████  ██    ██ ████████ ███████ ███████
