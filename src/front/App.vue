@@ -38,14 +38,16 @@
 
           <!-- start/stop button -->
           <div class="level-right">
-            <button
-              :title="isRunning(id) ? 'stop' : 'start'"
-              :class="['status', 'button', 'level-item', isRunning(id) ? 'is-success' : 'is-white']"
-              @click="toggle(id)">
-              <span class="icon">
-                <i :class="isRunning(id) ? 'ion-toggle-filled' : 'ion-toggle'"></i>
-              </span>
-            </button>
+            <div class="level-item">
+              <input
+                :id="'app-toggle-'+id"
+                type="checkbox"
+                class="switch is-rounded is-small is-success"
+                :title="isRunning(id) ? 'stop' : 'start'"
+                @click="toggle(id)"
+                :checked="isRunning(id)">
+              <label :for="'app-toggle-'+id">&nbsp;</label>
+            </div>
 
             <!-- view logs button -->
             <button
