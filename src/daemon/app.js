@@ -8,10 +8,7 @@ const conf = require('../conf')
 // Require routes
 const IndexRouter = require('./routers')
 const APIRouter = require('./routers/api')
-const Events = require('./events')
 const TLDHost = require('./vhosts/tld')
-
-const API_ROOT = '/_'
 
 module.exports = group => {
   const app = express()
@@ -20,7 +17,6 @@ module.exports = group => {
   // Initialize routes
   const indexRouter = IndexRouter(group)
   const api = APIRouter(group)
-  const events = Events(group)
   const tldHost = TLDHost(group)
 
   // requests timeout
@@ -31,11 +27,8 @@ module.exports = group => {
   app.set('view engine', 'pug')
   app.locals.pretty = true
 
-  // Server-sent events for servers
-  app.use(`${API_ROOT}/events`, events)
-
   // API
-  app.use(`${API_ROOT}/servers`, api)
+  app.use('/_', api)
 
   // .tld host
   app.use(vhost(new RegExp(`.*.${conf.tld}`), tldHost))
