@@ -96,7 +96,7 @@
             <i class="ion-close is-hidden-mobile"></i>
           </span>
         </button>
-        <div class="spacer is-hidden-mobile"></div>
+        <div class="flex-spacer is-hidden-mobile"></div>
         <h1 class="name is-hidden-tablet">{{ selected }}</h1>
         <button
           id="down"

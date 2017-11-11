@@ -136,10 +136,6 @@ nav {
     margin-left: $padding;
   }
 
-  .spacer {
-    flex: 1;
-  }
-
   .name {
     flex: 1;
     display: flex;
@@ -153,6 +149,9 @@ nav {
   background: #212121;
   color: #F9F9F9;
   transition: background 0.2s, color 0.2s;
+}
+.flex-spacer {
+  flex: 1;
 }
 
 footer {
