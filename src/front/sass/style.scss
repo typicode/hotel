@@ -47,16 +47,18 @@ aside {
   }
   display: flex !important;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
   justify-content: space-between;
   overflow-y: auto;
-}
 
-.hotel-menu {
-  flex: 1;
+  .hotel-menu {
+    flex: 1;
 
-  .level {
-    padding: $inner-padding;
+    overflow-y: auto;
+
+    .level {
+      padding: $inner-padding;
+    }
   }
 }
 
@@ -154,7 +156,10 @@ nav {
 }
 
 footer {
-  padding: $inner-padding;
+  padding: 0 $inner-padding;
+  padding-top: $padding;
+  display: flex;
+  justify-content: space-between;
   a {
     &:hover {
       text-decoration: none;
