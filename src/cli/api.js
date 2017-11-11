@@ -45,6 +45,11 @@ api.servers = () => {
   const serverJSON = api.json('servers')
   return Object.keys(serverJSON).map(key => [key, serverJSON[key]])
 }
+api.server = id => ({
+  // TODO: api.server().get() to fetch metadata
+  start: () => api.fetch(`servers/${id}/start`, 'POST'),
+  stop: () => api.fetch(`servers/${id}/stop`, 'POST')
+})
 
 /*
  * ███████ ██   ██ ████████ ██████   █████  ███████
