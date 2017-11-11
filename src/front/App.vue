@@ -16,7 +16,7 @@
       </div>
       <ul class="hotel-menu">
         <!-- monitors list -->
-        <li class="level fade-in is-mobile monitor" v-for="(item, id) in monitors">
+        <li class="level fade-in is-mobile" v-for="(item, id) in monitors">
           <!-- monitor -->
           <div class="level-left">
             <div class="level-item">
@@ -60,7 +60,7 @@
         </li>
 
         <!-- proxies list -->
-        <li v-for="(item, id) in proxies">
+        <li class="level fade-in is-mobile" v-for="(item, id) in proxies">
           <div>
             <a
               :href="href(id)"
