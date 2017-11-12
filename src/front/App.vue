@@ -8,7 +8,7 @@
           You're successfully running hotel.
         </p>
         <p>
-          To add a server, use <code style="padding: 5px">hotel add</code>
+          To add a server, use <code :style="{padding: 5}">hotel add</code>
         </p>
         <pre><code>~/app$ hotel add 'cmd'
 ~/app$ hotel add 'cmd -p $PORT'
