@@ -1,17 +1,15 @@
 import React from 'react'
-import ansi2HTML from 'ansi2html'
-import escapeHTML from 'escape-html'
 import difference from 'lodash.difference'
 import uid from 'uid'
 import cx from 'classnames'
 import Immutable from 'immutable'
 
-import { blankLine } from './filters'
 import * as api from './api'
 import { version } from '../../package.json'
 
 import { IconButton, CloseButton } from './components/button'
 import { Icon } from './components/icon'
+import { Log } from './components/log'
 import { Monitor } from './components/monitor'
 
 export class App extends React.Component {
@@ -63,29 +61,13 @@ export class App extends React.Component {
   }
   watchOutput() {
     api.watchOutput(({ id, output }) => {
-      let outputs = this.state.outputs
-      // add output
-      output
-        .replace(/\n$/, '')
-        .split('\n')
-        .map(line => {
-          // filter line
-          line = escapeHTML(line)
-          line = ansi2HTML(line)
-          line = blankLine(line)
-          return line
-        })
-        .forEach(line => {
-          outputs = outputs.set(
-            id,
-            outputs
-              .get(id)
-              .push({ __html: line, uid: uid() })
-              // keep 1000 lines only
-              .slice(0, 1000)
+      for (const line of Immutable.fromJS(output)) {
+        this.setState({
+          outputs: this.state.outputs.update(id, lines =>
+            lines.push(line.set('uid', uid())).slice(-1000)
           )
         })
-      this.setState({ outputs })
+      }
     })
   }
   startMonitor(id) {
@@ -330,7 +312,7 @@ export class App extends React.Component {
               <div className="blank-slate">no logs</div>
             )}
             {this.output().map(item => (
-              <div key={item.uid} dangerouslySetInnerHTML={item} />
+              <Log key={item.get('uid')} item={item} />
             ))}
           </pre>
         </main>

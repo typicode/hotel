@@ -32,10 +32,11 @@ module.exports = group => {
   })
 
   router.get('/output', sse, (req, res) => {
-    function sendOutput(id, data) {
+    function sendOutput(id, output) {
+      if (!Array.isArray(output)) output = [output]
       res.json({
         id,
-        output: data.toString()
+        output
       })
     }
 

@@ -89,6 +89,7 @@ main {
     font-family: $monospace-font;
     padding: 0;
     word-break: break-all;
+    overflow-x: visible;
   }
   .main-content {
     margin: 0;
@@ -121,6 +122,26 @@ main {
   font-size: 150%;
   color: #999;
   flex: 1;
+}
+
+.log-line {
+  display: flex;
+  &[data-log-type='meta'] {
+    border-bottom: 1px solid #ccc;
+    margin: #{0} -$padding; // #{0} is a hack to stop it from interpreting it as `0-$padding`
+    padding: 0 $padding;
+    font-family: $base-font;
+  }
+
+  .log-body {
+    flex: 1;
+  }
+  .timestamp {
+    font-size: 0.8em;
+    opacity: 0.5;
+    pointer-events: none;
+    font-family: $base-font;
+  }
 }
 
 nav {
