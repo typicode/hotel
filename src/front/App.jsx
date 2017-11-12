@@ -10,6 +10,9 @@ import { blankLine } from './filters'
 import * as api from './api'
 import { version } from '../../package.json'
 
+import { IconButton, CloseButton } from './components/button'
+import { Icon } from './components/icon'
+
 export class App extends React.Component {
   state = {
     list: Immutable.Map(),
@@ -28,7 +31,7 @@ export class App extends React.Component {
   }
   componentDidUpdate() {
     if (this.state.outputScroll) {
-      this.scrollToBottom()
+      this.scrollToBottom(false)
     }
   }
 
@@ -151,10 +154,12 @@ export class App extends React.Component {
       outputScroll: scrollHeight - scrollTop === clientHeight
     })
   }
-  scrollToBottom() {
-    this.setState({
-      outputScroll: true
-    })
+  scrollToBottom(_setState = true) {
+    if (!this.state.outputScroll && _setState) {
+      this.setState({
+        outputScroll: true
+      })
+    }
     this.refs.output.scrollTop = this.refs.output.scrollHeight
   }
   switchTheme() {
@@ -279,20 +284,16 @@ export class App extends React.Component {
                     </div>
 
                     {/* view logs button */}
-                    <button
+                    <IconButton
                       title="view logs"
-                      className={cx(
+                      classes={[
                         'logs',
-                        'button',
                         'level-item',
                         this.state.selected === id ? 'is-dark' : 'is-white'
-                      )}
+                      ]}
                       onClick={() => this.select(id)}
-                    >
-                      <span className="icon">
-                        <i className="ion-ios-paper" />
-                      </span>
-                    </button>
+                      icon="ios-paper"
+                    />
                   </div>
                 </li>
               ))}
@@ -325,64 +326,43 @@ export class App extends React.Component {
               readme <sup className="version">v{version}</sup>
             </a>
             {/* config button */}
-            <button
+            <IconButton
               title="change config"
-              className={cx(
-                'logs',
-                'button',
+              classes={[
+                'config',
                 this.state.configOpen ? 'is-dark' : 'is-white'
-              )}
+              ]}
               onClick={() => this.toggleConfig()}
+              icon="settings"
               style={{ float: 'right' }}
-            >
-              <span className="icon">
-                <i className="ion-settings" />
-              </span>
-            </button>
+            />
           </footer>
         </aside>
         <main
           ref="output"
-          style={{
-            display: this.state.selected ? null : 'none'
-          }}
+          hidden={!this.state.selected}
           className="hero"
           onScroll={event => this.onScroll(event)}
         >
           <nav role="navigation" aria-label="log navigation">
-            <button
-              id="back"
-              className={cx(blackIfDark, 'button')}
-              title="close"
+            <CloseButton
+              classes={blackIfDark}
               onClick={() => this.deselect()}
-            >
-              <span className="icon">
-                <i className="ion-chevron-left is-hidden-tablet" />
-                <i className="ion-close is-hidden-mobile" />
-              </span>
-            </button>
+            />
             <div className="flex-spacer is-hidden-mobile" />
             <h1 className="name is-hidden-tablet">{this.state.selected}</h1>
-            <button
-              id="down"
-              className={cx(blackIfDark, 'button')}
+            <IconButton
               title="scroll to bottom"
+              classes={blackIfDark}
               onClick={() => this.scrollToBottom()}
-            >
-              <span className="icon">
-                <i className="ion-arrow-down-c" />
-              </span>
-            </button>
-            <button
-              id="theme"
-              className={cx(blackIfDark, 'button')}
+              icon="arrow-down-c"
+            />
+            <IconButton
               title="switch theme"
+              classes={blackIfDark}
               onClick={() => this.switchTheme()}
-            >
-              <span className="icon">
-                <i className="ion-lightbulb" />
-              </span>
-            </button>
+              icon="lightbulb"
+            />
           </nav>
           <pre
             className="main-content"
@@ -407,64 +387,36 @@ export class App extends React.Component {
           </pre>
         </main>
         <main
-          style={{
-            display:
-              this.state.selected || this.state.configOpen ? 'none' : null
-          }}
+          hidden={this.state.selected || this.state.configOpen}
           className="blank-slate hero is-hidden-mobile"
         >
           choose an app to view its logs
         </main>
-        <main
-          style={{ display: this.state.configOpen ? null : 'none' }}
-          className="config hero"
-        >
+        <main hidden={!this.state.configOpen} className="config hero">
           <nav role="navigation" aria-label="config navigation">
-            <button
-              id="back"
-              className={cx(blackIfDark, 'button')}
-              title="close"
+            <CloseButton
+              classes={blackIfDark}
               onClick={() => this.toggleConfig()}
-            >
-              <span className="icon">
-                <i className="ion-chevron-left is-hidden-tablet" />
-                <i className="ion-close is-hidden-mobile" />
-              </span>
-            </button>
+            />
             <h1 className="name is-hidden-mobile">
-              <span
-                className="icon is-medium"
-                style={{ margin: '-1rem', fontSize: '2em' }}
-              >
-                <i className="ion-settings" />
-              </span>
+              <Icon name="settings" size="medium" style={{ margin: '-1rem' }} />
             </h1>
             <h1 className="name is-hidden-tablet">
-              <span className="icon is-medium">
-                <i className="ion-settings" />
-              </span>
+              <Icon name="settings" size="medium" />
               Config
             </h1>
-            <button
-              id="save"
-              className={cx(blackIfDark, 'button')}
-              title="save changes"
+            <IconButton
+              title="save"
+              classes={blackIfDark}
               onClick={() => this.saveChanges()}
-            >
-              <span className="icon">
-                <i className="ion-checkmark" />
-              </span>
-            </button>
-            <button
-              id="theme"
-              className={cx(blackIfDark, 'button')}
+              icon="checkmark"
+            />
+            <IconButton
               title="switch theme"
+              classes={blackIfDark}
               onClick={() => this.switchTheme()}
-            >
-              <span className="icon">
-                <i className="ion-lightbulb" />
-              </span>
-            </button>
+              icon="lightbulb"
+            />
           </nav>
           <div className="main-content">
             <h1
