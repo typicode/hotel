@@ -78,11 +78,21 @@
         <a target="_blank" href="https://github.com/typicode/hotel">
           readme <sup class="version">v{{ version }}</sup>
         </a>
+        <!-- config button -->
+        <button
+          title="change config"
+          :class="['logs', 'button', configOpen ? 'is-dark' : 'is-white']"
+          @click="toggleConfig"
+          style="float: right">
+          <span class="icon">
+            <i class="ion-settings"></i>
+          </span>
+        </button>
       </footer>
     </aside>
     <main
       ref="output"
-      :style="{ display: selected ? null : 'none' }"
+      :style="{ display: selected && !configOpen ? null : 'none' }"
       class="hero"
       @scroll="onScroll">
       <nav role="navigation" aria-label="log navigation">
@@ -133,9 +143,61 @@
       </pre>
     </main>
     <main
-      :style="{ display: selected ? 'none' : null }"
+      :style="{ display: selected || configOpen ? 'none' : null }"
       class="blank-slate hero is-hidden-mobile">
       choose an app to view its logs
+    </main>
+    <main
+      :style="{ display: configOpen ? null : 'none' }"
+      class="config hero">
+      <nav role="navigation" aria-label="config navigation">
+        <button
+          id="back"
+          :class="[{ 'is-black': isDark }, 'button']"
+          title="close"
+          @click="toggleConfig">
+          <span class="icon">
+            <i class="ion-chevron-left is-hidden-tablet"></i>
+            <i class="ion-close is-hidden-mobile"></i>
+          </span>
+        </button>
+        <h1 class="name is-hidden-mobile">
+          <span class="icon is-medium" :style="{margin: '-1rem', font-size: '2em'}">
+            <i class="ion-settings"></i>
+          </span>
+        </h1>
+        <h1 class="name is-hidden-tablet">
+          <span class="icon is-medium">
+            <i class="ion-settings"></i>
+          </span>
+          Config
+        </h1>
+        <button
+          id="save"
+          :class="[{ 'is-black': isDark }, 'button']"
+          title="save changes"
+          @click="saveChanges">
+          <span class="icon">
+            <i class="ion-checkmark"></i>
+          </span>
+        </button>
+        <button
+          id="theme"
+          :class="[{ 'is-black': isDark }, 'button']"
+          title="switch theme"
+          @click="switchTheme">
+          <span class="icon">
+            <i class="ion-lightbulb"></i>
+          </span>
+        </button>
+      </nav>
+      <div class="main-content">
+        <h1
+          class="title is-1 is-hidden-mobile has-text-centered"
+          :style="{marginTop: '0.5em', color: 'inherit'}">
+          Config
+        </h1>
+      </div>
     </main>
   </div>
 </template>
@@ -163,6 +225,7 @@ export default {
       outputs: {},
       outputScroll: true,
       isListFetched: false,
+      configOpen: true,
       version,
       isDark: JSON.parse(localStorage.getItem('isDark')) || false
     }
@@ -245,6 +308,7 @@ export default {
         this.selected = null
       } else {
         this.selected = id
+        this.configOpen = false
       }
     },
     isSelected (id) {
@@ -264,6 +328,10 @@ export default {
     switchTheme () {
       this.isDark = !this.isDark
       localStorage.setItem('isDark', JSON.stringify(this.isDark))
+    },
+    toggleConfig () {
+      this.deselect()
+      this.configOpen = !this.configOpen
     }
   },
   watch: {

@@ -164,7 +164,9 @@ footer {
   padding: 0 $inner-padding;
   padding-top: $padding;
   display: flex;
+  align-items: center;
   justify-content: space-between;
+
   a {
     &:hover {
       text-decoration: none;
