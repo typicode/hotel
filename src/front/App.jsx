@@ -12,6 +12,7 @@ import { version } from '../../package.json'
 
 import { IconButton, CloseButton } from './components/button'
 import { Icon } from './components/icon'
+import { Monitor } from './components/monitor'
 
 export class App extends React.Component {
   state = {
@@ -234,68 +235,15 @@ export class App extends React.Component {
             {Object.keys(this.monitors())
               .map(k => [k, this.monitors()[k]])
               .map(([id, item]) => (
-                <li key={id} className="level fade-in is-mobile">
-                  {/* monitor */}
-                  <div className="level-left">
-                    <div className="level-item">
-                      <div>
-                        <p>
-                          <a
-                            href={this.href(id)}
-                            title={this.title(id)}
-                            target="_blank"
-                          >
-                            {id}
-                          </a>
-                        </p>
-                        <p>
-                          <small
-                            onClick={() => this.select(id)}
-                            title={
-                              item.pid
-                                ? `PID ${item.get('pid')}\nStarted ${new Date(
-                                    item.get('started')
-                                  ).toLocaleString()}`
-                                : ''
-                            }
-                          >
-                            {item.get('status')}
-                          </small>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* start/stop button */}
-                  <div className="level-right">
-                    <div className="level-item">
-                      <input
-                        id={'app-toggle-' + id}
-                        type="checkbox"
-                        className="switch is-rounded is-small is-success"
-                        title={this.isRunning(id) ? 'stop' : 'start'}
-                        onChange={({ target: { checked } }) =>
-                          checked
-                            ? this.startMonitor(id)
-                            : this.stopMonitor(id)}
-                        checked={this.isRunning(id)}
-                      />
-                      <label htmlFor={'app-toggle-' + id}>&nbsp;</label>
-                    </div>
-
-                    {/* view logs button */}
-                    <IconButton
-                      title="view logs"
-                      classes={[
-                        'logs',
-                        'level-item',
-                        this.state.selected === id ? 'is-dark' : 'is-white'
-                      ]}
-                      onClick={() => this.select(id)}
-                      icon="ios-paper"
-                    />
-                  </div>
-                </li>
+                <Monitor
+                  key={id}
+                  id={id}
+                  item={item}
+                  onSelect={() => this.select(id)}
+                  onStart={() => this.startMonitor(id)}
+                  onStop={() => this.stopMonitor(id)}
+                  isSelected={this.state.selected === id}
+                />
               ))}
             {/* proxies list */}
             {Object.keys(this.proxies())
