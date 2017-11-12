@@ -21,6 +21,10 @@ $inner-padding: $padding / 2;
   }
 }
 
+[hidden] {
+  display: none !important;
+}
+
 body {
   font-family: $base-font;
   color: #212121;
@@ -129,7 +133,7 @@ nav {
   }
   @include desktop {
     margin: -$padding;
-    margin-bottom: 0;
+    margin-bottom: $padding;
   }
 
   padding: $padding;
