@@ -83,6 +83,8 @@ main {
 
   pre {
     font-family: $monospace-font;
+    padding: 0;
+    word-break: break-all;
   }
   .main-content {
     margin: 0;
