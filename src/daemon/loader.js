@@ -49,6 +49,10 @@ module.exports = (group, opts = { watch: true }) => {
       .on('change', file => handleChange(group, file))
       .on('unlink', file => handleUnlink(group, file))
   }
+  log(`Watching ${common.confFile}`)
+  chokidar
+    .watch(common.confFile)
+    .on('change', () => process.send({ command: 'restart' }))
 
   // Bootstrap
   fs.readdirSync(dir).forEach(file => {
