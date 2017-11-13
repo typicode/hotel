@@ -7,10 +7,11 @@ import Immutable from 'immutable'
 import * as api from './api'
 import { version } from '../../package.json'
 
-import { IconButton, CloseButton } from './components/button'
+import { IconButton } from './components/button'
 import { Icon } from './components/icon'
 import { Log } from './components/log'
 import { ServerList } from './components/server-list'
+import { Main } from './components/main'
 
 import { Broadcast } from 'react-broadcast'
 import { isDarkChannel } from './context'
@@ -114,9 +115,6 @@ export class App extends React.Component {
     const item = this.state.list.get(id)
     return item && item.get('status') === 'running'
   }
-  toggle(id) {
-    this.isRunning(id) ? this.stopMonitor(id) : this.startMonitor(id)
-  }
   selectMonitor = id => {
     if (this.state.selected === id) {
       this.setState({
@@ -129,35 +127,34 @@ export class App extends React.Component {
       })
     }
   }
-  deselect() {
+  deselect = () =>
     this.setState({
       selected: null
     })
-  }
-  onScroll(event) {
-    const { scrollHeight, scrollTop, clientHeight } = event.target
+  onScroll = ({ target: { scrollHeight, scrollTop, clientHeight } }) =>
     this.setState({
       outputScroll: scrollHeight - scrollTop === clientHeight
     })
-  }
-  scrollToBottom(_setState = true) {
+  scrollToBottom = (_setState = true) => {
     if (!this.state.outputScroll && _setState) {
       this.setState({
         outputScroll: true
       })
     }
-    this.outputEl.scrollTop = this.outputEl.scrollHeight
+    if (this.outputEl) {
+      this.outputEl.scrollTop = this.outputEl.scrollHeight
+    }
   }
-  outputRef(ref) {
+  outputRef = ref => {
     this.outputEl = ref
   }
-  switchTheme() {
+  switchTheme = () =>
     this.setState(({ isDark }) => {
       localStorage.setItem('isDark', JSON.stringify(!isDark))
       return { isDark: !isDark }
     })
-  }
-  toggleConfig() {
+
+  toggleConfig = () => {
     this.deselect()
     this.setState(({ configOpen }) => ({ configOpen: !configOpen }))
   }
@@ -205,7 +202,6 @@ export class App extends React.Component {
   }
 
   render() {
-    const blackIfDark = { 'is-black': this.state.isDark }
     return this.wrapInBroadcast(
       <div id="app" className={cx({ 'is-dark': this.state.isDark })}>
         {/* list */}
@@ -249,40 +245,30 @@ export class App extends React.Component {
                 'config',
                 this.state.configOpen ? 'is-dark' : 'is-white'
               ]}
-              onClick={() => this.toggleConfig()}
+              onClick={this.toggleConfig}
               icon="settings"
               style={{ float: 'right' }}
             />
           </footer>
         </aside>
-        <main
-          ref={this.outputRef}
-          hidden={!this.state.selected}
-          className="hero"
-          onScroll={event => this.onScroll(event)}
-        >
-          <nav role="navigation" aria-label="log navigation">
-            <CloseButton
-              classes={blackIfDark}
-              onClick={() => this.deselect()}
-            />
-            <div className="flex-spacer is-hidden-mobile" />
-            <h1 className="name is-hidden-tablet">{this.state.selected}</h1>
+        <Main
+          visible={this.state.selected}
+          onRef={this.outputRef}
+          navLabel="log"
+          title={this.state.selected}
+          onClose={this.deselect}
+          onToggleTheme={this.switchTheme}
+          extraButton={
             <IconButton
+              themed
               title="scroll to bottom"
-              classes={blackIfDark}
-              onClick={() => this.scrollToBottom()}
+              onClick={this.scrollToBottom}
               icon="arrow-down-c"
             />
-            <IconButton
-              title="switch theme"
-              classes={blackIfDark}
-              onClick={() => this.switchTheme()}
-              icon="lightbulb"
-            />
-          </nav>
+          }
+          onScroll={this.onScroll}
+        >
           <pre
-            className="main-content"
             style={{
               display: this.output().isEmpty() ? 'flex' : 'block'
             }}
@@ -302,48 +288,44 @@ export class App extends React.Component {
               <Log key={item.get('uid')} item={item} />
             ))}
           </pre>
-        </main>
-        <main
-          hidden={this.state.selected || this.state.configOpen}
-          className="blank-slate hero is-hidden-mobile"
+        </Main>
+        <Main
+          visible={!this.state.selected && !this.state.configOpen}
+          className="blank-slate is-hidden-mobile"
+          showNavbar={false}
+          navLabel="config"
         >
           choose an app to view its logs
-        </main>
-        <main hidden={!this.state.configOpen} className="config hero">
-          <nav role="navigation" aria-label="config navigation">
-            <CloseButton
-              classes={blackIfDark}
-              onClick={() => this.toggleConfig()}
-            />
-            <h1 className="name is-hidden-mobile">
-              <Icon name="settings" size="medium" style={{ margin: '-1rem' }} />
-            </h1>
-            <h1 className="name is-hidden-tablet">
-              <Icon name="settings" size="medium" />
-              Config
-            </h1>
+        </Main>
+        <Main
+          visible={this.state.configOpen}
+          className="config"
+          navLabel="config"
+          title={
+            <Icon name="settings" size="medium" style={{ margin: '-1rem' }} />
+          }
+          mobileTitle={[
+            <Icon key="icon" name="settings" size="medium" />,
+            'Config'
+          ]}
+          extraButton={
             <IconButton
+              themed
               title="save"
-              classes={blackIfDark}
-              onClick={() => this.saveChanges()}
+              onClick={this.saveChanges}
               icon="checkmark"
             />
-            <IconButton
-              title="switch theme"
-              classes={blackIfDark}
-              onClick={() => this.switchTheme()}
-              icon="lightbulb"
-            />
-          </nav>
-          <div className="main-content">
-            <h1
-              className="title is-1 is-hidden-mobile has-text-centered"
-              style={{ marginTop: '0.5em', color: 'inherit' }}
-            >
-              Config
-            </h1>
-          </div>
-        </main>
+          }
+          onClose={this.toggleConfig}
+          onToggleTheme={this.switchTheme}
+        >
+          <h1
+            className="title is-1 is-hidden-mobile has-text-centered"
+            style={{ marginTop: '0.5em', color: 'inherit' }}
+          >
+            Config
+          </h1>
+        </Main>
       </div>
     )
   }
