@@ -8,7 +8,6 @@ import { Row } from './row'
 
 export class Monitor extends React.Component {
   static propTypes = {
-    id: PropTypes.string.isRequired,
     item: PropTypes.object.isRequired,
     onSelect: PropTypes.func.isRequired,
     onStart: PropTypes.func.isRequired,
@@ -20,13 +19,13 @@ export class Monitor extends React.Component {
     checked ? this.props.onStart() : this.props.onStop()
 
   render() {
-    const { id, item, onSelect, isSelected } = this.props
+    const { item, onSelect, isSelected } = this.props
     const isRunning = item.get('status') === 'running'
     return (
       <Row
-        href={href(id)}
+        href={href(item.get('id'))}
         title={`DIR: ${item.get('cwd')}\nCMD: ${item.get('command').join(' ')}`}
-        name={id}
+        name={item.get('id')}
         subtitle={
           item.get('pid') &&
           `PID ${item.get('pid')}\nStarted ${new Date(
@@ -37,14 +36,14 @@ export class Monitor extends React.Component {
         right={[
           <div key="start/stop button" className="level-item">
             <input
-              id={'app-toggle-' + id}
+              id={'app-toggle-' + item.get('id')}
               type="checkbox"
               className="switch is-rounded is-small is-success"
               title={isRunning ? 'stop' : 'start'}
               onChange={this.onToggle}
               checked={isRunning}
             />
-            <label htmlFor={'app-toggle-' + id}>&nbsp;</label>
+            <label htmlFor={'app-toggle-' + item.get('id')}>&nbsp;</label>
           </div>,
           <IconButton
             key="view logs button"

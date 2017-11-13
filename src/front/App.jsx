@@ -222,7 +222,6 @@ export class App extends React.Component {
               .map(([id, item]) => (
                 <Monitor
                   key={id}
-                  id={id}
                   item={item}
                   onSelect={() => this.select(id)}
                   onStart={() => this.startMonitor(id)}
