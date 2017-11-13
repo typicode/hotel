@@ -10,8 +10,7 @@ import { version } from '../../package.json'
 import { IconButton, CloseButton } from './components/button'
 import { Icon } from './components/icon'
 import { Log } from './components/log'
-import { Monitor } from './components/monitor'
-import { Proxy } from './components/proxy'
+import { ServerList } from './components/server-list'
 
 export class App extends React.Component {
   state = {
@@ -216,25 +215,13 @@ export class App extends React.Component {
               </code>
             </pre>
           </div>
-          <ul className="hotel-menu">
-            {/* monitors list */}
-            {Object.keys(this.monitors())
-              .map(k => [k, this.monitors()[k]])
-              .map(([id, item]) => (
-                <Monitor
-                  key={id}
-                  item={item}
-                  onSelect={() => this.select(id)}
-                  onStart={() => this.startMonitor(id)}
-                  onStop={() => this.stopMonitor(id)}
-                  isSelected={this.state.selected === id}
-                />
-              ))}
-            {/* proxies list */}
-            {Object.keys(this.proxies())
-              .map(k => [k, this.proxies()[k]])
-              .map(([id, item]) => <Proxy key={id} item={item} />)}
-          </ul>
+          <ServerList
+            items={this.state.list.toArray()} // .toArray() returns values
+            selected={this.state.selected}
+            onSelect={this.selectMonitor}
+            onStart={this.startMonitor}
+            onStop={this.stopMonitor}
+          />
 
           <footer>
             <a

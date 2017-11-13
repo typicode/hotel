@@ -15,17 +15,22 @@ export class Monitor extends React.Component {
     isSelected: PropTypes.bool.isRequired
   }
 
+  get _id() {
+    return this.props.item.get('id')
+  }
+
   onToggle = ({ target: { checked } }) =>
-    checked ? this.props.onStart() : this.props.onStop()
+    checked ? this.props.onStart(this._id) : this.props.onStop(this._id)
+  onSelect = () => this.props.onSelect(this._id)
 
   render() {
-    const { item, onSelect, isSelected } = this.props
+    const { item, isSelected } = this.props
     const isRunning = item.get('status') === 'running'
     return (
       <Row
-        href={href(item.get('id'))}
+        href={href(this._id)}
         title={`DIR: ${item.get('cwd')}\nCMD: ${item.get('command').join(' ')}`}
-        name={item.get('id')}
+        name={this._id}
         subtitle={
           item.get('pid') &&
           `PID ${item.get('pid')}\nStarted ${new Date(
@@ -36,14 +41,14 @@ export class Monitor extends React.Component {
         right={[
           <div key="start/stop button" className="level-item">
             <input
-              id={'app-toggle-' + item.get('id')}
+              id={'app-toggle-' + this._id}
               type="checkbox"
               className="switch is-rounded is-small is-success"
               title={isRunning ? 'stop' : 'start'}
               onChange={this.onToggle}
               checked={isRunning}
             />
-            <label htmlFor={'app-toggle-' + item.get('id')}>&nbsp;</label>
+            <label htmlFor={'app-toggle-' + this._id}>&nbsp;</label>
           </div>,
           <IconButton
             key="view logs button"
@@ -53,7 +58,7 @@ export class Monitor extends React.Component {
               'level-item',
               isSelected ? 'is-dark' : 'is-white'
             ]}
-            onClick={onSelect}
+            onClick={this.onSelect}
             icon="ios-paper"
           />
         ]}

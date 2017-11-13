@@ -3,11 +3,10 @@ import PropTypes from 'prop-types'
 
 export const Row = ({ href, title, subtitle, name, label, right }) => (
   <div className="level fade-in is-mobile">
-    <div className="level-item">
+    <div className="monitor-info level-item">
       <a href={href} title={title} target="_blank">
         {name}
       </a>
-      <br />
       <small title={subtitle}>{label}</small>
     </div>
     {right && <div className="level-right">{right}</div>}
