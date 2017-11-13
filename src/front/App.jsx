@@ -11,6 +11,7 @@ import { IconButton, CloseButton } from './components/button'
 import { Icon } from './components/icon'
 import { Log } from './components/log'
 import { Monitor } from './components/monitor'
+import { Proxy } from './components/proxy'
 
 export class App extends React.Component {
   state = {
@@ -232,21 +233,7 @@ export class App extends React.Component {
             {/* proxies list */}
             {Object.keys(this.proxies())
               .map(k => [k, this.proxies()[k]])
-              .map(([id, item]) => (
-                <li key={id} className="level fade-in is-mobile">
-                  <div>
-                    <a
-                      href={this.href(id)}
-                      title={this.title(id)}
-                      target="_blank"
-                    >
-                      {id}
-                    </a>
-                    <br />
-                    <small>{item.get('target')}</small>
-                  </div>
-                </li>
-              ))}
+              .map(([id, item]) => <Proxy key={id} item={item} />)}
           </ul>
 
           <footer>
