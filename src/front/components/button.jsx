@@ -4,11 +4,19 @@ import cx from 'classnames'
 
 import { Icon } from './icon'
 
-export const Button = ({ title, classes, onClick, children }) => (
-  <button title={title} className={cx('button', classes)} onClick={onClick}>
+import { isDarkChannel, subscribe } from '../context'
+
+export const Button = subscribe(
+  isDarkChannel
+)(({ title, classes, themed, onClick, children, [isDarkChannel]: isDark }) => (
+  <button
+    title={title}
+    className={cx('button', { 'is-black': themed && isDark }, classes)}
+    onClick={onClick}
+  >
     {children}
   </button>
-)
+))
 
 Button.propTypes = {
   title: PropTypes.string.isRequired,
@@ -17,6 +25,7 @@ Button.propTypes = {
     PropTypes.string,
     PropTypes.object
   ]),
+  themed: PropTypes.bool,
   onClick: PropTypes.func,
   children: PropTypes.node.isRequired
 }

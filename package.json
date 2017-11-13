@@ -68,6 +68,7 @@
     "prop-types": "^15.6.0",
     "pug": "^2.0.0-beta11",
     "react": "^16.1.0",
+    "react-broadcast": "^0.5.2",
     "react-dom": "^16.1.0",
     "react-moment": "^0.6.8",
     "respawn": "^2.4.1",

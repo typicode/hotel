@@ -12,6 +12,9 @@ import { Icon } from './components/icon'
 import { Log } from './components/log'
 import { ServerList } from './components/server-list'
 
+import { Broadcast } from 'react-broadcast'
+import { isDarkChannel } from './context'
+
 export class App extends React.Component {
   state = {
     list: Immutable.Map(),
@@ -193,9 +196,17 @@ export class App extends React.Component {
     return obj
   }
 
+  wrapInBroadcast(children) {
+    return (
+      <Broadcast channel={isDarkChannel} value={this.state.isDark}>
+        {children}
+      </Broadcast>
+    )
+  }
+
   render() {
     const blackIfDark = { 'is-black': this.state.isDark }
-    return (
+    return this.wrapInBroadcast(
       <div id="app" className={cx({ 'is-dark': this.state.isDark })}>
         {/* list */}
         <aside hidden={!this.state.isListFetched}>
