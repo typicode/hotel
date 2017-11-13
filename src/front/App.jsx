@@ -71,7 +71,7 @@ export class App extends React.Component {
       }
     })
   }
-  startMonitor(id) {
+  startMonitor = id => {
     // optimistic update
     if (this.state.list.has(id)) {
       this.setState(({ list }) => ({
@@ -81,7 +81,7 @@ export class App extends React.Component {
     // change server state
     api.startMonitor(id)
   }
-  stopMonitor(id) {
+  stopMonitor = id => {
     // optimistic update
     if (this.state.list.has(id)) {
       this.setState(({ list }) => ({
@@ -115,7 +115,7 @@ export class App extends React.Component {
   toggle(id) {
     this.isRunning(id) ? this.stopMonitor(id) : this.startMonitor(id)
   }
-  select(id) {
+  selectMonitor = id => {
     if (this.state.selected === id) {
       this.setState({
         selected: null
