@@ -1,35 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { href } from '../common'
+
 import { IconButton } from './button'
-
-const href = id => {
-  const { protocol, hostname } = window.location
-  if (/hotel\./.test(hostname)) {
-    const tld = hostname.split('.').slice(-1)[0]
-    return `${protocol}//${id}.${tld}`
-  } else {
-    return `/${id}`
-  }
-}
-
-const title = item => {
-  if (item.get('status')) {
-    return `DIR: ${item.get('cwd')}\nCMD: ${item.get('command').join(' ')}`
-  } else {
-    return item.get('target')
-  }
-}
-
-const subtitle = item => {
-  if (item.get('pid')) {
-    return `PID ${item.get('pid')}\nStarted ${new Date(
-      item.get('started')
-    ).toLocaleString()}`
-  } else {
-    return ''
-  }
-}
+import { Row } from './row'
 
 export class Monitor extends React.Component {
   static propTypes = {
@@ -48,25 +23,19 @@ export class Monitor extends React.Component {
     const { id, item, onSelect, isSelected } = this.props
     const isRunning = item.get('status') === 'running'
     return (
-      <div className="level fade-in is-mobile">
-        <div className="level-left">
-          <div className="level-item">
-            <div>
-              <p>
-                <a href={href(id)} title={title(item)} target="_blank">
-                  {id}
-                </a>
-              </p>
-              <p>
-                <small title={subtitle(item)}>{item.get('status')}</small>
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* start/stop button */}
-        <div className="level-right">
-          <div className="level-item">
+      <Row
+        href={href(id)}
+        title={`DIR: ${item.get('cwd')}\nCMD: ${item.get('command').join(' ')}`}
+        name={id}
+        subtitle={
+          item.get('pid') &&
+          `PID ${item.get('pid')}\nStarted ${new Date(
+            item.get('started')
+          ).toLocaleString()}`
+        }
+        label={item.get('status')}
+        right={[
+          <div key="start/stop button" className="level-item">
             <input
               id={'app-toggle-' + id}
               type="checkbox"
@@ -76,10 +45,9 @@ export class Monitor extends React.Component {
               checked={isRunning}
             />
             <label htmlFor={'app-toggle-' + id}>&nbsp;</label>
-          </div>
-
-          {/* view logs button */}
+          </div>,
           <IconButton
+            key="view logs button"
             title="view logs"
             classes={[
               'logs',
@@ -89,8 +57,8 @@ export class Monitor extends React.Component {
             onClick={onSelect}
             icon="ios-paper"
           />
-        </div>
-      </div>
+        ]}
+      />
     )
   }
 }
