@@ -7,3 +7,4 @@ export const href = id => {
     return `/${id}`
   }
 }
+export const blankLine = val => (val.trim() === '' ? '&nbsp;' : val)

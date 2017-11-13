@@ -4,7 +4,7 @@ import ansi2HTML from 'ansi2html'
 import escapeHTML from 'escape-html'
 import Moment from 'react-moment'
 
-import { blankLine } from '../filters'
+import { blankLine } from '../common'
 
 export const Log = ({ item }) => (
   <div className="log-line" data-log-type={item.get('type')}>
