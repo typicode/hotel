@@ -143,7 +143,10 @@ export class App extends React.Component {
         outputScroll: true
       })
     }
-    this.refs.output.scrollTop = this.refs.output.scrollHeight
+    this.outputEl.scrollTop = this.outputEl.scrollHeight
+  }
+  outputRef(ref) {
+    this.outputEl = ref
   }
   switchTheme() {
     this.setState(({ isDark }) => {
@@ -269,7 +272,7 @@ export class App extends React.Component {
           </footer>
         </aside>
         <main
-          ref="output"
+          ref={this.outputRef}
           hidden={!this.state.selected}
           className="hero"
           onScroll={event => this.onScroll(event)}
