@@ -5,10 +5,8 @@ const tildify = require('tildify')
 const mkdirp = require('mkdirp')
 const inquirer = require('inquirer')
 const opn = require('opn')
-const common = require('../common')
+const { serversDir, getServerFile } = require('../common')
 const api = require('./api')
-
-const serversDir = common.serversDir
 
 function isUrl(str) {
   return /^(http|https):/.test(str)
@@ -28,10 +26,6 @@ function domainify(str) {
 
 function getId(cwd) {
   return domainify(path.basename(cwd))
-}
-
-function getServerFile(id) {
-  return `${serversDir}/${id}.json`
 }
 
 function colorizeIdFromStatus(text, status) {
@@ -59,7 +53,7 @@ function getCurrentApp(servers) {
     .map(([id, { cwd }]) => [id, fs.realpathSync(cwd)])
   const exactMatch = serverNames.filter(([id, cwd]) => cwd === currentCwd)
   const parents = serverNames.filter(([id, cwd]) =>
-    /^(\.\.[\/\\])*\.\.$/.test(path.relative(currentCwd, cwd))
+    /^(\.\.[\\/])*\.\.$/.test(path.relative(currentCwd, cwd))
   )
 
   if (exactMatch.length) {
