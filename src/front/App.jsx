@@ -26,16 +26,6 @@ export class App extends React.Component {
   }
 
   componentWillMount() {
-    this.watchList()
-    this.watchOutput()
-  }
-  componentDidUpdate() {
-    if (this.state.outputScroll) {
-      this.scrollToBottom()
-    }
-  }
-
-  watchList() {
     api.watchServers(data => {
       const list = Immutable.fromJS(data)
 
@@ -59,8 +49,6 @@ export class App extends React.Component {
         isListFetched: true
       })
     })
-  }
-  watchOutput() {
     api.watchOutput(({ id, output }) => {
       for (const line of Immutable.fromJS(output)) {
         this.setState({
@@ -71,6 +59,12 @@ export class App extends React.Component {
       }
     })
   }
+  componentDidUpdate() {
+    if (this.state.outputScroll) {
+      this.scrollToBottom()
+    }
+  }
+
   startMonitor = id => {
     // optimistic update
     if (this.state.list.has(id)) {
