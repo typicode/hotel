@@ -94,27 +94,6 @@ export class App extends React.Component {
     // change server state
     api.stopMonitor(id)
   }
-  href(id) {
-    const { protocol, hostname } = window.location
-    if (/hotel\./.test(hostname)) {
-      const tld = hostname.split('.').slice(-1)[0]
-      return `${protocol}//${id}.${tld}`
-    } else {
-      return `/${id}`
-    }
-  }
-  title(id) {
-    const item = this.state.list.get(id)
-    if (item.get('status')) {
-      return `DIR: ${item.get('cwd')}\nCMD: ${item.get('command').join(' ')}`
-    } else {
-      return item.get('target')
-    }
-  }
-  isRunning(id) {
-    const item = this.state.list.get(id)
-    return item && item.get('status') === 'running'
-  }
   selectMonitor = id => {
     if (this.state.selected === id) {
       this.setState({
@@ -173,19 +152,6 @@ export class App extends React.Component {
       .entrySeq()
       .sort()
       .filter(([key, value]) => value.get('status'))
-      .forEach(([key, value]) => {
-        obj[key] = value
-      })
-
-    return obj
-  }
-  proxies() {
-    const obj = {}
-
-    this.state.list
-      .entrySeq()
-      .sort()
-      .filter(([key, value]) => !value.get('status'))
       .forEach(([key, value]) => {
         obj[key] = value
       })
