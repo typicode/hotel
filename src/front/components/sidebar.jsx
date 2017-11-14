@@ -19,17 +19,20 @@ export const Sidebar = ({
   onToggleConfig
 }) => (
   <aside>
-    <Intro
-      className="fade-in content"
-      hidden={!serversFetched || !servers.isEmpty()}
-    />
-    <ServerList
-      items={servers.toArray()} // .toArray() returns values
-      selected={selectedServer}
-      onSelect={onSelect}
-      onStart={onStart}
-      onStop={onStop}
-    />
+    {serversFetched ? (
+      servers.isEmpty() && <Intro serversFetched={serversFetched} />
+    ) : (
+      <div className="blank-slate">Loading monitors&hellip;</div>
+    )}
+    {!servers.isEmpty() && (
+      <ServerList
+        items={servers.toArray()} // .toArray() returns values
+        selected={selectedServer}
+        onSelect={onSelect}
+        onStart={onStart}
+        onStop={onStop}
+      />
+    )}
 
     <footer>
       <a
