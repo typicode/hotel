@@ -164,11 +164,7 @@ export class App extends React.Component {
   }
 
   output() {
-    if (this.state.selected) {
-      return this.state.outputs.get(this.state.selected)
-    }
-
-    return Immutable.List()
+    return this.state.outputs.get(this.state.selected, Immutable.List())
   }
   monitors() {
     const obj = {}
