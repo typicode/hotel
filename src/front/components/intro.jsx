@@ -1,13 +1,13 @@
 import React from 'react'
 
 export const Intro = props => (
-  <div {...props}>
+  <div className="blank-slate content" {...props}>
     <p>
       Congrats!<br />
       You’re successfully running hotel.
     </p>
     <p>
-      To add a server, use <code style={{ padding: 5 }}>hotel add</code>
+      To add a server, use <code style={{ padding: 5 }}>hotel add</code>:
     </p>
     <pre>
       <code>

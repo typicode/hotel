@@ -128,6 +128,12 @@ main {
   color: #999;
   flex: 1;
   text-align: center;
+  flex-direction: column;
+
+  pre {
+    text-align: left;
+    font-size: 60%;
+  }
 
   .main-content {
     flex: 0;
