@@ -34,7 +34,7 @@ export class App extends React.Component {
   }
   componentDidUpdate() {
     if (this.state.outputScroll) {
-      this.scrollToBottom(false)
+      this.scrollToBottom()
     }
   }
 
@@ -135,12 +135,16 @@ export class App extends React.Component {
     this.setState({
       outputScroll: scrollHeight - scrollTop === clientHeight
     })
-  scrollToBottom = (_setState = true) => {
-    if (!this.state.outputScroll && _setState) {
-      this.setState({
-        outputScroll: true
-      })
-    }
+  toggleScrollToBottom = () => {
+    this.setState(({ outputScroll }) => {
+      const newOutputScroll = !outputScroll
+      if (newOutputScroll) this.scrollToBottom()
+      return {
+        outputScroll: newOutputScroll
+      }
+    })
+  }
+  scrollToBottom = () => {
     if (this.outputEl) {
       this.outputEl.scrollTop = this.outputEl.scrollHeight
     }
@@ -262,7 +266,7 @@ export class App extends React.Component {
             <IconButton
               themed
               title="scroll to bottom"
-              onClick={this.scrollToBottom}
+              onClick={this.toggleScrollToBottom}
               icon="arrow-down-c"
             />
           }
