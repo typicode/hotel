@@ -9,7 +9,8 @@ module.exports = {
         singleQuote: true,
         semi: false,
       },
-    ]
+    ],
+    'react/jsx-no-bind': 'error'
   },
   env: { mocha: true }
 }
