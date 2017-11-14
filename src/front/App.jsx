@@ -5,12 +5,10 @@ import cx from 'classnames'
 import Immutable from 'immutable'
 
 import * as api from './api'
-import { version } from '../../package.json'
 
-import { IconButton } from './components/button'
-import { Icon } from './components/icon'
-import { Log } from './components/log'
-import { ServerList } from './components/server-list'
+import { Sidebar } from './components/sidebar'
+import { Config } from './components/config'
+import { Logs } from './components/logs'
 import { Main } from './components/main'
 
 import { Broadcast } from 'react-broadcast'
@@ -24,7 +22,6 @@ export class App extends React.Component {
     outputScroll: true,
     isListFetched: false,
     configOpen: true,
-    version,
     isDark: JSON.parse(localStorage.getItem('isDark')) || false
   }
 
@@ -151,96 +148,30 @@ export class App extends React.Component {
   }
 
   render() {
-    const output = this.state.outputs.get(this.state.selected)
     return this.wrapInBroadcast(
       <div id="app" className={cx({ 'is-dark': this.state.isDark })}>
-        {/* list */}
-        <aside>
-          <div
-            className="fade-in content"
-            hidden={!this.state.isListFetched || !this.state.list.isEmpty()}
-          >
-            <p>
-              Congrats!<br />
-              You’re successfully running hotel.
-            </p>
-            <p>
-              To add a server, use <code style={{ padding: 5 }}>hotel add</code>
-            </p>
-            <pre>
-              <code>
-                ~/app$ hotel add &apos;cmd&apos;<br />
-                ~/app$ hotel add &apos;cmd -p $PORT&apos;<br />
-                ~/app$ hotel add http://192.16.1.2:3000
-              </code>
-            </pre>
-          </div>
-          <ServerList
-            items={this.state.list.toArray()} // .toArray() returns values
-            selected={this.state.selected}
-            onSelect={this.selectMonitor}
-            onStart={this.startMonitor}
-            onStop={this.stopMonitor}
-          />
-
-          <footer>
-            <a
-              target="_blank"
-              rel="noreferrer noopener"
-              href="https://github.com/typicode/hotel"
-            >
-              readme <sup className="version">v{version}</sup>
-            </a>
-            {/* config button */}
-            <IconButton
-              title="change config"
-              classes={[
-                'config',
-                this.state.configOpen ? 'is-dark' : 'is-white'
-              ]}
-              onClick={this.toggleConfig}
-              icon="settings"
-              style={{ float: 'right' }}
-            />
-          </footer>
-        </aside>
-        <Main
+        <Sidebar
+          serversFetched={this.state.isListFetched}
+          servers={this.state.list}
+          selectedServer={this.state.selected}
+          onSelect={this.selectMonitor}
+          onStart={this.startMonitor}
+          onStop={this.stopMonitor}
+          configSelected={this.state.configOpen}
+          onToggleConfig={this.toggleConfig}
+        />
+        <Logs
           visible={this.state.selected}
           onRef={this.outputRef}
           navLabel="log"
           title={this.state.selected}
           onClose={this.deselect}
           onToggleTheme={this.switchTheme}
-          extraButton={
-            <IconButton
-              themed
-              title="scroll to bottom"
-              onClick={this.toggleScrollToBottom}
-              icon="arrow-down-c"
-            />
-          }
           onScroll={this.onScroll}
-        >
-          <pre
-            style={{
-              display: output ? 'flex' : 'block'
-            }}
-          >
-            {this.state.list.has(this.state.selected) && (
-              <div>
-                $ cd {this.state.list.getIn([this.state.selected, 'cwd'])}
-                <br />
-                ${' '}
-                {this.state.list.getIn([this.state.selected, 'command']).last()}
-              </div>
-            )}
-            {output ? (
-              output.map(item => <Log key={item.get('uid')} item={item} />)
-            ) : (
-              <div className="blank-slate">no logs</div>
-            )}
-          </pre>
-        </Main>
+          toggleScrollToBottom={this.toggleScrollToBottom}
+          output={this.state.outputs.get(this.state.selected)}
+          mon={this.state.list.get(this.state.selected)}
+        />
         <Main
           visible={!this.state.selected && !this.state.configOpen}
           className="blank-slate is-hidden-mobile"
@@ -249,35 +180,14 @@ export class App extends React.Component {
         >
           choose an app to view its logs
         </Main>
-        <Main
+        <Config
           visible={this.state.configOpen}
           className="config"
           navLabel="config"
-          title={
-            <Icon name="settings" size="medium" style={{ margin: '-1rem' }} />
-          }
-          mobileTitle={[
-            <Icon key="icon" name="settings" size="medium" />,
-            'Config'
-          ]}
-          extraButton={
-            <IconButton
-              themed
-              title="save"
-              onClick={this.saveChanges}
-              icon="checkmark"
-            />
-          }
+          onSave={this.saveChanges}
           onClose={this.toggleConfig}
           onToggleTheme={this.switchTheme}
-        >
-          <h1
-            className="title is-1 is-hidden-mobile has-text-centered"
-            style={{ marginTop: '0.5em', color: 'inherit' }}
-          >
-            Config
-          </h1>
-        </Main>
+        />
       </div>
     )
   }
