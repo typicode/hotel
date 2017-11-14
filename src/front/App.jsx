@@ -209,8 +209,11 @@ export class App extends React.Component {
     return this.wrapInBroadcast(
       <div id="app" className={cx({ 'is-dark': this.state.isDark })}>
         {/* list */}
-        <aside hidden={!this.state.isListFetched}>
-          <div className="fade-in" hidden={!this.state.list.isEmpty()}>
+        <aside>
+          <div
+            className="fade-in content"
+            hidden={!this.state.isListFetched || !this.state.list.isEmpty()}
+          >
             <p>
               Congrats!<br />
               You’re successfully running hotel.
