@@ -142,23 +142,6 @@ export class App extends React.Component {
     this.setState(({ configOpen }) => ({ configOpen: !configOpen }))
   }
 
-  output() {
-    return this.state.outputs.get(this.state.selected, Immutable.List())
-  }
-  monitors() {
-    const obj = {}
-
-    this.state.list
-      .entrySeq()
-      .sort()
-      .filter(([key, value]) => value.get('status'))
-      .forEach(([key, value]) => {
-        obj[key] = value
-      })
-
-    return obj
-  }
-
   wrapInBroadcast(children) {
     return (
       <Broadcast channel={isDarkChannel} value={this.state.isDark}>
@@ -168,6 +151,7 @@ export class App extends React.Component {
   }
 
   render() {
+    const output = this.state.outputs.get(this.state.selected)
     return this.wrapInBroadcast(
       <div id="app" className={cx({ 'is-dark': this.state.isDark })}>
         {/* list */}
@@ -239,23 +223,22 @@ export class App extends React.Component {
         >
           <pre
             style={{
-              display: this.output().isEmpty() ? 'flex' : 'block'
+              display: output ? 'flex' : 'block'
             }}
           >
-            {this.monitors()[this.state.selected] && (
+            {this.state.list.has(this.state.selected) && (
               <div>
-                $ cd {this.monitors()[this.state.selected].cwd}
+                $ cd {this.state.list.getIn([this.state.selected, 'cwd'])}
                 <br />
                 ${' '}
                 {this.state.list.getIn([this.state.selected, 'command']).last()}
               </div>
             )}
-            {this.output().isEmpty() && (
+            {output ? (
+              output.map(item => <Log key={item.get('uid')} item={item} />)
+            ) : (
               <div className="blank-slate">no logs</div>
             )}
-            {this.output().map(item => (
-              <Log key={item.get('uid')} item={item} />
-            ))}
           </pre>
         </Main>
         <Main
