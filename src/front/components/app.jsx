@@ -4,15 +4,15 @@ import uid from 'uid'
 import cx from 'classnames'
 import Immutable from 'immutable'
 
-import * as api from './api'
+import * as api from '../api'
 
-import { Sidebar } from './components/sidebar'
-import { Config } from './components/config'
-import { Logs } from './components/logs'
-import { Main } from './components/main'
+import { Sidebar } from './sidebar'
+import { Config } from './config'
+import { Logs } from './logs'
+import { Main } from './main'
 
 import { Broadcast } from 'react-broadcast'
-import { isDarkChannel } from './context'
+import { isDarkChannel } from '../context'
 
 export class App extends React.Component {
   state = {
