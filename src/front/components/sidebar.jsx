@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 
 import { version } from '../../../package.json'
 
-import { IconButton } from './button'
-
 import { ServerList } from './server-list'
 import { Intro } from './intro'
 
@@ -14,9 +12,7 @@ export const Sidebar = ({
   selectedServer,
   onSelect,
   onStart,
-  onStop,
-  configSelected,
-  onToggleConfig
+  onStop
 }) => (
   <aside>
     {serversFetched ? (
@@ -42,14 +38,6 @@ export const Sidebar = ({
       >
         readme <sup className="version">v{version}</sup>
       </a>
-      {/* config button */}
-      <IconButton
-        title="change config"
-        classes={['config', configSelected ? 'is-dark' : 'is-white']}
-        onClick={onToggleConfig}
-        icon="settings"
-        style={{ float: 'right' }}
-      />
     </footer>
   </aside>
 )
@@ -60,7 +48,5 @@ Sidebar.propTypes = {
   selectedServer: PropTypes.string,
   onSelect: PropTypes.func,
   onStart: PropTypes.func,
-  onStop: PropTypes.func,
-  configSelected: PropTypes.bool.isRequired,
-  onToggleConfig: PropTypes.func
+  onStop: PropTypes.func
 }

@@ -7,7 +7,6 @@ import Immutable from 'immutable'
 import * as api from '../api'
 
 import { Sidebar } from './sidebar'
-import { Config } from './config'
 import { Logs } from './logs'
 import { Main } from './main'
 
@@ -21,8 +20,6 @@ export class App extends React.Component {
     outputs: Immutable.Map(),
     outputScroll: true,
     isListFetched: false,
-    configOpen: true,
-    config: Immutable.Map(),
     isDark: JSON.parse(localStorage.getItem('isDark')) || false
   }
 
@@ -88,14 +85,9 @@ export class App extends React.Component {
   }
   selectMonitor = id => {
     if (this.state.selected === id) {
-      this.setState({
-        selected: null
-      })
+      this.setState({ selected: null })
     } else {
-      this.setState({
-        selected: id,
-        configOpen: false
-      })
+      this.setState({ selected: id })
     }
   }
   deselect = () =>
@@ -129,11 +121,6 @@ export class App extends React.Component {
       return { isDark: !isDark }
     })
 
-  toggleConfig = () => {
-    this.deselect()
-    this.setState(({ configOpen }) => ({ configOpen: !configOpen }))
-  }
-
   wrapInBroadcast(children) {
     return (
       <Broadcast channel={isDarkChannel} value={this.state.isDark}>
@@ -152,8 +139,6 @@ export class App extends React.Component {
           onSelect={this.selectMonitor}
           onStart={this.startMonitor}
           onStop={this.stopMonitor}
-          configSelected={this.state.configOpen}
-          onToggleConfig={this.toggleConfig}
         />
         <Logs
           visible={this.state.selected}
@@ -168,22 +153,12 @@ export class App extends React.Component {
           mon={this.state.list.get(this.state.selected)}
         />
         <Main
-          visible={!this.state.selected && !this.state.configOpen}
+          visible={!this.state.selected}
           className="blank-slate is-hidden-mobile"
           showNavbar={false}
-          navLabel="config"
         >
           choose an app to view its logs
         </Main>
-        <Config
-          visible={this.state.configOpen}
-          className="config"
-          navLabel="config"
-          config={this.state.config}
-          onSave={this.saveChanges}
-          onClose={this.toggleConfig}
-          onToggleTheme={this.switchTheme}
-        />
       </div>
     )
   }
