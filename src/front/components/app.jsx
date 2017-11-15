@@ -22,6 +22,7 @@ export class App extends React.Component {
     outputScroll: true,
     isListFetched: false,
     configOpen: true,
+    config: Immutable.Map(),
     isDark: JSON.parse(localStorage.getItem('isDark')) || false
   }
 
@@ -178,6 +179,7 @@ export class App extends React.Component {
           visible={this.state.configOpen}
           className="config"
           navLabel="config"
+          config={this.state.config}
           onSave={this.saveChanges}
           onClose={this.toggleConfig}
           onToggleTheme={this.switchTheme}
