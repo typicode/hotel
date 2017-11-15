@@ -98,12 +98,13 @@ __Tip__ you can also use `hotel run <cmd>` to start your server in the terminal 
 Using other servers? Here are some examples to get you started :)
 
 ```sh
-hotel add 'ember server'
-hotel add 'jekyll serve --port $PORT'
-hotel add 'rails server -p $PORT -b 127.0.0.1'
-hotel add 'python -m SimpleHTTPServer $PORT'
-hotel add 'php -S 127.0.0.1:$PORT'
-hotel add 'docker-compose up'
+hotel add 'ember server'                               # Ember
+hotel add 'jekyll serve --port $PORT'                  # Jekyll
+hotel add 'rails server -p $PORT -b 127.0.0.1'         # Rails
+hotel add 'python -m SimpleHTTPServer $PORT'           # static file server (Python)
+hotel add 'php -S 127.0.0.1:$PORT'                     # PHP
+hotel add 'docker-compose up'                          # docker-compose
+hotel add 'python manage.py runserver 127.0.0.1:$PORT' # Django
 # ...
 ```
 
