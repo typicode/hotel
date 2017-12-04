@@ -1,7 +1,3 @@
-<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/6WUB3WBwbmZXbZxzrUv5y2A5/typicode/hotel'>
-  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/6WUB3WBwbmZXbZxzrUv5y2A5/typicode/hotel.svg' />
-</a>
-
 # hotel [![Mac/Linux Build Status](https://img.shields.io/travis/typicode/hotel/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/typicode/hotel) [![Windows Build status](https://img.shields.io/appveyor/ci/typicode/hotel/master.svg?label=Windows)](https://ci.appveyor.com/project/typicode/hotel/branch/master) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel)
 
 > Start apps from your browser and get local domains in seconds!
