@@ -1,6 +1,7 @@
 module.exports = {
-  extends: ['standard', 'prettier'],
-  plugins: ['prettier'],
+  parser: 'babel-eslint',
+  extends: ['standard', 'prettier', 'plugin:react/recommended'],
+  plugins: ['prettier', 'react'],
   rules: {
     'prettier/prettier': [
       'error',
@@ -8,7 +9,8 @@ module.exports = {
         singleQuote: true,
         semi: false,
       },
-    ]
+    ],
+    'react/jsx-no-bind': 'error'
   },
   env: { mocha: true }
 }

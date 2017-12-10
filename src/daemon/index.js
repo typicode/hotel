@@ -1,52 +1,36 @@
-const fs = require('fs')
 const path = require('path')
-const exitHook = require('exit-hook')
-const httpProxy = require('http-proxy')
-const conf = require('../conf')
-const pidFile = require('../pid-file')
-const log = require('./log')
-const Group = require('./group')
-const Loader = require('./loader')
-const App = require('./app')
+const cp = require('child_process')
 
-const group = Group()
-const app = App(group)
+let child
 
-// Load and watch files
-Loader(group)
+function start() {
+  if (child) stop()
 
-// Create pid file
-pidFile.create()
+  child = cp.fork(path.join(__dirname, 'daemon.js'))
+  child.on('message', message => {
+    console.log('Parent process got message:', message)
+    switch (message.command) {
+      case 'die':
+        console.log('Killing daemon...')
+        stop()
+        break
+      case 'restart':
+        console.log('Reloading daemon...')
+        stop()
+        start()
+        break
+      default:
+        console.error('Command', message.command, 'unrecognized')
+    }
+  })
+}
 
-// Clean exit
-exitHook(() => {
-  console.log('Exiting')
-  console.log('Stop daemon')
-  proxy.close()
-  app.close()
-  group.stopAll()
+function stop() {
+  if (!child) return
 
-  console.log('Remove pid file')
-  pidFile.remove()
-})
+  child.kill()
 
-// HTTPS proxy
-const proxy = httpProxy.createServer({
-  target: {
-    host: '127.0.0.1',
-    port: conf.port
-  },
-  ssl: {
-    key: fs.readFileSync(path.join(__dirname, 'certs/server.key')),
-    cert: fs.readFileSync(path.join(__dirname, 'certs/server.crt'))
-  },
-  ws: true,
-  xfwd: true
-})
+  child = null
+}
 
-// Start HTTPS proxy and HTTP server
-proxy.listen(conf.port + 1)
-
-app.listen(conf.port, conf.host, function() {
-  log(`Server listening on port ${conf.host}:${conf.port}`)
-})
+start()

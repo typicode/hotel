@@ -27,22 +27,21 @@ class Group extends EventEmitter {
     this._proxy.on('error', this.handleProxyError)
   }
 
-  _output(id, data) {
-    this.emit('output', id, data)
-  }
-
-  _log(mon, logFile, data) {
-    mon.tail = mon.tail
-      .concat(data)
-      .split('\n')
-      .slice(-100)
-      .join('\n')
-
+  _log(mon, logFile, data, meta) {
     if (logFile) {
       fs.appendFile(logFile, data, err => {
         if (err) log(err.message)
       })
     }
+    const message = {
+      type: 'log',
+      date: Date.now(),
+      data,
+      ...meta
+    }
+    mon.tail.push(message)
+
+    this.emit('output', mon.id, message)
   }
 
   _change() {
@@ -64,6 +63,7 @@ class Group extends EventEmitter {
   add(id, conf) {
     if (conf.target) {
       log(`Add target ${id}`)
+      conf.id = id
       this._list[id] = conf
       this._change()
       return
@@ -101,22 +101,53 @@ class Group extends EventEmitter {
     })
 
     this._list[id] = mon
+    mon.id = id
+    mon.tail = []
 
     // Add proxy config
     mon.xfwd = conf.xfwd || false
     mon.changeOrigin = conf.changeOrigin || false
 
     // Emit output
-    mon.on('stdout', data => this._output(id, data))
-    mon.on('stderr', data => this._output(id, data))
-    mon.on('warn', data => this._output(id, data))
+    mon.on('stdout', data =>
+      this._log(mon, logFile, data.toString('utf-8'), { stream: 'stdout' })
+    )
+    mon.on('stderr', data =>
+      this._log(mon, logFile, data.toString('utf-8'), { stream: 'stderr' })
+    )
+    mon.on('warn', data => this._log(mon, logFile, data, { type: 'warn' }))
 
     // Emit change
-    mon.on('start', () => this._change())
-    mon.on('stop', () => this._change())
-    mon.on('crash', () => this._change())
-    mon.on('sleep', () => this._change())
-    mon.on('exit', () => this._change())
+    mon.on('start', () => {
+      this._log(mon, logFile, 'Started', { type: 'meta' })
+      this._change()
+    })
+    mon.on('stop', () => {
+      this._log(mon, logFile, 'Stopped', { type: 'meta' })
+      this._change()
+    })
+    mon.on('crash', () => {
+      this._log(mon, logFile, 'Crashed', { type: 'meta' })
+      this._change()
+    })
+    mon.on('sleep', () => {
+      this._log(mon, logFile, 'Sleeping…', { type: 'meta' })
+      this._change()
+    })
+    mon.on('exit', (code, signal) => {
+      let message = 'Exited with '
+      if (signal) {
+        message += signal + ' '
+      }
+      if (code) {
+        if (signal) message += '('
+        message += `code ${code}`
+        if (signal) message += ')'
+      }
+
+      this._log(mon, logFile, message, { type: 'meta' })
+      this._change()
+    })
 
     // Log status
     mon.on('start', () => log(id, 'has started'))
@@ -126,15 +157,7 @@ class Group extends EventEmitter {
     mon.on('exit', () => log(id, 'child process has exited'))
 
     // Handle logs
-    mon.tail = ''
-
-    mon.on('stdout', data => this._log(mon, logFile, data))
-    mon.on('stderr', data => this._log(mon, logFile, data))
-    mon.on('warn', data => this._log(mon, logFile, data))
-
     mon.on('start', () => {
-      mon.tail = ''
-
       if (logFile) {
         fs.unlink(logFile, err => {
           if (err) log(err.message)
