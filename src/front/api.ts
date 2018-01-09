@@ -1,3 +1,7 @@
+declare global {
+  interface Window { EventSource: any; }
+}
+
 export function fetchServers() {
   return window.fetch('/_/servers').then(response => response.json())
 }

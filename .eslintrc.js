@@ -1,7 +1,9 @@
 module.exports = {
-  extends: ['standard', 'prettier'],
+  extends: ['standard', "standard-react", 'prettier'],
   plugins: ['prettier'],
   rules: {
+    'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 'off',
     'prettier/prettier': [
       'error',
       {

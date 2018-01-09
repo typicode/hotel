@@ -45,9 +45,7 @@ module.exports = group => {
   // Static files
   // vendors, etc...
   app.use(express.static(path.join(__dirname, 'public')))
-  // static files: style.css, etc...
-  app.use(express.static(path.join(__dirname, '../../static')))
-  // bundle.js
+  // front files
   app.use(express.static(path.join(__dirname, '../../dist')))
 
   // localhost router

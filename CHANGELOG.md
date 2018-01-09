@@ -3,7 +3,9 @@
 ## Unreleased
 
 * Create empty `conf.json` if it doesn't exist
-* Update UI to open links in new tabs. Should help with third-party tools.
+* Update UI to open links in new tabs (should improve integration with third-party tools)
+* Local self-signed certicate are now generated in `~/.hotel` (you'll need to trust the certificate again)
+
 
 ## 0.7.6
 

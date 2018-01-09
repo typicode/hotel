@@ -273,12 +273,6 @@ test.cb('GET / should render index.html', t => {
     .expect(200, t.end)
 })
 
-test.cb('GET /style.css should render style.css', t => {
-  request(app)
-    .get('/css/style.css')
-    .expect(200, t.end)
-})
-
 //
 // Test env variables
 //

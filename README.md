@@ -27,7 +27,7 @@ Development of Hotel is generously supported by contributions from people. If yo
 ## Features
 
 * __Local domains__ - `http://project.dev`
-* __HTTPS via self-signed certificate__ - `https://project.dev`
+* __HTTPS via local self-signed certificate__ - `https://project.dev`
 * __Wildcard subdomains__ - `http://*.project.dev`
 * __Works everywhere__ - OS X, Linux and Windows
 * __Works with any server__ - Node, Ruby, PHP, ...
@@ -113,15 +113,15 @@ On __Windows__ use `"%PORT%"` instead of `'$PORT'`
 Add your remote servers
 
 ```sh
-~$ hotel add http://some-domain.com --name local-domain 
 ~$ hotel add http://192.168.1.12:1337 --name aliased-address
+~$ hotel add http://google.com --name aliased-domain 
 ```
 
 You can now access them using
 
 ```sh
-http://local-domain.dev # will proxy requests to http://some-domain.com
 http://aliased-address.dev # will proxy requests to http://192.168.1.12:1337
+http://aliased-domain.dev # will proxy requests to http://google.com
 ```
 
 ## CLI usage and options
@@ -174,14 +174,16 @@ hotel add "cmd -p %PORT%" # Windows
 
 If you're offline or can't configure your browser to use `.dev` domains, you can __always__ access your local servers by going to [localhost:2000](http://localhost:2000).
 
-## Configurations and logs
+## Configurations, logs and certificates
 
-`~/.hotel` contains daemon logs, servers and daemon configurations.
+You can find hotel related files in `~/.hotel` :
 
 ```sh
 ~/.hotel/conf.json
 ~/.hotel/daemon.log
 ~/.hotel/daemon.pid
+~/.hotel/key.pem
+~/.hotel/cert.pem
 ~/.hotel/servers/<app-name>.json
 ```
 
@@ -197,7 +199,7 @@ By default, `hotel` uses the following configuration values:
 }
 ```
 
-You can override them in `~/.hotel/conf.json`.
+To override a value, simply add it to `~/.hotel/conf.json` and run `hotel stop && hotel start`
 
 ## Third-party tools
 
