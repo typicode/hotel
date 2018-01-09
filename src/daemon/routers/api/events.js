@@ -2,54 +2,56 @@ const express = require('express')
 const connectSSE = require('connect-sse')
 const sse = connectSSE()
 
+function listen(res, group, groupEvent, handler) {
+  function removeListener() {
+    // Remove group handler
+    group.removeListener(groupEvent, handler)
+
+    // Remove self
+    res.removeListener('close', removeListener)
+    res.removeListener('finish', removeListener)
+  }
+
+  group.on(groupEvent, handler)
+
+  res.on('close', removeListener)
+  res.on('finish', removeListener)
+}
+
+function sendState(res, group) {
+  res.json(group.list())
+}
+
+function sendOutput(res, id, data) {
+  res.json({
+    id,
+    output: data.toString()
+  })
+}
+
 module.exports = group => {
   const router = express.Router()
 
-  function listen(res, event, handler) {
-    group.on(event, handler)
-
-    function removeListener() {
-      group.removeListener(event, handler)
-
-      res.removeListener('close', removeListener)
-      res.removeListener('finish', removeListener)
-    }
-
-    res.on('close', removeListener)
-    res.on('finish', removeListener)
-  }
-
   router.get('/', sse, (req, res) => {
-    function sendState() {
-      res.json(group.list())
-    }
-
     // Bootstrap
-    sendState()
+    sendState(res, group)
 
     // Listen
-    listen(res, 'change', sendState)
+    listen(res, group, 'change', sendState)
   })
 
   router.get('/output', sse, (req, res) => {
-    function sendOutput(id, data) {
-      res.json({
-        id,
-        output: data.toString()
-      })
-    }
-
     // Bootstrap
     const list = group.list()
     Object.keys(list).forEach(id => {
       var mon = list[id]
       if (mon && mon.tail) {
-        sendOutput(id, mon.tail)
+        sendOutput(res, id, mon.tail)
       }
     })
 
     // Listen
-    listen(res, 'output', sendOutput)
+    listen(res, group, 'output', sendOutput)
   })
 
   return router
