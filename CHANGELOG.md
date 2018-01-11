@@ -3,7 +3,6 @@
 ## 0.8.0
 
 * Create empty `conf.json` if it doesn't exist
-
 * Update UI
   * new 2018 style 🎉
   * Links now open in new tabs (should improve integration with third-party tools)
