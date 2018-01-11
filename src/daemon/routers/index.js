@@ -5,10 +5,6 @@ const log = require('../log')
 module.exports = function(group) {
   const router = express.Router()
 
-  function index(req, res) {
-    res.render('index')
-  }
-
   function pac(req, res) {
     log('Serve proxy.pac')
     if (conf.proxy) {
@@ -19,7 +15,6 @@ module.exports = function(group) {
   }
 
   router
-    .get('/', index)
     .get('/proxy.pac', pac)
     .get(
       '/:id',
