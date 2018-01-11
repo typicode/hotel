@@ -1,4 +1,4 @@
-import * as uniqueId from 'lodash.uniqueId'
+import * as uniqueId from 'lodash.uniqueid'
 import { action, computed, observable } from 'mobx'
 import * as api from './api'
 import { formatLines } from './formatter'

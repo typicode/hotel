@@ -1,4 +1,4 @@
 declare module 'ansi2html'
 declare module 'escape-html'
-declare module 'lodash.uniqueId'
+declare module 'lodash.uniqueid'
 interface Window { EventSource: any }

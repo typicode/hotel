@@ -1,3 +1,4 @@
+const fs = require('fs')
 const path = require('path')
 const http = require('http')
 const test = require('ava')
@@ -10,6 +11,11 @@ const servers = require('../../src/cli/servers')
 
 const { tld } = conf
 let app
+
+function ensureDistExists(t) {
+  const exists = fs.existsSync(path.join(__dirname, '../../dist'))
+  t.true(exists, 'dist directory must exist (try to run `npm run build`)')
+}
 
 test.before(() => {
   // Set request timeout to 20 seconds instead of 5 seconds for slower CI servers
@@ -87,6 +93,7 @@ test.cb.after(t => app.group.stopAll(t.end))
 //
 
 test.cb('GET http://hotel.tld should return 200', t => {
+  ensureDistExists(t)
   request(app)
     .get('/')
     .set('Host', `hotel.${tld}`)
@@ -268,6 +275,7 @@ test.cb('GET http://localhost:2000/proxy should redirect to target', t => {
 //
 
 test.cb('GET / should render index.html', t => {
+  ensureDistExists(t)
   request(app)
     .get('/')
     .expect(200, t.end)
