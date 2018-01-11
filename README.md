@@ -18,7 +18,7 @@ Hotel works great on any OS (OS X, Linux, Windows) and with __all servers :heart
 
 ## v0.8.0 upgrade
 
-`.localhost` is now the new default domain and replaces `.dev` domains (see https://ma.ttias.be/chrome-force-dev-domains-https-via-preloaded-hsts/).
+`.localhost` replaces `.dev` local domain and is the new default. See https://ma.ttias.be/chrome-force-dev-domains-https-via-preloaded-hsts/ for context.
 
 If you're upgrading, please be sure to:
 1. Remove `"tld": "dev"` from your `~/.hotel/conf.json` file
