@@ -5,7 +5,7 @@
 * Create empty `conf.json` if it doesn't exist
 * Self-signed certicate are now generated in `~/.hotel` (you'll need to "trust" the certificate again)
 * Update UI
-  * New style
+  * New 2018 style 🎉
   * Drop IE support for the UI
   * Links now open in new tabs (should improve integration with third-party tools)
 
