@@ -1,8 +1,10 @@
 # hotel [![Mac/Linux Build Status](https://img.shields.io/travis/typicode/hotel/master.svg?label=Mac%20OSX%20%26%20Linux)](https://travis-ci.org/typicode/hotel) [![Windows Build status](https://img.shields.io/appveyor/ci/typicode/hotel/master.svg?label=Windows)](https://ci.appveyor.com/project/typicode/hotel/branch/master) [![](https://badge.fury.io/js/hotel.svg)](https://www.npmjs.com/package/hotel)
 
-> Start apps from your browser and get local domains in seconds!
+> Start apps from your browser and use local domains/https automatically
 
-![](http://i.imgur.com/DrLjbIi.gif)
+![](https://i.imgur.com/eDLgWMj.png)
+
+__IMPORTANT `v0.8.0` breaking change: `.localhost` is now the new default domain and replaces `.dev` domains (see https://ma.ttias.be/chrome-force-dev-domains-https-via-preloaded-hsts/). Please be sure to remove `"tld": "dev"` from your `~/.hotel/conf.json` file, run `hotel stop && hotel start` and refresh your network settings.__
 
 _Tip: if you don't enable local domains, hotel can still be used as a **catalog of local servers**._
 
