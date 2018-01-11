@@ -14,13 +14,15 @@ function href(id: string) {
 }
 
 interface IProps {
-  id: string
+  className?: string,
+  id: string,
+  name: string
 }
 
-export default function Link({ id }: IProps) {
+export default function Link({ className, id, name }: IProps) {
   return (
-    <a href={href(id)} target="_blank" onClick={e => e.stopPropagation()}>
-      {id}
+    <a className={className} href={href(id)} target="_blank" onClick={e => e.stopPropagation()}>
+      {name}
     </a>
   )
 }

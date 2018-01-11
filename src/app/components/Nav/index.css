@@ -73,3 +73,7 @@ li > span:nth-last-child() {
 p {
   padding: 1rem;
 }
+
+.listLink {
+  line-height: 1em;
+}
