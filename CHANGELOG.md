@@ -13,6 +13,7 @@ __Breaking__
 * Drop Internet Explorer 11 support for the UI
 * Drop Node 4 support
 * Self-signed certicate is now generated locally and can be found in `~/.hotel`. Since it's going to be a new one, you'll need to "trust" it again to be able to use `https`
+* __`.localhost` is now the default domain and replaces `.dev` domains__ (if present, remove `"tld": "dev"` from `~/.hotel/conf.json` to use the new default value, then run `hotel stop && hotel start`)
 
 ## 0.7.6
 
