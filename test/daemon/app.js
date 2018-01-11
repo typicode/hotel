@@ -141,7 +141,7 @@ test.cb('GET http://failing.tld should return 502', t => {
 })
 
 test.cb(
-  'GET http://proxy.tld should return 200 and host should be proxy.dev',
+  'GET http://proxy.tld should return 200 and host should be proxy.localhost',
   t => {
     request(app)
       .get('/')
@@ -150,7 +150,7 @@ test.cb(
   }
 )
 
-test.cb('GET http://node.dev:4000 should proxy to localhost:4000', t => {
+test.cb('GET http://node.tld:4000 should proxy to localhost:4000', t => {
   request(app)
     .get('/')
     .set('Host', `node.${tld}:4000`)

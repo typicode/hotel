@@ -2,24 +2,13 @@ import * as classNames from 'classnames'
 import { observer } from 'mobx-react'
 import * as React from 'react'
 import Store, { RUNNING } from '../../Store'
+import Link from '../Link'
 import Switch from '../Switch'
 import './index.css'
 
 const examples = `~/app$ hotel add 'cmd'
 ~/app$ hotel add 'cmd -p $PORT'
 ~/app$ hotel add http://192.16.1.2:3000`
-
-function href(id) {
-  const { protocol, hostname } = window.location
-  if (/hotel\./.test(hostname)) {
-    // Accessed using hotel.tld
-    const tld = hostname.split('.').slice(-1)[0]
-    return `${protocol}//${id}.${tld}`
-  } else {
-    // Accessed using localhost
-    return `/${id}`
-  }
-}
 
 export interface IProps {
   store: Store
@@ -34,14 +23,7 @@ function Nav({ store }: IProps) {
         {monitors.size === 0 &&
           proxies.size === 0 && (
             <div>
-              <p>
-                Congrats!<br />
-                You're successfully running hotel.
-              </p>
-              <p>
-                To add a server, use{' '}
-                <code style={{ padding: 5 }}>hotel add</code>
-              </p>
+              <p>To add a server, use hotel add</p>
               <pre>
                 <code>{examples}</code>
               </pre>
@@ -55,27 +37,16 @@ function Nav({ store }: IProps) {
               {Array.from(monitors).map(([id, monitor]) => (
                 <li
                   key={id}
-                  className={classNames({
+                  className={classNames('monitor', {
                     selected: id === selectedMonitorId,
                     running: monitor.status === RUNNING
                   })}
                   onClick={() => store.selectMonitor(id)}
                 >
                   <span>
-                    <a
-                      href={href(id)}
-                      title={`directory: ${monitor.cwd}\ncommand: ${monitor.commandString}`}
-                      target="_blank"
-                      onClick={e => e.stopPropagation()}
-                    >
-                      {id}
-                    </a>
+                    <Link id={id} />
                   </span>
                   <span>
-                    {monitor.status !== 'running' &&
-                      monitor.status !== 'stopped' && (
-                        <span>{monitor.status}</span>
-                      )}{' '}
                     <Switch
                       onClick={() => store.toggleMonitor(id)}
                       checked={monitor.status === RUNNING}
@@ -93,11 +64,8 @@ function Nav({ store }: IProps) {
             <ul>
               {Array.from(proxies).map(([id, proxy]) => (
                 <li key={id}>
-                  {' '}
                   <span>
-                    <a href={href(id)} title={proxy.target} target="_blank">
-                      {id}
-                    </a>
+                    <Link id={id} />
                   </span>
                 </li>
               ))}

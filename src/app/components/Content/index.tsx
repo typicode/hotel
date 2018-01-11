@@ -1,6 +1,8 @@
 import { observer } from 'mobx-react'
 import * as React from 'react'
 import { MdArrowDownward, MdClearAll } from 'react-icons/lib/md'
+import Link from '../Link'
+
 import Store from '../../Store'
 import './index.css'
 
@@ -10,6 +12,9 @@ export interface IProps {
 
 @observer
 class Content extends React.Component<IProps, {}> {
+  private el: HTMLDivElement | null
+  private atBottom: boolean = true
+
   public componentWillUpdate() {
     if (this.el) {
       this.atBottom = this.isAtBottom()
@@ -23,16 +28,21 @@ class Content extends React.Component<IProps, {}> {
   }
 
   public isAtBottom() {
-    const { scrollHeight, scrollTop, clientHeight } = this.el
-    return scrollHeight - scrollTop === clientHeight
+    if (this.el) {
+      const { scrollHeight, scrollTop, clientHeight } = this.el
+      return scrollHeight - scrollTop === clientHeight
+    } else {
+      return true
+    }
   }
 
   public scrollToBottom() {
-    this.el.scrollTop = this.el.scrollHeight
+    if (this.el) {
+      this.el.scrollTop = this.el.scrollHeight
+    }
   }
 
-  public onScroll({ target }) {
-    const { scrollHeight, scrollTop, clientHeight } = target
+  public onScroll() {
     this.atBottom = this.isAtBottom()
   }
 
@@ -42,11 +52,15 @@ class Content extends React.Component<IProps, {}> {
     return (
       <div
         className="content"
-        onScroll={() => this.onScroll}
-        ref={el => (this.el = el)}
+        onScroll={() => this.onScroll()}
+        ref={el => {
+          this.el = el
+        }}
       >
         <div className="content-bar">
-          <span>{store.selectedMonitorId}</span>
+          <span>
+            <Link id={store.selectedMonitorId} />
+          </span>
           <span>
             <button
               title="Clear output"

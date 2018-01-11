@@ -1,7 +1,7 @@
 {
   "exec": "babel-node",
   "ignore": [
-    "src/front/**/*",
+    "src/app/**/*",
     "src/daemon/public/**/*"
   ]
 }

@@ -51,7 +51,7 @@ module.exports = group => {
   // localhost router
   app.use(indexRouter)
 
-  // Handle CONNECT, used by WebSockets and https when accessing .dev domains
+  // Handle CONNECT, used by WebSockets and https when accessing .localhost domains
   server.on('connect', (req, socket, head) => {
     group.handleConnect(req, socket, head)
   })

@@ -4,6 +4,10 @@
   background-color: var(--primary);
 }
 
+.content a {
+  color: white;
+}
+
 .content-bar {
   position: sticky;
   top: 0;
@@ -20,6 +24,7 @@
 pre {
   padding: 1rem;
   margin: 0;
+  word-break: break-all;
 }
 
 button {

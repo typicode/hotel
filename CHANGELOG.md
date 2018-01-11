@@ -1,11 +1,13 @@
 # Change Log
 
-## Unreleased
+## 0.8.0
 
 * Create empty `conf.json` if it doesn't exist
-* Update UI to open links in new tabs (should improve integration with third-party tools)
-* Local self-signed certicate are now generated in `~/.hotel` (you'll need to trust the certificate again)
-
+* Self-signed certicate are now generated in `~/.hotel` (you'll need to "trust" the certificate again)
+* Update UI
+  * New style
+  * Drop IE support for the UI
+  * Links now open in new tabs (should improve integration with third-party tools)
 
 ## 0.7.6
 
@@ -159,7 +161,7 @@ __Breaking__
 
 ## 0.4.12
 
-* Add wildcard subdomains `http://*.app.dev`.
+* Add wildcard subdomains `http://*.app.localhost`.
 
 ## 0.4.11
 
@@ -182,7 +184,7 @@ __Breaking__
 ## 0.4.7
 
 * Bundle front-end dependencies to make homepage work without network access.
-* Support subdomains `http://sub.app.dev`.
+* Support subdomains `http://sub.app.localhost`.
 * Support `https` and `wss`.
 
 ## 0.4.6
@@ -202,8 +204,8 @@ __Breaking__
 
 ## 0.4.1
 
-* Added WebSocket support for projects being accessed using local `.dev` domain.
+* Added WebSocket support for projects being accessed using local `.localhost` domain.
 
 ## 0.4.0
 
-* Added Local `.dev` domain support for HTTP requests.
+* Added Local `.localhost` domain support for HTTP requests.

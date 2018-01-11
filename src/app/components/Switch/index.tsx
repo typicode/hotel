@@ -8,15 +8,16 @@ export interface IProps {
 
 function Switch({ onClick = () => null, checked }: IProps) {
   return (
-    <label className="switch">
-      <input
-        type="checkbox"
-        onClick={e => {
-          e.stopPropagation()
-          onClick()
-        }}
-        checked={checked}
-      />
+    <label
+      className="switch"
+      onClick={e => {
+        e.stopPropagation()
+        e.preventDefault()
+        console.log('click')
+        onClick()
+      }}
+    >
+      <input type="checkbox" checked={checked} />
       <span className="slider" />
     </label>
   )

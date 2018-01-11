@@ -3,26 +3,29 @@ import { action, computed, observable } from 'mobx'
 import * as api from './api'
 import { formatLines } from './formatter'
 
-interface IProxy {
+export interface IProxy {
   target: string
 }
 
-interface ILine {
+export interface ILine {
   id: string
   html: string
 }
 
-interface IMonitor {
+export interface IMonitor {
   cwd: string
   command: string[]
   status: string
   output: ILine[]
+  started: Date
+  pid: number
 }
 
 export const RUNNING = 'running'
 export const STOPPED = 'stopped'
+const MAX_OUTPUT_LENGTH = 1000
 
-function clear(servers: Map<string, IMonitor | IProxy>, data) {
+function clear(servers: Map<string, IMonitor | IProxy>, data: any) {
   servers.forEach((server, id) => {
     if (!data.hasOwnProperty(id)) {
       servers.delete(id)
@@ -34,6 +37,7 @@ export default class Store {
   @observable public selectedMonitorId: string = ''
   @observable public monitors: Map<string, IMonitor> = new Map()
   @observable public proxies: Map<string, IProxy> = new Map()
+  @observable public servers: Map<string, IMonitor | IProxy> = new Map()
 
   constructor() {
     this.watchServers()
@@ -80,35 +84,44 @@ export default class Store {
       }))
 
       lines.forEach(line => {
-        if (this.monitors.has(id)) {
-          this.monitors.get(id).output.push(line)
+        const monitor = this.monitors.get(id)
+        if (monitor) {
+          monitor.output.push(line)
+
+          if (monitor.output.length > MAX_OUTPUT_LENGTH) {
+            monitor.output.shift()
+          }
         }
       })
     })
   }
 
   @action
-  public selectMonitor(monitorId) {
+  public selectMonitor(monitorId: string) {
     this.selectedMonitorId =
       this.selectedMonitorId === monitorId ? '' : monitorId
   }
 
   @action
-  public toggleMonitor(monitorId) {
+  public toggleMonitor(monitorId: string) {
     const monitor = this.monitors.get(monitorId)
 
-    if (monitor.status === RUNNING) {
-      api.stopMonitor(monitorId)
-      monitor.status = STOPPED // optimistic update
-    } else {
-      api.startMonitor(monitorId)
-      monitor.status = RUNNING
+    if (monitor) {
+      if (monitor.status === RUNNING) {
+        api.stopMonitor(monitorId)
+        monitor.status = STOPPED // optimistic update
+      } else {
+        api.startMonitor(monitorId)
+        monitor.status = RUNNING
+      }
     }
   }
 
   @action
-  public clearOutput(monitorId) {
+  public clearOutput(monitorId: string) {
     const monitor = this.monitors.get(monitorId)
-    monitor.output = []
+    if (monitor) {
+      monitor.output = []
+    }
   }
 }

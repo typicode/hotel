@@ -26,9 +26,9 @@ Development of Hotel is generously supported by contributions from people. If yo
 
 ## Features
 
-* __Local domains__ - `http://project.dev`
-* __HTTPS via local self-signed certificate__ - `https://project.dev`
-* __Wildcard subdomains__ - `http://*.project.dev`
+* __Local domains__ - `http://project.localhost`
+* __HTTPS via local self-signed certificate__ - `https://project.localhost`
+* __Wildcard subdomains__ - `http://*.project.localhost`
 * __Works everywhere__ - OS X, Linux and Windows
 * __Works with any server__ - Node, Ruby, PHP, ...
 * __Proxy__ - Map local domains to remote servers
@@ -55,7 +55,7 @@ You can also visit https://nodejs.org.
 
 ### Local dev domains (optional)
 
-To use local `.dev` domains, you need to configure your network or browser to use hotel's proxy auto-config file or you can skip this step for the moment and go directly to http://localhost:2000
+To use local `.localhost` domains, you need to configure your network or browser to use hotel's proxy auto-config file or you can skip this step for the moment and go directly to http://localhost:2000
 
 [__See instructions here__](https://github.com/typicode/hotel/blob/master/docs/README.md).
 
@@ -68,7 +68,7 @@ Add your servers commands
 ~/projects/two$ hotel add 'serve -p $PORT'
 ```
 
-Go to [localhost:2000](http://localhost:2000) or [hotel.dev](http://hotel.dev).
+Go to [localhost:2000](http://localhost:2000) or [hotel.localhost](http://hotel.localhost).
 
 Alternatively you can directly go to
 
@@ -78,13 +78,13 @@ http://localhost:2000/two
 ```
 
 ```
-http://one.dev
-http://two.dev
+http://one.localhost
+http://two.localhost
 ```
 
 ```
-https://one.dev
-https://two.dev
+https://one.localhost
+https://two.localhost
 ```
 
 __Tip__ you can also use `hotel run <cmd>` to start your server in the terminal and get a temporary local domain.
@@ -120,8 +120,8 @@ Add your remote servers
 You can now access them using
 
 ```sh
-http://aliased-address.dev # will proxy requests to http://192.168.1.12:1337
-http://aliased-domain.dev # will proxy requests to http://google.com
+http://aliased-address.localhost # will proxy requests to http://192.168.1.12:1337
+http://aliased-domain.localhost # will proxy requests to http://google.com
 ```
 
 ## CLI usage and options
@@ -172,7 +172,7 @@ hotel add "cmd -p %PORT%" # Windows
 
 ## Fallback URL
 
-If you're offline or can't configure your browser to use `.dev` domains, you can __always__ access your local servers by going to [localhost:2000](http://localhost:2000).
+If you're offline or can't configure your browser to use `.localhost` domains, you can __always__ access your local servers by going to [localhost:2000](http://localhost:2000).
 
 ## Configurations, logs and certificates
 
@@ -194,7 +194,9 @@ By default, `hotel` uses the following configuration values:
   "port": 2000,
   "host": '127.0.0.1',
   "timeout": 5000,
-  "tld": 'dev',
+  // Change this if you want to use another tld than .localhost
+  "tld": 'dev', 
+  // If you're behind a corporate proxy, replace this with your network proxy IP (example: "1.2.3.4:5000")
   "proxy": false
 }
 ```
@@ -236,7 +238,7 @@ hotel add --http-proxy-env 'server-cmd'
 hotel add --change-origin 'https://jsonplaceholder.typicode.com'
 ```
 
-_When proxying to a `https` server, you may get an error because your local `.dev` domain doesn't match the host defined in the server certificate. With this flag, `host` header is changed to match the target URL._
+_When proxying to a `https` server, you may get an error because your local `.localhost` domain doesn't match the host defined in the server certificate. With this flag, `host` header is changed to match the target URL._
 
 #### `ENOSPC` and `EACCES` errors
 
