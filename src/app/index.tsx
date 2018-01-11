@@ -4,4 +4,4 @@ import App from './components/App'
 import Store from './Store'
 
 const store = new Store()
-ReactDOM.render(<App store={store} />, document.body)
+ReactDOM.render(<App store={store} />, document.getElementById('root'))
