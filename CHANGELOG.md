@@ -10,9 +10,9 @@
 
 __Breaking__
 
-* Drop IE support for the UI
+* Drop Internet Explorer 11 support for the UI
 * Drop Node 4 support
-* Self-signed certicates are now generated in `~/.hotel` (you'll need to "trust" them again)
+* Self-signed certicate is now generated locally and can be found in `~/.hotel`. Since it's going to be a new one, you'll need to "trust" it again to be able to use `https`
 
 ## 0.7.6
 
