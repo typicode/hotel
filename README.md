@@ -4,8 +4,6 @@
 
 ![](https://i.imgur.com/eDLgWMj.png)
 
-__IMPORTANT `v0.8.0` breaking change: `.localhost` is now the new default domain and replaces `.dev` domains (see https://ma.ttias.be/chrome-force-dev-domains-https-via-preloaded-hsts/). Please be sure to remove `"tld": "dev"` from your `~/.hotel/conf.json` file, run `hotel stop && hotel start` and refresh your network settings.__
-
 _Tip: if you don't enable local domains, hotel can still be used as a **catalog of local servers**._
 
 Hotel works great on any OS (OS X, Linux, Windows) and with __all servers :heart:__
@@ -17,6 +15,15 @@ Hotel works great on any OS (OS X, Linux, Windows) and with __all servers :heart
 * Go
 * Apache, Nginx
 * ...
+
+## v0.8.0 upgrade
+
+`.localhost` is now the new default domain and replaces `.dev` domains (see https://ma.ttias.be/chrome-force-dev-domains-https-via-preloaded-hsts/).
+
+If you're upgrading, please be sure to:
+1. Remove `"tld": "dev"` from your `~/.hotel/conf.json` file
+2. Run `hotel stop && hotel start`
+3. Refresh your network settings
 
 ## Sponsorship
 
