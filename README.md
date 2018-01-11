@@ -53,7 +53,7 @@ You can also visit https://nodejs.org.
 
 ## Quick start
 
-### Local dev domains (optional)
+### Local domains (optional)
 
 To use local `.localhost` domains, you need to configure your network or browser to use hotel's proxy auto-config file or you can skip this step for the moment and go directly to http://localhost:2000
 
@@ -238,7 +238,7 @@ hotel add --http-proxy-env 'server-cmd'
 hotel add --change-origin 'https://jsonplaceholder.typicode.com'
 ```
 
-_When proxying to a `https` server, you may get an error because your local `.localhost` domain doesn't match the host defined in the server certificate. With this flag, `host` header is changed to match the target URL._
+_When proxying to a `https` server, you may get an error because your `.localhost` domain doesn't match the host defined in the server certificate. With this flag, `host` header is changed to match the target URL._
 
 #### `ENOSPC` and `EACCES` errors
 
