@@ -1,10 +1,14 @@
+interface IEvent {
+  data: string
+}
+
 export function fetchServers() {
   return window.fetch('/_/servers').then(response => response.json())
 }
 
-export function watchServers(cb) {
+export function watchServers(cb: (data: any) => void) {
   if (window.EventSource) {
-    new window.EventSource('/_/events').onmessage = event => {
+    new window.EventSource('/_/events').onmessage = (event: IEvent) => {
       const data = JSON.parse(event.data)
       cb(data)
     }
@@ -18,9 +22,9 @@ export function watchServers(cb) {
   }
 }
 
-export function watchOutput(cb) {
+export function watchOutput(cb: (data: any) => void) {
   if (window.EventSource) {
-    new window.EventSource('/_/events/output').onmessage = event => {
+    new window.EventSource('/_/events/output').onmessage = (event: IEvent) => {
       const data = JSON.parse(event.data)
       cb(data)
     }
@@ -29,10 +33,10 @@ export function watchOutput(cb) {
   }
 }
 
-export function startMonitor(id) {
+export function startMonitor(id: string) {
   return window.fetch(`/_/servers/${id}/start`, { method: 'POST' })
 }
 
-export function stopMonitor(id) {
+export function stopMonitor(id: string) {
   return window.fetch(`/_/servers/${id}/stop`, { method: 'POST' })
 }

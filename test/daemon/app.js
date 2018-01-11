@@ -141,7 +141,7 @@ test.cb('GET http://failing.tld should return 502', t => {
 })
 
 test.cb(
-  'GET http://proxy.tld should return 200 and host should be proxy.dev',
+  'GET http://proxy.tld should return 200 and host should be proxy.localhost',
   t => {
     request(app)
       .get('/')
@@ -150,7 +150,7 @@ test.cb(
   }
 )
 
-test.cb('GET http://node.dev:4000 should proxy to localhost:4000', t => {
+test.cb('GET http://node.tld:4000 should proxy to localhost:4000', t => {
   request(app)
     .get('/')
     .set('Host', `node.${tld}:4000`)
@@ -270,12 +270,6 @@ test.cb('GET http://localhost:2000/proxy should redirect to target', t => {
 test.cb('GET / should render index.html', t => {
   request(app)
     .get('/')
-    .expect(200, t.end)
-})
-
-test.cb('GET /style.css should render style.css', t => {
-  request(app)
-    .get('/css/style.css')
     .expect(200, t.end)
 })
 

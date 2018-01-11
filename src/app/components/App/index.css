@@ -1,0 +1,44 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-light: #484848;
+  --primary: #212121;
+  --primary: #282c2f;
+  --primary-dark: #000;
+  --accent: #4c9e97;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  color: white;
+  background-color: var(--primary-dark);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: #6c6c6f;
+  text-decoration: none;
+}
+
+a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+.nav {
+  height: 100vh;
+}
+
+/* 640px */
+@media (min-width: 40rem) {
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+  }
+}
