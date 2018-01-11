@@ -13,7 +13,6 @@ function Switch({ onClick = () => null, checked }: IProps) {
       onClick={e => {
         e.stopPropagation()
         e.preventDefault()
-        console.log('click')
         onClick()
       }}
     >

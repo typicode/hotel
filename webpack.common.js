@@ -25,7 +25,6 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Hotel',
       template: 'src/app/index.html'
     })
   ]

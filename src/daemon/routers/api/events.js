@@ -18,35 +18,36 @@ function listen(res, group, groupEvent, handler) {
   res.on('finish', removeListener)
 }
 
-function sendState(res, group) {
-  res.json(group.list())
-}
-
-function sendOutput(res, id, data) {
-  res.json({
-    id,
-    output: data.toString()
-  })
-}
-
 module.exports = group => {
   const router = express.Router()
 
   router.get('/', sse, (req, res) => {
+    // Handler
+    function sendState() {
+      res.json(group.list())
+    }
+
     // Bootstrap
-    sendState(res, group)
+    sendState()
 
     // Listen
     listen(res, group, 'change', sendState)
   })
 
   router.get('/output', sse, (req, res) => {
+    function sendOutput(id, data) {
+      res.json({
+        id,
+        output: data.toString()
+      })
+    }
+
     // Bootstrap
     const list = group.list()
     Object.keys(list).forEach(id => {
       var mon = list[id]
       if (mon && mon.tail) {
-        sendOutput(res, id, mon.tail)
+        sendOutput(id, mon.tail)
       }
     })
 

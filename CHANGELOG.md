@@ -3,11 +3,17 @@
 ## 0.8.0
 
 * Create empty `conf.json` if it doesn't exist
-* Self-signed certicate are now generated in `~/.hotel` (you'll need to "trust" the certificate again)
+
 * Update UI
-  * New 2018 style 🎉
-  * Drop IE support for the UI
+  * new 2018 style 🎉
   * Links now open in new tabs (should improve integration with third-party tools)
+* Update all dependencies
+
+__Breaking__
+
+* Drop IE support for the UI
+* Drop Node 4 support
+* Self-signed certicates are now generated in `~/.hotel` (you'll need to "trust" them again)
 
 ## 0.7.6
 
