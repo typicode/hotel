@@ -27,7 +27,7 @@ Development of Hotel is generously supported by contributions from people. If yo
 ## Features
 
 * __Local domains__ - `http://project.localhost`
-* __HTTPS via local self-signed certificate__ - `https://project.localhost`
+* __HTTPS via local self-signed SSL certificate__ - `https://project.localhost`
 * __Wildcard subdomains__ - `http://*.project.localhost`
 * __Works everywhere__ - OS X, Linux and Windows
 * __Works with any server__ - Node, Ruby, PHP, ...
@@ -59,16 +59,16 @@ To use local `.localhost` domains, you need to configure your network or browser
 
 [__See instructions here__](https://github.com/typicode/hotel/blob/master/docs/README.md).
 
-### Servers
-
-Add your servers commands
+### Add your servers
 
 ```sh
-~/projects/one$ hotel add nodemon
-~/projects/two$ hotel add 'serve -p $PORT'
+# Add your server to hotel
+~/projects/one$ hotel add 'npm start'
+# Or start your server in the terminal as usual and get a temporary local domain
+~/projects/two$ hotel run 'npm start' 
 ```
 
-Go to [localhost:2000](http://localhost:2000) or [hotel.localhost](http://hotel.localhost).
+Visit [localhost:2000](http://localhost:2000) or [http(s)://hotel.localhost](http://hotel.localhost).
 
 Alternatively you can directly go to
 
@@ -78,16 +78,9 @@ http://localhost:2000/two
 ```
 
 ```
-http://one.localhost
-http://two.localhost
+http(s)://one.localhost
+http(s)://two.localhost 
 ```
-
-```
-https://one.localhost
-https://two.localhost
-```
-
-__Tip__ you can also use `hotel run <cmd>` to start your server in the terminal and get a temporary local domain.
 
 #### Popular servers examples
 
@@ -108,7 +101,7 @@ On __Windows__ use `"%PORT%"` instead of `'$PORT'`
 
 [__See a Docker example here.__](https://github.com/typicode/hotel/blob/master/docs/Docker.md).
 
-### Proxy
+### Proxy requests to remote servers
 
 Add your remote servers
 
@@ -174,7 +167,7 @@ hotel add "cmd -p %PORT%" # Windows
 
 If you're offline or can't configure your browser to use `.localhost` domains, you can __always__ access your local servers by going to [localhost:2000](http://localhost:2000).
 
-## Configurations, logs and certificates
+## Configurations, logs and self-signed SSL certificate
 
 You can find hotel related files in `~/.hotel` :
 
@@ -193,9 +186,13 @@ By default, `hotel` uses the following configuration values:
 {
   "port": 2000,
   "host": '127.0.0.1',
+  
+  // Timeout when proxying requests to local domains
   "timeout": 5000,
+  
   // Change this if you want to use another tld than .localhost
   "tld": 'dev', 
+  
   // If you're behind a corporate proxy, replace this with your network proxy IP (example: "1.2.3.4:5000")
   "proxy": false
 }
