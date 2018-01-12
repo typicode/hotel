@@ -25,9 +25,9 @@ If you're upgrading, please be sure to:
 2. Run `hotel stop && hotel start`
 3. Refresh your network settings
 
-## Sponsorship
+## Patreon
 
-Development of Hotel is generously supported by contributions from people. If you are benefiting from my projects and would like to help keep them financially sustainable, please visit [Patreon](https://patreon.com/typicode).
+If you are benefiting from hotel and would like to help keep them sustainable, you can support its development on [Patreon](https://patreon.com/typicode).
 
 ## Video
 
