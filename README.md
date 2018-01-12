@@ -200,7 +200,7 @@ By default, `hotel` uses the following configuration values:
   "timeout": 5000,
   
   // Change this if you want to use another tld than .localhost
-  "tld": 'dev', 
+  "tld": 'localhost', 
   
   // If you're behind a corporate proxy, replace this with your network proxy IP (example: "1.2.3.4:5000")
   "proxy": false
