@@ -38,8 +38,8 @@ function Nav({ store }: IProps) {
                 <li
                   key={id}
                   className={classNames('monitor', {
-                    selected: id === selectedMonitorId,
-                    running: monitor.status === RUNNING
+                    running: monitor.status === RUNNING,
+                    selected: id === selectedMonitorId
                   })}
                   onClick={() => store.selectMonitor(id)}
                 >
