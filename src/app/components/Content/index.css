@@ -11,6 +11,7 @@
 .content-bar {
   position: sticky;
   top: 0;
+  left: 0;
   display: flex;
   justify-content: space-between;
   padding: 0 0 0 1rem;
