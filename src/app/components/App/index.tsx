@@ -12,11 +12,9 @@ export interface IProps {
 
 function App({ store }: IProps) {
   return (
-    <div>
-      <div className="container">
-        <Nav store={store} />
-        {store.selectedMonitorId ? <Content store={store} /> : <Splash />}
-      </div>
+    <div className="container">
+      <Nav store={store} />
+      {store.selectedMonitorId ? <Content store={store} /> : <Splash />}
     </div>
   )
 }
