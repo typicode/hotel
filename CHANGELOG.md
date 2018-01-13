@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.8.2 
+
+* UI
+
+## 0.8.1
+
+* Fix error page
+
 ## 0.8.0
 
 * Create empty `conf.json` if it doesn't exist
