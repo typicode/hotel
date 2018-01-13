@@ -63,6 +63,10 @@ li.selected {
 li > span {
   align-self: center;
   padding: 0 1rem;
+}
+
+/* Align Switch vertically */
+li > span:nth-last-child() {
   line-height: 0;
 }
 
