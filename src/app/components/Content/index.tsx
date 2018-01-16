@@ -58,9 +58,11 @@ class Content extends React.Component<IProps, {}> {
         }}
       >
         <div className="content-bar">
-          <span>
-            <Link id={store.selectedMonitorId} />
-          </span>
+          {monitor && (
+            <span>
+              <Link id={store.selectedMonitorId} name={monitor.name} />
+            </span>
+          )}
           <span>
             <button
               title="Clear output"

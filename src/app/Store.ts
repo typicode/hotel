@@ -13,6 +13,7 @@ export interface ILine {
 }
 
 export interface IMonitor {
+  name: string,
   cwd: string
   command: string[]
   status: string

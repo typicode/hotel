@@ -44,7 +44,7 @@ function Nav({ store }: IProps) {
                   onClick={() => store.selectMonitor(id)}
                 >
                   <span>
-                    <Link id={id} />
+                    <Link className="listLink" id={id} name={monitor.name} />
                   </span>
                   <span>
                     <Switch
@@ -63,9 +63,9 @@ function Nav({ store }: IProps) {
             <h2>proxies</h2>
             <ul>
               {Array.from(proxies).map(([id, proxy]) => (
-                <li key={id}>
+                <li key={name}>
                   <span>
-                    <Link id={id} />
+                    <Link className="listLink" id={id} name={id} />
                   </span>
                 </li>
               ))}

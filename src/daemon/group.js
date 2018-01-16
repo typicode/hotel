@@ -10,6 +10,7 @@ const afterAll = require('after-all')
 const httpProxy = require('http-proxy')
 const serverReady = require('server-ready')
 const log = require('./log')
+const normalize = require('./normalize')
 const tcpProxy = require('./tcp-proxy')
 const daemonConf = require('../conf')
 const getCmd = require('../get-cmd')
@@ -61,15 +62,18 @@ class Group extends EventEmitter {
     return this._list[id]
   }
 
-  add(id, conf) {
+  add(name, conf) {
+    conf.name = name
+    const id = normalize(name)
+
     if (conf.target) {
-      log(`Add target ${id}`)
+      log(`Add target ${name}`)
       this._list[id] = conf
       this._change()
       return
     }
 
-    log(`Add server ${id}`)
+    log(`Add server ${name}`)
 
     const HTTP_PROXY = `http://127.0.0.1:${daemonConf.port}/proxy.pac`
 
@@ -97,7 +101,8 @@ class Group extends EventEmitter {
 
     const mon = respawn(command, {
       ...conf,
-      maxRestarts: 0
+      maxRestarts: 0,
+      name
     })
 
     this._list[id] = mon
@@ -145,7 +150,8 @@ class Group extends EventEmitter {
     this._change()
   }
 
-  remove(id, cb) {
+  remove(name, cb) {
+    const id = normalize(name)
     const item = this.find(id)
     if (item) {
       delete this._list[id]
@@ -204,10 +210,8 @@ class Group extends EventEmitter {
   exists(req, res, next) {
     // Resolve using either hostname `app.tld`
     // or id param `http://localhost:2000/app`
-    const tld = new RegExp(`.${daemonConf.tld}$`)
-    const id = req.params.id
-      ? this.resolve(req.params.id)
-      : this.resolve(req.hostname.replace(tld, ''))
+    const tld = new RegExp(`\\.${daemonConf.tld}$`)
+    const id = this.resolve(req.params.id || req.hostname.replace(tld, ''))
 
     // Find item
     const item = this.find(id)
