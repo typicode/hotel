@@ -17,10 +17,12 @@ interface IProps {
   id: string
 }
 
-export default function Link({ id }: IProps) {
+function Link({ id }: IProps) {
   return (
     <a href={href(id)} target="_blank" onClick={e => e.stopPropagation()}>
       {id}
     </a>
   )
 }
+
+export default Link

@@ -79,8 +79,8 @@ export default class Store {
     api.watchOutput(data => {
       const { id, output } = data
       const lines = formatLines(output).map(html => ({
-        id: uniqueId(),
-        html
+        html,
+        id: uniqueId()
       }))
 
       lines.forEach(line => {
