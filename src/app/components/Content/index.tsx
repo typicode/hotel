@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react'
 import * as React from 'react'
-import MdArrowDownward from 'react-icons/lib/md/arrow-downward'
-import MdClearAll from 'react-icons/lib/md/clear-all'
+import MdArrowDownward from 'react-icons/md/arrow-downward'
+import MdClearAll from 'react-icons/md/clear-all'
 import Link from '../Link'
 
 import Store from '../../Store'

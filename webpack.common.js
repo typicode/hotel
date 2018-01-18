@@ -13,6 +13,20 @@ module.exports = {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/
+      },
+      {
+        test: /(\.js|\.jsx)$/,
+        loader: 'babel-loader',
+        include: [
+          path.resolve(
+            __dirname,
+            './node_modules/react-icons/md/arrow-downward'
+          ),
+          path.resolve(__dirname, './node_modules/react-icons/md/clear-all')
+        ],
+        query: {
+          presets: ['es2015', 'react']
+        }
       }
     ]
   },
