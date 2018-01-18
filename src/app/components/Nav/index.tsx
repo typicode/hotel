@@ -34,26 +34,28 @@ function Nav({ store }: IProps) {
           <div>
             <h2>monitors</h2>
             <ul>
-              {Array.from(monitors).map(([id, monitor]) => (
-                <li
-                  key={id}
-                  className={classNames('monitor', {
-                    running: monitor.status === RUNNING,
-                    selected: id === selectedMonitorId
-                  })}
-                  onClick={() => store.selectMonitor(id)}
-                >
-                  <span>
-                    <Link id={id} />
-                  </span>
-                  <span>
-                    <Switch
-                      onClick={() => store.toggleMonitor(id)}
-                      checked={monitor.status === RUNNING}
-                    />
-                  </span>
-                </li>
-              ))}
+              {Array.from(monitors).map(([id, monitor]) => {
+                return (
+                  <li
+                    key={id}
+                    className={classNames('monitor', {
+                      running: monitor.status === RUNNING,
+                      selected: id === selectedMonitorId
+                    })}
+                    onClick={() => store.selectMonitor(id)}
+                  >
+                    <span>
+                      <Link id={id} />
+                    </span>
+                    <span>
+                      <Switch
+                        onClick={() => store.toggleMonitor(id)}
+                        checked={monitor.status === RUNNING}
+                      />
+                    </span>
+                  </li>
+                )
+              })}
             </ul>
           </div>
         )}
@@ -62,13 +64,15 @@ function Nav({ store }: IProps) {
           <div>
             <h2>proxies</h2>
             <ul>
-              {Array.from(proxies).map(([id, proxy]) => (
-                <li key={id}>
-                  <span>
-                    <Link id={id} />
-                  </span>
-                </li>
-              ))}
+              {Array.from(proxies).map(([id, proxy]) => {
+                return (
+                  <li key={id}>
+                    <span>
+                      <Link id={id} />
+                    </span>
+                  </li>
+                )
+              })}
             </ul>
           </div>
         )}
