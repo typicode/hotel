@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.8.3
+
+* Fix error in Edge
+* Improve bundle size
+
 ## 0.8.2 
 
 * UI
