@@ -34,10 +34,10 @@ function clear(servers: Map<string, IMonitor | IProxy>, data: any) {
 }
 
 export default class Store {
+  @observable public isLoading: boolean = true
   @observable public selectedMonitorId: string = ''
   @observable public monitors: Map<string, IMonitor> = new Map()
   @observable public proxies: Map<string, IProxy> = new Map()
-  @observable public servers: Map<string, IMonitor | IProxy> = new Map()
 
   constructor() {
     this.watchServers()
@@ -71,6 +71,9 @@ export default class Store {
           }
         }
       })
+
+      // Initial data has been loaded
+      this.isLoading = false
     })
   }
 

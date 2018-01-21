@@ -17,6 +17,10 @@ header {
   flex: 1;
 }
 
+.menu.hidden {
+  visibility: hidden;
+}
+
 footer {
   padding: 1rem;
 }

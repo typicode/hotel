@@ -15,11 +15,11 @@ export interface IProps {
 }
 
 function Nav({ store }: IProps) {
-  const { selectedMonitorId, monitors, proxies } = store
+  const { isLoading, selectedMonitorId, monitors, proxies } = store
   return (
     <div className="nav">
       <header>hotel</header>
-      <div className="menu">
+      <div className={classNames('menu', { hidden: isLoading })}>
         {monitors.size === 0 &&
           proxies.size === 0 && (
             <div>
