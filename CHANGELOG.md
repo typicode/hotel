@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.8.4
+
+* Fix UI crash
+
 ## 0.8.3
 
 * Fix error in Edge
