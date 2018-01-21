@@ -17,7 +17,6 @@
     "start:nodemon": "nodemon -- src/daemon",
     "prepublishOnly": "npm run build && pkg-ok",
     "uninstall": "node bin/uninstall.js",
-    "precommit": "npm test",
     "build": "run-s build:*",
     "build:webpack": "rimraf dist && webpack --config webpack.prod.js",
     "build:babel": "rimraf lib && babel src -d lib --copy-files --ignore src/app",
@@ -95,7 +94,7 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
     "html-webpack-plugin": "^2.30.1",
-    "husky": "^0.14.2",
+    "husky": "^0.15.0-rc.2",
     "lodash.uniqueid": "^4.0.1",
     "mobx": "^3.4.1",
     "mobx-react": "^4.3.5",
@@ -132,5 +131,10 @@
       "./test/_setup"
     ],
     "babel": "inherit"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test"
+    }
   }
 }
