@@ -1,5 +1,4 @@
 import * as ansi2HTML from 'ansi2html'
-import * as escapeHTML from 'escape-html'
 import { IMonitor } from './Store'
 
 function blankLine(val: string) {
@@ -12,7 +11,6 @@ export function formatLines(str: string): string[] {
     .split('\n')
     .map(blankLine)
     .map(ansi2HTML)
-    .map(escapeHTML)
 }
 
 export function statusTitle(monitor: IMonitor) {
