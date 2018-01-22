@@ -76,6 +76,7 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.3",
+    "@types/escape-html": "0.0.20",
     "@types/react": "^16.0.34",
     "@types/react-dom": "^16.0.3",
     "@types/react-icons": "^2.2.4",
