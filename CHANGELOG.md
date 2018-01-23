@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.8.5
+
+* Fix colors in output
+
 ## 0.8.4
 
 * Fix UI crash

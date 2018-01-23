@@ -1,1 +1,5 @@
-setInterval(() => console.log('[31m' + Math.random() + '\n'), 200)
+setInterval(
+  () =>
+    console.log('[32m green text with blank line - ' + Math.random() + '\n'),
+  200
+)
