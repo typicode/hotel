@@ -95,7 +95,7 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
     "html-webpack-plugin": "^2.30.1",
-    "husky": "^0.15.0-rc.2",
+    "husky": "^0.15.0-rc.3",
     "lodash.uniqueid": "^4.0.1",
     "mobx": "^3.4.1",
     "mobx-react": "^4.3.5",
