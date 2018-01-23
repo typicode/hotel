@@ -10,9 +10,9 @@ export function formatLines(str: string): string[] {
   return str
     .replace(/\n$/, '')
     .split('\n')
+    .map(escapeHTML)
     .map(blankLine)
     .map(ansi2HTML)
-    .map(escapeHTML)
 }
 
 export function statusTitle(monitor: IMonitor) {
