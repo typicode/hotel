@@ -5,6 +5,7 @@ import * as MdClearAll from 'react-icons/lib/md/clear-all'
 import Link from '../Link'
 
 import Store from '../../Store'
+import { formatLine } from '../../formatter'
 import './index.css'
 
 export interface IProps {
@@ -78,13 +79,11 @@ class Content extends React.Component<IProps, {}> {
           </span>
         </div>
         <pre>
-          {monitor &&
-            monitor.output.map(line => (
-              <div
-                key={line.id}
-                dangerouslySetInnerHTML={{ __html: line.html }}
-              />
-            ))}
+          {monitor && (
+            <div
+              dangerouslySetInnerHTML={{ __html: formatLine(monitor.output) }}
+            />
+          )}
         </pre>
       </div>
     )

@@ -1,22 +1,15 @@
-import * as uniqueId from 'lodash.uniqueid'
 import { action, computed, observable } from 'mobx'
 import * as api from './api'
-import { formatLines } from './formatter'
 
 export interface IProxy {
   target: string
-}
-
-export interface ILine {
-  id: string
-  html: string
 }
 
 export interface IMonitor {
   cwd: string
   command: string[]
   status: string
-  output: ILine[]
+  output: string
   started: Date
   pid: number
 }
@@ -81,21 +74,25 @@ export default class Store {
   public watchOutput() {
     api.watchOutput(data => {
       const { id, output } = data
-      const lines = formatLines(output).map(html => ({
-        html,
-        id: uniqueId()
-      }))
+      const monitor = this.monitors.get(id)
+      if (monitor) {
+        monitor.output = (monitor.output + output)
+          .split('')
+          .reduce((previous, current) => {
+            if (current === String.fromCharCode(8)) {
+              return previous.substring(0, previous.length - 1)
+            }
 
-      lines.forEach(line => {
-        const monitor = this.monitors.get(id)
-        if (monitor) {
-          monitor.output.push(line)
+            return previous + current
+          }, '')
 
-          if (monitor.output.length > MAX_OUTPUT_LENGTH) {
-            monitor.output.shift()
-          }
+        const lines = monitor.output.split('\n')
+        if (lines.length > MAX_OUTPUT_LENGTH) {
+          monitor.output = lines
+            .slice(lines.length - MAX_OUTPUT_LENGTH)
+            .join('\n')
         }
-      })
+      }
     })
   }
 
@@ -124,7 +121,7 @@ export default class Store {
   public clearOutput(monitorId: string) {
     const monitor = this.monitors.get(monitorId)
     if (monitor) {
-      monitor.output = []
+      monitor.output = ''
     }
   }
 }
