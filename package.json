@@ -108,7 +108,7 @@
     "react-icons": "^2.2.7",
     "rimraf": "^2.6.2",
     "sinon": "^4.1.4",
-    "style-loader": "^0.19.1",
+    "style-loader": "^0.20.1",
     "stylelint": "^8.4.0",
     "stylelint-config-recess-order": "^1.2.3",
     "stylelint-config-standard": "^18.0.0",
