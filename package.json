@@ -71,7 +71,7 @@
     "update-notifier": "^2.3.0",
     "user-startup": "^0.2.1",
     "vhost": "^3.0.2",
-    "yargs": "^10.1.1"
+    "yargs": "^11.0.0"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.3",
