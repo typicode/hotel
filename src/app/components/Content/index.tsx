@@ -13,7 +13,7 @@ export interface IProps {
 
 @observer
 class Content extends React.Component<IProps, {}> {
-  private el: HTMLDivElement | null
+  private el: HTMLDivElement | null = null
   private atBottom: boolean = true
 
   public componentWillUpdate() {
