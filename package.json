@@ -96,7 +96,7 @@
     "html-webpack-plugin": "^2.30.1",
     "husky": "^0.15.0-rc.8",
     "lodash.uniqueid": "^4.0.1",
-    "mobx": "^3.5.1",
+    "mobx": "^4.0.1",
     "mobx-react": "^4.4.2",
     "nodemon": "^1.15.1",
     "npm-run-all": "^4.1.2",
