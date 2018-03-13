@@ -108,7 +108,7 @@
     "rimraf": "^2.6.2",
     "sinon": "^4.4.2",
     "style-loader": "^0.19.1",
-    "stylelint": "^8.4.0",
+    "stylelint": "^9.1.2",
     "stylelint-config-recess-order": "^1.2.3",
     "stylelint-config-standard": "^18.1.0",
     "supertest": "^3.0.0",
