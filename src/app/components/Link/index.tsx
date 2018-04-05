@@ -1,11 +1,12 @@
 import * as React from 'react'
 import { IMonitor, IProxy } from '../../Store'
 
+const HOTEL_REGEXP = /^hotel\./
 function href(id: string) {
   const { protocol, hostname } = window.location
-  if (/hotel\./.test(hostname)) {
+  if (HOTEL_REGEXP.test(hostname)) {
     // Accessed using hotel.tld
-    const tld = hostname.split('.').slice(-1)[0]
+    const tld = hostname.replace(HOTEL_REGEXP, '')
     return `${protocol}//${id}.${tld}`
   } else {
     // Accessed using localhost
