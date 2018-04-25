@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.8.6
+
+* Fix `The listener must be a function` error
+
 ## 0.8.5
 
 * Fix colors in output

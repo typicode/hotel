@@ -24,7 +24,6 @@ class Group extends EventEmitter {
     this._proxy = httpProxy.createProxyServer({
       xfwd: true
     })
-    this._proxy.on('error', this.handleProxyError)
   }
 
   _output(id, data) {
