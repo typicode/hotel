@@ -213,6 +213,7 @@ To override a value, simply add it to `~/.hotel/conf.json` and run `hotel stop &
 
 ## Third-party tools
 
+* [Hotelier](https://github.com/macav/hotelier) Hotelier (Mac & Windows Tray App)
 * [Hotel Clerk](https://github.com/therealklanni/hotel-clerk) OS X menubar
 * [HotelX](https://github.com/djyde/HotelX) Another OS X menubar (only 1.6MB)
 * [alfred-hotel](https://github.com/exah/alfred-hotel) Alfred 3 workflow
