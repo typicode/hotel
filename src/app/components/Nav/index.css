@@ -15,6 +15,7 @@ header {
 
 .menu {
   flex: 1;
+  overflow-y: scroll;
 }
 
 .menu.hidden {
