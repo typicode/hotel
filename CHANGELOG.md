@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.8.7
+
+* Fix UI menu overflow
+
 ## 0.8.6
 
 * Fix `The listener must be a function` error
