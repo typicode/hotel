@@ -8,7 +8,7 @@
 
 _Tip: if you don't enable local domains, hotel can still be used as a **catalog of local servers**._
 
-Hotel works great on any OS (OS X, Linux, Windows) and with __all servers :heart:__
+Hotel works great on any OS (macOS, Linux, Windows) and with __all servers :heart:__
 * Node (Express, Webpack)
 * PHP (Laravel, Symfony)
 * Ruby (Rails, Sinatra, Jekyll)
@@ -40,7 +40,7 @@ If you are benefiting from hotel and would like to help keep them sustainable, y
 * __Local domains__ - `http://project.localhost`
 * __HTTPS via local self-signed SSL certificate__ - `https://project.localhost`
 * __Wildcard subdomains__ - `http://*.project.localhost`
-* __Works everywhere__ - OS X, Linux and Windows
+* __Works everywhere__ - macOS, Linux and Windows
 * __Works with any server__ - Node, Ruby, PHP, ...
 * __Proxy__ - Map local domains to remote servers
 * __System-friendly__ - No messing with `port 80`, `/etc/hosts`, `sudo` or additional software
