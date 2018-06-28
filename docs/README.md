@@ -20,7 +20,7 @@ __Important__ Don't forget to restart hotel and reload network or browser config
 
 ## System configuration (recommended)
 
-##### OS X
+##### macOS
 
 `Network Preferences > Advanced > Proxies > Automatic Proxy Configuration`
 
@@ -48,7 +48,7 @@ Exit Chrome and start it using the following option:
 # Linux
 $ google-chrome --proxy-pac-url=http://localhost:2000/proxy.pac
 
-# OS X
+# macOS
 $ open -a "Google Chrome" --args --proxy-pac-url=http://localhost:2000/proxy.pac
 ```
 
