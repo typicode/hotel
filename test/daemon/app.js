@@ -1,3 +1,4 @@
+const fs = require('fs')
 const path = require('path')
 const http = require('http')
 const test = require('ava')
@@ -10,6 +11,11 @@ const servers = require('../../src/cli/servers')
 
 const { tld } = conf
 let app
+
+function ensureDistExists(t) {
+  const exists = fs.existsSync(path.join(__dirname, '../../dist'))
+  t.true(exists, 'dist directory must exist (try to run `npm run build`)')
+}
 
 test.before(() => {
   // Set request timeout to 20 seconds instead of 5 seconds for slower CI servers
@@ -87,6 +93,7 @@ test.cb.after(t => app.group.stopAll(t.end))
 //
 
 test.cb('GET http://hotel.tld should return 200', t => {
+  ensureDistExists(t)
   request(app)
     .get('/')
     .set('Host', `hotel.${tld}`)
@@ -141,7 +148,7 @@ test.cb('GET http://failing.tld should return 502', t => {
 })
 
 test.cb(
-  'GET http://proxy.tld should return 200 and host should be proxy.dev',
+  'GET http://proxy.tld should return 200 and host should be proxy.localhost',
   t => {
     request(app)
       .get('/')
@@ -150,7 +157,7 @@ test.cb(
   }
 )
 
-test.cb('GET http://node.dev:4000 should proxy to localhost:4000', t => {
+test.cb('GET http://node.tld:4000 should proxy to localhost:4000', t => {
   request(app)
     .get('/')
     .set('Host', `node.${tld}:4000`)
@@ -268,14 +275,9 @@ test.cb('GET http://localhost:2000/proxy should redirect to target', t => {
 //
 
 test.cb('GET / should render index.html', t => {
+  ensureDistExists(t)
   request(app)
     .get('/')
-    .expect(200, t.end)
-})
-
-test.cb('GET /style.css should render style.css', t => {
-  request(app)
-    .get('/css/style.css')
     .expect(200, t.end)
 })
 

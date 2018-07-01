@@ -1,9 +1,48 @@
 # Change Log
 
-## Unreleased
+## 0.8.7
+
+* Fix UI menu overflow
+
+## 0.8.6
+
+* Fix `The listener must be a function` error
+
+## 0.8.5
+
+* Fix colors in output
+
+## 0.8.4
+
+* Fix UI crash
+
+## 0.8.3
+
+* Fix error in Edge
+* Improve bundle size
+
+## 0.8.2 
+
+* UI
+
+## 0.8.1
+
+* Fix error page
+
+## 0.8.0
 
 * Create empty `conf.json` if it doesn't exist
-* Update UI to open links in new tabs. Should help with third-party tools.
+* Update UI
+  * New 2018 style 🎉
+  * Links now open in new tabs (should improve integration with third-party tools)
+* Update all dependencies
+
+__Breaking__
+
+* Drop Internet Explorer 11 support for the UI
+* Drop Node 4 support
+* Self-signed certicate is now generated locally and can be found in `~/.hotel`. Since it's going to be a new one, you'll need to "trust" it again to be able to use `https`
+* __`.localhost` is now the default domain and replaces `.dev` domains__ (if present, remove `"tld": "dev"` from `~/.hotel/conf.json` to use the new default value, then run `hotel stop && hotel start`)
 
 ## 0.7.6
 
@@ -157,7 +196,7 @@ __Breaking__
 
 ## 0.4.12
 
-* Add wildcard subdomains `http://*.app.dev`.
+* Add wildcard subdomains `http://*.app.localhost`.
 
 ## 0.4.11
 
@@ -180,7 +219,7 @@ __Breaking__
 ## 0.4.7
 
 * Bundle front-end dependencies to make homepage work without network access.
-* Support subdomains `http://sub.app.dev`.
+* Support subdomains `http://sub.app.localhost`.
 * Support `https` and `wss`.
 
 ## 0.4.6
@@ -200,8 +239,8 @@ __Breaking__
 
 ## 0.4.1
 
-* Added WebSocket support for projects being accessed using local `.dev` domain.
+* Added WebSocket support for projects being accessed using local `.localhost` domain.
 
 ## 0.4.0
 
-* Added Local `.dev` domain support for HTTP requests.
+* Added Local `.localhost` domain support for HTTP requests.

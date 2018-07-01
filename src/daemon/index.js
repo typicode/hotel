@@ -1,9 +1,8 @@
-const fs = require('fs')
-const path = require('path')
 const exitHook = require('exit-hook')
 const httpProxy = require('http-proxy')
 const conf = require('../conf')
 const pidFile = require('../pid-file')
+const pem = require('./pem')
 const log = require('./log')
 const Group = require('./group')
 const Loader = require('./loader')
@@ -36,10 +35,7 @@ const proxy = httpProxy.createServer({
     host: '127.0.0.1',
     port: conf.port
   },
-  ssl: {
-    key: fs.readFileSync(path.join(__dirname, 'certs/server.key')),
-    cert: fs.readFileSync(path.join(__dirname, 'certs/server.crt'))
-  },
+  ssl: pem.generate(),
   ws: true,
   xfwd: true
 })

@@ -2,10 +2,27 @@ const express = require('express')
 const connectSSE = require('connect-sse')
 const sse = connectSSE()
 
+function listen(res, group, groupEvent, handler) {
+  function removeListener() {
+    // Remove group handler
+    group.removeListener(groupEvent, handler)
+
+    // Remove self
+    res.removeListener('close', removeListener)
+    res.removeListener('finish', removeListener)
+  }
+
+  group.on(groupEvent, handler)
+
+  res.on('close', removeListener)
+  res.on('finish', removeListener)
+}
+
 module.exports = group => {
   const router = express.Router()
 
   router.get('/', sse, (req, res) => {
+    // Handler
     function sendState() {
       res.json(group.list())
     }
@@ -14,7 +31,7 @@ module.exports = group => {
     sendState()
 
     // Listen
-    group.on('change', sendState)
+    listen(res, group, 'change', sendState)
   })
 
   router.get('/output', sse, (req, res) => {
@@ -35,7 +52,7 @@ module.exports = group => {
     })
 
     // Listen
-    group.on('output', sendOutput)
+    listen(res, group, 'output', sendOutput)
   })
 
   return router

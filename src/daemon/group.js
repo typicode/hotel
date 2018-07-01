@@ -24,7 +24,6 @@ class Group extends EventEmitter {
     this._proxy = httpProxy.createProxyServer({
       xfwd: true
     })
-    this._proxy.on('error', this.handleProxyError)
   }
 
   _output(id, data) {
@@ -289,7 +288,7 @@ class Group extends EventEmitter {
     const { item } = req.hotel
 
     // Handle case where port is set
-    // http://app.dev:5000 should proxy to http://localhost:5000
+    // http://app.localhost:5000 should proxy to http://localhost:5000
     if (port) {
       const target = `http://127.0.0.1:${port}`
 
@@ -381,7 +380,7 @@ class Group extends EventEmitter {
     }
   }
 
-  // Handle CONNECT, used by WebSockets and https when accessing .dev domains
+  // Handle CONNECT, used by WebSockets and https when accessing .localhost domains
   handleConnect(req, socket, head) {
     if (req.headers.host) {
       const { host } = req.headers

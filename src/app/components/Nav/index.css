@@ -1,0 +1,80 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  border-right: 1px solid var(--primary);
+}
+
+header {
+  padding: 1rem;
+  font-size: 1rem;
+  line-height: 1rem;
+  text-transform: capitalize;
+  border-bottom: 1px solid var(--primary);
+}
+
+.menu {
+  flex: 1;
+  overflow-y: scroll;
+}
+
+.menu.hidden {
+  visibility: hidden;
+}
+
+footer {
+  padding: 1rem;
+}
+
+h2 {
+  padding: 1rem;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+ul {
+  padding: 0;
+  margin: 0 0 2rem 0;
+  list-style: none;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  height: 3rem;
+  color: var(--primary-light);
+  transition: border-color 0.2s;
+}
+
+li:focus {
+  outline: none;
+}
+
+li.running * {
+  color: white;
+}
+
+li.monitor:hover {
+  cursor: pointer;
+  background: var(--primary);
+}
+
+li.selected {
+  background: var(--primary);
+}
+
+li > span {
+  align-self: center;
+  padding: 0 1rem;
+}
+
+/* Align Switch vertically */
+li > span:nth-last-child() {
+  line-height: 0;
+}
+
+p {
+  padding: 1rem;
+}

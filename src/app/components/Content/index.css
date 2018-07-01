@@ -1,0 +1,42 @@
+.content {
+  height: 100vh;
+  overflow-y: scroll;
+  background-color: var(--primary);
+}
+
+.content a {
+  color: white;
+}
+
+.content-bar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0 0 1rem;
+  background-color: var(--primary-dark);
+}
+
+.content-bar > span {
+  align-self: center;
+}
+
+pre {
+  padding: 1rem;
+  margin: 0;
+  word-break: break-all;
+}
+
+button {
+  padding: 1rem;
+  color: white;
+  cursor: pointer;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+button:hover {
+  background: var(--primary);
+}

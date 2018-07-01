@@ -1,5 +1,5 @@
 environment:
-  nodejs_version: '5'
+  nodejs_version: '6'
 
 install:
   - ps: Install-Product node $env:nodejs_version
@@ -10,4 +10,4 @@ test_script:
   - npm --version
   - npm test
 
-build: off
+build_script: npm run build
