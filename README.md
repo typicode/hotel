@@ -105,8 +105,11 @@ hotel add 'python -m SimpleHTTPServer $PORT'           # static file server (Pyt
 hotel add 'php -S 127.0.0.1:$PORT'                     # PHP
 hotel add 'docker-compose up'                          # docker-compose
 hotel add 'python manage.py runserver 127.0.0.1:$PORT' # Django
+hotel add 'yarn serve --port $PORT' --change-origin    # Vue
 # ...
 ```
+
+Note: `--change-origin` option is required for any application using `webpack-dev-server`. It basically rewrites the `Host` of the request to match the host and port that the server is listening on.
 
 On __Windows__ use `"%PORT%"` instead of `'$PORT'`
 
