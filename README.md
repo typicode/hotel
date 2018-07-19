@@ -221,7 +221,7 @@ To override a value, simply add it to `~/.hotel/conf.json` and run `hotel stop &
 
 ## FAQ
 
-#### Seting a fixed port
+#### Setting a fixed port
 
 ```sh
 hotel add --port 3000 'server-cmd $PORT' 
