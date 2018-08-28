@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: './src/app/index.tsx',
@@ -24,6 +25,16 @@ module.exports = {
     path: path.resolve(__dirname, 'dist')
   },
   plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: 'src/daemon/public/safari-pinned-tab.svg',
+        to: 'safari-pinned-tab.svg'
+      },
+      {
+        from: 'src/daemon/public/favicon.png',
+        to: 'favicon.png'
+      }
+    ]),
     new HtmlWebpackPlugin({
       template: 'src/app/index.html'
     })

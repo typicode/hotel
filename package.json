@@ -83,6 +83,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "classnames": "^2.2.5",
+    "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^0.28.10",
     "escape-html": "^1.0.3",
     "eslint": "^4.18.1",
