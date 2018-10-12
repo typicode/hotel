@@ -31,6 +31,8 @@ If you're upgrading, please be sure to:
 
 If you are benefiting from hotel, you can support its development on [Patreon](https://patreon.com/typicode).
 
+You can view the list of Supporters here https://thanks.typicode.com.
+
 ## Video
 
 * [Starting apps with Hotel - Spacedojo Code Kata by Josh Owens](https://www.youtube.com/watch?v=BHW4tzctQ0k)
