@@ -272,4 +272,6 @@ If you're behind a corporate proxy, replace `"proxy"` with your network proxy IP
 
 ## License
 
-MIT - [Typicode :cactus:](https://github.com/typicode)
+MIT
+
+[Patreon](https://www.patreon.com/typicode) - [Supporters](https://thanks.typicode.com) ✨
