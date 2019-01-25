@@ -18,10 +18,15 @@ function listen(res, group, groupEvent, handler) {
   res.on('finish', removeListener)
 }
 
+function corsSse(_req, resp, next) {
+  resp.setHeader('Access-Control-Allow-Origin', '*')
+  next()
+}
+
 module.exports = group => {
   const router = express.Router()
 
-  router.get('/', sse, (req, res) => {
+  router.get('/', corsSse, sse, (req, res) => {
     // Handler
     function sendState() {
       res.json(group.list())
@@ -34,7 +39,7 @@ module.exports = group => {
     listen(res, group, 'change', sendState)
   })
 
-  router.get('/output', sse, (req, res) => {
+  router.get('/output', corsSse, sse, (req, res) => {
     function sendOutput(id, data) {
       res.json({
         id,
