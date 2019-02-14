@@ -1,5 +1,5 @@
 {
-  "name": "hotel",
+  "name": "@envoy/hotel",
   "version": "0.8.7",
   "description": "Local domains for everyone and more! ",
   "main": "lib",
