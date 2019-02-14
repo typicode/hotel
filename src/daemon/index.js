@@ -46,3 +46,7 @@ proxy.listen(conf.port + 1)
 app.listen(conf.port, conf.host, function() {
   log(`Server listening on port ${conf.host}:${conf.port}`)
 })
+
+proxy.on('error', function(e) {
+  log('error', e);
+});
