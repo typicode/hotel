@@ -41,7 +41,7 @@ const proxy = httpProxy.createServer({
 })
 
 // Start HTTPS proxy and HTTP server
-proxy.listen(conf.port + 1)
+proxy.listen(conf.sslPort)
 
 app.listen(conf.port, conf.host, function() {
   log(`Server listening on port ${conf.host}:${conf.port}`)

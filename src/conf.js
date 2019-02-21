@@ -8,6 +8,7 @@ mkdirp.sync(hotelDir)
 // Defaults
 const defaults = {
   port: 2000,
+  sslPort: 2001,
   host: '127.0.0.1',
   timeout: 5000,
   tld: 'localhost',
