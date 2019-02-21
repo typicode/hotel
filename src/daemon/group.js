@@ -389,7 +389,7 @@ class Group extends EventEmitter {
       // If https make socket go through https proxy on 2001
       // TODO find a way to detect https and wss without relying on port number
       if (port === '443') {
-        return tcpProxy.proxy(socket, daemonConf.port + 1, hostname)
+        return tcpProxy.proxy(socket, daemonConf.sslPort, hostname)
       }
 
       const item = this.find(id)

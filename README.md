@@ -198,6 +198,7 @@ By default, `hotel` uses the following configuration values:
 ```js
 {
   "port": 2000,
+  "sslPort": 2001,
   "host": '127.0.0.1',
   
   // Timeout when proxying requests to local domains
