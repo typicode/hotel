@@ -48,5 +48,5 @@ app.listen(conf.port, conf.host, function() {
 })
 
 proxy.on('error', function(e) {
-  log('error', e);
-});
+  log('error', e)
+})
