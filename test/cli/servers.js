@@ -5,6 +5,7 @@ const sinon = require('sinon')
 const servers = require('../../src/cli/servers')
 const cli = require('../../src/cli')
 const { serversDir } = require('../../src/common')
+const { uid, gid } = require('os').userInfo()
 
 const appDir = path.join(__dirname, '../fixtures/app')
 
@@ -18,7 +19,9 @@ test('add should create file', t => {
     cwd: process.cwd(),
     env: {
       PATH: process.env.PATH
-    }
+    },
+    uid,
+    gid
   }
 
   const actual = JSON.parse(fs.readFileSync(file))
@@ -82,7 +85,9 @@ test('add should support options', t => {
     },
     xfwd: true,
     changeOrigin: true,
-    httpProxyEnv: true
+    httpProxyEnv: true,
+    uid,
+    gid
   }
 
   const actual = JSON.parse(fs.readFileSync(file))

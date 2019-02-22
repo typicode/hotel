@@ -14,10 +14,11 @@ module.exports = {
 // Start daemon in background
 function start() {
   const node = process.execPath
-  const daemonFile = path.join(__dirname, '../daemon')
+  const daemonFile = path.join(__dirname, '../daemon/bin.js')
+  const args = [daemonFile, 'start', '--hotel-dir', common.hotelDir]
   const startupFile = startup.getFile('hotel')
 
-  startup.create('hotel', node, [daemonFile], common.logFile)
+  startup.create('hotel', node, args, common.logFile)
 
   // Save startup file path in ~/.hotel
   // Will be used later by uninstall script

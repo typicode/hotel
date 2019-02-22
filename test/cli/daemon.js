@@ -15,7 +15,8 @@ test.before(() => {
 
 test('start should start daemon', t => {
   const node = process.execPath
-  const daemonFile = path.join(__dirname, '../../src/daemon')
+  const daemonFile = path.join(__dirname, '../../src/daemon/bin.js')
+  const args = [daemonFile, 'start', '--hotel-dir', common.hotelDir]
   const daemonLog = path.resolve(untildify('~/.hotel/daemon.log'))
 
   cli(['', '', 'start'])
@@ -24,7 +25,7 @@ test('start should start daemon', t => {
     userStartup.create,
     'hotel',
     node,
-    [daemonFile],
+    args,
     daemonLog
   )
 
