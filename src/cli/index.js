@@ -3,6 +3,7 @@ const servers = require('./servers')
 const run = require('./run')
 const daemon = require('./daemon')
 const pkg = require('../../package.json')
+const { hotelDir } = require('../common')
 
 const addOptions = {
   name: {
@@ -82,7 +83,18 @@ module.exports = processArgv =>
       argv => servers.rm(argv)
     )
     .command('ls', 'List servers', {}, argv => servers.ls(argv))
-    .command('start', 'Start daemon', {}, () => daemon.start())
+    .command(
+      'start [options]',
+      'Start daemon',
+      yargs => {
+        yargs.option('dir', {
+          alias: 'd',
+          description: 'Hotel directory',
+          default: hotelDir
+        })
+      },
+      argv => daemon.start(argv)
+    )
     .command('stop', 'Stop daemon', {}, () => daemon.stop())
     .example('$0 add --help')
     .example('$0 add nodemon')
@@ -95,6 +107,9 @@ module.exports = processArgv =>
     .example('$0 add http://192.168.1.10 -n app ')
     .example('$0 rm')
     .example('$0 rm -n app')
+    .example('$0 start')
+    .example('$0 start -d /var/hotel')
+    .example('$0 stop')
     .epilog('https://github.com/typicode/hotel')
     .demand(1)
     .strict()
