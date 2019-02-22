@@ -4,6 +4,7 @@ const chalk = require('chalk')
 const tildify = require('tildify')
 const mkdirp = require('mkdirp')
 const common = require('../common')
+const { uid, gid } = require('os').userInfo()
 
 const serversDir = common.serversDir
 
@@ -91,6 +92,13 @@ function add(param, opts = {}) {
     // Copy port option
     if (opts.port) {
       conf.env.PORT = opts.port
+    }
+
+    // Add uid and gid
+    conf = {
+      uid,
+      gid,
+      ...conf
     }
   }
 
