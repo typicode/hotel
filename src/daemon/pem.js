@@ -1,29 +1,45 @@
 const fs = require('fs')
 const path = require('path')
 const tildify = require('tildify')
-const selfsigned = require('selfsigned')
+const mkcert = require('mkcert')
 const log = require('./log')
 const { hotelDir } = require('../common')
 
 const KEY_FILE = path.join(hotelDir, 'key.pem')
 const CERT_FILE = path.join(hotelDir, 'cert.pem')
 
-function generate() {
+async function generate() {
   if (fs.existsSync(KEY_FILE) && fs.existsSync(CERT_FILE)) {
-    log(`Reading self-signed certificate in ${tildify(hotelDir)}`)
-    return {
-      key: fs.readFileSync(KEY_FILE, 'utf-8'),
-      cert: fs.readFileSync(CERT_FILE, 'utf-8')
-    }
+    log(`Reading self-signed certificatw in ${tildify(hotelDir)}`)
+    return new Promise((resolve, reject) =>
+      resolve({
+        key: fs.readFileSync(KEY_FILE, 'utf-8'),
+        cert: fs.readFileSync(CERT_FILE, 'utf-8')
+      })
+    )
   } else {
     log(`Generating self-signed certificate in ${tildify(hotelDir)}`)
-    const pems = selfsigned.generate([{ name: 'commonName', value: 'hotel' }], {
-      days: 365
-    })
-    fs.writeFileSync(KEY_FILE, pems.private, 'utf-8')
-    fs.writeFileSync(CERT_FILE, pems.cert, 'utf-8')
+    try {
+      const ca = await mkcert.createCA({
+        organization: 'hotel',
+        countryCode: 'US',
+        state: 'California',
+        locality: 'hotel',
+        validityDays: 365
+      })
+      const pems = await mkcert.createCert({
+        domains: ['127.0.0.1', '*.localhost'],
+        validityDays: 365,
+        caKey: ca.key,
+        caCert: ca.cert
+      })
+      fs.writeFileSync(KEY_FILE, pems.key, 'utf-8')
+      fs.writeFileSync(CERT_FILE, pems.cert, 'utf-8')
 
-    return { key: pems.private, cert: pems.cert }
+      return { key: pems.key, cert: pems.cert }
+    } catch (err) {
+      log(`err in creating CA for certs ${err}`)
+    }
   }
 }
 

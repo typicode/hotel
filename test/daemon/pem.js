@@ -8,18 +8,19 @@ test.before(() => {
   fs.mkdirSync(hotelDir)
 })
 
-test("should create cert files if they don't exist", t => {
-  const { key, cert } = generate()
+test("should create cert files if they don't exist", async t => {
+  const { key, cert } = await generate()
+
   t.true(fs.existsSync(KEY_FILE))
   t.true(fs.existsSync(CERT_FILE))
   t.is(key, fs.readFileSync(KEY_FILE, 'utf-8'))
   t.is(cert, fs.readFileSync(CERT_FILE, 'utf-8'))
 })
 
-test('should read cert files if they exist', t => {
+test('should read cert files if they exist', async t => {
   fs.writeFileSync(KEY_FILE, 'foo')
   fs.writeFileSync(CERT_FILE, 'bar')
-  const { key, cert } = generate()
+  const { key, cert } = await generate()
   t.is('foo', key)
   t.is('bar', cert)
 })
