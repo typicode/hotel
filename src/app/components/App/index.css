@@ -13,7 +13,7 @@
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   color: white;
   background-color: var(--primary-dark);
   text-rendering: optimizeLegibility;
@@ -29,6 +29,14 @@ a {
 a:hover {
   color: white;
   text-decoration: underline;
+}
+
+.monitor-name {
+  color: #6c6c6f;
+}
+
+.monitor-name:hover {
+  color: white;
 }
 
 .nav {

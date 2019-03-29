@@ -1,10 +1,9 @@
-import * as classNames from 'classnames'
-import { observer } from 'mobx-react'
-import * as React from 'react'
-import Store, { RUNNING } from '../../Store'
-import Link from '../Link'
-import Switch from '../Switch'
-import './index.css'
+import * as classNames from 'classnames';
+import { observer } from 'mobx-react';
+import * as React from 'react';
+import Store, { RUNNING } from '../../Store';
+import Switch from '../Switch';
+import './index.css';
 
 const examples = `~/app$ hotel add 'cmd'
 ~/app$ hotel add 'cmd -p $PORT'
@@ -44,9 +43,7 @@ function Nav({ store }: IProps) {
                     })}
                     onClick={() => store.selectMonitor(id)}
                   >
-                    <span>
-                      <Link id={id} />
-                    </span>
+                    <span className="monitor-name">{id}</span>
                     <span>
                       <Switch
                         onClick={() => store.toggleMonitor(id)}
@@ -67,9 +64,7 @@ function Nav({ store }: IProps) {
               {Array.from(proxies).map(([id, proxy]) => {
                 return (
                   <li key={id}>
-                    <span>
-                      <Link id={id} />
-                    </span>
+                    <span className="monitor-name">{id}</span>
                   </li>
                 )
               })}

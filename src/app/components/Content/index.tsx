@@ -1,11 +1,10 @@
-import { observer } from 'mobx-react'
-import * as React from 'react'
-import * as MdArrowDownward from 'react-icons/lib/md/arrow-downward'
-import * as MdClearAll from 'react-icons/lib/md/clear-all'
-import Link from '../Link'
+import { observer } from 'mobx-react';
+import * as React from 'react';
+import * as MdArrowDownward from 'react-icons/lib/md/arrow-downward';
+import * as MdClearAll from 'react-icons/lib/md/clear-all';
+import Store from '../../Store';
+import './index.css';
 
-import Store from '../../Store'
-import './index.css'
 
 export interface IProps {
   store: Store
@@ -59,9 +58,7 @@ class Content extends React.Component<IProps, {}> {
         }}
       >
         <div className="content-bar">
-          <span>
-            <Link id={store.selectedMonitorId} />
-          </span>
+          <span className="monitor-name">{store.selectedMonitorId}</span>
           <span>
             <button
               title="Clear output"
