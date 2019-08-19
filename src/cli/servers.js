@@ -96,7 +96,7 @@ function add(param, opts = {}) {
 
   const data = JSON.stringify(conf, null, 2)
 
-  console.log(`Create ${tildify(file)}`)
+  console.log(`Created ${tildify(file)}`)
   fs.writeFileSync(file, data)
 
   // if we're mapping a domain to a URL there's no additional info to output
