@@ -81,7 +81,22 @@ module.exports = processArgv =>
       },
       argv => servers.rm(argv)
     )
-    .command('ls', 'List servers', {}, argv => servers.ls(argv))
+    .command(
+      ['ls', 'ps'],
+      'List servers',
+      yargs =>
+        yargs.option('verbose', {
+          alias: 'V',
+          boolean: true,
+          describe: 'Show more details about the processes'
+        }),
+      argv => servers.ls(argv)
+    )
+    .command('up [search]', 'Start a server', {}, argv => servers.up(argv))
+    .command('down [search]', 'Stop a server', {}, argv => servers.down(argv))
+    .command('open [search]', 'Open a server’s page', {}, argv =>
+      servers.open(argv)
+    )
     .command('start', 'Start daemon', {}, () => daemon.start())
     .command('stop', 'Stop daemon', {}, () => daemon.stop())
     .example('$0 add --help')

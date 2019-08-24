@@ -3,15 +3,10 @@ const path = require('path')
 const chalk = require('chalk')
 const tildify = require('tildify')
 const mkdirp = require('mkdirp')
-const common = require('../common')
-
-const serversDir = common.serversDir
-
-module.exports = {
-  add,
-  rm,
-  ls
-}
+const inquirer = require('inquirer')
+const opn = require('opn')
+const { serversDir, getServerFile } = require('../common')
+const api = require('./api')
 
 function isUrl(str) {
   return /^(http|https):/.test(str)
@@ -33,9 +28,108 @@ function getId(cwd) {
   return domainify(path.basename(cwd))
 }
 
-function getServerFile(id) {
-  return `${serversDir}/${id}.json`
+function colorizeIdFromStatus(text, status) {
+  // see https://github.com/mafintosh/respawn#api
+  switch (status) {
+    case 'running':
+      return chalk.green(text)
+    case 'stopping':
+      return chalk.yellow(text)
+    case 'stopped':
+      return chalk.gray(text)
+    case 'crashed':
+      return chalk.red(text)
+    case 'sleeping':
+      return chalk.gray(text)
+    default:
+      return text
+  }
 }
+
+function getCurrentApp(servers) {
+  const currentCwd = fs.realpathSync(process.cwd())
+  const serverNames = servers
+    .filter(([id, { cwd }]) => cwd) // remove proxies
+    .map(([id, { cwd }]) => [id, fs.realpathSync(cwd)])
+  const exactMatch = serverNames.filter(([id, cwd]) => cwd === currentCwd)
+  const parents = serverNames.filter(([id, cwd]) =>
+    /^(\.\.[\\/])*\.\.$/.test(path.relative(currentCwd, cwd))
+  )
+
+  if (exactMatch.length) {
+    return exactMatch
+  } else if (parents.length) {
+    const minLength = parents
+      .map(([id, cwd]) => path.relative(currentCwd, cwd).length)
+      .reduce((a, b) => Math.min(a, b))
+
+    return parents.filter(
+      ([id, cwd]) => path.relative(currentCwd, cwd).length === minLength
+    )
+  }
+  return []
+}
+
+// NOTE: Returns a `Promise`
+function acquireAppName(hint) {
+  const servers = api
+    .getServerList()
+    .servers.filter(([id, server]) => server.cmd)
+  let results = []
+  if (hint) {
+    results = servers.filter(([id]) => id.includes(hint))
+    if (!results.length) {
+      console.error(
+        chalk.red(chalk`Could not find app matching {underline.bold ${hint}}`)
+      )
+    }
+  } else {
+    results = getCurrentApp(servers)
+    console.error(chalk.yellow('Could not find an app for this directory'))
+  }
+
+  if (!results.length) results = servers
+  if (results.length === 1) {
+    return Promise.resolve(results[0][0])
+  } else {
+    return inquirer
+      .prompt([
+        {
+          type: 'list',
+          name: 'appName',
+          message: 'Please select an app:',
+          choices: results.map(([id]) => id)
+        }
+      ])
+      .then(result => result.appName)
+      .catch(err => console.error('Thing failed\n' + chalk.gray(err.stack)))
+  }
+}
+
+function logStack(err) {
+  console.error(chalk.red('ERR! ') + err.message)
+  console.error(
+    chalk.gray(err.stack.replace('Error: ' + err.message + '\n', ''))
+  )
+}
+
+function withAppName(cb) {
+  return ({ search }) =>
+    acquireAppName(search)
+      .then(name => {
+        if (!name) return
+        cb(name)
+      })
+      .catch(logStack)
+}
+
+/*
+ *  ██████  ██████  ███    ███ ███    ███  █████  ███    ██ ██████  ███████
+ * ██      ██    ██ ████  ████ ████  ████ ██   ██ ████   ██ ██   ██ ██
+ * ██      ██    ██ ██ ████ ██ ██ ████ ██ ███████ ██ ██  ██ ██   ██ ███████
+ * ██      ██    ██ ██  ██  ██ ██  ██  ██ ██   ██ ██  ██ ██ ██   ██      ██
+ *  ██████  ██████  ██      ██ ██      ██ ██   ██ ██   ████ ██████  ███████
+ */
 
 function add(param, opts = {}) {
   mkdirp.sync(serversDir)
@@ -129,33 +223,64 @@ function rm(opts = {}) {
   }
 }
 
-function ls() {
-  mkdirp.sync(serversDir)
-
-  const list = fs
-    .readdirSync(serversDir)
-    .map(file => {
-      const id = path.basename(file, '.json')
-      const serverFile = getServerFile(id)
-      let server
-
-      try {
-        server = JSON.parse(fs.readFileSync(serverFile))
-      } catch (error) {
-        // Ignore mis-named or malformed files
-        return
-      }
-
+function ls(opts = {}) {
+  const { servers, fromApi } = api.getServerList()
+  if (!fromApi) {
+    console.error(
+      chalk.gray(
+        'Could not load data from the API. Server status unavailable.\n'
+      )
+    )
+  }
+  const list = servers
+    .map(([id, server]) => {
+      let lines = []
       if (server.cmd) {
-        return `${id}\n${chalk.gray(tildify(server.cwd))}\n${chalk.gray(
-          server.cmd
-        )}`
+        lines = [
+          colorizeIdFromStatus(chalk.bold(id), server.status) +
+            (server.status ? chalk.gray(` (${server.status})`) : ''),
+          '$ cd ' + tildify(server.cwd),
+          '$ ' + server.cmd,
+          server.pid && `PID: ${server.pid}`
+        ]
       } else {
-        return `${id}\n${chalk.gray(server.target)}`
+        lines = ['🔗 ' + chalk.bold(id), '→ ' + server.target]
+      }
+      lines = lines.filter(x => x)
+      if (opts.verbose) {
+        return lines.join('\n  ')
+      } else {
+        return lines[0]
       }
     })
     .filter(item => item)
-    .join('\n\n')
+    .join(opts.verbose ? '\n\n' : '\n')
 
-  console.log(list)
+  console.log(list + '\n')
+}
+
+const up = withAppName(name => {
+  api.server(name).start()
+  console.log(chalk`Started {bold ${name}}.`)
+})
+
+const down = withAppName(name => {
+  api.server(name).start()
+  console.log(chalk`Stopped {bold ${name}}.`)
+})
+
+const open = withAppName(name => {
+  opn(`${api.host}/${name}`, {
+    wait: false // don’t wait for the tab to be closed before returning
+  })
+  console.log(chalk`Opening {bold ${name}}...`)
+})
+
+module.exports = {
+  add,
+  rm,
+  ls,
+  up,
+  down,
+  open
 }
