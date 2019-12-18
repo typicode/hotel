@@ -8,9 +8,9 @@ module.exports = function(group) {
   function pac(req, res) {
     log('Serve proxy.pac')
     if (conf.proxy) {
-      res.render('proxy-pac-with-proxy', { conf })
+      res.render('proxy-pac-with-proxy', { conf, hostname: req.hostname })
     } else {
-      res.render('proxy-pac', { conf })
+      res.render('proxy-pac', { conf, hostname: req.hostname })
     }
   }
 
