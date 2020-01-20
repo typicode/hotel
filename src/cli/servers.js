@@ -42,8 +42,18 @@ function add(param, opts = {}) {
 
   const cwd = opts.dir || process.cwd()
   const id = opts.name ? domainify(opts.name) : getId(cwd)
+  const force = opts.force
 
   const file = getServerFile(id)
+
+  const fileExists = fs.existsSync(file)
+
+  if (fileExists && !force) {
+    console.log(
+      `Configuration already exists with name '${id}' (use -f to force creation)`
+    )
+    return
+  }
 
   let conf = {}
 
@@ -96,7 +106,7 @@ function add(param, opts = {}) {
 
   const data = JSON.stringify(conf, null, 2)
 
-  console.log(`Create ${tildify(file)}`)
+  console.log(`${fileExists ? 'Overwrite' : 'Create'} ${tildify(file)}`)
   fs.writeFileSync(file, data)
 
   // if we're mapping a domain to a URL there's no additional info to output

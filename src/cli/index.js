@@ -43,6 +43,12 @@ const addOptions = {
   dir: {
     describe: 'Server directory',
     string: true
+  },
+  force: {
+    alias: 'f',
+    describe: 'Forces creation of configuration if one already exits',
+    default: false,
+    boolean: true
   }
 }
 

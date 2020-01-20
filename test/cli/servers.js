@@ -113,13 +113,49 @@ test('add should support URL', t => {
 })
 
 test('add should support URL and options', t => {
-  cli(['', '', 'add', 'http://1.2.3.4', '-n', 'proxy', '-x', '--co'])
+  cli(['', '', 'add', 'http://1.2.3.4', '-n', 'proxy2', '-x', '--co'])
 
-  const file = path.join(serversDir, 'proxy.json')
+  const file = path.join(serversDir, 'proxy2.json')
   const conf = {
     target: 'http://1.2.3.4',
     xfwd: true,
     changeOrigin: true
+  }
+
+  const actual = JSON.parse(fs.readFileSync(file))
+  t.deepEqual(actual, conf)
+})
+
+test('add of duplicate should be ignored', t => {
+  process.chdir(appDir)
+  cli(['', '', 'add', 'node index.js', '-n', 'add-dup-ignore'])
+  cli(['', '', 'add', 'nodemon', '-n', 'add-dup-ignore'])
+
+  const file = path.join(serversDir, 'add-dup-ignore.json')
+  const conf = {
+    cmd: 'node index.js',
+    cwd: process.cwd(),
+    env: {
+      PATH: process.env.PATH
+    }
+  }
+
+  const actual = JSON.parse(fs.readFileSync(file))
+  t.deepEqual(actual, conf)
+})
+
+test('add of duplicate should be overwritten if using force option', t => {
+  process.chdir(appDir)
+  cli(['', '', 'add', 'node index.js', '-n', 'add-dup-force'])
+  cli(['', '', 'add', 'nodemon', '-n', 'add-dup-force', '-f'])
+
+  const file = path.join(serversDir, 'add-dup-force.json')
+  const conf = {
+    cmd: 'nodemon',
+    cwd: process.cwd(),
+    env: {
+      PATH: process.env.PATH
+    }
   }
 
   const actual = JSON.parse(fs.readFileSync(file))
