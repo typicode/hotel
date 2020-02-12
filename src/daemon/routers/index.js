@@ -16,7 +16,7 @@ module.exports = function(group) {
 
   router
     .get('/proxy.pac', pac)
-    .get(
+    .all(
       '/:id',
       group.exists.bind(group),
       group.start.bind(group),
