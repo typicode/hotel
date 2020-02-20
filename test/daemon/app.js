@@ -245,7 +245,7 @@ test.cb('GET http://localhost:2000/node should redirect to node server', t => {
     .get('/node')
     .set('Host', 'localhost')
     .expect('location', /http:\/\/localhost:51234/)
-    .expect(302, t.end)
+    .expect(307, t.end)
 })
 
 test.cb(
@@ -257,7 +257,7 @@ test.cb(
     request(app)
       .get('/node')
       .expect('location', /http:\/\/127.0.0.1:51234/)
-      .expect(302, t.end)
+      .expect(307, t.end)
   }
 )
 
@@ -267,7 +267,7 @@ test.cb('GET http://localhost:2000/proxy should redirect to target', t => {
     .get('/proxy')
     .set('Host', 'localhost')
     .expect('location', /http:\/\/localhost:4000/)
-    .expect(302, t.end)
+    .expect(307, t.end)
 })
 
 //

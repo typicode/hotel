@@ -322,17 +322,14 @@ class Group extends EventEmitter {
   redirect(req, res) {
     const { id } = req.params
     const { item } = req.hotel
-    let target = item.target;
     let path = req.params[0] || ''
-
-
-    target = (target.endsWith('/') ? ''  : '/') + path;
 
     // Make sure to send only one response
     const send = once(() => {
-      log(`Redirect - ${id} → ${target}`);
-      res.redirect(307, target);
-    });    
+      let target = item.target + (item.target.endsWith('/') ? '' : '/') + path
+      log(`Redirect - ${id} → ${target}`)
+      res.redirect(307, target)
+    })
 
     if (item.start) {
       // Set target
