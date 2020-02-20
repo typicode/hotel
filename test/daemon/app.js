@@ -270,6 +270,8 @@ test.cb('GET http://localhost:2000/proxy should redirect to target', t => {
     .expect(307, t.end)
 })
 
+// TODO: Add tests for forward-by-proxy cases
+
 //
 // Test daemon/app.js
 //

@@ -87,6 +87,14 @@ class Group extends EventEmitter {
       }
     }
 
+    if (conf.mechanism) {
+      log(`adding env.mechanism:${conf.mechanism}`)
+      conf.env = {
+        mechanism: conf.mechanism,
+        ...conf.env
+      }
+    }
+
     let logFile
     if (conf.out) {
       logFile = path.resolve(conf.cwd, conf.out)
@@ -327,8 +335,14 @@ class Group extends EventEmitter {
     // Make sure to send only one response
     const send = once(() => {
       let target = item.target + (item.target.endsWith('/') ? '' : '/') + path
-      log(`Redirect - ${id} → ${target}`)
-      res.redirect(307, target)
+      if (item.env && item.env.mechanism === 'proxy') {
+        let target = item.target + (item.target.endsWith('/') ? '' : '/') + path
+        log(`Proxy - ${id} → ${target}`)
+        this.proxyWeb(req, res, target)
+      } else {
+        log(`Redirect - ${id} → ${target}`)
+        res.redirect(307, target)
+      }
     })
 
     if (item.start) {
