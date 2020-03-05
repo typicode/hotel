@@ -20,7 +20,7 @@ function proxy(source, targetPort, targetHost) {
 
   source.write(
     'HTTP/1.1 200 Connection Established\r\n' +
-      'Proxy-agent: Hotel\r\n' +
+      'Proxy-agent: Chalet\r\n' +
       '\r\n'
   )
 

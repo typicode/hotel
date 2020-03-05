@@ -101,7 +101,7 @@ module.exports = processArgv =>
     .example('$0 add http://192.168.1.10 -n app ')
     .example('$0 rm')
     .example('$0 rm -n app')
-    .epilog('https://github.com/typicode/hotel')
+    .epilog('https://github.com/jeansaad/chalet')
     .demand(1)
     .strict()
     .help().argv

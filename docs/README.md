@@ -1,14 +1,14 @@
 # Configuring local .localhost domains
 
-_This step is totally optional and you can use hotel without it._
+_This step is totally optional and you can use chalet without it._
 
-To use local `.localhost` domain, you need to configure your browser or network to use hotel's proxy auto-config file which is available at `http://localhost:2000/proxy.pac` [[view file content](../src/daemon/views/proxy-pac.pug)].
+To use local `.localhost` domain, you need to configure your browser or network to use chalet's proxy auto-config file which is available at `http://localhost:2000/proxy.pac` [[view file content](../src/daemon/views/proxy-pac.pug)].
 
-__Important__ hotel MUST be running before configuring your network or browser so that `http://localhost:2000/proxy.pac` is available. If hotel is started after and you can't access `.localhost` domains, simply disable/enable network or restart browser.
+**Important** chalet MUST be running before configuring your network or browser so that `http://localhost:2000/proxy.pac` is available. If chalet is started after and you can't access `.localhost` domains, simply disable/enable network or restart browser.
 
 ## Configuring another .tld
 
-You can edit `~/.hotel/conf.json` to use another Top-level Domain than `.localhost`.
+You can edit `~/.chalet/conf.json` to use another Top-level Domain than `.localhost`.
 
 ```json
 {
@@ -16,7 +16,7 @@ You can edit `~/.hotel/conf.json` to use another Top-level Domain than `.localho
 }
 ```
 
-__Important__ Don't forget to restart hotel and reload network or browser configuration.
+**Important** Don't forget to restart chalet and reload network or browser configuration.
 
 ## System configuration (recommended)
 

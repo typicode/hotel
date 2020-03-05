@@ -5,14 +5,14 @@ const log = require('../log')
 // *.tld vhost
 module.exports = group => {
   const app = express.Router()
-  const hotelRegExp = new RegExp(`hotel.${conf.tld}$`)
+  const chaletRegExp = new RegExp(`chalet.${conf.tld}$`)
 
   app.use((req, res, next) => {
     const { hostname } = req
 
-    // Skip hotel.tld
-    if (hotelRegExp.test(hostname)) {
-      log(`hotel.${conf.tld}`)
+    // Skip chalet.tld
+    if (chaletRegExp.test(hostname)) {
+      log(`chalet.${conf.tld}`)
       return next()
     }
 

@@ -15,13 +15,13 @@ module.exports = {
 function start() {
   const node = process.execPath
   const daemonFile = path.join(__dirname, '../daemon')
-  const startupFile = startup.getFile('hotel')
+  const startupFile = startup.getFile('chalet')
 
-  startup.create('hotel', node, [daemonFile], common.logFile)
+  startup.create('chalet', node, [daemonFile], common.logFile)
 
-  // Save startup file path in ~/.hotel
+  // Save startup file path in ~/.chalet
   // Will be used later by uninstall script
-  mkdirp.sync(common.hotelDir)
+  mkdirp.sync(common.chaletDir)
   fs.writeFileSync(common.startupFile, startupFile)
 
   console.log(`Started http://localhost:${conf.port}`)
@@ -29,8 +29,8 @@ function start() {
 
 // Stop daemon
 function stop() {
-  startup.remove('hotel')
-  // kills process and clean stuff in ~/.hotel
+  startup.remove('chalet')
+  // kills process and clean stuff in ~/.chalet
   uninstall()
   console.log('Stopped')
 }

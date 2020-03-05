@@ -1,6 +1,6 @@
 # Docker
 
-[Docker](https://www.docker.com/) is a software container platform that integrates easily into Hotel.
+[Docker](https://www.docker.com/) is a software container platform that integrates easily into Chalet.
 
 ### Dockerfile
 
@@ -17,10 +17,10 @@ To build this image, run the following in the application directory:
 docker build -t my-apache2 .
 ```
 
-To use Hotel for this example, run the following in the application directory:
+To use Chalet for this example, run the following in the application directory:
 
 ```
-hotel add 'docker run -dit --name my-running-app my-apache2'
+chalet add 'docker run -dit --name my-running-app my-apache2'
 ```
 
 ### Docker Compose
@@ -40,8 +40,8 @@ This binds the internal port 5000 on the container to port 5000 on the host mach
 
 `docker-compose build`
 
-To use Hotel for this, run the following in the application directory:
+To use Chalet for this, run the following in the application directory:
 
 ```
-hotel add 'docker-compose up' -p 5000
+chalet add 'docker-compose up' -p 5000
 ```

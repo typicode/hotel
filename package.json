@@ -1,5 +1,5 @@
 {
-  "name": "hotel",
+  "name": "chalet",
   "version": "0.8.7",
   "description": "Local domains for everyone and more! ",
   "main": "lib",
@@ -10,7 +10,7 @@
   "scripts": {
     "test": "ava && npm run lint",
     "lint": "eslint . --ignore-path .gitignore && stylelint './src/app/**/*.css'",
-    "fix": "eslint . --ignore-path .gitignore --fix && stylelint './src/app/**/*.css' --fix",
+    "lint:fix": "eslint . --ignore-path .gitignore --fix && stylelint './src/app/**/*.css' --fix",
     "start": "run-p start:*",
     "start:webpack": "webpack-dev-server --config webpack.dev.js --open",
     "start:nodemon": "nodemon -- src/daemon",
@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/typicode/hotel.git"
+    "url": "https://github.com/jeansaad/chalet.git"
   },
   "keywords": [
     "dev",
@@ -41,9 +41,9 @@
   "author": "Typicode <typicode@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/typicode/hotel/issues"
+    "url": "https://github.com/jeansaad/chalet/issues"
   },
-  "homepage": "https://github.com/typicode/hotel",
+  "homepage": "https://github.com/jeansaad/chalet",
   "dependencies": {
     "after-all": "^2.0.2",
     "ansi2html": "0.0.1",

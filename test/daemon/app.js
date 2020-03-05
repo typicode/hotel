@@ -92,11 +92,11 @@ test.cb.after(t => app.group.stopAll(t.end))
 // Test daemon/vhosts/tld.js
 //
 
-test.cb('GET http://hotel.tld should return 200', t => {
+test.cb('GET http://chalet.tld should return 200', t => {
   ensureDistExists(t)
   request(app)
     .get('/')
-    .set('Host', `hotel.${tld}`)
+    .set('Host', `chalet.${tld}`)
     .expect(200, t.end)
 })
 

@@ -1,9 +1,9 @@
 const fs = require('fs')
 const mkdirp = require('mkdirp')
-const { hotelDir, confFile } = require('./common')
+const { chaletDir, confFile } = require('./common')
 
 // Create dir
-mkdirp.sync(hotelDir)
+mkdirp.sync(chaletDir)
 
 // Defaults
 const defaults = {

@@ -1,6 +1,6 @@
 .
-  // Proxy only *.#{conf.tld} requests to hotel
-  // Configuration file can be found in ~/.hotel
+  // Proxy only *.#{conf.tld} requests to chalet
+  // Configuration file can be found in ~/.chalet
   function FindProxyForURL (url, host) {
     if (dnsDomainIs(host, '.#{conf.tld}')) {
       return 'PROXY #{hostname}:#{conf.port}';

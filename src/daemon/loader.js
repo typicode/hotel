@@ -40,7 +40,7 @@ module.exports = (group, opts = { watch: true }) => {
   // Ensure directory exists
   mkdirp.sync(dir)
 
-  // Watch ~/.hotel/servers
+  // Watch ~/.chalet/servers
   if (opts.watch) {
     log(`Watching ${dir}`)
     chokidar

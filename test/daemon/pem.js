@@ -2,10 +2,10 @@ const fs = require('fs')
 const test = require('ava')
 // TODO rename to KEY_NAME
 const { KEY_FILE, CERT_FILE, generate } = require('../../src/daemon/pem')
-const { hotelDir } = require('../../src/common')
+const { chaletDir } = require('../../src/common')
 
 test.before(() => {
-  fs.mkdirSync(hotelDir)
+  fs.mkdirSync(chaletDir)
 })
 
 test("should create cert files if they don't exist", t => {

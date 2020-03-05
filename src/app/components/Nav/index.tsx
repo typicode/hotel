@@ -1,34 +1,33 @@
-import * as classNames from 'classnames'
-import { observer } from 'mobx-react'
-import * as React from 'react'
-import Store, { RUNNING } from '../../Store'
-import Link from '../Link'
-import Switch from '../Switch'
-import './index.css'
+import * as classNames from "classnames";
+import { observer } from "mobx-react";
+import * as React from "react";
+import Store, { RUNNING } from "../../Store";
+import Link from "../Link";
+import Switch from "../Switch";
+import "./index.css";
 
-const examples = `~/app$ hotel add 'cmd'
-~/app$ hotel add 'cmd -p $PORT'
-~/app$ hotel add http://192.16.1.2:3000`
+const examples = `~/app$ chalet add 'cmd'
+~/app$ chalet add 'cmd -p $PORT'
+~/app$ chalet add http://192.16.1.2:3000`;
 
 export interface IProps {
-  store: Store
+  store: Store;
 }
 
 function Nav({ store }: IProps) {
-  const { isLoading, selectedMonitorId, monitors, proxies } = store
+  const { isLoading, selectedMonitorId, monitors, proxies } = store;
   return (
     <div className="nav">
-      <header>hotel</header>
-      <div className={classNames('menu', { hidden: isLoading })}>
-        {monitors.size === 0 &&
-          proxies.size === 0 && (
-            <div>
-              <p>To add a server, use hotel add</p>
-              <pre>
-                <code>{examples}</code>
-              </pre>
-            </div>
-          )}
+      <header>chalet</header>
+      <div className={classNames("menu", { hidden: isLoading })}>
+        {monitors.size === 0 && proxies.size === 0 && (
+          <div>
+            <p>To add a server, use chalet add</p>
+            <pre>
+              <code>{examples}</code>
+            </pre>
+          </div>
+        )}
 
         {monitors.size > 0 && (
           <div>
@@ -38,7 +37,7 @@ function Nav({ store }: IProps) {
                 return (
                   <li
                     key={id}
-                    className={classNames('monitor', {
+                    className={classNames("monitor", {
                       running: monitor.status === RUNNING,
                       selected: id === selectedMonitorId
                     })}
@@ -54,7 +53,7 @@ function Nav({ store }: IProps) {
                       />
                     </span>
                   </li>
-                )
+                );
               })}
             </ul>
           </div>
@@ -71,19 +70,19 @@ function Nav({ store }: IProps) {
                       <Link id={id} />
                     </span>
                   </li>
-                )
+                );
               })}
             </ul>
           </div>
         )}
       </div>
       <footer>
-        <a href="https://github.com/typicode/hotel" target="_blank">
+        <a href="https://github.com/jeansaad/chalet" target="_blank">
           README
         </a>
       </footer>
     </div>
-  )
+  );
 }
 
-export default observer(Nav)
+export default observer(Nav);
