@@ -365,8 +365,9 @@ class Group extends EventEmitter {
         } else if (item.start) {
           target = `ws://127.0.0.1:${item.env.PORT}`
         } else {
-          const { hostname } = url.parse(item.target)
-          target = `ws://${hostname}`
+          const { hostname, port } = url.parse(item.target)
+          const targetPort = port || 80
+          target = `ws://${hostname}:${targetPort}`
         }
         log(`WebSocket - ${host} → ${target}`)
         this._proxy.ws(req, socket, head, { target }, err => {
