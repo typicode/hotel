@@ -1,16 +1,16 @@
-const express = require('express')
+const express = require("express");
 
-const ServerRouter = require('./servers')
-const EventRouter = require('./events')
+const ServerRouter = require("./servers");
+const EventRouter = require("./events");
 
 module.exports = group => {
-  const router = express.Router()
+  const router = express.Router();
 
-  const servers = ServerRouter(group)
-  const events = EventRouter(group)
+  const servers = ServerRouter(group);
+  const events = EventRouter(group);
 
-  router.use('/servers', servers)
-  router.use('/events', events)
+  router.use("/servers", servers);
+  router.use("/events", events);
 
-  return router
-}
+  return router;
+};

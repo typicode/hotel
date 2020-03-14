@@ -1,59 +1,59 @@
-const express = require('express')
-const connectSSE = require('connect-sse')
-const sse = connectSSE()
+const express = require("express");
+const connectSSE = require("connect-sse");
+const sse = connectSSE();
 
 function listen(res, group, groupEvent, handler) {
   function removeListener() {
     // Remove group handler
-    group.removeListener(groupEvent, handler)
+    group.removeListener(groupEvent, handler);
 
     // Remove self
-    res.removeListener('close', removeListener)
-    res.removeListener('finish', removeListener)
+    res.removeListener("close", removeListener);
+    res.removeListener("finish", removeListener);
   }
 
-  group.on(groupEvent, handler)
+  group.on(groupEvent, handler);
 
-  res.on('close', removeListener)
-  res.on('finish', removeListener)
+  res.on("close", removeListener);
+  res.on("finish", removeListener);
 }
 
 module.exports = group => {
-  const router = express.Router()
+  const router = express.Router();
 
-  router.get('/', sse, (req, res) => {
+  router.get("/", sse, (req, res) => {
     // Handler
     function sendState() {
-      res.json(group.list())
+      res.json(group.list());
     }
 
     // Bootstrap
-    sendState()
+    sendState();
 
     // Listen
-    listen(res, group, 'change', sendState)
-  })
+    listen(res, group, "change", sendState);
+  });
 
-  router.get('/output', sse, (req, res) => {
+  router.get("/output", sse, (req, res) => {
     function sendOutput(id, data) {
       res.json({
         id,
         output: data.toString()
-      })
+      });
     }
 
     // Bootstrap
-    const list = group.list()
+    const list = group.list();
     Object.keys(list).forEach(id => {
-      var mon = list[id]
+      var mon = list[id];
       if (mon && mon.tail) {
-        sendOutput(id, mon.tail)
+        sendOutput(id, mon.tail);
       }
-    })
+    });
 
     // Listen
-    listen(res, group, 'output', sendOutput)
-  })
+    listen(res, group, "output", sendOutput);
+  });
 
-  return router
-}
+  return router;
+};

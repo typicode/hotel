@@ -1,1 +1,1 @@
-require('../lib/scripts/uninstall')()
+require("../lib/scripts/uninstall")();
