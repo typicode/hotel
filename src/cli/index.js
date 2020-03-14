@@ -63,18 +63,18 @@ module.exports = processArgv =>
       'Add server or proxy',
       yargs => yargs.options(addOptions),
       // .demand(1),
-      argv => servers.add(argv['cmd_or_url'], argv)
+      argv => servers.add(argv.cmd_or_url, argv)
     )
     .command(
       'run <cmd> [options]',
       'Run server and get a temporary local domain',
       yargs => {
         const runOptions = { ...addOptions }
-        delete runOptions['out']
+        delete runOptions.out
         return yargs.options(runOptions)
         // TODO demand(1) ?
       },
-      argv => run.spawn(argv['cmd'], argv)
+      argv => run.spawn(argv.cmd, argv)
     )
     .command(
       'rm [options]',

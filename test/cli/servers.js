@@ -25,7 +25,7 @@ test('add should create file', t => {
   t.deepEqual(actual, conf)
 })
 
-test('add should create file with URL safe characters by defaults', t => {
+test('add should create file with URL safe characters for dir by default', t => {
   cli(['', '', 'add', 'node index.js', '--dir', '/_-Some Project_Name--'])
 
   const file = path.join(serversDir, 'some-project-name.json')
@@ -33,7 +33,7 @@ test('add should create file with URL safe characters by defaults', t => {
   t.true(fs.existsSync(file))
 })
 
-test('add should create file with URL safe characters by defaults', t => {
+test('add should create file with URL safe characters with name by default', t => {
   cli(['', '', 'add', 'node index.js', '--name', '/_-Some Project_Name--'])
 
   const file = path.join(serversDir, 'some-project-name.json')

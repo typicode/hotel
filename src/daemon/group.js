@@ -365,7 +365,7 @@ class Group extends EventEmitter {
         } else if (item.start) {
           target = `ws://127.0.0.1:${item.env.PORT}`
         } else {
-          const { hostname, port } = url.parse(item.target)
+          const { hostname, port } = new url.URL(item.target)
           const targetPort = port || 80
           target = `ws://${hostname}:${targetPort}`
         }
@@ -404,7 +404,7 @@ class Group extends EventEmitter {
           log(`Connect - ${host} → ${PORT}`)
           tcpProxy.proxy(socket, PORT)
         } else {
-          const { hostname, port } = url.parse(item.target)
+          const { hostname, port } = new url.URL(item.target)
           const targetPort = port || 80
           log(`Connect - ${host} → ${hostname}:${port}`)
           tcpProxy.proxy(socket, targetPort, hostname)

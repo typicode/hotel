@@ -1,4 +1,4 @@
-import * as ansi2HTML from 'ansi2html'
+import * as ansiHTML from 'ansi-html'
 import * as escapeHTML from 'escape-html'
 import { IMonitor } from './Store'
 
@@ -12,13 +12,13 @@ export function formatLines(str: string): string[] {
     .split('\n')
     .map(escapeHTML)
     .map(blankLine)
-    .map(ansi2HTML)
+    .map(ansiHTML)
 }
 
 export function statusTitle(monitor: IMonitor) {
   return monitor.pid
     ? `PID ${monitor.pid}\nStarted since ${new Date(
-        monitor.started
-      ).toLocaleString()}`
+      monitor.started
+    ).toLocaleString()}`
     : ''
 }
