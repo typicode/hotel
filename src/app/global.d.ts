@@ -1,5 +1,6 @@
 declare module 'ansi-html'
 declare module 'lodash.uniqueid'
-declare module 'react-icons/lib/md/arrow-downward'
-declare module 'react-icons/lib/md/clear-all'
+declare module '@material-ui/icons/ArrowDownward'
+declare module '@material-ui/icons/ClearAll'
+
 interface Window { EventSource: any }

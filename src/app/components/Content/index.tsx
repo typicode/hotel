@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react'
 import * as React from 'react'
-import * as MdArrowDownward from 'react-icons/lib/md/arrow-downward'
-import * as MdClearAll from 'react-icons/lib/md/clear-all'
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
+import ClearAllIcon from '@material-ui/icons/ClearAll'
 import Link from '../Link'
 
 import Store from '../../Store'
@@ -67,13 +67,13 @@ class Content extends React.Component<IProps, {}> {
               title="Clear output"
               onClick={() => store.clearOutput(store.selectedMonitorId)}
             >
-              <MdClearAll />
+              <ClearAllIcon />
             </button>
             <button
               title="Scroll to bottom"
               onClick={() => this.scrollToBottom()}
             >
-              <MdArrowDownward />
+              <ArrowDownwardIcon />
             </button>
           </span>
         </div>

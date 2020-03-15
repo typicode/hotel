@@ -45,14 +45,15 @@
   },
   "homepage": "https://github.com/jeansaad/chalet",
   "dependencies": {
+    "@babel/register": "^7.8.6",
     "after-all": "^2.0.2",
     "ansi-to-html": "^0.6.14",
-    "chalk": "^2.4.2",
+    "chalk": "^3.0.0",
     "chokidar": "^3.3.1",
     "connect-sse": "^1.2.0",
-    "exit-hook": "^1.1.1",
+    "exit-hook": "^2.2.0",
     "express": "^4.17.1",
-    "get-port": "^3.2.0",
+    "get-port": "^5.1.1",
     "http-proxy": "^1.18.0",
     "matcher": "^2.1.0",
     "mkdirp": "^1.0.3",
@@ -71,16 +72,20 @@
   },
   "devDependencies": {
     "@ava/babel": "^1.0.1",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/node": "^7.8.7",
+    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-react": "^7.8.3",
+    "@material-ui/core": "^4.9.5",
+    "@material-ui/icons": "^4.9.1",
     "@types/classnames": "^2.2.10",
     "@types/escape-html": "0.0.20",
     "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.5",
-    "@types/react-icons": "^2.2.7",
     "ansi-html": "0.0.7",
     "ava": "^3.5.0",
-    "babel-cli": "^6.26.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
     "classnames": "^2.2.6",
     "css-loader": "^3.4.2",
     "escape-html": "^1.0.3",
@@ -103,7 +108,6 @@
     "prettier": "^1.19.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
-    "react-icons": "^2.2.7",
     "rimraf": "^3.0.2",
     "sinon": "^9.0.1",
     "style-loader": "^1.1.3",
@@ -117,27 +121,15 @@
     "ts-loader": "^6.2.1",
     "tslint": "^6.1.0",
     "tslint-config-prettier": "^1.18.0",
-    "tslint-plugin-prettier": "^2.1.0",
+    "tslint-plugin-prettier": "^2.2.0",
     "typescript": "^3.8.3",
     "untildify": "^4.0.0",
     "update-notifier": "^4.1.0",
     "webpack": "^4.42.0",
+    "webpack-bundle-analyzer": "^3.6.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3",
     "webpack-merge": "^4.2.2"
-  },
-  "ava": {
-    "serial": true,
-    "verbose": true,
-    "require": [
-      "babel-register",
-      "./test/_setup"
-    ],
-    "babel": {
-      "testOptions": {
-        "babelrc": false
-      }
-    }
   },
   "husky": {
     "hooks": {
