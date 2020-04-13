@@ -66,6 +66,7 @@ test('add should support options', t => {
     env[1],
     '-x',
     '--co',
+    '--forward-by-proxy',
     '--http-proxy-env'
   ])
 
@@ -82,6 +83,7 @@ test('add should support options', t => {
     },
     xfwd: true,
     changeOrigin: true,
+    mechanism: 'proxy',
     httpProxyEnv: true
   }
 

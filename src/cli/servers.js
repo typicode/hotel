@@ -59,6 +59,10 @@ function add(param, opts = {}) {
     conf.httpProxyEnv = opts.httpProxyEnv
   }
 
+  if (opts.forwardByProxy) {
+    conf.mechanism = 'proxy'
+  }
+
   if (isUrl(param)) {
     conf = {
       target: param,

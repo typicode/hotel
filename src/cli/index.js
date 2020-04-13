@@ -40,6 +40,11 @@ const addOptions = {
     default: false,
     boolean: true
   },
+  'forward-by-proxy': {
+    describe: 'Proxies requests to this server rather than forwarding',
+    default: false,
+    boolean: true
+  },
   dir: {
     describe: 'Server directory',
     string: true
