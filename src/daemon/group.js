@@ -335,10 +335,16 @@ class Group extends EventEmitter {
     // Make sure to send only one response
     const send = once(() => {
       let target = item.target + (item.target.endsWith('/') ? '' : '/') + path
+      let parsedUrl = url.parse(req.url)
+      if (parsedUrl.search) {
+        target = target + parsedUrl.search
+      }
+
       if (item.env && item.env.mechanism === 'proxy') {
-        let target = item.target + (item.target.endsWith('/') ? '' : '/') + path
+        // Adjusting the request is the easiest way to proxy the correct url
+        req.url = target
         log(`Proxy - ${id} → ${target}`)
-        this.proxyWeb(req, res, target)
+        this.proxyWeb(req, res, item.target)
       } else {
         log(`Redirect - ${id} → ${target}`)
         res.redirect(307, target)
