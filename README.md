@@ -47,6 +47,7 @@ You can view the list of Supporters here https://thanks.typicode.com.
 * __Proxy__ - Map local domains to remote servers
 * __System-friendly__ - No messing with `port 80`, `/etc/hosts`, `sudo` or additional software
 * Fallback URL - `http://localhost:2000/project`
+* Hotel automatically starts on login
 * Servers are only started when you access them
 * Plays nice with other servers (Apache, Nginx, ...)
 * Random or fixed ports
