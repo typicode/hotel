@@ -5,6 +5,7 @@ const mkdirp = require('mkdirp')
 const startup = require('user-startup')
 const common = require('../common')
 const conf = require('../conf')
+const pidFile = require('../pid-file')
 const uninstall = require('../scripts/uninstall')
 
 module.exports = {
@@ -16,6 +17,12 @@ module.exports = {
 function start() {
   const node = process.execPath
   const daemonFile = path.join(__dirname, '../daemon')
+
+  const pid = pidFile.read()
+  if (pid) {
+    console.log(`Already running (process ${pid})`)
+    return
+  }
 
   if (conf.autostart) {
     const startupFile = startup.getFile('hotel')
