@@ -156,3 +156,10 @@ test("group.handleConnect on port 443", t => {
   sinon.assert.calledWith(tcpProxy.proxy, socket, conf.port + 1);
   t.pass();
 });
+
+test("group proxy doesnt raise exception on error", t => {
+  const group = Group();
+  // This line will raise if http-proxy doesn't have at least 1 listener
+  group._proxy.emit("error", "an error that occured");
+  t.pass();
+});

@@ -40,6 +40,10 @@ const proxy = httpProxy.createServer({
   xfwd: true
 });
 
+// `http-proxy` requires that at least 1 listener exists to not raise
+// an exception. See https://github.com/http-party/node-http-proxy/blob/9b96cd725127a024dabebec6c7ea8c807272223d/lib/http-proxy/index.js#L119
+proxy.on("error", err => console.error(err));
+
 // Start HTTPS proxy and HTTP server
 proxy.listen(conf.port + 1);
 

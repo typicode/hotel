@@ -24,6 +24,10 @@ class Group extends EventEmitter {
     this._proxy = httpProxy.createProxyServer({
       xfwd: true
     });
+
+    // `http-proxy` requires that at least 1 listener exists to not raise
+    // an exception. See https://github.com/http-party/node-http-proxy/blob/9b96cd725127a024dabebec6c7ea8c807272223d/lib/http-proxy/index.js#L119
+    this._proxy.on("error", err => console.error(err));
   }
 
   _output(id, data) {
