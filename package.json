@@ -76,7 +76,7 @@
     "@babel/core": "^7.8.7",
     "@babel/node": "^7.8.7",
     "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
-    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.8.3",
     "@material-ui/core": "^4.9.5",
     "@material-ui/icons": "^4.9.1",
