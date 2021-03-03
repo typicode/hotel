@@ -58,7 +58,7 @@
     "mkdirp": "^0.5.1",
     "once": "^1.3.2",
     "please-upgrade-node": "^3.0.2",
-    "pug": "^2.0.0-rc.4",
+    "pug": "^3.0.1",
     "respawn": "^2.4.1",
     "selfsigned": "^1.10.2",
     "server-ready": "^0.3.1",
