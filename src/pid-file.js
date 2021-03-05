@@ -9,7 +9,7 @@ module.exports = {
 
 function create() {
   console.log('create', pidFile, process.pid)
-  return fs.writeFileSync(pidFile, process.pid)
+  return fs.writeFileSync(pidFile, `${process.pid}`)
 }
 
 function read() {
