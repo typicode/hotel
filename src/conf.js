@@ -13,7 +13,9 @@ const defaults = {
   tld: 'localhost',
   // Replace with your network proxy IP (1.2.3.4:5000) if any
   // For example, if you're behind a corporate proxy
-  proxy: false
+  proxy: false,
+  // Set to false to disable automatic running on startup.
+  autostart: true
 }
 
 // Create empty conf it it doesn't exist

@@ -207,7 +207,10 @@ By default, `hotel` uses the following configuration values:
   "tld": 'localhost', 
   
   // If you're behind a corporate proxy, replace this with your network proxy IP (example: "1.2.3.4:5000")
-  "proxy": false
+  "proxy": false,
+
+  // Change to false to prevent hotel from starting itself up automatically on login
+  "autostart": true
 }
 ```
 
