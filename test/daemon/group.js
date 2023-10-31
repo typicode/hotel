@@ -36,7 +36,7 @@ test('group.handleUpgrade with proxy', t => {
   group.handleUpgrade(req, head, socket)
 
   sinon.assert.calledWith(group._proxy.ws, req, head, socket, {
-    target: `ws://${target}`
+    target: `ws://${target}:80`
   })
   t.pass()
 })
