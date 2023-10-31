@@ -326,7 +326,7 @@ class Group extends EventEmitter {
     // Make sure to send only one response
     const send = once(() => {
       log(`Redirect - ${id} → ${item.target}`)
-      res.redirect(item.target)
+      res.redirect(307, item.target)
     })
 
     if (item.start) {
