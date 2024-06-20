@@ -26,7 +26,13 @@ __Important__ Don't forget to restart hotel and reload network or browser config
 
 ##### Windows
 
-`Settings > Network and Internet > Proxy > Use setup script`
+###### Windows 10
+
+`Settings > Network and Internet > Proxy > Use setup script > Script address "http://localhost:2000/proxy.pac"`
+
+###### < Windows 10
+
+`Start > "Internet Options" > Connections > LAN settings > 🗹 "Use automatic configuration script" > Address: "http://localhost:2000/proxy.pac"`
 
 ##### Linux
 
