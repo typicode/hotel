@@ -22,6 +22,14 @@ module.exports = function(group) {
       group.start.bind(group),
       group.redirect.bind(group)
     )
+    // Handle path segments after service name
+    // e.g., /web-workshop/health should proxy to the server
+    .get(
+      '/:id/*',
+      group.exists.bind(group),
+      group.start.bind(group),
+      group.proxy.bind(group)
+    )
 
   return router
 }
