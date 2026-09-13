@@ -213,9 +213,14 @@ class Group extends EventEmitter {
 
     // Not found
     if (!id || !item) {
-      const msg = `Can't find server id: ${id}`
+      const availableServers = Object.keys(this._list).join(', ')
+      const msg = id
+        ? `Can't find server id: ${id}`
+        : `Can't find server for hostname: ${req.hostname}`
       log(msg)
-      return res.status(404).send(msg)
+      return res.status(404).send(
+        `${msg}\n\nAvailable servers: ${availableServers || 'none'}`
+      )
     }
 
     req.hotel = {
