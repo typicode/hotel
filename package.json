@@ -5,7 +5,7 @@
   "main": "lib",
   "bin": "lib/cli/bin.js",
   "engines": {
-    "node": ">=6"
+    "node": ">=10"
   },
   "scripts": {
     "test": "ava && npm run lint",
