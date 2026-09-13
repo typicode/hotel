@@ -1,7 +1,9 @@
 .content {
   height: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   background-color: var(--primary);
+  display: flex;
+  flex-direction: column;
 }
 
 .content a {
@@ -16,6 +18,7 @@
   justify-content: space-between;
   padding: 0 0 0 1rem;
   background-color: var(--primary-dark);
+  z-index: 1;
 }
 
 .content-bar > span {
@@ -25,7 +28,14 @@
 pre {
   padding: 1rem;
   margin: 0;
-  word-break: break-all;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-x: auto;
+  flex: 1;
+}
+
+pre div {
+  line-height: 1.4;
 }
 
 button {
