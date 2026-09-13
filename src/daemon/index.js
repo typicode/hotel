@@ -21,8 +21,16 @@ pidFile.create()
 exitHook(() => {
   console.log('Exiting')
   console.log('Stop daemon')
-  proxy.close()
-  app.close()
+  try {
+    proxy.close()
+  } catch (err) {
+    log('Error closing HTTPS proxy:', err.message)
+  }
+  try {
+    app.close()
+  } catch (err) {
+    log('Error closing HTTP server:', err.message)
+  }
   group.stopAll()
 
   console.log('Remove pid file')
@@ -40,9 +48,28 @@ const proxy = httpProxy.createServer({
   xfwd: true
 })
 
-// Start HTTPS proxy and HTTP server
-proxy.listen(conf.port + 1)
-
-app.listen(conf.port, conf.host, function() {
-  log(`Server listening on port ${conf.host}:${conf.port}`)
+// Handle proxy errors
+proxy.on('error', (err, req, res) => {
+  log('HTTPS proxy error:', err.message)
+  if (res && !res.headersSent) {
+    res.writeHead(502, { 'Content-Type': 'text/plain' })
+    res.end('Proxy Error: ' + err.message)
+  }
 })
+
+// Start HTTPS proxy
+try {
+  proxy.listen(conf.port + 1)
+} catch (err) {
+  log('Error starting HTTPS proxy:', err.message)
+}
+
+// Start HTTP server
+try {
+  app.listen(conf.port, conf.host, function() {
+    log(`Server listening on port ${conf.host}:${conf.port}`)
+  })
+} catch (err) {
+  log('Error starting HTTP server:', err.message)
+  process.exit(1)
+}
