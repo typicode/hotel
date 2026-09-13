@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const tildify = require('tildify')
+const mkdirp = require('mkdirp')
 const selfsigned = require('selfsigned')
 const log = require('./log')
 const { hotelDir } = require('../common')
@@ -17,6 +18,8 @@ function generate() {
     }
   } else {
     log(`Generating self-signed certificate in ${tildify(hotelDir)}`)
+    // Ensure hotel directory exists before writing certificate files
+    mkdirp.sync(hotelDir)
     const pems = selfsigned.generate([{ name: 'commonName', value: 'hotel' }], {
       days: 365
     })
