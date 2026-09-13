@@ -72,8 +72,16 @@ class Group extends EventEmitter {
 
     const HTTP_PROXY = `http://127.0.0.1:${daemonConf.port}/proxy.pac`
 
+    // Build PATH that includes node_modules/.bin for npm scripts
+    let pathEnv = process.env.PATH || ''
+    if (conf.cwd) {
+      const localBin = path.join(conf.cwd, 'node_modules', '.bin')
+      pathEnv = `${localBin}${path.delimiter}${pathEnv}`
+    }
+
     conf.env = {
       ...process.env,
+      PATH: pathEnv,
       ...conf.env
     }
 
