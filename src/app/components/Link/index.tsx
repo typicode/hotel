@@ -5,6 +5,13 @@ function href(id: string) {
   const { protocol, hostname } = window.location
   if (/hotel\./.test(hostname)) {
     // Accessed using hotel.tld
+    // Extract the full TLD after 'hotel.' (e.g., 'demo.dev.example.com' from 'hotel.demo.dev.example.com')
+    const hotelIndex = hostname.indexOf('hotel.')
+    if (hotelIndex !== -1) {
+      const tld = hostname.slice(hotelIndex + 6) // Skip 'hotel.'
+      return `${protocol}//${id}.${tld}`
+    }
+    // Fallback: use last segment only
     const tld = hostname.split('.').slice(-1)[0]
     return `${protocol}//${id}.${tld}`
   } else {
