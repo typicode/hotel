@@ -5,6 +5,7 @@ const startup = require('user-startup')
 const common = require('../common')
 const conf = require('../conf')
 const uninstall = require('../scripts/uninstall')
+const log = require('../daemon/log')
 
 module.exports = {
   start,
@@ -24,7 +25,15 @@ function start() {
   mkdirp.sync(common.hotelDir)
   fs.writeFileSync(common.startupFile, startupFile)
 
-  console.log(`Started http://localhost:${conf.port}`)
+  // Verify daemon started by checking if pid file exists after a short delay
+  setTimeout(() => {
+    if (fs.existsSync(common.pidFile)) {
+      console.log(`Started http://localhost:${conf.port}`)
+    } else {
+      console.log(`Start command sent. Check ${common.logFile} for details.`)
+      console.log(`If hotel doesn't start, try running: node ${daemonFile}`)
+    }
+  }, 500)
 }
 
 // Stop daemon
