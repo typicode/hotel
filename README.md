@@ -51,7 +51,7 @@ You can view the list of Supporters here https://thanks.typicode.com.
 * Plays nice with other servers (Apache, Nginx, ...)
 * Random or fixed ports
 
-## Install
+## Install_BABAB
 
 ```sh
 npm install -g hotel && hotel start
